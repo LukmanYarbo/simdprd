@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }} - Admin Dashboard</title>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Scripts -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        })();
+    </script>
+    @vite(['resources/css/app.scss', 'resources/js/app.js'])
+    @livewireStyles
+    @stack('styles')
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        @include('layouts.partials.sidebar')
+
+        <!-- Page Content -->
+        <div id="content" class="d-flex flex-column min-vh-100">
+            @include('layouts.partials.navbar')
+
+            <main class="p-4 flex-grow-1">
+                <div class="mb-4">
+                    @yield('breadcrumbs')
+                </div>
+                @yield('content')
+            </main>
+
+            @include('layouts.partials.footer')
+        </div>
+    </div>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @livewireScripts
+    @stack('scripts')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            @if(session('success'))
+                Toast.fire({
+                    icon: 'success',
+                    title: "{{ session('success') }}"
+                });
+            @endif
+
+            @if(session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan!',
+                    text: "{{ session('error') }}",
+                    confirmButtonColor: '#3085d6',
+                });
+            @endif
+
+            @if(session('warning'))
+                Toast.fire({
+                    icon: 'warning',
+                    title: "{{ session('warning') }}"
+                });
+            @endif
+
+            @if(session('info'))
+                Toast.fire({
+                    icon: 'info',
+                    title: "{{ session('info') }}"
+                });
+            @endif
+        });
+    </script>
+</body>
+</html>
