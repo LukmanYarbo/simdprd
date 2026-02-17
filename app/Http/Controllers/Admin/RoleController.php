@@ -11,14 +11,20 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::with('permissions')->paginate(10);
+        $roles = Role::withCount(['permissions', 'users'])->paginate(10);
         return view('admin.roles.index', compact('roles'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
-        return view('admin.roles.create', compact('permissions'));
+        // Group permissions by their prefix (e.g., 'view users' -> 'users')
+        $permissionGroups = $permissions->groupBy(function ($permission) {
+            $parts = explode(' ', $permission->name);
+            return count($parts) > 1 ? end($parts) : 'Other';
+        });
+        
+        return view('admin.roles.create', compact('permissionGroups'));
     }
 
     public function store(Request $request)
@@ -41,8 +47,14 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
+        // Group permissions by their prefix
+        $permissionGroups = $permissions->groupBy(function ($permission) {
+            $parts = explode(' ', $permission->name);
+            return count($parts) > 1 ? end($parts) : 'Other';
+        });
+        
         $rolePermissions = $role->permissions->pluck('name')->toArray();
-        return view('admin.roles.edit', compact('role', 'permissions', 'rolePermissions'));
+        return view('admin.roles.edit', compact('role', 'permissionGroups', 'rolePermissions'));
     }
 
     public function update(Request $request, Role $role)

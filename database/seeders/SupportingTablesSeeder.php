@@ -36,7 +36,7 @@ class SupportingTablesSeeder extends Seeder
             ['nama' => 'Mengundurkan Diri'],
         ]);
 
-        DB::table('jabatan')->insert([
+        DB::table('jabatan_dprd')->insert([
             ['nama' => 'Ketua DPRD'],
             ['nama' => 'Wakil Ketua DPRD'],
             ['nama' => 'Anggota DPRD'],

@@ -16,11 +16,11 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light">
                         <tr>
-                            <th class="ps-4">#</th>
-                            <th>Role Name</th>
+                            <th class="ps-4">No</th>
+                            <th>Name</th>
                             <th>Permissions</th>
                             <th>Users Count</th>
-                            <th class="text-end pe-4">Actions</th>
+                            <th class="text-end pe-4">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,18 +31,14 @@
                                 <span class="fw-semibold">{{ ucfirst($role->name) }}</span>
                             </td>
                             <td>
-                                @forelse($role->permissions as $permission)
-                                    <span class="badge bg-info-subtle text-info mb-1">{{ $permission->name }}</span>
-                                @empty
-                                    <span class="text-muted">No permissions</span>
-                                @endforelse
+                                <span class="badge bg-info-subtle text-info">{{ $role->permissions_count }} Permissions</span>
                             </td>
                             <td>
-                                <span class="badge bg-secondary">{{ $role->users_count ?? $role->users()->count() }}</span>
+                                <span class="badge bg-secondary">{{ $role->users_count }} Users</span>
                             </td>
                             <td class="text-end pe-4">
                                 <div class="d-flex gap-2 justify-content-end">
-                                    <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                    <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-outline-warning" title="Edit">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     @if($role->name !== 'admin')

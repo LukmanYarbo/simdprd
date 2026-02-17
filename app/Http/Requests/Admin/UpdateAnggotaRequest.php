@@ -43,7 +43,7 @@ class UpdateAnggotaRequest extends FormRequest
             'desa' => ['required', 'string'],
             'alamat_lengkap' => ['required', 'string'],
             'id_status_keanggotaan' => ['required', 'exists:status_keanggotaan,id'],
-            'id_jabatan' => ['required', 'exists:jabatan,id'],
+            'id_dprd' => ['required', 'exists:jabatan_dprd,id'],
             'tgl_mulai' => ['required', 'date'],
             'tgl_berhenti' => ['nullable', 'date'],
             'status_bpjs' => ['required', 'in:Y,T'],

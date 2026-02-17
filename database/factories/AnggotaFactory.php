@@ -44,7 +44,7 @@ class AnggotaFactory extends Factory
             'desa' => 'DAGO',
             'alamat_lengkap' => $this->faker->address,
             'id_status_keanggotaan' => rand(1, 3),
-            'id_jabatan' => 3, // Default to Anggota, will be overridden in seeder
+            'id_dprd' => 3, // Default to Anggota, will be overridden in seeder
             'tgl_mulai' => $this->faker->date('Y-m-d', '-5 years'),
             'tgl_berhenti' => null,
             'id_komisi' => rand(1, 4),

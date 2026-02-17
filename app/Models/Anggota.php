@@ -31,7 +31,7 @@ class Anggota extends Model
         'desa',
         'alamat_lengkap',
         'id_status_keanggotaan',
-        'id_jabatan',
+        'id_dprd',
         'tgl_mulai',
         'tgl_berhenti',
         'status_bpjs',
@@ -66,9 +66,9 @@ class Anggota extends Model
         return $this->belongsTo(StatusKeanggotaan::class, 'id_status_keanggotaan');
     }
 
-    public function jabatan()
+    public function jabatan() 
     {
-        return $this->belongsTo(Jabatan::class, 'id_jabatan');
+        return $this->belongsTo(JabatanDPRD::class, 'id_dprd');
     }
 
     public function jabatanKomisi()

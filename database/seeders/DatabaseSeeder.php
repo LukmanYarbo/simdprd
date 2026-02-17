@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleAndUserSeeder::class,
             SupportingTablesSeeder::class,
+            AlatKelengkapanSeeder::class,
             AnggotaSeeder::class,
         ]);
     }

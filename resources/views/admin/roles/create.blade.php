@@ -24,16 +24,29 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label">Permissions</label>
-                            <div class="row">
-                                @foreach($permissions as $permission)
-                                <div class="col-md-6 col-lg-4 mb-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->name }}" id="perm_{{ $permission->id }}"
-                                            {{ in_array($permission->name, old('permissions', [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="perm_{{ $permission->id }}">
-                                            {{ $permission->name }}
-                                        </label>
+                            <label class="form-label d-block mb-3">Permissions</label>
+                            <div class="row g-3">
+                                @foreach($permissionGroups as $groupName => $permissions)
+                                <div class="col-md-12">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="card-header bg-transparent border-bottom">
+                                            <h6 class="mb-0 fw-bold text-capitalize">{{ $groupName }} Permissions</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                @foreach($permissions as $permission)
+                                                <div class="col-md-4 col-sm-6 mb-2">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->name }}" id="perm_{{ $permission->id }}"
+                                                            {{ in_array($permission->name, old('permissions', [])) ? 'checked' : '' }}>
+                                                        <label class="form-check-label small" for="perm_{{ $permission->id }}">
+                                                            {{ $permission->name }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 @endforeach

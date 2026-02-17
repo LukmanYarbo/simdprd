@@ -24,6 +24,17 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
     Route::resource('anggota', \App\Http\Controllers\Admin\AnggotaController::class)->parameters([
         'anggota' => 'anggota'
     ]);
+    Route::resource('alat-kelengkapan', \App\Http\Controllers\Admin\AlatKelengkapanController::class)->parameters([
+        'alat-kelengkapan' => 'alatKelengkapan'
+    ]);
+    Route::resource('surat-keputusan', \App\Http\Controllers\Admin\SuratKeputusanController::class)->parameters([
+        'surat-keputusan' => 'suratKeputusan'
+    ]);
+    
+    // Member Management for SK
+    Route::get('surat-keputusan/{id}/anggota', [\App\Http\Controllers\Admin\SuratKeputusanController::class, 'getAnggota'])->name('surat-keputusan.get-anggota');
+    Route::post('surat-keputusan/anggota', [\App\Http\Controllers\Admin\SuratKeputusanController::class, 'storeAnggota'])->name('surat-keputusan.store-anggota');
+    Route::delete('surat-keputusan/anggota/{id}', [\App\Http\Controllers\Admin\SuratKeputusanController::class, 'destroyAnggota'])->name('surat-keputusan.destroy-anggota');
 });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {

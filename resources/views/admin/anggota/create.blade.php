@@ -209,14 +209,14 @@
                             @error('id_status_keanggotaan')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <label for="id_jabatan" class="form-label">Jabatan</label>
-                            <select class="form-select @error('id_jabatan') is-invalid @enderror" id="id_jabatan" name="id_jabatan" required>
+                            <label for="id_dprd" class="form-label">Jabatan</label>
+                            <select class="form-select @error('id_dprd') is-invalid @enderror" id="id_dprd" name="id_dprd" required>
                                 <option value="" disabled selected>Pilih Jabatan</option>
                                 @foreach($jabatans as $j)
-                                    <option value="{{ $j->id }}" {{ old('id_jabatan') == $j->id ? 'selected' : '' }}>{{ $j->nama }}</option>
+                                    <option value="{{ $j->id }}" {{ old('id_dprd') == $j->id ? 'selected' : '' }}>{{ $j->nama }}</option>
                                 @endforeach
                             </select>
-                            @error('id_jabatan')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('id_dprd')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
                             <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>

@@ -7,15 +7,28 @@ use App\Models\Anggota;
 use App\Models\Agama;
 use App\Models\StatusKawin;
 use App\Models\StatusKeanggotaan;
-use App\Models\Jabatan;
+use App\Models\JabatanDPRD;
 use App\Http\Requests\Admin\StoreAnggotaRequest;
 use App\Http\Requests\Admin\UpdateAnggotaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
-class AnggotaController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class AnggotaController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view anggota|create anggota|edit anggota|delete anggota', only: ['index', 'show']),
+            new Middleware('permission:create anggota', only: ['create', 'store']),
+            new Middleware('permission:edit anggota', only: ['edit', 'update']),
+            new Middleware('permission:delete anggota', only: ['destroy']),
+        ];
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -54,15 +67,18 @@ class AnggotaController extends Controller
                         <div><small class="text-muted"><i class="bi bi-telephone me-2 text-success"></i>'.$row->no_telp.'</small></div>';
                 })
                 ->addColumn('action', function($row) {
-                    return '
-                        <div class="btn-group shadow-sm">
-                            <a href="'.route('admin.anggota.edit', $row->id).'" class="btn btn-sm btn-light border-end" title="Edit">
-                                <i class="bi bi-pencil-square text-warning"></i>
-                            </a>
-                            <button type="button" onclick="deleteAnggota('.$row->id.')" class="btn btn-sm btn-light" title="Hapus">
-                                <i class="bi bi-trash3-fill text-danger"></i>
-                            </button>
-                        </div>';
+                    $btn = '<div class="btn-group shadow-sm">';
+                    
+                    if (auth()->user()->can('edit anggota')) {
+                        $btn .= '<a href="'.route('admin.anggota.edit', $row->id).'" class="btn btn-sm btn-light border-end" title="Edit"><i class="bi bi-pencil-square text-warning"></i></a>';
+                    }
+                    
+                    if (auth()->user()->can('delete anggota')) {
+                        $btn .= '<button type="button" onclick="deleteAnggota('.$row->id.')" class="btn btn-sm btn-light" title="Hapus"><i class="bi bi-trash3-fill text-danger"></i></button>';
+                    }
+                    
+                    $btn .= '</div>';
+                    return $btn;
                 })
                 ->rawColumns(['nama_nik', 'status', 'kontak', 'action'])
                 ->make(true);
@@ -113,7 +129,7 @@ class AnggotaController extends Controller
             case 3:
                 $rules = [
                     'id_status_keanggotaan' => ['required', 'exists:status_keanggotaan,id'],
-                    'id_jabatan' => ['required', 'exists:jabatan,id'],
+                    'id_dprd' => ['required', 'exists:jabatan_dprd,id'],
                     'tgl_mulai' => ['required', 'date'],
                     'tgl_berhenti' => ['nullable', 'date'],
                     'no_rekening' => ['required', 'string'],
@@ -144,7 +160,7 @@ class AnggotaController extends Controller
         $agamas = Agama::all();
         $statusKawins = StatusKawin::all();
         $statusKeanggotaans = StatusKeanggotaan::all();
-        $jabatans = Jabatan::all();
+        $jabatans = JabatanDPRD::all();
         return view('admin.anggota.create', compact('agamas', 'statusKawins', 'statusKeanggotaans', 'jabatans'));
     }
 
@@ -171,7 +187,7 @@ class AnggotaController extends Controller
         $agamas = Agama::all();
         $statusKawins = StatusKawin::all();
         $statusKeanggotaans = StatusKeanggotaan::all();
-        $jabatans = Jabatan::all();
+        $jabatans = JabatanDPRD::all();
         return view('admin.anggota.edit', compact('anggota', 'agamas', 'statusKawins', 'statusKeanggotaans', 'jabatans'));
     }
 

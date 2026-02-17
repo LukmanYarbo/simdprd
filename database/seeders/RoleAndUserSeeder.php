@@ -14,15 +14,47 @@ class RoleAndUserSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // Resources based on sidebar
+        $resources = [
+            'anggota',
+            'users',
+            'roles',
+            'permissions',
+        ];
+
+        $actions = ['view', 'create', 'edit', 'delete'];
+
         // Create Permissions
-        \Spatie\Permission\Models\Permission::create(['name' => 'view users']);
-        \Spatie\Permission\Models\Permission::create(['name' => 'view roles']);
-        \Spatie\Permission\Models\Permission::create(['name' => 'view settings']);
+        foreach ($resources as $resource) {
+            foreach ($actions as $action) {
+                \Spatie\Permission\Models\Permission::create(['name' => "{$action} {$resource}"]);
+            }
+        }
+
+        // Dashboard specific permission
+        \Spatie\Permission\Models\Permission::create(['name' => 'view dashboard']);
 
         // Create Roles
         $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
         $operatorRole = Role::create(['name' => 'operator']);
+        $userRole = Role::create(['name' => 'user']);
+
+        // Assign all permissions to Admin
+        $adminRole->givePermissionTo(\Spatie\Permission\Models\Permission::all());
+
+        // Assign specific permissions to Operator (Example: can manage Anggota but not Users/RBAC)
+        $operatorPermissions = [
+            'view dashboard',
+            'view anggota', 'create anggota', 'edit anggota',
+        ];
+        $operatorRole->givePermissionTo($operatorPermissions);
+
+        // Assign specific permissions to User (Example: View only)
+        $userPermissions = [
+            'view dashboard',
+            'view anggota',
+        ];
+        $userRole->givePermissionTo($userPermissions);
 
         // Create Admin User
         $admin = User::factory()->create([
@@ -30,10 +62,9 @@ class RoleAndUserSeeder extends Seeder
             'email' => 'admin@simdprd.com',
             'password' => Hash::make('password'),
         ]);
-
         $admin->assignRole($adminRole);
 
-        // Optional: Create dummy users for other roles
+        // Create Operator User
         $operator = User::factory()->create([
              'name' => 'Operator User',
              'email' => 'operator@simdprd.com',
@@ -41,6 +72,7 @@ class RoleAndUserSeeder extends Seeder
         ]);
         $operator->assignRole($operatorRole);
         
+        // Create Regular User
         $user = User::factory()->create([
              'name' => 'Regular User',
              'email' => 'user@simdprd.com',

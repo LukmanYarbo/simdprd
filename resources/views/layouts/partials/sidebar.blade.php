@@ -14,14 +14,24 @@
 
         <li>
             <a href="#masterDataSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-               aria-expanded="{{ request()->routeIs('admin.anggota.*') ? 'true' : 'false' }}">
+               aria-expanded="{{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') ? 'true' : 'false' }}">
                 <span><i class="bi bi-database me-2"></i> Master Data</span>
                 <i class="bi bi-chevron-down small"></i>
             </a>
-            <ul class="collapse {{ request()->routeIs('admin.anggota.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
+            <ul class="collapse {{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
                 <li>
                     <a href="{{ route('admin.anggota.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggota.*') ? 'active' : '' }}">
                         <i class="bi bi-people me-2"></i> Data Anggota
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.alat-kelengkapan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.alat-kelengkapan.*') ? 'active' : '' }}">
+                        <i class="bi bi-diagram-3 me-2"></i> Alat Kelengkapan
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.surat-keputusan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.surat-keputusan.*') ? 'active' : '' }}">
+                        <i class="bi bi-file-earmark-text me-2"></i> Surat Keputusan
                     </a>
                 </li>
             </ul>
@@ -46,12 +56,7 @@
                 @can('view roles')
                 <li>
                     <a href="{{ route('admin.roles.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.roles.*') ? 'active' : '' }}">
-                        <i class="bi bi-shield-lock me-2"></i> Roles
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('admin.permissions.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.permissions.*') ? 'active' : '' }}">
-                        <i class="bi bi-key me-2"></i> Permissions
+                        <i class="bi bi-shield-lock me-2"></i> Role Management
                     </a>
                 </li>
                 @endcan

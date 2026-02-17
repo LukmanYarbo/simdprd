@@ -184,9 +184,14 @@ $(function() {
                         );
                     },
                     error: function(xhr) {
+                        let errorMessage = 'Terjadi kesalahan saat menghapus data.';
+                        if (xhr.status === 403) {
+                            errorMessage = 'Anda tidak memiliki hak akses untuk menghapus data ini.';
+                        }
+                        
                         Swal.fire(
                             'Gagal!',
-                            'Terjadi kesalahan saat menghapus data.',
+                            errorMessage,
                             'error'
                         );
                     }
