@@ -19,21 +19,27 @@
                 <i class="bi bi-chevron-down small"></i>
             </a>
             <ul class="collapse {{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
+                @can('view anggota')
                 <li>
                     <a href="{{ route('admin.anggota.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggota.*') ? 'active' : '' }}">
                         <i class="bi bi-people me-2"></i> Data Anggota
                     </a>
                 </li>
+                @endcan
+                @can('view alat_kelengkapan')
                 <li>
                     <a href="{{ route('admin.alat-kelengkapan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.alat-kelengkapan.*') ? 'active' : '' }}">
                         <i class="bi bi-diagram-3 me-2"></i> Alat Kelengkapan
                     </a>
                 </li>
+                @endcan
+                @can('view surat_keputusan')
                 <li>
                     <a href="{{ route('admin.surat-keputusan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.surat-keputusan.*') ? 'active' : '' }}">
                         <i class="bi bi-file-earmark-text me-2"></i> Surat Keputusan
                     </a>
                 </li>
+                @endcan
             </ul>
         </li>
         

@@ -20,6 +20,8 @@ class RoleAndUserSeeder extends Seeder
             'users',
             'roles',
             'permissions',
+            'alat_kelengkapan',
+            'surat_keputusan',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];
@@ -27,57 +29,68 @@ class RoleAndUserSeeder extends Seeder
         // Create Permissions
         foreach ($resources as $resource) {
             foreach ($actions as $action) {
-                \Spatie\Permission\Models\Permission::create(['name' => "{$action} {$resource}"]);
+                \Spatie\Permission\Models\Permission::firstOrCreate(['name' => "{$action} {$resource}"]);
             }
         }
 
         // Dashboard specific permission
-        \Spatie\Permission\Models\Permission::create(['name' => 'view dashboard']);
+        \Spatie\Permission\Models\Permission::firstOrCreate(['name' => 'view dashboard']);
 
         // Create Roles
-        $adminRole = Role::create(['name' => 'admin']);
-        $operatorRole = Role::create(['name' => 'operator']);
-        $userRole = Role::create(['name' => 'user']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $operatorRole = Role::firstOrCreate(['name' => 'operator']);
+        $userRole = Role::firstOrCreate(['name' => 'user']);
 
         // Assign all permissions to Admin
-        $adminRole->givePermissionTo(\Spatie\Permission\Models\Permission::all());
+        $adminRole->syncPermissions(\Spatie\Permission\Models\Permission::all());
 
-        // Assign specific permissions to Operator (Example: can manage Anggota but not Users/RBAC)
+        // Assign specific permissions to Operator
         $operatorPermissions = [
             'view dashboard',
             'view anggota', 'create anggota', 'edit anggota',
+            'view alat_kelengkapan', 'create alat_kelengkapan', 'edit alat_kelengkapan',
+            'view surat_keputusan', 'create surat_keputusan', 'edit surat_keputusan',
         ];
-        $operatorRole->givePermissionTo($operatorPermissions);
+        // Filter permissions that actually exist to avoid errors if something went wrong
+        $validOperatorPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $operatorPermissions)->get();
+        $operatorRole->syncPermissions($validOperatorPermissions);
 
-        // Assign specific permissions to User (Example: View only)
+        // Assign specific permissions to User
         $userPermissions = [
             'view dashboard',
             'view anggota',
+            'view alat_kelengkapan', // Users usually can view master data
+            'view surat_keputusan',
         ];
-        $userRole->givePermissionTo($userPermissions);
+        $validUserPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $userPermissions)->get();
+        $userRole->syncPermissions($validUserPermissions);
 
-        // Create Admin User
-        $admin = User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@simdprd.com',
-            'password' => Hash::make('password'),
-        ]);
-        $admin->assignRole($adminRole);
+        // Create Users (only if they don't exist)
+        if (!User::where('email', 'admin@simdprd.com')->exists()) {
+            $admin = User::factory()->create([
+                'name' => 'Admin User',
+                'email' => 'admin@simdprd.com',
+                'password' => Hash::make('password'),
+            ]);
+            $admin->assignRole($adminRole);
+        }
 
-        // Create Operator User
-        $operator = User::factory()->create([
-             'name' => 'Operator User',
-             'email' => 'operator@simdprd.com',
-             'password' => Hash::make('password'),
-        ]);
-        $operator->assignRole($operatorRole);
+        if (!User::where('email', 'operator@simdprd.com')->exists()) {
+            $operator = User::factory()->create([
+                'name' => 'Operator User',
+                'email' => 'operator@simdprd.com',
+                'password' => Hash::make('password'),
+            ]);
+            $operator->assignRole($operatorRole);
+        }
         
-        // Create Regular User
-        $user = User::factory()->create([
-             'name' => 'Regular User',
-             'email' => 'user@simdprd.com',
-             'password' => Hash::make('password'),
-        ]);
-        $user->assignRole($userRole);
+        if (!User::where('email', 'user@simdprd.com')->exists()) {
+            $user = User::factory()->create([
+                 'name' => 'Regular User',
+                 'email' => 'user@simdprd.com',
+                 'password' => Hash::make('password'),
+            ]);
+            $user->assignRole($userRole);
+        }
     }
 }

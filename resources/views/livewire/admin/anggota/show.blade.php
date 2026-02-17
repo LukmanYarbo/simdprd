@@ -73,7 +73,7 @@
                 </div>
             </div>
 
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-transparent border-0 py-3">
                     <h5 class="mb-0 fw-bold"><i class="bi bi-shield-check me-2"></i>Asuransi & Tunjangan</h5>
                 </div>
@@ -123,6 +123,47 @@
                                         {!! $anggota->status_tjgn_transport == 'Y' ? '<span class="text-success">Menerima</span>' : '<span class="text-muted">Tidak Menerima</span>' !!}
                                     </td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-diagram-3 me-2"></i>Jabatan Alat Kelengkapan</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="bg-light text-muted">
+                                <tr>
+                                    <th class="border-0 ps-3 rounded-start">Alat Kelengkapan</th>
+                                    <th class="border-0">Jabatan</th>
+                                    <th class="border-0 rounded-end">SK</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($anggota->jabatanAnggota as $ja)
+                                <tr>
+                                    <td class="ps-3 border-bottom-0">
+                                        <div class="fw-semibold">{{ $ja->alatKelengkapan->nama }}</div>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25">{{ $ja->jabatanAlatKelengkapan->nama }}</span>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <div class="small fw-semibold">{{ $ja->suratKeputusan->no_sk }}</div>
+                                        <div class="small text-muted">{{ \Carbon\Carbon::parse($ja->suratKeputusan->tgl_sk)->translatedFormat('d F Y') }}</div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted py-3 border-bottom-0">
+                                        Belum menjabat di alat kelengkapan manapun.
+                                    </td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

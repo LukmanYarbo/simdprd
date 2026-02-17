@@ -7,8 +7,24 @@ use App\Models\AlatKelengkapan;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class AlatKelengkapanController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class AlatKelengkapanController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view alat_kelengkapan|create alat_kelengkapan|edit alat_kelengkapan|delete alat_kelengkapan', only: ['index', 'show']),
+            new Middleware('permission:create alat_kelengkapan', only: ['create', 'store']),
+            new Middleware('permission:edit alat_kelengkapan', only: ['edit', 'update']),
+            new Middleware('permission:delete alat_kelengkapan', only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -20,8 +36,12 @@ class AlatKelengkapanController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $btn = '<div class="btn-group shadow-sm">';
-                    $btn .= '<button type="button" class="btn btn-sm btn-light border-end btn-edit" data-id="'.$row->id.'" title="Edit"><i class="bi bi-pencil-square text-warning"></i></button>';
-                    $btn .= '<button type="button" onclick="deleteItem('.$row->id.')" class="btn btn-sm btn-light" title="Hapus"><i class="bi bi-trash3-fill text-danger"></i></button>';
+                    if(auth()->user()->can('edit alat_kelengkapan')){
+                        $btn .= '<button type="button" class="btn btn-sm btn-light border-end btn-edit" data-id="'.$row->id.'" title="Edit"><i class="bi bi-pencil-square text-warning"></i></button>';
+                    }
+                    if(auth()->user()->can('delete alat_kelengkapan')){
+                        $btn .= '<button type="button" onclick="deleteItem('.$row->id.')" class="btn btn-sm btn-light" title="Hapus"><i class="bi bi-trash3-fill text-danger"></i></button>';
+                    }
                     $btn .= '</div>';
                     return $btn;
                 })

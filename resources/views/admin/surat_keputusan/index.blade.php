@@ -11,9 +11,11 @@
             <h2 class="h4 mb-0 fw-bold">Surat Keputusan</h2>
         </div>
         <div class="col-auto">
+            @can('create surat_keputusan')
             <button type="button" class="btn btn-primary shadow-sm btn-add">
                 <i class="bi bi-plus-lg me-2"></i>Tambah SK
             </button>
+            @endcan
         </div>
     </div>
 
@@ -26,9 +28,10 @@
                             <th class="border-0" width="5%">No</th>
                             <th class="border-0">No. SK</th>
                             <th class="border-0">Tanggal SK</th>
-                            <th class="border-0">Alat Kelengkapan</th>
+                            <th class="border-0">Nama Alat Kelengkapan</th>
+                            <th class="border-0">Jumlah Anggota</th>
                             <th class="border-0">Status</th>
-                            <th class="border-0">Keterangan</th>
+                          
                             <th class="border-0">File</th>
                             <th class="border-0 text-end pe-4" width="15%">Aksi</th>
                         </tr>
@@ -108,7 +111,7 @@
         <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-white border-bottom-0 pb-0">
                 <div>
-                    <h5 class="modal-title fw-bold">Kelola Anggota</h5>
+                    <h5 class="modal-title fw-bold" id="modalAnggotaTitle">Kelola Anggota</h5>
                     <p class="text-muted mb-0 small" id="modalAnggotaSubtitle">Surat Keputusan</p>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -184,6 +187,7 @@ $(function() {
             {data: 'no_sk', name: 'no_sk'},
             {data: 'tgl_sk', name: 'tgl_sk'},
             {data: 'alat_kelengkapan.nama', name: 'alatKelengkapan.nama'},
+            {data: 'jumlah_anggota', name: 'jumlah_anggota', searchable: false},
             {
                 data: 'status',
                 name: 'status',
@@ -195,7 +199,7 @@ $(function() {
                     }
                 }
             },
-            {data: 'ket_sk', name: 'ket_sk'},
+          
             {data: 'file_download', name: 'file_download', orderable: false, searchable: false},
             {
                 data: 'action', 
@@ -320,7 +324,11 @@ $(function() {
                         Swal.fire('Terhapus!', response.success, 'success');
                     },
                     error: function(xhr) {
-                        Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus data.', 'error');
+                        var msg = 'Terjadi kesalahan saat menghapus data.';
+                        if(xhr.status === 422 && xhr.responseJSON.error) {
+                            msg = xhr.responseJSON.error;
+                        }
+                        Swal.fire('Gagal!', msg, 'error');
                     }
                 });
             }
@@ -339,6 +347,7 @@ $(function() {
         $('#tableAnggotaList tbody').html('<tr><td colspan="3" class="text-center">Memuat data...</td></tr>');
         
         $.get("{{ url('admin/surat-keputusan') }}/" + id + "/anggota", function(data) {
+            $('#modalAnggotaTitle').text('Kelola Anggota ' + (data.surat_keputusan.alat_kelengkapan.ket || ''));
             $('#modalAnggotaSubtitle').text('No. SK: ' + data.surat_keputusan.no_sk + ' (' + data.surat_keputusan.alat_kelengkapan.nama + ')');
             
             // Populate Anggota Select
@@ -359,6 +368,9 @@ $(function() {
 
             renderAnggotaTable(data.existing_anggota);
             modalAnggota.show();
+        }).fail(function(xhr) {
+            console.error(xhr);
+            Swal.fire('Error', 'Gagal memuat data anggota. Cek log console.', 'error');
         });
     }
 
@@ -398,11 +410,18 @@ $(function() {
                     timer: 1000,
                     showConfirmButton: false
                 });
+                table.ajax.reload(null, false); // Reload main table to update count
             },
             error: function(xhr) {
                 var msg = 'Terjadi kesalahan.';
                 if(xhr.status === 422) {
-                    msg = xhr.responseJSON.errors.id_anggota ? xhr.responseJSON.errors.id_anggota[0] : 'Cek kembali inputan anda.';
+                    if (xhr.responseJSON.errors.id_anggota) {
+                         msg = xhr.responseJSON.errors.id_anggota[0];
+                    } else if (xhr.responseJSON.errors.id_jabatan_alat_kelengkapan) {
+                         msg = xhr.responseJSON.errors.id_jabatan_alat_kelengkapan[0];
+                    } else {
+                        msg = 'Cek kembali inputan anda.';
+                    }
                 }
                 Swal.fire('Gagal!', msg, 'error');
             },
@@ -438,9 +457,14 @@ $(function() {
                             timer: 1000,
                             showConfirmButton: false
                         });
+                        table.ajax.reload(null, false); // Reload main table to update count
                     },
                     error: function(xhr) {
-                        Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus data.', 'error');
+                        var msg = 'Terjadi kesalahan saat menghapus data.';
+                        if(xhr.status === 422 && xhr.responseJSON.error) {
+                            msg = xhr.responseJSON.error;
+                        }
+                        Swal.fire('Gagal!', msg, 'error');
                     }
                 });
             }

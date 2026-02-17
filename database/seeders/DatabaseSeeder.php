@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             SupportingTablesSeeder::class,
             AlatKelengkapanSeeder::class,
             AnggotaSeeder::class,
+            IkatanKeluargaSeeder::class,
         ]);
     }
 }

@@ -20,4 +20,9 @@ class SuratKeputusan extends Model
     {
         return $this->belongsTo(AlatKelengkapan::class, 'id_alat_kelengkapan');
     }
+
+    public function jabatanAnggota()
+    {
+        return $this->hasMany(JabatanAnggota::class, 'id_surat_keputusan');
+    }
 }

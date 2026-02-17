@@ -105,4 +105,14 @@ class Anggota extends Model
     {
         return $this->belongsTo(JabatanAlatKelengkapan::class, 'id_panja');
     }
+
+    public function jabatanAnggota()
+    {
+        return $this->hasMany(JabatanAnggota::class, 'id_anggota');
+    }
+
+    public function keluarga()
+    {
+        return $this->hasMany(Keluarga::class, 'id_anggota');
+    }
 }

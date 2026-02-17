@@ -11,9 +11,11 @@
             <h2 class="h4 mb-0 fw-bold">Alat Kelengkapan DPRD</h2>
         </div>
         <div class="col-auto">
+            @can('create alat_kelengkapan')
             <button type="button" class="btn btn-primary shadow-sm btn-add">
                 <i class="bi bi-plus-lg me-2"></i>Tambah Baru
             </button>
+            @endcan
         </div>
     </div>
 

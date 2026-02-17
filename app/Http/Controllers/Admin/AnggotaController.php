@@ -70,6 +70,7 @@ class AnggotaController extends Controller implements HasMiddleware
                     $btn = '<div class="btn-group shadow-sm">';
                     
                     if (auth()->user()->can('edit anggota')) {
+                        $btn .= '<button type="button" class="btn btn-sm btn-info text-white border-end btn-keluarga" data-id="'.$row->id.'" title="Keluarga"><i class="bi bi-people-fill"></i></button>';
                         $btn .= '<a href="'.route('admin.anggota.edit', $row->id).'" class="btn btn-sm btn-light border-end" title="Edit"><i class="bi bi-pencil-square text-warning"></i></a>';
                     }
                     

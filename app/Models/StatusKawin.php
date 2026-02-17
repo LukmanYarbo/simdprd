@@ -16,4 +16,9 @@ class StatusKawin extends Model
     {
         return $this->hasMany(Anggota::class, 'id_status_kawin');
     }
+
+    public function keluarga()
+    {
+        return $this->hasMany(Keluarga::class, 'id_status_kawin');
+    }
 }

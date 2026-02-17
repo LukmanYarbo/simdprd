@@ -35,6 +35,13 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
     Route::get('surat-keputusan/{id}/anggota', [\App\Http\Controllers\Admin\SuratKeputusanController::class, 'getAnggota'])->name('surat-keputusan.get-anggota');
     Route::post('surat-keputusan/anggota', [\App\Http\Controllers\Admin\SuratKeputusanController::class, 'storeAnggota'])->name('surat-keputusan.store-anggota');
     Route::delete('surat-keputusan/anggota/{id}', [\App\Http\Controllers\Admin\SuratKeputusanController::class, 'destroyAnggota'])->name('surat-keputusan.destroy-anggota');
+
+    // Keluarga Management
+    Route::get('anggota/{id}/keluarga', [\App\Http\Controllers\Admin\KeluargaController::class, 'index'])->name('keluarga.index');
+    Route::post('keluarga', [\App\Http\Controllers\Admin\KeluargaController::class, 'store'])->name('keluarga.store');
+    Route::get('keluarga/{id}/edit', [\App\Http\Controllers\Admin\KeluargaController::class, 'edit'])->name('keluarga.edit');
+    Route::put('keluarga/{id}', [\App\Http\Controllers\Admin\KeluargaController::class, 'update'])->name('keluarga.update');
+    Route::delete('keluarga/{id}', [\App\Http\Controllers\Admin\KeluargaController::class, 'destroy'])->name('keluarga.destroy');
 });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {
