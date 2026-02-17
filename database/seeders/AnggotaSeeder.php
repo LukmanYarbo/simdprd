@@ -15,17 +15,48 @@ class AnggotaSeeder extends Seeder
         // 1. Create Ketua (1 person)
         Anggota::factory()->create([
             'id_dprd' => 1, // Ketua
-            'nama_anggota' => 'Budi Santoso, S.T.', // A specific name for the chairperson
+            'nama_anggota' => 'FRANGKY CHENDRA', // A specific name for the chairperson
         ]);
 
         // 2. Create Wakil Ketua (2 people)
-        Anggota::factory()->count(2)->create([
-            'id_dprd' => 2, // Wakil Ketua
-        ]);
+        $wakilKetuaNames = [
+            'FIKRI GAM',
+            'ABDUL MULO DAENG MULISA',
+        ];
 
-        // 3. Create Anggota (997 people)
-        Anggota::factory()->count(997)->create([
-            'id_dprd' => 3, // Anggota
-        ]);
+        foreach ($wakilKetuaNames as $name) {
+            Anggota::factory()->create([
+                'id_dprd' => 2, // Wakil Ketua
+                'nama_anggota' => $name,
+            ]);
+        }
+
+        // 3. Create Anggota (17 people)
+        $anggotaNames = [
+            'RAMJAN SUNE',
+            'SUTRISNO VAN GOBEL',
+            'DJONI PATIRO',
+            'RONAL BOLOTA',
+            'DRS SALIM BIN ABDULLAH',
+            'MASDIYANI LANTANA',
+            'TIA APRILIA MODANGGU',
+            'RAMLAN TINAMONGA',
+            'DEPRI PONTOH',
+            'SEM HASSAN',
+            'MEIDI PONTOH',
+            'ANDRIANSAH SEPTIAN PAKAYA',
+            'ABDUL ZAMAD LAUMA',
+            'DONAL LAMUNTE',
+            'MARDAN UMAR',
+            'DEWI ZANDRA ASTUTI MONDO',
+            'SAIFUL AMBARAK',
+        ];
+
+        foreach ($anggotaNames as $name) {
+            Anggota::factory()->create([
+                'id_dprd' => 3, // Anggota
+                'nama_anggota' => $name,
+            ]);
+        }
     }
 }

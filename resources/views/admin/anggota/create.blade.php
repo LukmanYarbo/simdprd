@@ -17,7 +17,7 @@
     </div>
 
     <!-- Step Indicator -->
-    <div class="card border-0 shadow-sm mb-4">
+    <div class="card border-0 shadow-lg mb-4">
         <div class="card-body p-4 pt-5 pb-5">
             <div class="step-header">
                 <div class="step-item active" data-step="1">
@@ -40,7 +40,7 @@
         @csrf
         
         @if ($errors->any())
-            <div class="alert alert-danger border-0 shadow-sm mb-4">
+            <div class="alert alert-danger border-0 shadow-lg mb-4">
                 <div class="d-flex align-items-center">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     <div>
@@ -52,7 +52,7 @@
 
         <!-- Step 1: Data Pribadi -->
         <div class="form-step active" id="step1">
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-lg">
                 <div class="card-header bg-transparent border-0 py-3">
                     <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-person me-2"></i>Langkah 1: Data Pribadi</h5>
                 </div>
@@ -132,7 +132,7 @@
 
         <!-- Step 2: Kontak & Alamat -->
         <div class="form-step" id="step2">
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-lg">
                 <div class="card-header bg-transparent border-0 py-3">
                     <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-geo-alt me-2"></i>Langkah 2: Kontak & Alamat</h5>
                 </div>
@@ -192,7 +192,7 @@
 
         <!-- Step 3: Keanggotaan & Keuangan -->
         <div class="form-step" id="step3">
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-lg">
                 <div class="card-header bg-transparent border-0 py-3">
                     <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-briefcase me-2"></i>Langkah 3: Keanggotaan & Keuangan</h5>
                 </div>
@@ -228,10 +228,15 @@
                             <input type="date" class="form-control @error('tgl_berhenti') is-invalid @enderror" id="tgl_berhenti" name="tgl_berhenti" value="{{ old('tgl_berhenti') }}">
                             @error('tgl_berhenti')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
-                        <div class="col-12">
+                        <div class="col-md-6">
                             <label for="no_rekening" class="form-label">Nomor Rekening</label>
                             <input type="text" class="form-control @error('no_rekening') is-invalid @enderror" id="no_rekening" name="no_rekening" value="{{ old('no_rekening') }}" required>
                             @error('no_rekening')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="no_npwp" class="form-label">Nomor NPWP</label>
+                            <input type="text" class="form-control @error('no_npwp') is-invalid @enderror" id="no_npwp" name="no_npwp" value="{{ old('no_npwp') }}" placeholder="00.000.000.0-000.000">
+                            @error('no_npwp')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
                 </div>
@@ -244,7 +249,7 @@
 
         <!-- Step 4: Asuransi & Tunjangan + Foto -->
         <div class="form-step" id="step4">
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-lg">
                 <div class="card-header bg-transparent border-0 py-3">
                     <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-shield-check me-2"></i>Langkah 4: Asuransi & Foto</h5>
                 </div>
@@ -253,7 +258,7 @@
                         <div class="col-md-4 text-center">
                             <label class="form-label d-block">Foto Anggota</label>
                             <div class="mb-3">
-                                <img id="preview" src="https://ui-avatars.com/api/?name=New+Anggota&background=random&size=180" class="rounded border shadow-sm" width="180" height="180" title="Klik untuk ganti foto">
+                                <img id="preview" src="https://ui-avatars.com/api/?name=New+Anggota&background=random&size=180" class="rounded border shadow-lg" width="180" height="180" title="Klik untuk ganti foto">
                             </div>
                             <input type="file" class="form-control form-control-sm @error('foto_anggota') is-invalid @enderror" id="foto_anggota" name="foto_anggota">
                             @error('foto_anggota')<div class="invalid-feedback">{{ $message }}</div>@enderror

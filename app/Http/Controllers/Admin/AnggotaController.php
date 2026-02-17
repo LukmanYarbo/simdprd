@@ -37,7 +37,8 @@ class AnggotaController extends Controller implements HasMiddleware
                 ->whereHas('statusKeanggotaan', function($query) {
                     $query->where('id', 1);
                 })
-                ->select('anggota.*');
+                ->select('anggota.*')
+                ->orderBy('id_dprd', 'asc');
 
             return DataTables::of($query)
                 ->addIndexColumn()
@@ -134,6 +135,7 @@ class AnggotaController extends Controller implements HasMiddleware
                     'tgl_mulai' => ['required', 'date'],
                     'tgl_berhenti' => ['nullable', 'date'],
                     'no_rekening' => ['required', 'string'],
+                    'no_npwp' => ['nullable', 'string'],
                 ];
                 break;
             case 4:

@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('keluarga', function (Blueprint $table) {
-            $table->string('status_anak')->nullable()->change();
+        Schema::table('anggota', function (Blueprint $table) {
+            $table->string('no_npwp')->nullable()->after('no_rekening');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::table('keluarga', function (Blueprint $table) {
-            $table->string('status_anak')->nullable(false)->change();
+        Schema::table('anggota', function (Blueprint $table) {
+            $table->dropColumn('no_npwp');
         });
     }
 };

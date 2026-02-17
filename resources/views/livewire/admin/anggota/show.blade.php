@@ -2,7 +2,7 @@
     <div class="row g-4">
         <!-- Profile Header -->
         <div class="col-12">
-            <div class="card border-0 shadow-sm overflow-hidden">
+            <div class="card border-0 shadow-lg overflow-hidden">
                 <div class="bg-primary py-5"></div>
                 <div class="card-body pt-0 px-4">
                     <div class="d-flex flex-column flex-md-row align-items-center align-items-md-end mt-n5" style="margin-top: -60px;">
@@ -24,112 +24,63 @@
             </div>
         </div>
 
-        <!-- Detail Information -->
-        <div class="col-12 col-xl-8">
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-info-circle me-2"></i>Informasi Lengkap</h5>
-                </div>
-                <div class="card-body p-4 pt-0">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="text-muted small d-block">NIK</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->nik }}</p>
+    <!-- Combined Data Diri & Keanggotaan -->
+        <div class="col-12">
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <div class="col-12 col-lg-8">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2"></i>Data Diri</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="text-muted small d-block">NIK</label>
+                                    <p class="fw-semibold mb-0">{{ $anggota->nik }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small d-block">No. Kartu Keluarga (KK)</label>
+                                    <p class="fw-semibold mb-0">{{ $anggota->nokk }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small d-block">Tempat, Tanggal Lahir</label>
+                                    <p class="fw-semibold mb-0">{{ $anggota->tempat_lahir }}, {{ $anggota->tgl_lahir->format('d F Y') }} <span class="badge bg-light text-dark ms-2">{{ $anggota->tgl_lahir->age }} Tahun</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small d-block">Jenis Kelamin</label>
+                                    <p class="fw-semibold mb-0">{{ $anggota->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small d-block">Agama</label>
+                                    <p class="fw-semibold mb-0">{{ $anggota->agama->nama }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-muted small d-block">Status Kawin</label>
+                                    <p class="fw-semibold mb-0">{{ $anggota->statusKawin->nama }} ({{ $anggota->jmlh_istri }} Istri, {{ $anggota->jmlh_anak }} Anak)</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="text-muted small d-block">No. Kartu Keluarga (KK)</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->nokk }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="text-muted small d-block">Tempat, Tanggal Lahir</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->tempat_lahir }}, {{ $anggota->tgl_lahir->format('d F Y') }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="text-muted small d-block">Jenis Kelamin</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="text-muted small d-block">Agama</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->agama->nama }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="text-muted small d-block">Status Kawin</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->statusKawin->nama }} ({{ $anggota->jmlh_istri }} Istri, {{ $anggota->jmlh_anak }} Anak)</p>
-                        </div>
-                        <hr class="my-2">
-                        <div class="col-md-6">
-                            <label class="text-muted small d-block">Email</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->email }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="text-muted small d-block">No. Telp / HP</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->no_telp }}</p>
-                        </div>
-                        <div class="col-12">
-                            <label class="text-muted small d-block">Alamat</label>
-                            <p class="fw-semibold mb-0">{{ $anggota->alamat_lengkap }}, {{ $anggota->desa }}, {{ $anggota->kec }}, {{ $anggota->kab }}, {{ $anggota->prov }}</p>
+                        <div class="col-12 col-lg-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-briefcase me-2"></i>Keanggotaan</h5>
+                            <div class="mb-3">
+                                <label class="text-muted small d-block">Tanggal Mulai</label>
+                                <p class="fw-semibold mb-0">{{ $anggota->tgl_mulai->format('d M Y') }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-muted small d-block">Tanggal Berhenti</label>
+                                <p class="fw-semibold mb-0">{{ $anggota->tgl_berhenti ? $anggota->tgl_berhenti->format('d M Y') : '-' }}</p>
+                            </div>
+                            <div class="mb-0">
+                                <label class="text-muted small d-block">Nomor Rekening</label>
+                                <p class="fw-semibold mb-0">{{ $anggota->no_rekening }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-shield-check me-2"></i>Asuransi & Tunjangan</h5>
-                </div>
-                <div class="card-body p-4 pt-0">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <tbody>
-                                <tr>
-                                    <td class="text-muted border-0 ps-0">BPJS Kesehatan</td>
-                                    <td class="border-0 fw-semibold text-end">
-                                        @if($anggota->status_bpjs == 'Y')
-                                            <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif ({{ $anggota->no_bpjs }})</span>
-                                        @else
-                                            <span class="text-muted">Tidak Terdaftar</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted ps-0">JKK (Jaminan Kecelakaan Kerja)</td>
-                                    <td class="fw-semibold text-end">
-                                        @if($anggota->status_jkk == 'Y')
-                                            <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif ({{ $anggota->no_jkk }})</span>
-                                        @else
-                                            <span class="text-muted">Tidak Terdaftar</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted ps-0">JKM (Jaminan Kematian)</td>
-                                    <td class="fw-semibold text-end">
-                                        @if($anggota->status_jkm == 'Y')
-                                            <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif ({{ $anggota->no_jkm }})</span>
-                                        @else
-                                            <span class="text-muted">Tidak Terdaftar</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted ps-0">Tunjangan Perumahan</td>
-                                    <td class="fw-semibold text-end">
-                                        {!! $anggota->status_tjgn_perum == 'Y' ? '<span class="text-success">Menerima</span>' : '<span class="text-muted">Tidak Menerima</span>' !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-muted ps-0 border-0">Tunjangan Transport</td>
-                                    <td class="fw-semibold text-end border-0">
-                                        {!! $anggota->status_tjgn_transport == 'Y' ? '<span class="text-success">Menerima</span>' : '<span class="text-muted">Tidak Menerima</span>' !!}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card border-0 shadow-sm">
+        <!-- Left Column (Jabatan, Keluarga) -->
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-lg mb-4">
                 <div class="card-header bg-transparent border-0 py-3">
                     <h5 class="mb-0 fw-bold"><i class="bi bi-diagram-3 me-2"></i>Jabatan Alat Kelengkapan</h5>
                 </div>
@@ -169,25 +120,131 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-transparent border-0 py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-people me-2"></i>Daftar Keluarga</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="bg-light text-muted">
+                                <tr>
+                                    <th class="border-0 ps-3 rounded-start">Nama</th>
+                                    <th class="border-0">NIK</th>
+                                    <th class="border-0">Hubungan</th>
+                                    <th class="border-0">L/P</th>
+                                    <th class="border-0">Tgl Lahir</th>
+                                    <th class="border-0 text-center rounded-end">Status Tunjangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($anggota->keluarga as $k)
+                                <tr>
+                                    <td class="ps-3 border-bottom-0 fw-semibold">{{ $k->nama }}</td>
+                                    <td class="border-bottom-0 text-muted">{{ $k->nik }}</td>
+                                    <td class="border-bottom-0">{{ $k->ikatanKeluarga->nama }}</td>
+                                    <td class="border-bottom-0">{{ $k->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                    <td class="border-bottom-0">{{ $k->tgl_lahir->format('d F Y') }} ({{ $k->tgl_lahir->age }} Thn)</td>
+                                    <td class="border-bottom-0 text-center">
+                                        @if($k->status_tunjangan == 'Y')
+                                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Ditunjang</span>
+                                        @else
+                                            <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25">Tidak Ditunjang</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-3 border-bottom-0">
+                                        Belum ada data keluarga.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-12 col-xl-4">
-            <div class="card border-0 shadow-sm mb-4">
+        <!-- Right Column (Kontak, Asuransi) -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-lg mb-4">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-briefcase me-2"></i>Keanggotaan</h5>
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-geo-alt me-2"></i>Kontak & Alamat</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="mb-3">
-                        <label class="text-muted small d-block">Tanggal Mulai</label>
-                        <p class="fw-semibold mb-0">{{ $anggota->tgl_mulai->format('d M Y') }}</p>
+                        <label class="text-muted small d-block">Email</label>
+                        <p class="fw-semibold mb-0 text-break">{{ $anggota->email }}</p>
                     </div>
                     <div class="mb-3">
-                        <label class="text-muted small d-block">Tanggal Berhenti</label>
-                        <p class="fw-semibold mb-0">{{ $anggota->tgl_berhenti ? $anggota->tgl_berhenti->format('d M Y') : '-' }}</p>
+                        <label class="text-muted small d-block">No. Telp / HP</label>
+                        <p class="fw-semibold mb-0">{{ $anggota->no_telp }}</p>
                     </div>
                     <div class="mb-0">
-                        <label class="text-muted small d-block">Nomor Rekening</label>
-                        <p class="fw-semibold mb-0">{{ $anggota->no_rekening }}</p>
+                        <label class="text-muted small d-block">Alamat</label>
+                        <p class="fw-semibold mb-0">{{ $anggota->alamat_lengkap }}, {{ $anggota->desa }}, {{ $anggota->kec }}, {{ $anggota->kab }}, {{ $anggota->prov }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-transparent border-0 py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-shield-check me-2"></i>Asuransi & Tunjangan</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="text-muted border-0 ps-0">BPJS Kesehatan</td>
+                                    <td class="border-0 fw-semibold text-end">
+                                        @if($anggota->status_bpjs == 'Y')
+                                            <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif</span>
+                                            <div class="small text-muted">{{ $anggota->no_bpjs }}</div>
+                                        @else
+                                            <span class="text-muted">Tidak Terdaftar</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted ps-0">JKK</td>
+                                    <td class="fw-semibold text-end">
+                                        @if($anggota->status_jkk == 'Y')
+                                            <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif</span>
+                                            <div class="small text-muted">{{ $anggota->no_jkk }}</div>
+                                        @else
+                                            <span class="text-muted">Tidak Terdaftar</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted ps-0">JKM</td>
+                                    <td class="fw-semibold text-end">
+                                        @if($anggota->status_jkm == 'Y')
+                                            <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif</span>
+                                            <div class="small text-muted">{{ $anggota->no_jkm }}</div>
+                                        @else
+                                            <span class="text-muted">Tidak Terdaftar</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted ps-0">Tunjangan Perumahan</td>
+                                    <td class="fw-semibold text-end">
+                                        {!! $anggota->status_tjgn_perum == 'Y' ? '<span class="text-success">Ya</span>' : '<span class="text-muted">Tidak</span>' !!}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted ps-0 border-0">Tunjangan Transport</td>
+                                    <td class="fw-semibold text-end border-0">
+                                        {!! $anggota->status_tjgn_transport == 'Y' ? '<span class="text-success">Ya</span>' : '<span class="text-muted">Tidak</span>' !!}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

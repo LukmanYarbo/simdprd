@@ -37,13 +37,22 @@ class UpdateAnggotaRequest extends FormRequest
             'no_telp' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:anggota,email,' . $anggotaId],
             'no_rekening' => ['required', 'string'],
+            'no_npwp' => ['nullable', 'string'],
             'prov' => ['required', 'string'],
             'kab' => ['required', 'string'],
             'kec' => ['required', 'string'],
             'desa' => ['required', 'string'],
             'alamat_lengkap' => ['required', 'string'],
             'id_status_keanggotaan' => ['required', 'exists:status_keanggotaan,id'],
-            'id_dprd' => ['required', 'exists:jabatan_dprd,id'],
+            'id_dprd' => [
+                'required',
+                'exists:jabatan_dprd,id',
+                function ($attribute, $value, $fail) use ($anggotaId) {
+                    if ($value == 1 && \App\Models\Anggota::where('id_dprd', 1)->where('id', '!=', $anggotaId)->exists()) {
+                        $fail('Ketua DPRD sudah terdaftar. Hanya boleh ada satu Ketua DPRD.');
+                    }
+                },
+            ],
             'tgl_mulai' => ['required', 'date'],
             'tgl_berhenti' => ['nullable', 'date'],
             'status_bpjs' => ['required', 'in:Y,T'],

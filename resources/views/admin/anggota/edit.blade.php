@@ -224,10 +224,15 @@
                             <input type="date" class="form-control @error('tgl_berhenti') is-invalid @enderror" id="tgl_berhenti" name="tgl_berhenti" value="{{ old('tgl_berhenti', $anggota->tgl_berhenti ? $anggota->tgl_berhenti->format('Y-m-d') : '') }}">
                             @error('tgl_berhenti')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
-                        <div class="col-12">
+                        <div class="col-md-6">
                             <label for="no_rekening" class="form-label">Nomor Rekening</label>
                             <input type="text" class="form-control @error('no_rekening') is-invalid @enderror" id="no_rekening" name="no_rekening" value="{{ old('no_rekening', $anggota->no_rekening) }}" required>
                             @error('no_rekening')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="no_npwp" class="form-label">Nomor NPWP</label>
+                            <input type="text" class="form-control @error('no_npwp') is-invalid @enderror" id="no_npwp" name="no_npwp" value="{{ old('no_npwp', $anggota->no_npwp) }}" placeholder="00.000.000.0-000.000">
+                            @error('no_npwp')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('tgl_lahir');
             $table->enum('jk', ['L', 'P']);
             $table->string('pekerjaan');
-            $table->enum('status_anak', ['AK', 'AA']); // Anak Kandung, Anak Angkat
+            $table->enum('status_anak', ['AK', 'AA'])->nullable(); // Anak Kandung, Anak Angkat
             $table->enum('status_tunjangan', ['Y', 'T']); // Ditunjang, Tidak
             $table->string('no_sk_pengadilan')->nullable();
             $table->timestamps();

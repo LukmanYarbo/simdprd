@@ -167,12 +167,15 @@
 
 @push('styles')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 @endpush
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -342,6 +345,14 @@ $(function() {
         loadAnggota(id);
     });
 
+    // Initialize Select2
+    $('#id_anggota').select2({
+        theme: 'bootstrap-5',
+        dropdownParent: $('#modalAnggota'),
+        placeholder: 'Pilih Anggota',
+        allowClear: true
+    });
+
     function loadAnggota(id) {
         $('#id_surat_keputusan_anggota').val(id);
         $('#tableAnggotaList tbody').html('<tr><td colspan="3" class="text-center">Memuat data...</td></tr>');
@@ -358,6 +369,7 @@ $(function() {
                 // For now just list all
                 anggotaSelect.append('<option value="'+val.id+'">'+val.nama_anggota+'</option>');
             });
+            anggotaSelect.trigger('change');
 
             // Populate Jabatan Select
             var jabatanSelect = $('#id_jabatan_alat_kelengkapan');

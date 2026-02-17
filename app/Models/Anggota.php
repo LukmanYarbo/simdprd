@@ -25,6 +25,7 @@ class Anggota extends Model
         'no_telp',
         'email',
         'no_rekening',
+        'no_npwp',
         'prov',
         'kab',
         'kec',

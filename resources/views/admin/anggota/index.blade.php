@@ -20,7 +20,7 @@
     <!-- Statistics Cards -->
     <div class="row g-3 mb-4">
         <div class="col-12 col-sm-6 col-xl-4">
-            <div class="card border-0 shadow-sm h-100 bg-primary text-white overflow-hidden">
+            <div class="card border-0 shadow-lg h-100 bg-primary text-white overflow-hidden">
                 <div class="card-body position-relative">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon bg-white bg-opacity-25 rounded-3 p-3 me-3">
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="col-12 col-sm-6 col-xl-4">
-            <div class="card border-0 shadow-sm h-100 bg-success text-white overflow-hidden">
+            <div class="card border-0 shadow-lg h-100 bg-success text-white overflow-hidden">
                 <div class="card-body position-relative">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon bg-white bg-opacity-25 rounded-3 p-3 me-3">
@@ -79,6 +79,7 @@
                             <th class="border-0">No</th>
                             <th class="border-0">Nama / NIK</th>
                             <th class="border-0">Jabatan</th>
+                          
                             <th class="border-0">Status</th>
                             <th class="border-0">Kontak</th>
                             <th class="border-0 text-end pe-4">Aksi</th>
@@ -142,10 +143,12 @@ $(function() {
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'nama_nik', name: 'nama_anggota'},
             {data: 'jabatan.nama', name: 'jabatan.nama'},
+          
             {data: 'status', name: 'statusKeanggotaan.nama'},
             {data: 'kontak', name: 'email'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-end pe-4'},
         ],
+        order: [], // Disable initial sort to respect server-side ordering
         language: {
             url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json',
             search: "_INPUT_",
