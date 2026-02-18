@@ -9,6 +9,8 @@ use App\Models\StatusKawin;
 use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class KeluargaController extends Controller
 {
@@ -32,10 +34,12 @@ class KeluargaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $age = Carbon::parse($request->tgl_lahir)->age;
+        
+        $rules = [
             'id_anggota' => 'required|exists:anggota,id',
             'id_ikatan_keluarga' => 'required|exists:ikatan_keluarga,id',
-            'nik' => 'required|numeric|unique:keluarga,nik',
+            'nik' => 'required|numeric|unique:keluarga_anggota,nik',
             'nama' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tgl_lahir' => 'required|date',
@@ -45,9 +49,20 @@ class KeluargaController extends Controller
             'status_anak' => 'nullable|in:AK,AA',
             'status_tunjangan' => 'required|in:Y,T',
             'no_sk_pengadilan' => 'nullable|string|max:255',
-        ]);
+            'file_surat_ket' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ];
 
-        Keluarga::create($request->all());
+        if (in_array($request->status_anak, ['AK', 'AA']) && $age >= 21) {
+            $rules['file_surat_ket'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+        }
+
+        $validated = $request->validate($rules);
+
+        if ($request->hasFile('file_surat_ket')) {
+            $validated['file_surat_ket'] = $request->file('file_surat_ket')->store('surat_keterangan_anak', 'public');
+        }
+
+        Keluarga::create($validated);
 
         return response()->json(['success' => 'Data keluarga berhasil ditambahkan.']);
     }
@@ -61,10 +76,11 @@ class KeluargaController extends Controller
     public function update(Request $request, $id)
     {
         $keluarga = Keluarga::findOrFail($id);
+        $age = Carbon::parse($request->tgl_lahir)->age;
 
-        $request->validate([
+        $rules = [
             'id_ikatan_keluarga' => 'required|exists:ikatan_keluarga,id',
-            'nik' => 'required|numeric|unique:keluarga,nik,' . $id,
+            'nik' => 'required|numeric|unique:keluarga_anggota,nik,' . $id,
             'nama' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tgl_lahir' => 'required|date',
@@ -74,16 +90,36 @@ class KeluargaController extends Controller
             'status_anak' => 'nullable|in:AK,AA',
             'status_tunjangan' => 'required|in:Y,T',
             'no_sk_pengadilan' => 'nullable|string|max:255',
-        ]);
+            'file_surat_ket' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ];
 
-        $keluarga->update($request->all());
+        if (in_array($request->status_anak, ['AK', 'AA']) && $age >= 21) {
+            if (!$keluarga->file_surat_ket && !$request->hasFile('file_surat_ket')) {
+                $rules['file_surat_ket'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+            }
+        }
+
+        $validated = $request->validate($rules);
+
+        if ($request->hasFile('file_surat_ket')) {
+            if ($keluarga->file_surat_ket) {
+                Storage::disk('public')->delete($keluarga->file_surat_ket);
+            }
+            $validated['file_surat_ket'] = $request->file('file_surat_ket')->store('surat_keterangan_anak', 'public');
+        }
+
+        $keluarga->update($validated);
 
         return response()->json(['success' => 'Data keluarga berhasil diperbarui.']);
     }
 
     public function destroy($id)
     {
-        Keluarga::destroy($id);
+        $keluarga = Keluarga::findOrFail($id);
+        if ($keluarga->file_surat_ket) {
+            Storage::disk('public')->delete($keluarga->file_surat_ket);
+        }
+        $keluarga->delete();
         return response()->json(['success' => 'Data keluarga berhasil dihapus.']);
     }
 }

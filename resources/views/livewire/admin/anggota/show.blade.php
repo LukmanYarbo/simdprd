@@ -78,100 +78,7 @@
             </div>
         </div>
 
-        <!-- Full Width Column (Jabatan) -->
-        <div class="col-12">
-            <div class="card border-0 shadow-lg mb-4">
-                <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-diagram-3 me-2"></i>Jabatan Alat Kelengkapan</h5>
-                </div>
-                <div class="card-body p-4 pt-0">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead class="bg-light text-muted">
-                                <tr>
-                                    <th class="border-0 ps-3 rounded-start">Alat Kelengkapan</th>
-                                    <th class="border-0">Jabatan</th>
-                                    <th class="border-0 rounded-end">SK</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($anggota->jabatanAnggota as $ja)
-                                <tr>
-                                    <td class="ps-3 border-bottom-0">
-                                        <div class="fw-semibold">{{ $ja->alatKelengkapan->nama }}</div>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25">{{ $ja->jabatanAlatKelengkapan->nama }}</span>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <div class="small fw-semibold">{{ $ja->suratKeputusan->no_sk }}</div>
-                                        <div class="small text-muted">{{ \Carbon\Carbon::parse($ja->suratKeputusan->tgl_sk)->translatedFormat('d F Y') }}</div>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="3" class="text-center text-muted py-3 border-bottom-0">
-                                        Belum menjabat di alat kelengkapan manapun.
-                                    </td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Full Width Column (Keluarga) -->
-        <div class="col-12">
-            <div class="card border-0 shadow-lg mb-4">
-                <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-people me-2"></i>Daftar Keluarga</h5>
-                </div>
-                <div class="card-body p-4 pt-0">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead class="bg-light text-muted">
-                                <tr>
-                                    <th class="border-0 ps-3 rounded-start">Nama</th>
-                                    <th class="border-0">NIK</th>
-                                    <th class="border-0">Hubungan</th>
-                                    <th class="border-0">L/P</th>
-                                    <th class="border-0">Tgl Lahir</th>
-                                    <th class="border-0 text-center rounded-end">Status Tunjangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($anggota->keluarga as $k)
-                                <tr>
-                                    <td class="ps-3 border-bottom-0 fw-semibold">{{ $k->nama }}</td>
-                                    <td class="border-bottom-0 text-muted">{{ $k->nik }}</td>
-                                    <td class="border-bottom-0">{{ $k->ikatanKeluarga->nama }}</td>
-                                    <td class="border-bottom-0">{{ $k->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
-                                    <td class="border-bottom-0">{{ $k->tgl_lahir->format('d F Y') }} ({{ $k->tgl_lahir->age }} Thn)</td>
-                                    <td class="border-bottom-0 text-center">
-                                        @if($k->status_tunjangan == 'Y')
-                                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Ditunjang</span>
-                                        @else
-                                            <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25">Tidak Ditunjang</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="6" class="text-center text-muted py-3 border-bottom-0">
-                                        Belum ada data keluarga.
-                                    </td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Split Row (Kontak & Asuransi) -->
+  <!-- Split Row (Kontak & Asuransi) -->
         <div class="col-12 p-0">
             <div class="row g-4">
                 <!-- Kontak & Alamat -->
@@ -260,5 +167,100 @@
                 </div>
             </div>
         </div>
+
+        <!-- Full Width Column (Jabatan) -->
+        <div class="col-12">
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-transparent border-0 py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-diagram-3 me-2"></i>Jabatan Alat Kelengkapan</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="bg-light text-muted">
+                                <tr>
+                                    <th class="border-0 ps-3 rounded-start">Alat Kelengkapan</th>
+                                    <th class="border-0">Jabatan</th>
+                                    <th class="border-0 rounded-end">Nomor Surat Keputusan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($anggota->jabatanAnggota as $ja)
+                                <tr>
+                                    <td class="ps-3 border-bottom-0">
+                                        <div class="fw-semibold">{{ $ja->alatKelengkapan->nama }}</div>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25">{{ $ja->jabatanAlatKelengkapan->nama }}</span>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <div class="small fw-semibold">{{ $ja->suratKeputusan->no_sk }}</div>
+                                        <div class="small text-muted">{{ \Carbon\Carbon::parse($ja->suratKeputusan->tgl_sk)->translatedFormat('d F Y') }}</div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted py-3 border-bottom-0">
+                                        Belum menjabat di alat kelengkapan manapun.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Width Column (Keluarga) -->
+        <div class="col-12">
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-transparent border-0 py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-people me-2"></i>Daftar Keluarga</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="bg-light text-muted">
+                                <tr>
+                                    <th class="border-0 ps-3 rounded-start">Nama</th>
+                                    <th class="border-0">NIK</th>
+                                    <th class="border-0">Hubungan</th>
+                                    <th class="border-0">Jenis Kelamin</th>
+                                    <th class="border-0">Tgl Lahir</th>
+                                    <th class="border-0 text-center rounded-end">Status Tunjangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($anggota->keluarga as $k)
+                                <tr>
+                                    <td class="ps-3 border-bottom-0 fw-semibold">{{ $k->nama }}</td>
+                                    <td class="border-bottom-0 text-muted">{{ $k->nik }}</td>
+                                    <td class="border-bottom-0">{{ $k->ikatanKeluarga->nama }}</td>
+                                    <td class="border-bottom-0">{{ $k->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                    <td class="border-bottom-0">{{ $k->tgl_lahir->format('d F Y') }} ({{ $k->tgl_lahir->age }} Thn)</td>
+                                    <td class="border-bottom-0 text-center">
+                                        @if($k->status_tunjangan == 'Y')
+                                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Ditunjang</span>
+                                        @else
+                                            <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25">Tidak Ditunjang</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-3 border-bottom-0">
+                                        Belum ada data keluarga.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
     </div>
 </div>

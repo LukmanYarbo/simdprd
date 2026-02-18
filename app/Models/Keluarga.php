@@ -9,7 +9,7 @@ class Keluarga extends Model
 {
     use HasFactory;
 
-    protected $table = 'keluarga';
+    protected $table = 'keluarga_anggota';
     protected $fillable = [
         'id_anggota',
         'id_ikatan_keluarga',
@@ -23,6 +23,7 @@ class Keluarga extends Model
         'status_anak',
         'status_tunjangan',
         'no_sk_pengadilan',
+        'file_surat_ket',
     ];
 
     protected $casts = [
