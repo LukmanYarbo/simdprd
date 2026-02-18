@@ -1,5 +1,5 @@
 <nav id="sidebar" class="bg-dark text-white d-flex flex-column">
-    <div class="px-4 py-3 border-bottom border-secondary d-flex align-items-center justify-content-between">
+    <div class="sidebar-header border-bottom border-secondary d-flex align-items-center justify-content-between">
         <h4 class="mb-0 overflow-hidden text-nowrap">SIMDPRD</h4>
         <button class="btn btn-link text-white p-0 d-lg-none" id="sidebarClose">
             <i class="bi bi-x-lg fs-4"></i>

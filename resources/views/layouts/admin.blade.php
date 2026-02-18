@@ -9,6 +9,11 @@
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -27,7 +32,7 @@
         @include('layouts.partials.sidebar')
 
         <!-- Page Content -->
-        <div id="content" class="d-flex flex-column min-vh-100">
+        <div id="content" class="d-flex flex-column min-vh-100 w-100">
             @include('layouts.partials.navbar')
 
             <main class="p-4 flex-grow-1">

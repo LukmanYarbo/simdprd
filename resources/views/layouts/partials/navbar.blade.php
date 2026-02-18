@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg border-bottom px-4 py-3">
+<nav class="navbar navbar-expand-lg px-4 py-3">
     <div class="d-flex align-items-center w-100 justify-content-between">
         <button class="btn btn-link link-dark p-0 me-3" id="sidebarCollapse">
             <i class="bi bi-list fs-3"></i>
