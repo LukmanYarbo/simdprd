@@ -89,6 +89,10 @@ body {
     box-shadow: 4px 0 24px rgba(0,0,0,0.1);
     z-index: 1000;
     
+    &.active {
+        margin-left: calc(var(--sidebar-width) * -1);
+    }
+    
     .sidebar-header {
         height: var(--header-height);
         display: flex;
