@@ -18,11 +18,12 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            RoleAndUserSeeder::class,
-            SupportingTablesSeeder::class,
-            AlatKelengkapanSeeder::class,
-            AnggotaSeeder::class,
-            IkatanKeluargaSeeder::class,
+            RoleAndUserSeeder::class ,
+            SupportingTablesSeeder::class ,
+            AlatKelengkapanSeeder::class ,
+            AnggotaSeeder::class ,
+            IkatanKeluargaSeeder::class ,
+            JenisPendidikanSeeder::class ,
         ]);
     }
 }

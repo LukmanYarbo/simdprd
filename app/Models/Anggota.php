@@ -54,66 +54,70 @@ class Anggota extends Model
 
     public function agama()
     {
-        return $this->belongsTo(Agama::class, 'id_agama');
+        return $this->belongsTo(Agama::class , 'id_agama');
     }
 
     public function statusKawin()
     {
-        return $this->belongsTo(StatusKawin::class, 'id_status_kawin');
+        return $this->belongsTo(StatusKawin::class , 'id_status_kawin');
     }
 
     public function statusKeanggotaan()
     {
-        return $this->belongsTo(StatusKeanggotaan::class, 'id_status_keanggotaan');
+        return $this->belongsTo(StatusKeanggotaan::class , 'id_status_keanggotaan');
     }
 
-    public function jabatan() 
+    public function jabatan()
     {
-        return $this->belongsTo(JabatanDPRD::class, 'id_dprd');
+        return $this->belongsTo(JabatanDPRD::class , 'id_dprd');
     }
 
     public function jabatanKomisi()
     {
-        return $this->belongsTo(JabatanAlatKelengkapan::class, 'id_komisi');
+        return $this->belongsTo(JabatanAlatKelengkapan::class , 'id_komisi');
     }
 
     public function jabatanBanggar()
     {
-        return $this->belongsTo(JabatanAlatKelengkapan::class, 'id_banggar');
+        return $this->belongsTo(JabatanAlatKelengkapan::class , 'id_banggar');
     }
 
     public function jabatanBanmus()
     {
-        return $this->belongsTo(JabatanAlatKelengkapan::class, 'id_banmus');
+        return $this->belongsTo(JabatanAlatKelengkapan::class , 'id_banmus');
     }
 
     public function jabatanBalegda()
     {
-        return $this->belongsTo(JabatanAlatKelengkapan::class, 'id_balegda');
+        return $this->belongsTo(JabatanAlatKelengkapan::class , 'id_balegda');
     }
 
     public function jabatanBk()
     {
-        return $this->belongsTo(JabatanAlatKelengkapan::class, 'id_bk');
+        return $this->belongsTo(JabatanAlatKelengkapan::class , 'id_bk');
     }
 
     public function jabatanPansus()
     {
-        return $this->belongsTo(JabatanAlatKelengkapan::class, 'id_pansus');
+        return $this->belongsTo(JabatanAlatKelengkapan::class , 'id_pansus');
     }
 
     public function jabatanPanja()
     {
-        return $this->belongsTo(JabatanAlatKelengkapan::class, 'id_panja');
+        return $this->belongsTo(JabatanAlatKelengkapan::class , 'id_panja');
     }
 
     public function jabatanAnggota()
     {
-        return $this->hasMany(JabatanAnggota::class, 'id_anggota');
+        return $this->hasMany(JabatanAnggota::class , 'id_anggota');
     }
 
     public function keluarga()
     {
-        return $this->hasMany(Keluarga::class, 'id_anggota');
+        return $this->hasMany(Keluarga::class , 'id_anggota');
+    }
+    public function pendidikan()
+    {
+        return $this->hasMany(PendidikanAnggota::class , 'id_anggota');
     }
 }

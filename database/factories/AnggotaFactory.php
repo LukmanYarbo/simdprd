@@ -43,7 +43,7 @@ class AnggotaFactory extends Factory
             'kec' => 'COBLONG',
             'desa' => 'DAGO',
             'alamat_lengkap' => $this->faker->address,
-            'id_status_keanggotaan' => rand(1, 3),
+            'id_status_keanggotaan' => 1,
             'id_dprd' => 3, // Default to Anggota, will be overridden in seeder
             'tgl_mulai' => $this->faker->date('Y-m-d', '-5 years'),
             'tgl_berhenti' => null,
