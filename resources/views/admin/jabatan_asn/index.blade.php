@@ -2,21 +2,30 @@
 
 @section('title', 'Data Jabatan ASN')
 
+@section('breadcrumbs')
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data Jabatan ASN</li>
+    </ol>
+</nav>
+@endsection
+
+<!-- @push('styles')
+    
+@endpush -->
+
+
 @section('content')
-<div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Jabatan ASN</h1>
-        <button class="btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalJabatanAsn" onclick="resetForm()">
-            <i class="bi bi-plus-lg text-white-50"></i> Tambah Jabatan
-        </button>
-    </div>
-
-
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Jabatan ASN</h6>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalJabatanAsn" onclick="resetForm()">
+            <i class="bi bi-plus-lg"></i> Tambah Jabatan ASN
+            </button>
         </div>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -59,8 +68,10 @@
                 {{ $jabatan->links() }}
             </div>
         </div>
+        
     </div>
-</div>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="modalJabatanAsn" tabindex="-1" aria-labelledby="modalJabatanAsnLabel" aria-hidden="true">

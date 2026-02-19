@@ -39,12 +39,14 @@
         <div id="content" class="d-flex flex-column min-vh-100 w-100">
             @include('layouts.partials.navbar')
 
-            <main class="p-4 flex-grow-1">
-                <div class="mb-4">
-                    @yield('breadcrumbs')
-                </div>
-                @yield('content')
-            </main>
+            <div class="flex-grow-1"> <!-- Added wrapper for main content to push footer -->
+                <main class="p-4">
+                    <div class="mb-4">
+                        @yield('breadcrumbs')
+                    </div>
+                    @yield('content')
+                </main>
+            </div>
 
             @include('layouts.partials.footer')
         </div>
