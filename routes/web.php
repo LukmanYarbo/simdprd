@@ -52,7 +52,12 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
             Route::put('pendidikan/{id}', 'update')->name('pendidikan.update');
             Route::delete('pendidikan/{id}', 'destroy')->name('pendidikan.destroy');
         }
-        );    });
+        );
+
+        Route::resource('jabatan-asn', \App\Http\Controllers\Admin\JabatanAsnController::class);
+        Route::resource('pegawai-asn', \App\Http\Controllers\Admin\PegawaiAsnController::class);
+        Route::resource('skpd', \App\Http\Controllers\Admin\SkpdController::class);
+    });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class , 'index'])->name('dashboard');

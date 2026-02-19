@@ -1,10 +1,10 @@
 <div class="modal fade" id="modalKeluarga" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-white border-bottom-0 pb-0">
+            <div class="modal-header border-bottom-0 pb-0">
                 <div>
                     <h5 class="modal-title fw-bold">Data Keluarga</h5>
-                    <p class="text-muted mb-0 small" id="modalKeluargaSubtitle">Anggota</p>
+                    <p class="text-body-secondary mb-0 small" id="modalKeluargaSubtitle">Anggota</p>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -12,7 +12,7 @@
                 <div class="row">
                     <!-- Form Input -->
                     <div class="col-lg-4 mb-4 mb-lg-0">
-                        <div class="card bg-light border-0">
+                        <div class="card bg-body-tertiary border-0">
                             <div class="card-body">
                                 <h6 class="fw-bold mb-3">Form Keluarga</h6>
                                 <form id="formKeluarga">
@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label small">Umur</label>
-                                        <input type="text" class="form-control form-control-sm bg-light" id="umur_keluarga" readonly>
+                                        <input type="text" class="form-control form-control-sm bg-body-secondary" id="umur_keluarga" readonly>
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label small">Jenis Kelamin</label>
@@ -92,7 +92,7 @@
                                     </div>
 
                                     <div class="d-flex justify-content-end gap-2">
-                                        <button type="button" class="btn btn-sm btn-light border" onclick="resetFormKeluarga()">Reset</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary border" onclick="resetFormKeluarga()">Reset</button>
                                         <button type="submit" class="btn btn-sm btn-primary" id="btnSaveKeluarga"><i class="bi bi-plus-lg"></i> Tambah</button>
                                     </div>
                                 </form>
@@ -102,10 +102,10 @@
 
                     <!-- List Data -->
                     <div class="col-lg-8">
-                        <h6 class="fw-bold mb-3">Ryawat Keluarga</h6>
+                        <h6 class="fw-bold mb-3">Riwayat Keluarga</h6>
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0" id="tableKeluargaList">
-                                <thead class="bg-light">
+                                <thead class="bg-body-tertiary">
                                     <tr>
                                         <th>Nama / NIK</th>
                                         <th>Hubungan</th>
@@ -407,8 +407,8 @@
                     html += '<td>' + (item.jk == 'L' ? 'Laki-laki' : 'Perempuan') + '</td>';
                     html += '<td><span class="badge ' + (item.status_tunjangan == 'Y' ? 'bg-success' : 'bg-secondary') + '">' + (item.status_tunjangan == 'Y' ? 'Ditunjang' : 'Tidak') + '</span></td>';
                     html += '<td class="text-end">';
-                    html += '<button type="button" class="btn btn-sm btn-light border-end btn-edit-keluarga" data-id="'+item.id+'"><i class="bi bi-pencil-square text-warning"></i></button>';
-                    html += '<button type="button" class="btn btn-sm btn-light btn-delete-keluarga" data-id="'+item.id+'"><i class="bi bi-trash3-fill text-danger"></i></button>';
+                    html += '<button type="button" class="btn btn-sm btn-outline-secondary border-end btn-edit-keluarga" data-id="'+item.id+'"><i class="bi bi-pencil-square text-warning"></i></button>';
+                    html += '<button type="button" class="btn btn-sm btn-outline-secondary btn-delete-keluarga" data-id="'+item.id+'"><i class="bi bi-trash3-fill text-danger"></i></button>';
                     html += '</td>';
                     html += '</tr>';
                 });

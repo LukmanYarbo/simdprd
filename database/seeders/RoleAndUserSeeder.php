@@ -69,7 +69,7 @@ class RoleAndUserSeeder extends Seeder
         if (!User::where('email', 'admin@simdprd.com')->exists()) {
             $admin = User::factory()->create([
                 'name' => 'Admin User',
-                'email' => 'admin@simdprd.com',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('password'),
             ]);
             $admin->assignRole($adminRole);
@@ -78,7 +78,7 @@ class RoleAndUserSeeder extends Seeder
         if (!User::where('email', 'operator@simdprd.com')->exists()) {
             $operator = User::factory()->create([
                 'name' => 'Operator User',
-                'email' => 'operator@simdprd.com',
+                'email' => 'operator@gmail.com',
                 'password' => Hash::make('password'),
             ]);
             $operator->assignRole($operatorRole);
@@ -87,7 +87,7 @@ class RoleAndUserSeeder extends Seeder
         if (!User::where('email', 'user@simdprd.com')->exists()) {
             $user = User::factory()->create([
                  'name' => 'Regular User',
-                 'email' => 'user@simdprd.com',
+                 'email' => 'user@gmail.com',
                  'password' => Hash::make('password'),
             ]);
             $user->assignRole($userRole);

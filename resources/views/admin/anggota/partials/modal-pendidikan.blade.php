@@ -1,10 +1,10 @@
 <div class="modal fade" id="modalPendidikan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-white border-bottom-0 pb-0">
+            <div class="modal-header border-bottom-0 pb-0">
                 <div>
                     <h5 class="modal-title fw-bold">Data Pendidikan</h5>
-                    <p class="text-muted mb-0 small" id="modalPendidikanSubtitle">Anggota</p>
+                    <p class="text-body-secondary mb-0 small" id="modalPendidikanSubtitle">Anggota</p>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -12,7 +12,7 @@
                 <div class="row">
                     <!-- Form Input -->
                     <div class="col-lg-4 mb-4 mb-lg-0">
-                        <div class="card bg-light border-0">
+                        <div class="card bg-body-tertiary border-0">
                             <div class="card-body">
                                 <h6 class="fw-bold mb-3">Form Pendidikan</h6>
                                 <form id="formPendidikan" enctype="multipart/form-data">
@@ -75,7 +75,7 @@
                                     </div>
 
                                     <div class="d-flex justify-content-end gap-2">
-                                        <button type="button" class="btn btn-sm btn-light border" onclick="resetFormPendidikan()">Reset</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary border" onclick="resetFormPendidikan()">Reset</button>
                                         <button type="submit" class="btn btn-sm btn-primary" id="btnSavePendidikan"><i class="bi bi-plus-lg"></i> Tambah</button>
                                     </div>
                                 </form>
@@ -88,7 +88,7 @@
                         <h6 class="fw-bold mb-3">Ryawat Pendidikan</h6>
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0" id="tablePendidikanList">
-                                <thead class="bg-light">
+                                <thead class="bg-body-tertiary">
                                     <tr>
                                         <th>Tingkat</th>
                                         <th>Institusi</th>
@@ -161,8 +161,8 @@
                     html += '<td>' + (item.jurusan ? item.jurusan : '-') + '</td>';
                     html += '<td>' + fileLink + '</td>';
                     html += '<td class="text-end">';
-                    html += '<button type="button" class="btn btn-sm btn-light border-end btn-edit-pendidikan" data-id="'+item.id+'"><i class="bi bi-pencil-square text-warning"></i></button>';
-                    html += '<button type="button" class="btn btn-sm btn-light btn-delete-pendidikan" data-id="'+item.id+'"><i class="bi bi-trash3-fill text-danger"></i></button>';
+                    html += '<button type="button" class="btn btn-sm btn-outline-secondary border-end btn-edit-pendidikan" data-id="'+item.id+'"><i class="bi bi-pencil-square text-warning"></i></button>';
+                    html += '<button type="button" class="btn btn-sm btn-outline-secondary btn-delete-pendidikan" data-id="'+item.id+'"><i class="bi bi-trash3-fill text-danger"></i></button>';
                     html += '</td>';
                     html += '</tr>';
                 });

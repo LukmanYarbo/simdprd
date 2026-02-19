@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             AnggotaSeeder::class ,
             IkatanKeluargaSeeder::class ,
             JenisPendidikanSeeder::class ,
+            EsselonSeeder::class ,
+            PangkatGolonganSeeder::class ,
         ]);
     }
 }

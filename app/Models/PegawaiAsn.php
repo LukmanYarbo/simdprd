@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class PegawaiAsn extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'nip', 'nik', 'nokk', 'nama', 'tempat_lahir', 'tgl_lahir', 'jenis_kelamin',
+        'id_agama', 'id_status_kawin', 'id_pangkat_golongan', 'id_jabatan',
+        'tanggal_mulai_kerja', 'email', 'nohp', 'norek', 'npwp', 'foto'
+    ];
+
+    public function agama()
+    {
+        return $this->belongsTo(Agama::class, 'id_agama');
+    }
+
+    public function statusKawin()
+    {
+        return $this->belongsTo(StatusKawin::class, 'id_status_kawin');
+    }
+
+    public function pangkatGolongan()
+    {
+        return $this->belongsTo(PangkatGolongan::class, 'id_pangkat_golongan');
+    }
+
+    public function jabatanAsn()
+    {
+        return $this->belongsTo(JabatanAsn::class, 'id_jabatan');
+    }
+}
