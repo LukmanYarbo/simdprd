@@ -41,9 +41,11 @@
 
             <div class="flex-grow-1"> <!-- Added wrapper for main content to push footer -->
                 <main class="p-4">
+                    @hasSection('breadcrumbs')
                     <div class="mb-4">
                         @yield('breadcrumbs')
                     </div>
+                    @endif
                     @yield('content')
                 </main>
             </div>

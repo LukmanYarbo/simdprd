@@ -3,12 +3,10 @@
 @section('title', 'Data Jabatan ASN')
 
 @section('breadcrumbs')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Data Jabatan ASN</li>
-    </ol>
-</nav>
+<x-breadcrumbs :items="[
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
+    ['label' => 'Data Jabatan ASN', 'icon' => 'bi-briefcase-fill']
+]" />
 @endsection
 
 <!-- @push('styles')

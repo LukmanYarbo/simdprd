@@ -11,6 +11,7 @@ Route::get('/', function () {
 Route::get('login', [LoginController::class , 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class , 'login']);
 Route::post('logout', [LoginController::class , 'logout'])->name('logout');
+Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 
 Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
@@ -57,6 +58,10 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('jabatan-asn', \App\Http\Controllers\Admin\JabatanAsnController::class);
         Route::resource('pegawai-asn', \App\Http\Controllers\Admin\PegawaiAsnController::class);
         Route::resource('skpd', \App\Http\Controllers\Admin\SkpdController::class);
+        
+        // Pemda Module
+        Route::get('pemda/pegawai-details/{id}', [\App\Http\Controllers\Admin\PemdaController::class, 'getPegawaiDetails'])->name('pemda.pegawai-details');
+        Route::resource('pemda', \App\Http\Controllers\Admin\PemdaController::class);
     });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {

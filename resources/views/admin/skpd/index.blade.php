@@ -3,12 +3,10 @@
 @section('title', 'Daftar SKPD')
 
 @section('breadcrumbs')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active" aria-current="page">SKPD</li>
-    </ol>
-</nav>
+<x-breadcrumbs :items="[
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
+    ['label' => 'SKPD', 'icon' => 'bi-building-fill']
+]" />
 @endsection
 
 @push('styles')

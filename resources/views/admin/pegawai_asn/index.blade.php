@@ -2,15 +2,16 @@
 
 @section('title', 'Data Pegawai ASN')
 
+@section('breadcrumbs')
+<x-breadcrumbs :items="[
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
+    ['label' => 'Data Pegawai ASN', 'icon' => 'bi-person-badge-fill']
+]" />
+@endsection
+
 @section('content')
 <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Pegawai ASN</h1>
-        <a href="{{ route('admin.pegawai-asn.create') }}" class="btn btn-sm btn-primary shadow-sm">
-            <i class="bi bi-plus-lg text-white-50"></i> Tambah Pegawai
-        </a>
-    </div>
-
+    
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -21,6 +22,9 @@
     <div class="card shadow mb-4 border-0">
         <div class="card-header py-3 bg-white d-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Pegawai ASN</h6>
+             <a href="{{ route('admin.pegawai-asn.create') }}" class="btn btn-sm btn-primary shadow-sm justify-content-end">
+            <i class="bi bi-plus-lg text-white-50"></i> Tambah Pegawai
+        </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
