@@ -124,6 +124,23 @@
                             </div>
 
                             <div class="form-floating mb-3">
+                                <input type="text" class="form-control @error('ket_jabatan') is-invalid @enderror" id="ket_jabatan" name="ket_jabatan" value="{{ old('ket_jabatan', $pegawaiAsn->ket_jabatan) }}" placeholder="Keterangan Jabatan">
+                                <label for="ket_jabatan">Keterangan Jabatan</label>
+                                @error('ket_jabatan') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <select class="form-select @error('id_status_pegawai') is-invalid @enderror" id="id_status_pegawai" name="id_status_pegawai" required>
+                                    <option value="">Pilih Status...</option>
+                                    @foreach($statusPegawai as $sp)
+                                        <option value="{{ $sp->id }}" {{ old('id_status_pegawai', $pegawaiAsn->id_status_pegawai) == $sp->id ? 'selected' : '' }}>{{ $sp->nama }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="id_status_pegawai">Status Pegawai <span class="text-danger">*</span></label>
+                                @error('id_status_pegawai') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="form-floating mb-3">
                                 <select class="form-select @error('id_pangkat_golongan') is-invalid @enderror" id="id_pangkat_golongan" name="id_pangkat_golongan" required>
                                     <option value="">Pilih Pangkat/Golongan...</option>
                                     @foreach($pangkatGolongan as $pg)
@@ -134,10 +151,21 @@
                                 @error('id_pangkat_golongan') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="date" class="form-control @error('tanggal_mulai_kerja') is-invalid @enderror" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" value="{{ old('tanggal_mulai_kerja', $pegawaiAsn->tanggal_mulai_kerja) }}">
-                                <label for="tanggal_mulai_kerja">Tanggal Mulai Kerja</label>
-                                @error('tanggal_mulai_kerja') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <div class="row g-2">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control @error('tanggal_mulai_kerja') is-invalid @enderror" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" value="{{ old('tanggal_mulai_kerja', $pegawaiAsn->tanggal_mulai_kerja) }}">
+                                        <label for="tanggal_mulai_kerja">Tanggal Mulai Kerja</label>
+                                        @error('tanggal_mulai_kerja') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control @error('tanggal_berhenti') is-invalid @enderror" id="tanggal_berhenti" name="tanggal_berhenti" value="{{ old('tanggal_berhenti', $pegawaiAsn->tanggal_berhenti) }}">
+                                        <label for="tanggal_berhenti">Tanggal Berhenti</label>
+                                        @error('tanggal_berhenti') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-floating mb-3">

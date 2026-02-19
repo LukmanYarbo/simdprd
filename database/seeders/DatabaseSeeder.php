@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             JenisPendidikanSeeder::class ,
             EsselonSeeder::class ,
             PangkatGolonganSeeder::class ,
+            SkpdSeeder::class ,
+            JabatanAsnSeeder::class ,
+            StatusPegawaiSeeder::class ,
         ]);
     }
 }

@@ -104,6 +104,7 @@
                         <div class="p-3 bg-body-tertiary rounded-3 h-100">
                             <h5 class="mb-3 text-primary border-bottom pb-2"><i class="bi bi-briefcase me-2"></i>Kepegawaian & Kontak</h5>
                             <div class="mb-3">
+                            <div class="mb-3">
                                 <label for="id_jabatan" class="form-label">Jabatan <span class="text-danger">*</span></label>
                                 <select class="form-select select2 @error('id_jabatan') is-invalid @enderror" id="id_jabatan" name="id_jabatan" style="width: 100%" required>
                                     <option value="">Pilih Jabatan...</option>
@@ -113,6 +114,24 @@
                                 </select>
                                 @error('id_jabatan') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control @error('ket_jabatan') is-invalid @enderror" id="ket_jabatan" name="ket_jabatan" value="{{ old('ket_jabatan') }}" placeholder="Keterangan Jabatan">
+                                <label for="ket_jabatan">Keterangan Jabatan</label>
+                                @error('ket_jabatan') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <select class="form-select @error('id_status_pegawai') is-invalid @enderror" id="id_status_pegawai" name="id_status_pegawai" required>
+                                    <option value="">Pilih Status...</option>
+                                    @foreach($statusPegawai as $sp)
+                                        <option value="{{ $sp->id }}" {{ old('id_status_pegawai') == $sp->id ? 'selected' : '' }}>{{ $sp->nama }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="id_status_pegawai">Status Pegawai <span class="text-danger">*</span></label>
+                                @error('id_status_pegawai') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
                             <div class="form-floating mb-3">
                                 <select class="form-select @error('id_pangkat_golongan') is-invalid @enderror" id="id_pangkat_golongan" name="id_pangkat_golongan" required>
                                     <option value="">Pilih Pangkat/Golongan...</option>
@@ -123,10 +142,22 @@
                                 <label for="id_pangkat_golongan">Pangkat / Golongan <span class="text-danger">*</span></label>
                                 @error('id_pangkat_golongan') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="date" class="form-control @error('tanggal_mulai_kerja') is-invalid @enderror" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" value="{{ old('tanggal_mulai_kerja') }}">
-                                <label for="tanggal_mulai_kerja">Tanggal Mulai Kerja</label>
-                                @error('tanggal_mulai_kerja') <div class="invalid-feedback">{{ $message }}</div> @enderror
+
+                            <div class="row g-2">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control @error('tanggal_mulai_kerja') is-invalid @enderror" id="tanggal_mulai_kerja" name="tanggal_mulai_kerja" value="{{ old('tanggal_mulai_kerja') }}">
+                                        <label for="tanggal_mulai_kerja">Tanggal Mulai Kerja</label>
+                                        @error('tanggal_mulai_kerja') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control @error('tanggal_berhenti') is-invalid @enderror" id="tanggal_berhenti" name="tanggal_berhenti" value="{{ old('tanggal_berhenti') }}">
+                                        <label for="tanggal_berhenti">Tanggal Berhenti</label>
+                                        @error('tanggal_berhenti') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Email">

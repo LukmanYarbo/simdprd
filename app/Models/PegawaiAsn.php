@@ -11,8 +11,8 @@ class PegawaiAsn extends Model
 
     protected $fillable = [
         'nip', 'nik', 'nokk', 'nama', 'tempat_lahir', 'tgl_lahir', 'jenis_kelamin',
-        'id_agama', 'id_status_kawin', 'id_pangkat_golongan', 'id_jabatan',
-        'tanggal_mulai_kerja', 'email', 'nohp', 'norek', 'npwp', 'foto'
+        'id_agama', 'id_status_kawin', 'id_pangkat_golongan', 'id_jabatan', 'ket_jabatan', 'id_status_pegawai',
+        'tanggal_mulai_kerja', 'tanggal_berhenti', 'email', 'nohp', 'norek', 'npwp', 'foto'
     ];
 
     public function agama()
@@ -33,5 +33,10 @@ class PegawaiAsn extends Model
     public function jabatanAsn()
     {
         return $this->belongsTo(JabatanAsn::class, 'id_jabatan');
+    }
+
+    public function statusPegawai()
+    {
+        return $this->belongsTo(StatusPegawai::class, 'id_status_pegawai');
     }
 }

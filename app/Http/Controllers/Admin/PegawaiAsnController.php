@@ -8,6 +8,7 @@ use App\Models\Agama;
 use App\Models\StatusKawin;
 use App\Models\PangkatGolongan;
 use App\Models\JabatanAsn;
+use App\Models\StatusPegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +19,7 @@ class PegawaiAsnController extends Controller
      */
     public function index()
     {
-        $pegawai = PegawaiAsn::with(['agama', 'statusKawin', 'pangkatGolongan', 'jabatanAsn'])
+        $pegawai = PegawaiAsn::with(['agama', 'statusKawin', 'pangkatGolongan', 'jabatanAsn', 'statusPegawai'])
             ->latest()
             ->paginate(10);
         return view('admin.pegawai_asn.index', compact('pegawai'));
@@ -33,8 +34,9 @@ class PegawaiAsnController extends Controller
         $statusKawin = StatusKawin::all();
         $pangkatGolongan = PangkatGolongan::all();
         $jabatan = JabatanAsn::all();
+        $statusPegawai = StatusPegawai::all();
         
-        return view('admin.pegawai_asn.create', compact('agama', 'statusKawin', 'pangkatGolongan', 'jabatan'));
+        return view('admin.pegawai_asn.create', compact('agama', 'statusKawin', 'pangkatGolongan', 'jabatan', 'statusPegawai'));
     }
 
     /**
@@ -54,7 +56,10 @@ class PegawaiAsnController extends Controller
             'id_status_kawin' => 'required|exists:status_kawin,id',
             'id_pangkat_golongan' => 'required|exists:pangkat_golongans,id',
             'id_jabatan' => 'required|exists:jabatan_asns,id',
+            'ket_jabatan' => 'nullable|string',
+            'id_status_pegawai' => 'required|exists:status_pegawais,id',
             'tanggal_mulai_kerja' => 'nullable|date',
+            'tanggal_berhenti' => 'nullable|date',
             'email' => 'nullable|email|unique:pegawai_asns,email',
             'nohp' => 'nullable|string',
             'norek' => 'nullable|string',
@@ -88,8 +93,9 @@ class PegawaiAsnController extends Controller
         $statusKawin = StatusKawin::all();
         $pangkatGolongan = PangkatGolongan::all();
         $jabatan = JabatanAsn::all();
+        $statusPegawai = StatusPegawai::all();
 
-        return view('admin.pegawai_asn.edit', compact('pegawaiAsn', 'agama', 'statusKawin', 'pangkatGolongan', 'jabatan'));
+        return view('admin.pegawai_asn.edit', compact('pegawaiAsn', 'agama', 'statusKawin', 'pangkatGolongan', 'jabatan', 'statusPegawai'));
     }
 
     /**
@@ -109,7 +115,10 @@ class PegawaiAsnController extends Controller
             'id_status_kawin' => 'required|exists:status_kawin,id',
             'id_pangkat_golongan' => 'required|exists:pangkat_golongans,id',
             'id_jabatan' => 'required|exists:jabatan_asns,id',
+            'ket_jabatan' => 'nullable|string',
+            'id_status_pegawai' => 'required|exists:status_pegawais,id',
             'tanggal_mulai_kerja' => 'nullable|date',
+            'tanggal_berhenti' => 'nullable|date',
             'email' => 'nullable|email|unique:pegawai_asns,email,' . $pegawaiAsn->id,
             'nohp' => 'nullable|string',
             'norek' => 'nullable|string',

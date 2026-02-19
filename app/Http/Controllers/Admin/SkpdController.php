@@ -13,7 +13,7 @@ class SkpdController extends Controller
      */
     public function index()
     {
-        $skpds = Skpd::latest()->paginate(10);
+        $skpds = Skpd::latest()->get();
         return view('admin.skpd.index', compact('skpds'));
     }
 

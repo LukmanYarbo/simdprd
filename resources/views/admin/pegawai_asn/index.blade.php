@@ -52,7 +52,10 @@
                                 <div class="fw-bold text-dark">{{ $item->nama }}</div>
                                 <small class="text-secondary">{{ $item->nip }}</small>
                             </td>
-                            <td><span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{ $item->jabatanAsn->nama_jabatan ?? '-' }}</span></td>
+                            <td>
+                                <div class="mb-1"><span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{ $item->jabatanAsn->nama_jabatan ?? '-' }}</span></div>
+                                <small class="text-muted"><i class="bi bi-circle-fill {{ $item->statusPegawai->nama == 'Aktif' ? 'text-success' : 'text-danger' }} me-1" style="font-size: 8px;"></i>{{ $item->statusPegawai->nama ?? '-' }}</small>
+                            </td>
                             <td>{{ $item->pangkatGolongan->pangkat ?? '-' }} <span class="text-muted small">({{ $item->pangkatGolongan->golongan ?? '-' }})</span></td>
                             <td class="text-center">
                                 <div class="btn-group" role="group">
