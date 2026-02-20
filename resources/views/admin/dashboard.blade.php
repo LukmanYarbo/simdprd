@@ -35,13 +35,19 @@
              <div class="card border-0 shadow-sm h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted text-uppercase fw-bold small">Active Sessions</span>
+                        <span class="text-muted text-uppercase fw-bold small">Anggota Aktif</span>
                         <div class="icon-box bg-success bg-opacity-10 text-success p-2 rounded">
-                            <i class="bi bi-activity fs-4"></i>
+                            <i class="bi bi-person-check fs-4"></i>
                         </div>
                     </div>
-                    <h3 class="mb-1 fw-bold">24</h3>
-                    <span class="text-success small fw-bold"><i class="bi bi-arrow-up-short"></i> 5%</span> <span class="text-muted small">since yesterday</span>
+                    @php
+                        // Hitung anggota yang belum berhenti (aktif)
+                        $anggotaAktif = \App\Models\Anggota::whereNull('tgl_berhenti')->count();
+                        $totalAnggota = \App\Models\Anggota::count();
+                        $persenAktif = $totalAnggota > 0 ? round(($anggotaAktif / $totalAnggota) * 100) : 0;
+                    @endphp
+                    <h3 class="mb-1 fw-bold">{{ $anggotaAktif }}</h3>
+                    <span class="text-success small fw-bold">{{ $persenAktif }}%</span> <span class="text-muted small">dari total anggota</span>
                 </div>
             </div>
         </div>
@@ -51,13 +57,21 @@
              <div class="card border-0 shadow-sm h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted text-uppercase fw-bold small">System Load</span>
+                        <span class="text-muted text-uppercase fw-bold small">Alat Kelengkapan Aktif</span>
                          <div class="icon-box bg-warning bg-opacity-10 text-warning p-2 rounded">
-                            <i class="bi bi-cpu fs-4"></i>
+                            <i class="bi bi-diagram-3 fs-4"></i>
                         </div>
                     </div>
-                    <h3 class="mb-1 fw-bold">45%</h3>
-                    <span class="text-danger small fw-bold"><i class="bi bi-arrow-down-short"></i> 2%</span> <span class="text-muted small">since last hour</span>
+                    @php
+                        // Menghitung Alat Kelengkapan yang memiliki Surat Keputusan dengan status Aktif ('A')
+                        $alatAktif = \App\Models\AlatKelengkapan::whereHas('suratKeputusan', function($q) {
+                            $q->where('status', 'A');
+                        })->count();
+                        $totalAlat = \App\Models\AlatKelengkapan::count();
+                        $persenAlat = $totalAlat > 0 ? round(($alatAktif / $totalAlat) * 100) : 0;
+                    @endphp
+                    <h3 class="mb-1 fw-bold">{{ $alatAktif }}</h3>
+                    <span class="text-warning small fw-bold">{{ $persenAlat }}%</span> <span class="text-muted small">dari total</span>
                 </div>
             </div>
         </div>

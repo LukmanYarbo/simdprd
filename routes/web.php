@@ -58,6 +58,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('jabatan-asn', \App\Http\Controllers\Admin\JabatanAsnController::class);
         Route::resource('pegawai-asn', \App\Http\Controllers\Admin\PegawaiAsnController::class);
         Route::resource('skpd', \App\Http\Controllers\Admin\SkpdController::class);
+        Route::get('tunjangan', [\App\Http\Controllers\Admin\TunjanganController::class, 'index'])->name('tunjangan.index');
         
         // Pemda Module
         Route::get('pemda/pegawai-details/{id}', [\App\Http\Controllers\Admin\PemdaController::class, 'getPegawaiDetails'])->name('pemda.pegawai-details');

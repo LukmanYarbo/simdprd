@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
 @section('breadcrumbs')
-<x-breadcrumbs :items="[['label' => 'Surat Keputusan', 'icon' => 'bi-file-earmark-text']]" />
+<x-breadcrumbs :items="[
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
+    
+    ['label' => 'Surat Keputusan', 'icon' => 'bi-envelope-paper']
+]" />
 @endsection
 
 @section('content')
