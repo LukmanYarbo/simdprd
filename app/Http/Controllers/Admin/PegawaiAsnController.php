@@ -11,9 +11,21 @@ use App\Models\JabatanAsn;
 use App\Models\StatusPegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PegawaiAsnController extends Controller
+class PegawaiAsnController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view pegawai_asn|create pegawai_asn|edit pegawai_asn|delete pegawai_asn', only: ['index', 'show']),
+            new Middleware('permission:create pegawai_asn', only: ['create', 'store']),
+            new Middleware('permission:edit pegawai_asn', only: ['edit', 'update']),
+            new Middleware('permission:delete pegawai_asn', only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -19,11 +19,13 @@
                 <i class="bi bi-chevron-down small"></i>
             </a>
             <ul class="collapse {{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.tunjangan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
+                @can('view pemda')
                 <li>
                     <a href="{{ route('admin.pemda.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pemda.*') ? 'active' : '' }}">
                         <i class="bi bi-building me-2"></i> Data Pemda
                     </a>
                 </li>
+                @endcan
                 @can('view alat_kelengkapan')
                 <li>
                     <a href="{{ route('admin.alat-kelengkapan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.alat-kelengkapan.*') ? 'active' : '' }}">
@@ -38,21 +40,27 @@
                     </a>
                 </li>
                 @endcan
+                @can('view jabatan_asn')
                 <li>
                     <a href="{{ route('admin.jabatan-asn.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.jabatan-asn.*') ? 'active' : '' }}">
                         <i class="bi bi-briefcase me-2"></i> Jabatan ASN
                     </a>
                 </li>
+                @endcan
+                @can('view skpd')
                 <li>
                     <a href="{{ route('admin.skpd.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.skpd.*') ? 'active' : '' }}">
                         <i class="bi bi-building me-2"></i> Data SKPD
                     </a>
                 </li>
+                @endcan
+                @can('view tunjangan')
                 <li>
                     <a href="{{ route('admin.tunjangan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.tunjangan.*') ? 'active' : '' }}">
                         <i class="bi bi-credit-card-fill me-2"></i> Master Tunjangan
                     </a>
                 </li>
+                @endcan
             </ul>
         </li>
 
@@ -70,11 +78,13 @@
                     </a>
                 </li>
                 @endcan
+                @can('view pegawai_asn')
                 <li>
                     <a href="{{ route('admin.pegawai-asn.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pegawai-asn.*') ? 'active' : '' }}">
                         <i class="bi bi-person-badge me-2"></i> Pegawai ASN
                     </a>
                 </li>
+                @endcan
             </ul>
         </li>
         

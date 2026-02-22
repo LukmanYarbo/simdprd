@@ -5,9 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Skpd;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class SkpdController extends Controller
+class SkpdController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view skpd|create skpd|edit skpd|delete skpd', only: ['index', 'show']),
+            new Middleware('permission:create skpd', only: ['create', 'store']),
+            new Middleware('permission:edit skpd', only: ['edit', 'update']),
+            new Middleware('permission:delete skpd', only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

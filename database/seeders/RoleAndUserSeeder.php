@@ -22,6 +22,11 @@ class RoleAndUserSeeder extends Seeder
             'permissions',
             'alat_kelengkapan',
             'surat_keputusan',
+            'pemda',
+            'jabatan_asn',
+            'skpd',
+            'tunjangan',
+            'pegawai_asn',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];
@@ -50,6 +55,11 @@ class RoleAndUserSeeder extends Seeder
             'view anggota', 'create anggota', 'edit anggota',
             'view alat_kelengkapan', 'create alat_kelengkapan', 'edit alat_kelengkapan',
             'view surat_keputusan', 'create surat_keputusan', 'edit surat_keputusan',
+            'view pemda', 'create pemda', 'edit pemda',
+            'view jabatan_asn', 'create jabatan_asn', 'edit jabatan_asn',
+            'view skpd', 'create skpd', 'edit skpd',
+            'view tunjangan', 'create tunjangan', 'edit tunjangan',
+            'view pegawai_asn', 'create pegawai_asn', 'edit pegawai_asn',
         ];
         // Filter permissions that actually exist to avoid errors if something went wrong
         $validOperatorPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $operatorPermissions)->get();
@@ -61,12 +71,17 @@ class RoleAndUserSeeder extends Seeder
             'view anggota',
             'view alat_kelengkapan', // Users usually can view master data
             'view surat_keputusan',
+            'view pemda',
+            'view jabatan_asn',
+            'view skpd',
+            'view tunjangan',
+            'view pegawai_asn',
         ];
         $validUserPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $userPermissions)->get();
         $userRole->syncPermissions($validUserPermissions);
 
         // Create Users (only if they don't exist)
-        if (!User::where('email', 'admin@simdprd.com')->exists()) {
+        if (!User::where('email', 'admin@gmail.com')->exists()) {
             $admin = User::factory()->create([
                 'name' => 'Admin User',
                 'email' => 'admin@gmail.com',
@@ -75,7 +90,7 @@ class RoleAndUserSeeder extends Seeder
             $admin->assignRole($adminRole);
         }
 
-        if (!User::where('email', 'operator@simdprd.com')->exists()) {
+        if (!User::where('email', 'operator@gmail.com')->exists()) {
             $operator = User::factory()->create([
                 'name' => 'Operator User',
                 'email' => 'operator@gmail.com',
@@ -84,7 +99,7 @@ class RoleAndUserSeeder extends Seeder
             $operator->assignRole($operatorRole);
         }
         
-        if (!User::where('email', 'user@simdprd.com')->exists()) {
+        if (!User::where('email', 'user@gmail.com')->exists()) {
             $user = User::factory()->create([
                  'name' => 'Regular User',
                  'email' => 'user@gmail.com',
