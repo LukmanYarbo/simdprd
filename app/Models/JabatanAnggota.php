@@ -10,7 +10,7 @@ class JabatanAnggota extends Model
     use HasFactory;
 
     protected $table = 'jabatan_anggota';
-    protected $fillable = ['id_alat_kelengkapan', 'id_jabatan_alat_kelengkapan', 'id_anggota', 'id_surat_keputusan'];
+    protected $fillable = ['id_alat_kelengkapan', 'id_jabatan_alat_kelengkapan', 'id_anggota', 'id_surat_keputusan', 'nama_komisi'];
 
     public function alatKelengkapan()
     {

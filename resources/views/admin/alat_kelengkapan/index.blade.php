@@ -65,6 +65,12 @@
                         <textarea class="form-control" id="ket" name="ket" rows="3"></textarea>
                         <div class="invalid-feedback"></div>
                     </div>
+                    <div class="mb-4 d-none" id="nama_komisi_wrapper">
+                        <label for="nama_komisi" class="form-label">Nama Komisi</label>
+                        <input type="text" class="form-control" id="nama_komisi" name="nama_komisi" autocomplete="off" placeholder="Masukkan nama komisi, contoh: Komisi A">
+                        <div class="form-text">Khusus untuk Alat Kelengkapan bertipe Komisi.</div>
+                        <div class="invalid-feedback"></div>
+                    </div>
                     <div class="d-flex justify-content-end gap-2">
                         <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary" id="btnSave">Simpan</button>
@@ -120,12 +126,27 @@ $(function() {
             $('#id').val(data.id);
             $('#nama').val(data.nama);
             $('#ket').val(data.ket);
+            $('#nama_komisi').val(data.nama_komisi || '');
+            toggleNamaKomisi(data.nama);
             $('#modalTitle').text('Edit Alat Kelengkapan');
             $('#btnSave').text('Simpan Perubahan');
             $('.is-invalid').removeClass('is-invalid');
             modal.show();
         });
     }
+
+    function toggleNamaKomisi(val) {
+        if (val && val.toLowerCase() === 'komisi') {
+            $('#nama_komisi_wrapper').removeClass('d-none');
+        } else {
+            $('#nama_komisi_wrapper').addClass('d-none');
+            $('#nama_komisi').val('');
+        }
+    }
+
+    $('#nama').on('input', function() {
+        toggleNamaKomisi($(this).val());
+    });
 
     // Event Delegation
     $(document).on('click', '.btn-add', function() {
