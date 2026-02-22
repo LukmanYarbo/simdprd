@@ -27,7 +27,7 @@
                             <i class="bi bi-gender-{{ $pegawaiAsn->jenis_kelamin == 'L' ? 'male' : 'female' }} text-white"></i>
                         </span>
                     </div>
-                    <h4 class="fw-bold text-dark mb-1">{{ $pegawaiAsn->nama }}</h4>
+                    <h4 class="fw-bold text-body mb-1">{{ $pegawaiAsn->nama }}</h4>
                     <p class="text-primary fw-medium mb-1">{{ $pegawaiAsn->jabatanAsn->nama_jabatan ?? '-' }}</p>
                     <p class="text-secondary small mb-4">NIP. {{ $pegawaiAsn->nip }}</p>
                     
@@ -41,7 +41,7 @@
         </div>
         <div class="col-lg-8">
             <div class="card shadow-sm border-0 mb-4">
-                <div class="card-header py-3 bg-white border-bottom d-flex align-items-center">
+                <div class="card-header py-3  border-bottom d-flex align-items-center">
                     <i class="bi bi-info-circle-fill text-primary me-2 fs-5"></i>
                     <h6 class="m-0 font-weight-bold text-primary">Informasi Lengkap</h6>
                 </div>
@@ -94,7 +94,7 @@
             </div>
 
             <div class="card shadow-sm border-0">
-                <div class="card-header py-3 bg-white border-bottom d-flex align-items-center">
+                <div class="card-header py-3  border-bottom d-flex align-items-center">
                     <i class="bi bi-envelope-paper-fill text-success me-2 fs-5"></i>
                     <h6 class="m-0 font-weight-bold text-success">Kontak & Finansial</h6>
                 </div>

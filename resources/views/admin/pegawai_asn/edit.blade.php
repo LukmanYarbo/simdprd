@@ -12,7 +12,7 @@
     </div>
 
     <div class="card shadow-sm border-0">
-        <div class="card-header py-3 bg-white border-bottom">
+        <div class="card-header py-3  border-bottom">
             <h6 class="m-0 font-weight-bold text-primary"><i class="bi bi-pencil-square me-2"></i>Form Edit Pegawai</h6>
         </div>
         <div class="card-body p-4">

@@ -103,7 +103,7 @@
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
-                            <thead class="bg-light">
+                            <thead class="bg-body-tertiary">
                                 <tr>
                                     <th class="border-0 ps-4">User</th>
                                     <th class="border-0">Action</th>

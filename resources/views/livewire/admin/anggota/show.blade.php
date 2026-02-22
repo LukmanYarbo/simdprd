@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="text-muted small d-block">Tempat, Tanggal Lahir</label>
-                                    <p class="fw-semibold mb-0">{{ $anggota->tempat_lahir }}, {{ $anggota->tgl_lahir->format('d F Y') }} <span class="badge bg-light text-dark ms-2">{{ $anggota->tgl_lahir->age }} Tahun</span></p>
+                                    <p class="fw-semibold mb-0">{{ $anggota->tempat_lahir }}, {{ $anggota->tgl_lahir->format('d F Y') }} <span class="badge bg-body-tertiary text-body ms-2">{{ $anggota->tgl_lahir->age }} Tahun</span></p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="text-muted small d-block">Jenis Kelamin</label>
@@ -177,7 +177,7 @@
                 <div class="card-body p-4 pt-0">
                     <div class="table-responsive">
                         <table class="table mb-0">
-                            <thead class="bg-light text-muted">
+                            <thead class="bg-body-tertiary text-muted">
                                 <tr>
                                     <th class="border-0 ps-3 rounded-start">Alat Kelengkapan</th>
                                     <th class="border-0">Jabatan</th>
@@ -221,7 +221,7 @@
                 <div class="card-body p-4 pt-0">
                     <div class="table-responsive">
                         <table class="table mb-0">
-                            <thead class="bg-light text-muted">
+                            <thead class="bg-body-tertiary text-muted">
                                 <tr>
                                     <th class="border-0 ps-3 rounded-start">Nama</th>
                                     <th class="border-0">NIK</th>

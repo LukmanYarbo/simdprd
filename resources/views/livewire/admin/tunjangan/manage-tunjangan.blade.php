@@ -1,24 +1,24 @@
 <div>
     <div class="card shadow mb-4 border-0 rounded-4">
-        <div class="card-header bg-white py-3 border-bottom-0 pt-4 pb-0 px-4">
-            <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-light rounded-5 shadow-sm" id="tunjanganTabs" role="tablist">
+        <div class="card-header py-3 border-bottom-0 pt-4 pb-0 px-4">
+            <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-body-tertiary rounded-5 shadow-sm" id="tunjanganTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5 py-2 {{ $activeTab === 'umum' ? 'active fw-bold shadow-sm' : 'text-dark' }}" wire:click="switchTab('umum')" type="button">
+                    <button class="nav-link rounded-5 py-2 {{ $activeTab === 'umum' ? 'active fw-bold shadow-sm' : 'text-body' }}" wire:click="switchTab('umum')" type="button">
                         <i class="bi bi-wallet2 me-1"></i> Umum
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5 py-2 {{ $activeTab === 'transportasi' ? 'active fw-bold shadow-sm' : 'text-dark' }}" wire:click="switchTab('transportasi')" type="button">
+                    <button class="nav-link rounded-5 py-2 {{ $activeTab === 'transportasi' ? 'active fw-bold shadow-sm' : 'text-body' }}" wire:click="switchTab('transportasi')" type="button">
                         <i class="bi bi-car-front-fill me-1"></i> Transportasi
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5 py-2 {{ $activeTab === 'perumahan' ? 'active fw-bold shadow-sm' : 'text-dark' }}" wire:click="switchTab('perumahan')" type="button">
+                    <button class="nav-link rounded-5 py-2 {{ $activeTab === 'perumahan' ? 'active fw-bold shadow-sm' : 'text-body' }}" wire:click="switchTab('perumahan')" type="button">
                         <i class="bi bi-house-door-fill me-1"></i> Perumahan
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-5 py-2 {{ $activeTab === 'komunikasi_intensif' ? 'active fw-bold shadow-sm' : 'text-dark' }}" wire:click="switchTab('komunikasi_intensif')" type="button">
+                    <button class="nav-link rounded-5 py-2 {{ $activeTab === 'komunikasi_intensif' ? 'active fw-bold shadow-sm' : 'text-body' }}" wire:click="switchTab('komunikasi_intensif')" type="button">
                         <i class="bi bi-telephone-fill me-1"></i> Komunikasi Intensif
                     </button>
                 </li>
@@ -40,7 +40,7 @@
                 @if($activeTab === 'umum')
                 <div class="row fade-in">
                     <div class="col-lg-4 mb-4">
-                        <div class="card border-0 shadow-sm bg-light rounded-4">
+                        <div class="card border-0 shadow-sm bg-body-tertiary rounded-4">
                             <div class="card-body p-4">
                                 <h6 class="font-weight-bold text-primary mb-3">{{ $isEditMode ? 'Edit' : 'Tambah' }} Tunjangan Umum</h6>
                                 <form wire:submit.prevent="{{ $isEditMode ? 'updateUmum' : 'storeUmum' }}">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="table-responsive bg-white rounded-4 shadow-sm border p-3">
+                        <div class="table-responsive rounded-4 shadow-sm border p-3 bg-body-tertiary">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
@@ -130,7 +130,7 @@
                 @if($activeTab === 'transportasi')
                 <div class="row fade-in">
                     <div class="col-lg-4 mb-4">
-                        <div class="card border-0 shadow-sm bg-light rounded-4">
+                        <div class="card border-0 shadow-sm bg-body-tertiary rounded-4">
                             <div class="card-body p-4">
                                 <h6 class="font-weight-bold text-primary mb-3">{{ $isEditMode ? 'Edit' : 'Tambah' }} Transportasi</h6>
                                 <form wire:submit.prevent="{{ $isEditMode ? 'updateTransportasi' : 'storeTransportasi' }}">
@@ -184,7 +184,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="table-responsive bg-white rounded-4 shadow-sm border p-3">
+                        <div class="table-responsive rounded-4 shadow-sm border p-3 bg-body-tertiary">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
@@ -201,7 +201,7 @@
                                             <div class="fw-medium">{{ $item->no_peraturan }}</div>
                                             <div class="small text-muted">{{ \Carbon\Carbon::parse($item->tgl_berlaku)->format('d M Y') }}</div>
                                             @if($item->file_peraturan)
-                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-light text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
+                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
                                             @endif
                                         </td>
                                         <td class="small">
@@ -235,7 +235,7 @@
                 @if($activeTab === 'perumahan')
                 <div class="row fade-in">
                     <div class="col-lg-4 mb-4">
-                        <div class="card border-0 shadow-sm bg-light rounded-4">
+                        <div class="card border-0 shadow-sm bg-body-tertiary rounded-4">
                             <div class="card-body p-4">
                                 <h6 class="font-weight-bold text-primary mb-3">{{ $isEditMode ? 'Edit' : 'Tambah' }} Perumahan</h6>
                                 <form wire:submit.prevent="{{ $isEditMode ? 'updatePerumahan' : 'storePerumahan' }}">
@@ -290,7 +290,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="table-responsive bg-white rounded-4 shadow-sm border p-3">
+                        <div class="table-responsive rounded-4 shadow-sm border p-3 bg-body-tertiary">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
@@ -307,7 +307,7 @@
                                             <div class="fw-medium">{{ $item->no_peraturan }}</div>
                                             <div class="small text-muted">{{ \Carbon\Carbon::parse($item->tgl_berlaku)->format('d M Y') }}</div>
                                             @if($item->file_peraturan)
-                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-light text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
+                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
                                             @endif
                                         </td>
                                         <td class="small">
@@ -341,7 +341,7 @@
                 @if($activeTab === 'komunikasi_intensif')
                 <div class="row fade-in">
                     <div class="col-lg-4 mb-4">
-                        <div class="card border-0 shadow-sm bg-light rounded-4">
+                        <div class="card border-0 shadow-sm bg-body-tertiary rounded-4">
                             <div class="card-body p-4">
                                 <h6 class="font-weight-bold text-primary mb-3">{{ $isEditMode ? 'Edit' : 'Tambah' }} Komunikasi Intensif</h6>
                                 <form wire:submit.prevent="{{ $isEditMode ? 'updateKomunikasi' : 'storeKomunikasi' }}">
@@ -387,7 +387,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="table-responsive bg-white rounded-4 shadow-sm border p-3">
+                        <div class="table-responsive rounded-4 shadow-sm border p-3 bg-body-tertiary">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
@@ -404,7 +404,7 @@
                                             <div class="fw-medium">{{ $item->no_peraturan }}</div>
                                             <div class="small text-muted">{{ \Carbon\Carbon::parse($item->tgl_berlaku)->format('d M Y') }}</div>
                                             @if($item->file_peraturan)
-                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-light text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
+                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
                                             @endif
                                         </td>
                                         <td class="fw-medium text-primary">Rp {{ number_format($item->nilai_tunjangan_tki, 0, ',', '.') }}</td>

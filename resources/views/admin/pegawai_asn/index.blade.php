@@ -20,7 +20,7 @@
     @endif
 
     <div class="card shadow mb-4 border-0">
-        <div class="card-header py-3 bg-white d-flex align-items-center justify-content-between">
+        <div class="card-header py-3 d-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Pegawai ASN</h6>
              <a href="{{ route('admin.pegawai-asn.create') }}" class="btn btn-sm btn-primary shadow-sm justify-content-end">
             <i class="bi bi-plus-lg text-white-50"></i> Tambah Pegawai
@@ -53,7 +53,7 @@
                                 @endif
                             </td>
                             <td>
-                                <div class="fw-bold text-dark">{{ $item->nama }}</div>
+                                <div class="fw-bold text-body">{{ $item->nama }}</div>
                                 <small class="text-secondary">{{ $item->nip }}</small>
                             </td>
                             <td>

@@ -1,7 +1,15 @@
-<nav id="sidebar" class="bg-dark text-white d-flex flex-column">
-    <div class="sidebar-header border-bottom border-secondary d-flex align-items-center justify-content-between">
-        <h4 class="mb-0 overflow-hidden text-nowrap">SIMDPRD</h4>
-        <button class="btn btn-link text-white p-0 d-lg-none" id="sidebarClose">
+<nav id="sidebar" class="bg-body-tertiary d-flex flex-column border-end">
+    <div class="sidebar-header border-bottom border-secondary-subtle d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            @php
+                $pemda = \App\Models\Pemda::first();
+            @endphp
+            @if($pemda && $pemda->logo_pemda)
+                <img src="{{ Storage::url($pemda->logo_pemda) }}" alt="Logo" class="me-2" style="height: 32px; width: auto; object-fit: contain;">
+            @endif
+            <h4 class="mb-0 overflow-hidden text-nowrap mt-1">SIMDPRD</h4>
+        </div>
+        <button class="btn btn-link text-body p-0 d-lg-none" id="sidebarClose">
             <i class="bi bi-x-lg fs-4"></i>
         </button>
     </div>
@@ -115,10 +123,10 @@
         </li>
         @endif
     </ul>
-    <div class="p-2 border-top border-secondary">
+    <div class="p-2 border-top border-secondary-subtle">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="sidebar-link rounded btn btn-link text-white text-decoration-none w-100 text-start">
+            <button type="submit" class="sidebar-link rounded btn btn-link text-decoration-none w-100 text-start pb-0 border-0">
                 <i class="bi bi-box-arrow-left me-2"></i> Logout
             </button>
         </form>

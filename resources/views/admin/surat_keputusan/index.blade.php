@@ -27,7 +27,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0 w-100" id="surat-keputusan-table">
-                    <thead class="bg-light text-muted">
+                    <thead class="bg-body-tertiary text-muted">
                         <tr>
                             <th class="border-0" width="5%">No</th>
                             <th class="border-0">No. SK</th>
@@ -52,7 +52,7 @@
 <div class="modal fade" id="modalSuratKeputusan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-white border-bottom-0 pb-0">
+            <div class="modal-header border-bottom-0 pb-0">
                 <h5 class="modal-title fw-bold" id="modalTitle">Tambah Surat Keputusan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -113,7 +113,7 @@
 <div class="modal fade" id="modalAnggota" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-white border-bottom-0 pb-0">
+            <div class="modal-header border-bottom-0 pb-0">
                 <div>
                     <h5 class="modal-title fw-bold" id="modalAnggotaTitle">Kelola Anggota</h5>
                     <p class="text-muted mb-0 small" id="modalAnggotaSubtitle">Surat Keputusan</p>
@@ -122,7 +122,7 @@
             </div>
             <div class="modal-body p-4">
                 <!-- Form Tambah Anggota -->
-                <div class="card bg-light border-0 mb-4">
+                <div class="card bg-body-tertiary border-0 mb-4">
                     <div class="card-body">
                         <h6 class="fw-bold mb-3">Tambah Anggota</h6>
                         <form id="formAnggota" class="row g-2">
@@ -151,7 +151,7 @@
                 <h6 class="fw-bold mb-3">Daftar Anggota</h6>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0" id="tableAnggotaList">
-                        <thead class="bg-light">
+                        <thead class="bg-body-tertiary">
                             <tr>
                                 <th>Nama Anggota</th>
                                 <th>Jabatan</th>

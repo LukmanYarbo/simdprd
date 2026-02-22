@@ -2,7 +2,7 @@
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="input-group">
-                <span class="input-group-text bg-white border-end-0">
+                <span class="input-group-text  border-end-0">
                     <i class="bi bi-search text-muted"></i>
                 </span>
                 <input type="text" wire:model.live.debounce.300ms="search" class="form-control border-start-0 ps-0" placeholder="Cari Nama atau NIK...">
@@ -21,7 +21,7 @@
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
+                    <thead class="bg-body-tertiary">
                         <tr>
                             <th class="ps-4">Nama / NIK</th>
                             <th>Jabatan</th>

@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 
-                <div class="row mb-3 p-3 bg-light rounded mx-1">
+                <div class="row mb-3 p-3 bg-body-tertiary rounded mx-1">
                     <div class="col-md-4">
                         <label class="form-label fw-bold">NIP</label>
                         <input type="text" class="form-control-plaintext" id="preview_nip" readonly value="-">

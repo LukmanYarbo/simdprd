@@ -55,7 +55,7 @@
         <div class="form-step active" id="step1">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-person me-2"></i>Langkah 1: Data Pribadi</h5>
+                    <h5 class="mb-0 fw-bold text-body"><i class="bi bi-person me-2"></i>Langkah 1: Data Pribadi</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -132,7 +132,7 @@
         <div class="form-step" id="step2">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-geo-alt me-2"></i>Langkah 2: Kontak & Alamat</h5>
+                    <h5 class="mb-0 fw-bold text-body"><i class="bi bi-geo-alt me-2"></i>Langkah 2: Kontak & Alamat</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -192,7 +192,7 @@
         <div class="form-step" id="step3">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-briefcase me-2"></i>Langkah 3: Keanggotaan & Keuangan</h5>
+                    <h5 class="mb-0 fw-bold text-body"><i class="bi bi-briefcase me-2"></i>Langkah 3: Keanggotaan & Keuangan</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -247,7 +247,7 @@
         <div class="form-step" id="step4">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-shield-check me-2"></i>Langkah 4: Asuransi & Foto</h5>
+                    <h5 class="mb-0 fw-bold text-body"><i class="bi bi-shield-check me-2"></i>Langkah 4: Asuransi & Foto</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-4">
@@ -343,7 +343,7 @@
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="3"><i class="bi bi-arrow-left me-1"></i> Previous</button>
-                    <button type="submit" class="btn btn-warning btn-lg px-5 text-dark fw-bold">
+                    <button type="submit" class="btn btn-warning btn-lg px-5 text-body fw-bold">
                         <i class="bi bi-save me-1"></i> Perbarui Data Anggota
                     </button>
                 </div>

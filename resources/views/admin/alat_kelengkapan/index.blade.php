@@ -27,7 +27,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0 w-100" id="alat-kelengkapan-table">
-                    <thead class="bg-light text-muted">
+                    <thead class="bg-body-tertiary text-muted">
                         <tr>
                             <th class="border-0" width="5%">No</th>
                             <th class="border-0">Nama</th>
@@ -47,7 +47,7 @@
 <div class="modal fade" id="modalAlatKelengkapan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-white border-bottom-0 pb-0">
+            <div class="modal-header border-bottom-0 pb-0">
                 <h5 class="modal-title fw-bold" id="modalTitle">Tambah Alat Kelengkapan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
