@@ -40,14 +40,21 @@
                             <td>{{ $loop->iteration + ($penandaTangan->currentPage() - 1) * $penandaTangan->perPage() }}</td>
                             <td>
                                 @php
-                                    $badgeClass = match($item->jenis_dokumen) {
-                                        'Surat Tugas'     => 'bg-success-subtle text-success border-success-subtle',
-                                        'SPPD'            => 'bg-warning-subtle text-warning border-warning-subtle',
-                                        'Surat Keputusan' => 'bg-primary-subtle text-primary border-primary-subtle',
-                                        default           => 'bg-secondary-subtle text-secondary border-secondary-subtle',
-                                    };
+                                    $jenisList = explode(',', $item->jenis_dokumen);
                                 @endphp
-                                <span class="badge border {{ $badgeClass }}">{{ $item->jenis_dokumen }}</span>
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach($jenisList as $jenis)
+                                        @php
+                                            $badgeClass = match(trim($jenis)) {
+                                                'Surat Tugas'     => 'bg-success-subtle text-success border-success-subtle',
+                                                'SPPD'            => 'bg-warning-subtle text-warning border-warning-subtle',
+                                                'Surat Keputusan' => 'bg-primary-subtle text-primary border-primary-subtle',
+                                                default           => 'bg-secondary-subtle text-secondary border-secondary-subtle',
+                                            };
+                                        @endphp
+                                        <span class="badge border {{ $badgeClass }}">{{ trim($jenis) }}</span>
+                                    @endforeach
+                                </div>
                             </td>
                             <td>{{ $item->skpd->namaskpd ?? '<span class="text-muted">-</span>' }}</td>
                             <td>

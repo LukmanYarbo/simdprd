@@ -32,30 +32,25 @@
                     <form action="{{ route('admin.penanda-tangan.store') }}" method="POST">
                         @csrf
 
-                        {{-- Jenis Dokumen --}}
+                        {{-- SKPD (Select2 AJAX) --}}
                         <div class="mb-4">
-                            <label for="jenis_dokumen" class="form-label fw-semibold">
-                                Jenis Dokumen <span class="text-danger">*</span>
+                            <label for="id_skpd" class="form-label fw-semibold">
+                                SKPD Penanda Tangan <span class="text-danger">*</span>
                             </label>
-                            <select name="jenis_dokumen" id="jenis_dokumen"
-                                class="form-select @error('jenis_dokumen') is-invalid @enderror" required>
-                                <option value="">-- Pilih Jenis Dokumen --</option>
-                                @foreach(['Surat Tugas', 'SPPD', 'Surat Keputusan'] as $jenis)
-                                    <option value="{{ $jenis }}" {{ old('jenis_dokumen') == $jenis ? 'selected' : '' }}>
-                                        {{ $jenis }}
-                                    </option>
-                                @endforeach
+                            <select name="id_skpd" id="id_skpd"
+                                class="form-select @error('id_skpd') is-invalid @enderror" required>
+                                <option value="">-- Cari & Pilih SKPD --</option>
                             </select>
-                            @error('jenis_dokumen')
+                            @error('id_skpd')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        {{-- Anggota DPRD --}}
-                        <div class="mb-4">
+                        {{-- Section: Anggota DPRD (Hidden by default) --}}
+                        <div id="container-anggota" class="mb-4" style="display: none;">
                             <label for="id_anggota" class="form-label fw-semibold">
                                 Anggota DPRD
-                                <small class="text-muted fw-normal">(Ketua / Wakil Ketua DPRD)</small>
+                                <small class="text-muted fw-normal">(Ketua / Wakil Ketua DPRD)</small> <span class="text-danger">*</span>
                             </label>
                             <select name="id_anggota" id="id_anggota"
                                 class="form-select @error('id_anggota') is-invalid @enderror">
@@ -71,35 +66,39 @@
                             @enderror
                         </div>
 
-                        <hr class="my-4">
-
-                        {{-- SKPD (Select2 AJAX) --}}
-                        <div class="mb-4">
-                            <label for="id_skpd" class="form-label fw-semibold">
-                                SKPD Penanda Tangan ASN
-                            </label>
-                            <select name="id_skpd" id="id_skpd"
-                                class="form-select @error('id_skpd') is-invalid @enderror">
-                                <option value="">-- Cari & Pilih SKPD --</option>
-                            </select>
-                            @error('id_skpd')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <div class="form-text text-muted">Pilih SKPD terlebih dahulu untuk memuat daftar ASN.</div>
-                        </div>
-
-                        {{-- Pegawai ASN (Select2 AJAX, dependent on SKPD) --}}
-                        <div class="mb-4">
+                        {{-- Section: Pegawai ASN (Hidden by default) --}}
+                        <div id="container-asn" class="mb-4" style="display: none;">
                             <label for="id_pegawai_asn" class="form-label fw-semibold">
-                                Penanda Tangan ASN
+                                Penanda Tangan ASN <span class="text-danger">*</span>
                             </label>
                             <select name="id_pegawai_asn" id="id_pegawai_asn"
                                 class="form-select @error('id_pegawai_asn') is-invalid @enderror">
-                                <option value="">-- Pilih SKPD dahulu --</option>
+                                <option value="">-- Pilih ASN --</option>
                             </select>
                             @error('id_pegawai_asn')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <hr class="my-4">
+
+                        {{-- Jenis Dokumen (Bottom) --}}
+                        <div class="mb-4">
+                            <label for="jenis_dokumen" class="form-label fw-semibold">
+                                Jenis Dokumen <span class="text-danger">*</span>
+                            </label>
+                            <select name="jenis_dokumen[]" id="jenis_dokumen"
+                                class="form-select @error('jenis_dokumen') is-invalid @enderror" multiple required>
+                                @foreach(['Surat Tugas', 'SPPD', 'Surat Keputusan'] as $jenis)
+                                    <option value="{{ $jenis }}" {{ is_array(old('jenis_dokumen')) && in_array($jenis, old('jenis_dokumen')) ? 'selected' : '' }}>
+                                        {{ $jenis }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('jenis_dokumen')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <div class="form-text text-muted">Anda dapat memilih lebih dari satu jenis dokumen.</div>
                         </div>
 
                         <div class="d-flex gap-2 justify-content-end mt-4">
@@ -123,6 +122,33 @@
 <script>
     $(document).ready(function () {
 
+        function toggleInputs() {
+            var skpdText = $('#id_skpd').select2('data')[0] ? $('#id_skpd').select2('data')[0].text : '';
+            var skpdVal = $('#id_skpd').val();
+
+            if (skpdVal) {
+                if (skpdText === 'Dewan Perwakilan Rakyat Daerah') {
+                    $('#container-anggota').show();
+                    $('#container-asn').hide();
+                    $('#id_pegawai_asn').val(null).trigger('change');
+                } else {
+                    $('#container-anggota').hide();
+                    $('#container-asn').show();
+                    $('#id_anggota').val('').trigger('change');
+                }
+            } else {
+                $('#container-anggota').hide();
+                $('#container-asn').hide();
+            }
+        }
+
+        // === Select2: Jenis Dokumen (Multiple) ===
+        $('#jenis_dokumen').select2({
+            theme: 'bootstrap-5',
+            placeholder: '-- Pilih Jenis Dokumen --',
+            allowClear: true
+        });
+
         // === Select2: SKPD (AJAX search) ===
         $('#id_skpd').select2({
             theme: 'bootstrap-5',
@@ -141,12 +167,14 @@
                 },
                 cache: true
             }
+        }).on('change', function() {
+            toggleInputs();
         });
 
         // === Select2: Pegawai ASN (AJAX search, filtered by SKPD) ===
         var $asnSelect = $('#id_pegawai_asn').select2({
             theme: 'bootstrap-5',
-            placeholder: '-- Pilih SKPD dahulu --',
+            placeholder: '-- Pilih ASN --',
             allowClear: true,
             minimumInputLength: 0,
             ajax: {
@@ -166,13 +194,12 @@
             }
         });
 
-        // When SKPD changes, reset ASN selection and update placeholder
-        $('#id_skpd').on('change', function () {
-            $asnSelect.val(null).trigger('change');
-            var skpdSelected = $(this).val();
-            $asnSelect.data('select2').options.options.placeholder = skpdSelected
-                ? '-- Cari ASN berdasarkan SKPD terpilih --'
-                : '-- Pilih SKPD dahulu --';
+        // Initial check
+        toggleInputs();
+
+        // Also check when Select2 is initialized/loaded (for old input)
+        $('#id_skpd').on('select2:select', function() {
+            toggleInputs();
         });
     });
 </script>

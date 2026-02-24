@@ -150,7 +150,11 @@
                                 wire:model="id_anggota_penandatangan">
                                 <option value="">-- Pilih Penandatangan --</option>
                                 @foreach($penandatanganOptions as $opt)
-                                    <option value="{{ $opt->id }}">{{ $opt->nama_anggota }} ({{ $opt->jabatan->nama }})</option>
+                                    @if($opt->anggota)
+                                        <option value="{{ $opt->id_anggota }}">{{ $opt->anggota->nama_anggota }} ({{ $opt->anggota->jabatan->nama ?? '-' }})</option>
+                                    @elseif($opt->pegawaiAsn)
+                                        <option value="{{ $opt->id_pegawai_asn }}">{{ $opt->pegawaiAsn->nama }} (ASN)</option>
+                                    @endif
                                 @endforeach
                             </select>
                             @error('id_anggota_penandatangan') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror

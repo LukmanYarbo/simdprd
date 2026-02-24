@@ -56,16 +56,46 @@ class PenandaTanganController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'jenis_dokumen'  => 'required|in:Surat Tugas,SPPD,Surat Keputusan',
+            'jenis_dokumen'  => 'required|array',
+            'jenis_dokumen.*' => 'in:Surat Tugas,SPPD,Surat Keputusan',
             'id_anggota'     => 'nullable|exists:anggota,id',
             'id_skpd'        => 'nullable|exists:skpds,id',
             'id_pegawai_asn' => 'nullable|exists:pegawai_asns,id',
         ]);
 
-        PenandaTangan::create($validated);
+        // Check if signee already exists in this SKPD
+        $query = PenandaTangan::where('id_skpd', $validated['id_skpd']);
+
+        if ($validated['id_anggota']) {
+            $query->where('id_anggota', $validated['id_anggota']);
+        } elseif ($validated['id_pegawai_asn']) {
+            $query->where('id_pegawai_asn', $validated['id_pegawai_asn']);
+        } else {
+            $validated['jenis_dokumen'] = implode(',', $validated['jenis_dokumen']);
+            PenandaTangan::create($validated);
+            return redirect()->route('admin.penanda-tangan.index')
+                ->with('success', 'Data Penanda Tangan berhasil ditambahkan.');
+        }
+
+        $existing = $query->first();
+
+        if ($existing) {
+            $existingJenis = explode(',', $existing->jenis_dokumen);
+            $newJenis = array_unique(array_merge($existingJenis, $validated['jenis_dokumen']));
+            
+            $existing->update([
+                'jenis_dokumen' => implode(',', $newJenis)
+            ]);
+            
+            $message = 'Jenis dokumen berhasil ditambahkan ke penanda tangan yang sudah ada.';
+        } else {
+            $validated['jenis_dokumen'] = implode(',', $validated['jenis_dokumen']);
+            PenandaTangan::create($validated);
+            $message = 'Data Penanda Tangan berhasil ditambahkan.';
+        }
 
         return redirect()->route('admin.penanda-tangan.index')
-            ->with('success', 'Data Penanda Tangan berhasil ditambahkan.');
+            ->with('success', $message);
     }
 
     /**
@@ -89,11 +119,14 @@ class PenandaTanganController extends Controller implements HasMiddleware
     public function update(Request $request, PenandaTangan $penandaTangan)
     {
         $validated = $request->validate([
-            'jenis_dokumen'  => 'required|in:Surat Tugas,SPPD,Surat Keputusan',
+            'jenis_dokumen'  => 'required|array',
+            'jenis_dokumen.*' => 'in:Surat Tugas,SPPD,Surat Keputusan',
             'id_anggota'     => 'nullable|exists:anggota,id',
             'id_skpd'        => 'nullable|exists:skpds,id',
             'id_pegawai_asn' => 'nullable|exists:pegawai_asns,id',
         ]);
+
+        $validated['jenis_dokumen'] = implode(',', $validated['jenis_dokumen']);
 
         $penandaTangan->update($validated);
 

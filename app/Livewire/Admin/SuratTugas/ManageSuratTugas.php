@@ -6,6 +6,8 @@ use App\Models\SuratTugasAnggota;
 use App\Models\Anggota;
 use App\Models\AnggotaSt;
 use App\Models\JabatanDPRD;
+use App\Models\PenandaTangan;
+use App\Models\Skpd;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Carbon\Carbon;
@@ -65,9 +67,14 @@ class ManageSuratTugas extends Component
             ->latest()
             ->paginate(10);
 
-        $penandatanganOptions = Anggota::whereHas('jabatan', function ($query) {
-            $query->whereIn('nama', ['Ketua DPRD', 'Wakil Ketua DPRD']);
-        })->get();
+        $skpdDprd = Skpd::where('namaskpd', 'Dewan Perwakilan Rakyat Daerah')->first();
+        
+        $penandatanganOptions = PenandaTangan::with(['anggota.jabatan', 'pegawaiAsn'])
+            ->when($skpdDprd, function($q) use ($skpdDprd) {
+                $q->where('id_skpd', $skpdDprd->id);
+            })
+            ->where('jenis_dokumen', 'like', '%Surat Tugas%')
+            ->get();
 
         $allJabatan = JabatanDPRD::all();
         
