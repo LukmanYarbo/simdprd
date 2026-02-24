@@ -93,6 +93,13 @@
                     </a>
                 </li>
                 @endcan
+                @can('view surat_tugas')
+                <li>
+                    <a href="{{ route('admin.surat-tugas.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.surat-tugas.*') ? 'active' : '' }}">
+                        <i class="bi bi-file-earmark-text me-2"></i> Surat Tugas
+                    </a>
+                </li>
+                @endcan
             </ul>
         </li>
         

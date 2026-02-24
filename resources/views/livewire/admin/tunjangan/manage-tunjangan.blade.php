@@ -69,8 +69,8 @@
                                     <div class="mb-4">
                                         <label class="form-label text-muted small fw-bold">Status</label>
                                         <select class="form-select form-select-sm rounded-3 @error('tu_status') is-invalid @enderror" wire:model="tu_status">
-                                            <option value="Y">Aktif (Y)</option>
-                                            <option value="T">Tidak Aktif (T)</option>
+                                            <option value="Y">Aktif</option>
+                                            <option value="T">Tidak Aktif</option>
                                         </select>
                                         @error('tu_status') <span class="text-danger small">{{ $message }}</span> @enderror
                                     </div>
@@ -167,8 +167,8 @@
                                     <div class="mb-4">
                                         <label class="form-label text-muted small fw-bold">Status</label>
                                         <select class="form-select form-select-sm rounded-3 @error('tt_status') is-invalid @enderror" wire:model="tt_status">
-                                            <option value="Y">Aktif (Y)</option>
-                                            <option value="T">Tidak Aktif (T)</option>
+                                            <option value="Y">Aktif</option>
+                                            <option value="T">Tidak Aktif</option>
                                         </select>
                                     </div>
                                     <div class="d-grid gap-2">
@@ -273,8 +273,8 @@
                                     <div class="mb-4">
                                         <label class="form-label text-muted small fw-bold">Status</label>
                                         <select class="form-select form-select-sm rounded-3 @error('tp_status') is-invalid @enderror" wire:model="tp_status">
-                                            <option value="Y">Aktif (Y)</option>
-                                            <option value="T">Tidak Aktif (T)</option>
+                                            <option value="Y">Aktif</option>
+                                            <option value="T">Tidak Aktif</option>
                                         </select>
                                     </div>
                                     <div class="d-grid gap-2">
@@ -370,8 +370,8 @@
                                     <div class="mb-4">
                                         <label class="form-label text-muted small fw-bold">Status</label>
                                         <select class="form-select form-select-sm rounded-3 @error('tki_status') is-invalid @enderror" wire:model="tki_status">
-                                            <option value="Y">Aktif (Y)</option>
-                                            <option value="T">Tidak Aktif (T)</option>
+                                            <option value="Y">Aktif</option>
+                                            <option value="T">Tidak Aktif</option>
                                         </select>
                                     </div>
                                     <div class="d-grid gap-2">

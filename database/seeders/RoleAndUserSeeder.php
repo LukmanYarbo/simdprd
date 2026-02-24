@@ -27,6 +27,7 @@ class RoleAndUserSeeder extends Seeder
             'skpd',
             'tunjangan',
             'pegawai_asn',
+            'surat_tugas',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];
@@ -60,6 +61,7 @@ class RoleAndUserSeeder extends Seeder
             'view skpd', 'create skpd', 'edit skpd',
             'view tunjangan', 'create tunjangan', 'edit tunjangan',
             'view pegawai_asn', 'create pegawai_asn', 'edit pegawai_asn',
+            'view surat_tugas', 'create surat_tugas', 'edit surat_tugas',
         ];
         // Filter permissions that actually exist to avoid errors if something went wrong
         $validOperatorPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $operatorPermissions)->get();
@@ -76,6 +78,7 @@ class RoleAndUserSeeder extends Seeder
             'view skpd',
             'view tunjangan',
             'view pegawai_asn',
+            'view surat_tugas',
         ];
         $validUserPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $userPermissions)->get();
         $userRole->syncPermissions($validUserPermissions);
