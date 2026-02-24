@@ -74,11 +74,11 @@
 
         <li>
             <a href="#inputDataSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-               aria-expanded="{{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.pegawai-asn.*') ? 'true' : 'false' }}">
+               aria-expanded="{{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.pegawai-asn.*') || request()->routeIs('admin.surat-tugas.*') || request()->routeIs('admin.penanda-tangan.*') ? 'true' : 'false' }}">
                 <span><i class="bi bi-pencil-square me-2"></i> Input Data</span>
                 <i class="bi bi-chevron-down small"></i>
             </a>
-            <ul class="collapse {{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.pegawai-asn.*') ? 'show' : '' }} list-unstyled ps-3" id="inputDataSubmenu">
+            <ul class="collapse {{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.pegawai-asn.*') || request()->routeIs('admin.surat-tugas.*') || request()->routeIs('admin.penanda-tangan.*') ? 'show' : '' }} list-unstyled ps-3" id="inputDataSubmenu">
                 @can('view anggota')
                 <li>
                     <a href="{{ route('admin.anggota.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggota.*') ? 'active' : '' }}">
@@ -96,7 +96,14 @@
                 @can('view surat_tugas')
                 <li>
                     <a href="{{ route('admin.surat-tugas.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.surat-tugas.*') ? 'active' : '' }}">
-                        <i class="bi bi-file-earmark-text me-2"></i> Surat Tugas
+                        <i class="bi bi-file-earmark-text me-2"></i> Surat Tugas Anggota DPRD
+                    </a>
+                </li>
+                @endcan
+                @can('view penanda_tangan')
+                <li>
+                    <a href="{{ route('admin.penanda-tangan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.penanda-tangan.*') ? 'active' : '' }}">
+                        <i class="bi bi-pen me-2"></i> Penanda Tangan
                     </a>
                 </li>
                 @endcan

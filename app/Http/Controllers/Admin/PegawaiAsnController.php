@@ -31,7 +31,7 @@ class PegawaiAsnController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $pegawai = PegawaiAsn::with(['agama', 'statusKawin', 'pangkatGolongan', 'jabatanAsn', 'statusPegawai'])
+        $pegawai = PegawaiAsn::with(['skpd', 'agama', 'statusKawin', 'pangkatGolongan', 'jabatanAsn', 'statusPegawai'])
             ->latest()
             ->paginate(10);
         return view('admin.pegawai_asn.index', compact('pegawai'));
@@ -57,8 +57,9 @@ class PegawaiAsnController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nip' => 'required|unique:pegawai_asns,nip',
-            'nik' => 'required|unique:pegawai_asns,nik',
+            'id_skpd'        => 'nullable|exists:skpds,id',
+            'nip'            => 'required|unique:pegawai_asns,nip',
+            'nik'            => 'required|unique:pegawai_asns,nik',
             'nokk' => 'nullable|string',
             'nama' => 'required|string',
             'tempat_lahir' => 'required|string',
@@ -116,8 +117,9 @@ class PegawaiAsnController extends Controller implements HasMiddleware
     public function update(Request $request, PegawaiAsn $pegawaiAsn)
     {
         $validated = $request->validate([
-            'nip' => 'required|unique:pegawai_asns,nip,' . $pegawaiAsn->id,
-            'nik' => 'required|unique:pegawai_asns,nik,' . $pegawaiAsn->id,
+            'id_skpd'        => 'nullable|exists:skpds,id',
+            'nip'            => 'required|unique:pegawai_asns,nip,' . $pegawaiAsn->id,
+            'nik'            => 'required|unique:pegawai_asns,nik,' . $pegawaiAsn->id,
             'nokk' => 'nullable|string',
             'nama' => 'required|string',
             'tempat_lahir' => 'required|string',

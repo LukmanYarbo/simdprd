@@ -2,6 +2,12 @@
 
 @section('title', 'Tambah Pegawai ASN')
 
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+<style>.select2-container { width: 100% !important; }</style>
+@endpush
+
 @section('content')
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -103,6 +109,16 @@
                     <div class="col-lg-6">
                         <div class="p-3 bg-body-tertiary rounded-3 h-100">
                             <h5 class="mb-3 text-primary border-bottom pb-2"><i class="bi bi-briefcase me-2"></i>Kepegawaian & Kontak</h5>
+
+                            {{-- SKPD (Select2 AJAX) --}}
+                            <div class="mb-3">
+                                <label for="id_skpd" class="form-label">SKPD</label>
+                                <select class="form-select @error('id_skpd') is-invalid @enderror" id="id_skpd" name="id_skpd" style="width:100%">
+                                    <option value="">-- Cari & Pilih SKPD --</option>
+                                </select>
+                                @error('id_skpd') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
                             <div class="mb-3">
                             <div class="mb-3">
                                 <label for="id_jabatan" class="form-label">Jabatan <span class="text-danger">*</span></label>
@@ -205,12 +221,30 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
+        // Jabatan Select2
         $('#id_jabatan').select2({
             theme: 'bootstrap-5',
             placeholder: 'Pilih Jabatan...',
             allowClear: true
+        });
+
+        // SKPD Select2 AJAX
+        $('#id_skpd').select2({
+            theme: 'bootstrap-5',
+            placeholder: '-- Cari & Pilih SKPD --',
+            allowClear: true,
+            minimumInputLength: 0,
+            ajax: {
+                url: '{{ route("admin.penanda-tangan.search-skpd") }}',
+                dataType: 'json',
+                delay: 300,
+                data: function(params) { return { q: params.term || '' }; },
+                processResults: function(data) { return { results: data.results }; },
+                cache: true
+            }
         });
     });
 </script>

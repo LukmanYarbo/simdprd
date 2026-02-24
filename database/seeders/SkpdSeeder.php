@@ -13,6 +13,7 @@ class SkpdSeeder extends Seeder
     public function run(): void
     {
         $skpds = [
+            'Dewan Perwakilan Rakyat Daerah',
             'Sekretariat Daerah',
             'Sekretariat DPRD',
             'Inspektorat Daerah',
@@ -38,7 +39,7 @@ class SkpdSeeder extends Seeder
             'Dinas Perdagangan Perindustrian Koperasi dan Usaha Kecil Menengah',
             'Dinas Tenaga Kerja dan Transmigrasi',
             'Badan Perencanaan Pembangunan Penelitian dan Pengembangan',
-            'Badan Keuangan Daerah',
+            'Badan Pengelolaan Keuangan dan Aset Daerah',
             'Badan Kepegawaian Pendidikan dan Pelatihan',
             'Badan Penanggulangan Bencana Daerah',
             'Badan Kesatuan Bangsa dan Politik',

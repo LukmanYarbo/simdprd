@@ -35,6 +35,7 @@
                             <th class="border-top-0">Foto</th>
                             <th class="border-top-0">NIP / Nama</th>
                             <th class="border-top-0">Jabatan</th>
+                            <th class="border-top-0">SKPD</th>
                             <th class="border-top-0">Pangkat/Gol</th>
                             <th class="text-center border-top-0" style="width: 15%">Aksi</th>
                         </tr>
@@ -60,6 +61,7 @@
                                 <div class="mb-1"><span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{ $item->jabatanAsn->nama_jabatan ?? '-' }}</span></div>
                                 <small class="text-muted"><i class="bi bi-circle-fill {{ $item->statusPegawai->nama == 'Aktif' ? 'text-success' : 'text-danger' }} me-1" style="font-size: 8px;"></i>{{ $item->statusPegawai->nama ?? '-' }}</small>
                             </td>
+                            <td>{{ $item->skpd->namaskpd ?? '-' }}</td>
                             <td>{{ $item->pangkatGolongan->pangkat ?? '-' }} <span class="text-muted small">({{ $item->pangkatGolongan->golongan ?? '-' }})</span></td>
                             <td class="text-center">
                                 <div class="btn-group" role="group">
