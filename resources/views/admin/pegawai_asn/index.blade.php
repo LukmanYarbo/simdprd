@@ -20,7 +20,7 @@
     @endif
 
     <div class="card shadow mb-4 border-0">
-        <div class="card-header py-3 bg-white d-flex align-items-center justify-content-between">
+        <div class="card-header py-3 d-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Pegawai ASN</h6>
              <a href="{{ route('admin.pegawai-asn.create') }}" class="btn btn-sm btn-primary shadow-sm justify-content-end">
             <i class="bi bi-plus-lg text-white-50"></i> Tambah Pegawai
@@ -35,6 +35,7 @@
                             <th class="border-top-0">Foto</th>
                             <th class="border-top-0">NIP / Nama</th>
                             <th class="border-top-0">Jabatan</th>
+                            <th class="border-top-0">SKPD</th>
                             <th class="border-top-0">Pangkat/Gol</th>
                             <th class="text-center border-top-0" style="width: 15%">Aksi</th>
                         </tr>
@@ -53,13 +54,14 @@
                                 @endif
                             </td>
                             <td>
-                                <div class="fw-bold text-dark">{{ $item->nama }}</div>
+                                <div class="fw-bold text-body">{{ $item->nama }}</div>
                                 <small class="text-secondary">{{ $item->nip }}</small>
                             </td>
                             <td>
                                 <div class="mb-1"><span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{ $item->jabatanAsn->nama_jabatan ?? '-' }}</span></div>
                                 <small class="text-muted"><i class="bi bi-circle-fill {{ $item->statusPegawai->nama == 'Aktif' ? 'text-success' : 'text-danger' }} me-1" style="font-size: 8px;"></i>{{ $item->statusPegawai->nama ?? '-' }}</small>
                             </td>
+                            <td>{{ $item->skpd->namaskpd ?? '-' }}</td>
                             <td>{{ $item->pangkatGolongan->pangkat ?? '-' }} <span class="text-muted small">({{ $item->pangkatGolongan->golongan ?? '-' }})</span></td>
                             <td class="text-center">
                                 <div class="btn-group" role="group">

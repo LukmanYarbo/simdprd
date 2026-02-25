@@ -84,11 +84,11 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body d-flex align-items-center">
                     <div class="icon-box bg-warning bg-opacity-10 text-warning p-2 rounded me-3">
-                        <i class="bi bi-clock-history fs-4"></i>
+                        <i class="bi bi-people-fill fs-4"></i>
                     </div>
                     <div>
-                        <h6 class="mb-0 fw-bold">Login Terakhir</h6>
-                        <span class="text-muted small">{{ now()->format('d M Y, H:i') }}</span>
+                        <h6 class="mb-0 fw-bold">Jumlah Anggota</h6>
+                        <span class="text-muted small">{{ \App\Models\Anggota::count() }} Orang</span>
                     </div>
                 </div>
             </div>

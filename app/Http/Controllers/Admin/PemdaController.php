@@ -8,9 +8,21 @@ use Illuminate\Http\Request;
 use App\Models\Pemda;
 use App\Models\PegawaiAsn;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PemdaController extends Controller
+class PemdaController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view pemda|create pemda|edit pemda|delete pemda', only: ['index', 'show']),
+            new Middleware('permission:create pemda', only: ['create', 'store']),
+            new Middleware('permission:edit pemda', only: ['edit', 'update']),
+            new Middleware('permission:delete pemda', only: ['destroy']),
+        ];
+    }
+    
     /**
      * Display a listing of the resource.
      */

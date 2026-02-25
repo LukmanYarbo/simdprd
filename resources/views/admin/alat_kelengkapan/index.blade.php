@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
 @section('breadcrumbs')
-<x-breadcrumbs :items="[['label' => 'Alat Kelengkapan', 'icon' => 'bi-diagram-3']]" />
+<x-breadcrumbs :items="[
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
+    
+    ['label' => 'Alat Kelengkapan', 'icon' => 'bi-diagram-3']
+]" />
 @endsection
 
 @section('content')
@@ -23,7 +27,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0 w-100" id="alat-kelengkapan-table">
-                    <thead class="bg-light text-muted">
+                    <thead class="bg-body-tertiary text-muted">
                         <tr>
                             <th class="border-0" width="5%">No</th>
                             <th class="border-0">Nama</th>
@@ -43,7 +47,7 @@
 <div class="modal fade" id="modalAlatKelengkapan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-white border-bottom-0 pb-0">
+            <div class="modal-header border-bottom-0 pb-0">
                 <h5 class="modal-title fw-bold" id="modalTitle">Tambah Alat Kelengkapan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -59,6 +63,12 @@
                     <div class="mb-4">
                         <label for="ket" class="form-label">Keterangan</label>
                         <textarea class="form-control" id="ket" name="ket" rows="3"></textarea>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-4 d-none" id="nama_komisi_wrapper">
+                        <label for="nama_komisi" class="form-label">Nama Komisi</label>
+                        <input type="text" class="form-control" id="nama_komisi" name="nama_komisi" autocomplete="off" placeholder="Masukkan nama komisi, contoh: Komisi A">
+                        <div class="form-text">Khusus untuk Alat Kelengkapan bertipe Komisi.</div>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="d-flex justify-content-end gap-2">
@@ -116,12 +126,27 @@ $(function() {
             $('#id').val(data.id);
             $('#nama').val(data.nama);
             $('#ket').val(data.ket);
+            $('#nama_komisi').val(data.nama_komisi || '');
+            toggleNamaKomisi(data.nama);
             $('#modalTitle').text('Edit Alat Kelengkapan');
             $('#btnSave').text('Simpan Perubahan');
             $('.is-invalid').removeClass('is-invalid');
             modal.show();
         });
     }
+
+    function toggleNamaKomisi(val) {
+        if (val && val.toLowerCase() === 'komisi') {
+            $('#nama_komisi_wrapper').removeClass('d-none');
+        } else {
+            $('#nama_komisi_wrapper').addClass('d-none');
+            $('#nama_komisi').val('');
+        }
+    }
+
+    $('#nama').on('input', function() {
+        toggleNamaKomisi($(this).val());
+    });
 
     // Event Delegation
     $(document).on('click', '.btn-add', function() {

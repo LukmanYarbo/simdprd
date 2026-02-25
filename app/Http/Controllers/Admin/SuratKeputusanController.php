@@ -8,6 +8,7 @@ use App\Models\AlatKelengkapan;
 use App\Models\Anggota;
 use App\Models\JabatanAnggota;
 use App\Models\JabatanAlatKelengkapan;
+use App\Models\Pemda;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -55,6 +56,9 @@ class SuratKeputusanController extends Controller implements HasMiddleware
                     \Illuminate\Support\Facades\Log::info('User: ' . $user->email . ' | Role: ' . $user->getRoleNames() . ' | Can Edit SK: ' . ($user->can('edit surat_keputusan') ? 'Yes' : 'No') . ' | Can Delete SK: ' . ($user->can('delete surat_keputusan') ? 'Yes' : 'No'));
                     
                     $btn = '<div class="btn-group shadow-sm">';
+                    if($user->can('view surat_keputusan')){
+                        $btn .= '<a href="'.route('admin.surat-keputusan.print', $row->id).'" target="_blank" class="btn btn-sm btn-dark text-white border-end" title="Cetak"><i class="bi bi-printer"></i></a>';
+                    }
                     if($user->can('edit surat_keputusan')){
                         $btn .= '<button type="button" class="btn btn-sm btn-info text-white border-end btn-members" data-id="'.$row->id.'" title="Kelola Anggota"><i class="bi bi-people-fill"></i></button>';
                         $btn .= '<button type="button" class="btn btn-sm btn-light border-end btn-edit" data-id="'.$row->id.'" title="Edit"><i class="bi bi-pencil-square text-warning"></i></button>';
@@ -180,50 +184,100 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             ->where('id_surat_keputusan', $id)
             ->get();
         
+        $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
+
         $existingMemberIds = $anggota->pluck('id_anggota')->toArray();
         $allAnggota = Anggota::select('id', 'nama_anggota', 'nik')
             ->where('id_status_keanggotaan', 1)
             ->whereNotIn('id', $existingMemberIds)
+            ->when($isKomisi, function ($q) {
+                // Exclude Ketua DPRD and Wakil Ketua DPRD for Komisi-type SK
+                $q->whereDoesntHave('jabatan', function ($jq) {
+                    $jq->whereIn(\Illuminate\Support\Facades\DB::raw('LOWER(nama)'), ['ketua dprd', 'wakil ketua dprd']);
+                });
+            })
             ->orderBy('nama_anggota')
             ->get();
         $jabatanAlatKelengkapan = JabatanAlatKelengkapan::all();
+
+        // For Komisi: collect all distinct nama_komisi already used in this SK
+        $namaKomisiList = [];
+        if ($isKomisi) {
+            $namaKomisiList = JabatanAnggota::where('id_surat_keputusan', $id)
+                ->whereNotNull('nama_komisi')
+                ->distinct()
+                ->pluck('nama_komisi')
+                ->toArray();
+        }
 
         return response()->json([
             'surat_keputusan' => $suratKeputusan,
             'existing_anggota' => $anggota,
             'all_anggota' => $allAnggota,
-            'jabatan_options' => $jabatanAlatKelengkapan
+            'jabatan_options' => $jabatanAlatKelengkapan,
+            'is_komisi' => $isKomisi,
+            'nama_komisi_list' => $namaKomisiList,
         ]);
     }
 
     public function storeAnggota(Request $request)
     {
+        $suratKeputusan = SuratKeputusan::with('alatKelengkapan')->findOrFail($request->id_surat_keputusan);
+        $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
+
         $request->validate([
             'id_surat_keputusan' => 'required|exists:surat_keputusan,id',
             'id_anggota' => 'required|exists:anggota,id',
             'id_jabatan_alat_kelengkapan' => 'required|exists:jabatan_alat_kelengkapan,id',
+            'nama_komisi' => $isKomisi ? 'required|string|max:100' : 'nullable|string|max:100',
         ]);
 
-        $suratKeputusan = SuratKeputusan::findOrFail($request->id_surat_keputusan);
-
         // Check if member already exists in this SK
-        $exists = JabatanAnggota::where('id_surat_keputusan', $request->id_surat_keputusan)
-            ->where('id_anggota', $request->id_anggota)
-            ->exists();
-
-        if ($exists) {
-            return response()->json(['errors' => ['id_anggota' => ['Anggota ini sudah ada dalam SK ini.']]], 422);
+        $query = JabatanAnggota::where('id_surat_keputusan', $request->id_surat_keputusan)
+            ->where('id_anggota', $request->id_anggota);
+        if ($isKomisi) {
+            $query->where('nama_komisi', $request->nama_komisi);
+        }
+        if ($query->exists()) {
+            return response()->json(['errors' => ['id_anggota' => ['Anggota ini sudah terdaftar' . ($isKomisi ? ' di Komisi ini.' : ' dalam SK ini.')]]], 422);
         }
 
-        // Validate Unique Positions (Ketua, Wakil, Sekretaris)
+        // Validate Position Limits (Ketua, Wakil, Sekretaris)
         $jabatan = JabatanAlatKelengkapan::findOrFail($request->id_jabatan_alat_kelengkapan);
         if (in_array($jabatan->nama, ['Ketua', 'Wakil', 'Sekretaris'])) {
-            $positionExists = JabatanAnggota::where('id_surat_keputusan', $request->id_surat_keputusan)
-                ->where('id_jabatan_alat_kelengkapan', $request->id_jabatan_alat_kelengkapan)
-                ->exists();
-            
-            if ($positionExists) {
-                return response()->json(['errors' => ['id_jabatan_alat_kelengkapan' => ["Jabatan $jabatan->nama sudah terisi dalam SK ini."]]], 422);
+            $namaAlatKelengkapan = strtolower($suratKeputusan->alatKelengkapan->nama ?? '');
+            $isBanggarBanmus = in_array($namaAlatKelengkapan, ['banggar', 'banmus']);
+
+            // For Wakil in Banggar/Banmus: quota = number of "Wakil Ketua DPRD" members
+            if ($jabatan->nama === 'Wakil' && $isBanggarBanmus) {
+                // Count total anggota whose jabatan DPRD name contains "Wakil Ketua DPRD" (case-insensitive)
+                $wakilKuota = \App\Models\Anggota::where('id_status_keanggotaan', 1)
+                    ->whereHas('jabatan', function ($q) {
+                        $q->whereRaw('LOWER(nama) LIKE ?', ['%wakil ketua dprd%']);
+                    })
+                    ->count();
+
+                // Count how many Wakil already exist in this SK
+                $wakilTerisi = JabatanAnggota::where('id_surat_keputusan', $request->id_surat_keputusan)
+                    ->where('id_jabatan_alat_kelengkapan', $request->id_jabatan_alat_kelengkapan)
+                    ->count();
+
+                if ($wakilTerisi >= $wakilKuota) {
+                    return response()->json(['errors' => ['id_jabatan_alat_kelengkapan' => [
+                        "Jabatan Wakil sudah penuh ($wakilTerisi/$wakilKuota). Kuota disesuaikan dengan jumlah Wakil Ketua DPRD."
+                    ]]], 422);
+                }
+            } else {
+                // Default: max 1 for Ketua & Sekretaris, and Wakil on non-Banggar/Banmus
+                $posQuery = JabatanAnggota::where('id_surat_keputusan', $request->id_surat_keputusan)
+                    ->where('id_jabatan_alat_kelengkapan', $request->id_jabatan_alat_kelengkapan);
+                if ($isKomisi) {
+                    $posQuery->where('nama_komisi', $request->nama_komisi);
+                }
+                if ($posQuery->exists()) {
+                    $scope = $isKomisi ? "di Komisi '{$request->nama_komisi}'" : 'dalam SK ini';
+                    return response()->json(['errors' => ['id_jabatan_alat_kelengkapan' => ["Jabatan $jabatan->nama sudah terisi $scope."]]], 422);
+                }
             }
         }
 
@@ -232,6 +286,7 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             'id_anggota' => $request->id_anggota,
             'id_jabatan_alat_kelengkapan' => $request->id_jabatan_alat_kelengkapan,
             'id_alat_kelengkapan' => $suratKeputusan->id_alat_kelengkapan,
+            'nama_komisi' => $isKomisi ? $request->nama_komisi : null,
         ]);
 
         return response()->json(['success' => 'Anggota berhasil ditambahkan.']);
@@ -242,5 +297,51 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         $jabatanAnggota = JabatanAnggota::findOrFail($id);
         $jabatanAnggota->delete();
         return response()->json(['success' => 'Anggota berhasil dihapus.']);
+    }
+
+    public function print($id)
+    {
+        $suratKeputusan = SuratKeputusan::with(['alatKelengkapan', 'jabatanAnggota.anggota', 'jabatanAnggota.jabatanAlatKelengkapan'])
+            ->findOrFail($id);
+        
+        $pemda = Pemda::first();
+        
+        $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
+
+        // Custom sort for members based on position name
+        // For Komisi: sort by nama_komisi first, then Ketua, Wakil, Sekretaris, then Anggota
+        // For others: Ketua, Wakil, Sekretaris, then Anggota
+        $sortedAnggota = $suratKeputusan->jabatanAnggota->sort(function($a, $b) use ($isKomisi) {
+            if ($isKomisi) {
+                $komisiA = $a->nama_komisi ?? '';
+                $komisiB = $b->nama_komisi ?? '';
+                if ($komisiA !== $komisiB) {
+                    return strcasecmp($komisiA, $komisiB);
+                }
+            }
+
+            $order = ['Ketua' => 1, 'Wakil' => 2, 'Sekretaris' => 3, 'Anggota' => 4];
+            
+            $nameA = $a->jabatanAlatKelengkapan->nama;
+            $nameB = $b->jabatanAlatKelengkapan->nama;
+            
+            $valA = $order[$nameA] ?? 99;
+            $valB = $order[$nameB] ?? 99;
+            
+            if ($valA == $valB) {
+                return strcmp($a->anggota->nama_anggota, $b->anggota->nama_anggota);
+            }
+            
+            return $valA - $valB;
+        });
+
+        // Fetch Ketua DPRD for signature
+        $ketuaDprd = \App\Models\Anggota::whereHas('jabatan', function($q) {
+            $q->whereIn('nama', ['Ketua DPRD', 'KETUA DPRD']);
+        })->whereHas('statusKeanggotaan', function($q) {
+            $q->where('id', 1); // Aktif
+        })->first();
+
+        return view('admin.surat_keputusan.print', compact('suratKeputusan', 'pemda', 'sortedAnggota', 'ketuaDprd'));
     }
 }

@@ -61,9 +61,16 @@ class AlatKelengkapanController extends Controller implements HasMiddleware
         $request->validate([
             'nama' => 'required|string|max:255',
             'ket' => 'nullable|string',
+            'nama_komisi' => 'nullable|string|max:255',
         ]);
 
-        AlatKelengkapan::create($request->all());
+        // Only save nama_komisi if nama is 'Komisi' (case-insensitive)
+        $data = $request->only(['nama', 'ket']);
+        if (strtolower($request->nama) === 'komisi') {
+            $data['nama_komisi'] = $request->nama_komisi;
+        }
+
+        AlatKelengkapan::create($data);
 
         return response()->json(['success' => 'Alat Kelengkapan berhasil ditambahkan.']);
     }
@@ -83,9 +90,17 @@ class AlatKelengkapanController extends Controller implements HasMiddleware
         $request->validate([
             'nama' => 'required|string|max:255',
             'ket' => 'nullable|string',
+            'nama_komisi' => 'nullable|string|max:255',
         ]);
 
-        $alatKelengkapan->update($request->all());
+        $data = $request->only(['nama', 'ket']);
+        if (strtolower($request->nama) === 'komisi') {
+            $data['nama_komisi'] = $request->nama_komisi;
+        } else {
+            $data['nama_komisi'] = null;
+        }
+
+        $alatKelengkapan->update($data);
 
         return response()->json(['success' => 'Alat Kelengkapan berhasil diperbarui.']);
     }

@@ -13,7 +13,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -29,6 +29,33 @@
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
     @livewireStyles
     @stack('styles')
+    <style>
+        .marquee-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scrollerSlide 25s linear infinite;
+            animation-delay: 3.5s; /* Wait for letters to finish dropping */
+        }
+        @keyframes scrollerSlide {
+            0% { transform: translateX(0); }
+            45% { transform: translateX(-100%); }
+            45.001% { transform: translateX(100vw); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes dropLetter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -38,6 +65,13 @@
         <!-- Page Content -->
         <div id="content" class="d-flex flex-column min-vh-100 w-100">
             @include('layouts.partials.navbar')
+
+            <!-- Marquee Running Text with Fade Effect -->
+            <div class="marquee-wrapper border-bottom" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                <div class="marquee-content py-2 px-3 text-primary fw-medium small" id="marqueeText">
+                    Selamat Datang {{ auth()->check() ? auth()->user()->name : 'Guest' }} di Sistem Informasi Manajemen DPRD
+                </div>
+            </div>
 
             <div class="flex-grow-1"> <!-- Added wrapper for main content to push footer -->
                 <main class="p-4">
@@ -65,6 +99,23 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Marquee splitting logic for drop-down letters
+            const marqueeEl = document.getElementById('marqueeText');
+            if (marqueeEl) {
+                const text = marqueeEl.innerText.trim();
+                marqueeEl.innerHTML = '';
+                text.split('').forEach((char, i) => {
+                    let span = document.createElement('span');
+                    span.innerText = char === ' ' ? '\u00A0' : char;
+                    span.style.display = 'inline-block';
+                    span.style.opacity = '0';
+                    span.style.transform = 'translateY(-20px)';
+                    // Stagger the animation duration based on character index
+                    span.style.animation = `dropLetter 0.4s cubic-bezier(0.2, 0.8, 1, 1) forwards ${i * 0.03}s`;
+                    marqueeEl.appendChild(span);
+                });
+            }
+
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',

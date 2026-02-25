@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('breadcrumbs')
-<x-breadcrumbs :items="[['label' => 'Anggota', 'icon' => 'bi-people']]" />
+<x-breadcrumbs :items="[
+     ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
+    ['label' => 'Anggota', 'icon' => 'bi-people']]" />
 @endsection
 
 @section('content')
@@ -23,7 +25,7 @@
             <div class="card border-0 shadow-lg h-100 bg-primary text-white overflow-hidden">
                 <div class="card-body position-relative">
                     <div class="d-flex align-items-center">
-                        <div class="stats-icon bg-white bg-opacity-25 rounded-3 p-3 me-3">
+                        <div class="stats-icon  bg-opacity-25 rounded-3 p-3 me-3">
                             <i class="bi bi-people-fill fs-3"></i>
                         </div>
                         <div>
@@ -38,7 +40,7 @@
             <div class="card border-0 shadow-lg h-100 bg-success text-white overflow-hidden">
                 <div class="card-body position-relative">
                     <div class="d-flex align-items-center">
-                        <div class="stats-icon bg-white bg-opacity-25 rounded-3 p-3 me-3">
+                        <div class="stats-icon  bg-opacity-25 rounded-3 p-3 me-3">
                             <i class="bi bi-person-check-fill fs-3"></i>
                         </div>
                         <div>
@@ -50,14 +52,14 @@
             </div>
         </div>
         <div class="col-12 col-sm-6 col-xl-4">
-            <div class="card border-0 shadow-sm h-100 bg-warning text-dark overflow-hidden">
+            <div class="card border-0 shadow-sm h-100 bg-warning text-body overflow-hidden">
                 <div class="card-body position-relative">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon bg-dark bg-opacity-10 rounded-3 p-3 me-3">
-                            <i class="bi bi-person-x-fill fs-3 text-dark"></i>
+                            <i class="bi bi-person-x-fill fs-3 text-body"></i>
                         </div>
                         <div>
-                            <p class="mb-0 text-dark text-opacity-75 small fw-bold text-uppercase">Non-Aktif / Pensiun</p>
+                            <p class="mb-0 text-body text-opacity-75 small fw-bold text-uppercase">Non-Aktif / Pensiun</p>
                             <h3 class="mb-0 fw-bold">{{ $stats['nonAktif'] }}</h3>
                         </div>
                     </div>
@@ -68,13 +70,13 @@
 
     <!-- Data Table -->
     <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white py-3 border-0">
+        <div class="card-header py-3 border-0">
             <h5 class="mb-0 fw-bold text-muted">Daftar Anggota</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0 w-100" id="anggota-table">
-                    <thead class="bg-light text-muted">
+                    <thead class="bg-body-tertiary text-muted">
                         <tr>
                             <th class="border-0">No</th>
                             <th class="border-0">Nama / NIK</th>

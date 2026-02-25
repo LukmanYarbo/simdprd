@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
 @section('breadcrumbs')
-<x-breadcrumbs :items="[['label' => 'Surat Keputusan', 'icon' => 'bi-file-earmark-text']]" />
+<x-breadcrumbs :items="[
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
+    
+    ['label' => 'Surat Keputusan', 'icon' => 'bi-envelope-paper']
+]" />
 @endsection
 
 @section('content')
@@ -23,7 +27,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0 w-100" id="surat-keputusan-table">
-                    <thead class="bg-light text-muted">
+                    <thead class="bg-body-tertiary text-muted">
                         <tr>
                             <th class="border-0" width="5%">No</th>
                             <th class="border-0">No. SK</th>
@@ -48,7 +52,7 @@
 <div class="modal fade" id="modalSuratKeputusan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-white border-bottom-0 pb-0">
+            <div class="modal-header border-bottom-0 pb-0">
                 <h5 class="modal-title fw-bold" id="modalTitle">Tambah Surat Keputusan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -109,7 +113,7 @@
 <div class="modal fade" id="modalAnggota" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-white border-bottom-0 pb-0">
+            <div class="modal-header border-bottom-0 pb-0">
                 <div>
                     <h5 class="modal-title fw-bold" id="modalAnggotaTitle">Kelola Anggota</h5>
                     <p class="text-muted mb-0 small" id="modalAnggotaSubtitle">Surat Keputusan</p>
@@ -118,12 +122,26 @@
             </div>
             <div class="modal-body p-4">
                 <!-- Form Tambah Anggota -->
-                <div class="card bg-light border-0 mb-4">
+                <div class="card bg-body-tertiary border-0 mb-4">
                     <div class="card-body">
                         <h6 class="fw-bold mb-3">Tambah Anggota</h6>
                         <form id="formAnggota" class="row g-2">
                             @csrf
                             <input type="hidden" id="id_surat_keputusan_anggota" name="id_surat_keputusan">
+                            <!-- Nama Komisi row (only visible for Komisi-type SK) -->
+                            <div class="col-12 d-none" id="nama_komisi_row">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-diagram-3"></i></span>
+                                    <input type="text" class="form-control" id="nama_komisi" name="nama_komisi"
+                                        list="namaKomisiList" autocomplete="off"
+                                        placeholder="Nama Komisi, contoh: Komisi A">
+                                    <button type="button" class="btn btn-outline-secondary" id="btnClearKomisi" title="Hapus isian Nama Komisi">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+                                <datalist id="namaKomisiList"></datalist>
+                                <div class="invalid-feedback d-block" id="nama_komisi_error"></div>
+                            </div>
                             <div class="col-md-5">
                                 <select class="form-select" id="id_anggota" name="id_anggota" required>
                                     <option value="">Pilih Anggota</option>
@@ -147,9 +165,10 @@
                 <h6 class="fw-bold mb-3">Daftar Anggota</h6>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0" id="tableAnggotaList">
-                        <thead class="bg-light">
+                        <thead class="bg-body-tertiary">
                             <tr>
                                 <th>Nama Anggota</th>
+                                <th class="d-none komisi-col">Nama Komisi</th>
                                 <th>Jabatan</th>
                                 <th class="text-end">Aksi</th>
                             </tr>
@@ -209,14 +228,7 @@ $(function() {
                 name: 'action', 
                 orderable: false, 
                 searchable: false, 
-                className: 'text-end pe-4',
-                render: function(data, type, row) {
-                    return '<div class="btn-group shadow-sm">' +
-                        '<button type="button" class="btn btn-sm btn-info text-white border-end btn-members" data-id="'+row.id+'" title="Kelola Anggota"><i class="bi bi-people-fill"></i></button>' +
-                        '<button type="button" class="btn btn-sm btn-light border-end btn-edit" data-id="'+row.id+'" title="Edit"><i class="bi bi-pencil-square text-warning"></i></button>' +
-                        '<button type="button" onclick="deleteItem('+row.id+')" class="btn btn-sm btn-light" title="Hapus"><i class="bi bi-trash3-fill text-danger"></i></button>' +
-                        '</div>';
-                }
+                className: 'text-end pe-4'
             },
         ],
         language: {
@@ -355,18 +367,36 @@ $(function() {
 
     function loadAnggota(id) {
         $('#id_surat_keputusan_anggota').val(id);
-        $('#tableAnggotaList tbody').html('<tr><td colspan="3" class="text-center">Memuat data...</td></tr>');
+        $('#tableAnggotaList tbody').html('<tr><td colspan="4" class="text-center">Memuat data...</td></tr>');
         
         $.get("{{ url('admin/surat-keputusan') }}/" + id + "/anggota", function(data) {
             $('#modalAnggotaTitle').text('Kelola Anggota ' + (data.surat_keputusan.alat_kelengkapan.ket || ''));
             $('#modalAnggotaSubtitle').text('No. SK: ' + data.surat_keputusan.no_sk + ' (' + data.surat_keputusan.alat_kelengkapan.nama + ')');
+
+            // Toggle Nama Komisi field
+            var isKomisi = data.is_komisi || false;
+            if (isKomisi) {
+                $('#nama_komisi_row').removeClass('d-none');
+                $('#nama_komisi').attr('required', true);
+                $('.komisi-col').removeClass('d-none');
+            } else {
+                $('#nama_komisi_row').addClass('d-none');
+                $('#nama_komisi').removeAttr('required').val('');
+                $('.komisi-col').addClass('d-none');
+            }
+
+            // Populate Nama Komisi datalist
+            var datalist = $('#namaKomisiList').empty();
+            if (data.nama_komisi_list && data.nama_komisi_list.length) {
+                $.each(data.nama_komisi_list, function(i, val) {
+                    datalist.append('<option value="' + val + '">');
+                });
+            }
             
             // Populate Anggota Select
             var anggotaSelect = $('#id_anggota');
             anggotaSelect.empty().append('<option value="">Pilih Anggota</option>');
             $.each(data.all_anggota, function(key, val) {
-                // Determine if this anggota is already in existing_anggota to mark as selected or disabled if needed
-                // For now just list all
                 anggotaSelect.append('<option value="'+val.id+'">'+val.nama_anggota+'</option>');
             });
             anggotaSelect.trigger('change');
@@ -378,7 +408,7 @@ $(function() {
                 jabatanSelect.append('<option value="'+val.id+'">'+val.nama+'</option>');
             });
 
-            renderAnggotaTable(data.existing_anggota);
+            renderAnggotaTable(data.existing_anggota, isKomisi);
             modalAnggota.show();
         }).fail(function(xhr) {
             console.error(xhr);
@@ -386,14 +416,18 @@ $(function() {
         });
     }
 
-    function renderAnggotaTable(data) {
+    function renderAnggotaTable(data, isKomisi) {
         var html = '';
+        var colSpan = isKomisi ? 4 : 3;
         if(data.length === 0) {
-            html = '<tr><td colspan="3" class="text-center text-muted">Belum ada anggota.</td></tr>';
+            html = '<tr><td colspan="' + colSpan + '" class="text-center text-muted">Belum ada anggota.</td></tr>';
         } else {
             $.each(data, function(index, item) {
                 html += '<tr>';
                 html += '<td>' + item.anggota.nama_anggota + '</td>';
+                if (isKomisi) {
+                    html += '<td>' + (item.nama_komisi || '-') + '</td>';
+                }
                 html += '<td>' + item.jabatan_alat_kelengkapan.nama + '</td>';
                 html += '<td class="text-end"><button type="button" class="btn btn-sm btn-danger btn-delete-member" data-id="'+item.id+'"><i class="bi bi-trash"></i></button></td>';
                 html += '</tr>';
@@ -401,6 +435,11 @@ $(function() {
         }
         $('#tableAnggotaList tbody').html(html);
     }
+
+    // Clear Nama Komisi button
+    $(document).on('click', '#btnClearKomisi', function() {
+        $('#nama_komisi').val('').focus();
+    });
 
     $('#formAnggota').submit(function(e) {
         e.preventDefault();
@@ -426,11 +465,16 @@ $(function() {
             },
             error: function(xhr) {
                 var msg = 'Terjadi kesalahan.';
+                $('#nama_komisi_error').text('');
                 if(xhr.status === 422) {
-                    if (xhr.responseJSON.errors.id_anggota) {
-                         msg = xhr.responseJSON.errors.id_anggota[0];
-                    } else if (xhr.responseJSON.errors.id_jabatan_alat_kelengkapan) {
-                         msg = xhr.responseJSON.errors.id_jabatan_alat_kelengkapan[0];
+                    var errors = xhr.responseJSON.errors;
+                    if (errors.nama_komisi) {
+                        $('#nama_komisi_error').text(errors.nama_komisi[0]);
+                        msg = errors.nama_komisi[0];
+                    } else if (errors.id_anggota) {
+                         msg = errors.id_anggota[0];
+                    } else if (errors.id_jabatan_alat_kelengkapan) {
+                         msg = errors.id_jabatan_alat_kelengkapan[0];
                     } else {
                         msg = 'Cek kembali inputan anda.';
                     }

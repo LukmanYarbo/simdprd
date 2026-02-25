@@ -29,6 +29,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('alat-kelengkapan', \App\Http\Controllers\Admin\AlatKelengkapanController::class)->parameters([
             'alat-kelengkapan' => 'alatKelengkapan'
         ]);
+        Route::get('surat-keputusan/{suratKeputusan}/print', [\App\Http\Controllers\Admin\SuratKeputusanController::class , 'print'])->name('surat-keputusan.print');
         Route::resource('surat-keputusan', \App\Http\Controllers\Admin\SuratKeputusanController::class)->parameters([
             'surat-keputusan' => 'suratKeputusan'
         ]);
@@ -58,10 +59,20 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('jabatan-asn', \App\Http\Controllers\Admin\JabatanAsnController::class);
         Route::resource('pegawai-asn', \App\Http\Controllers\Admin\PegawaiAsnController::class);
         Route::resource('skpd', \App\Http\Controllers\Admin\SkpdController::class);
+        Route::get('tunjangan', [\App\Http\Controllers\Admin\TunjanganController::class, 'index'])->name('tunjangan.index');
         
         // Pemda Module
         Route::get('pemda/pegawai-details/{id}', [\App\Http\Controllers\Admin\PemdaController::class, 'getPegawaiDetails'])->name('pemda.pegawai-details');
         Route::resource('pemda', \App\Http\Controllers\Admin\PemdaController::class);
+        Route::get('surat-tugas/{id}/print', [\App\Http\Controllers\Admin\SuratTugasController::class, 'print'])->name('surat-tugas.print');
+        Route::resource('surat-tugas', \App\Http\Controllers\Admin\SuratTugasController::class);
+
+        // Penanda Tangan
+        Route::get('penanda-tangan/search-skpd', [\App\Http\Controllers\Admin\PenandaTanganController::class, 'searchSkpd'])->name('penanda-tangan.search-skpd');
+        Route::get('penanda-tangan/search-asn', [\App\Http\Controllers\Admin\PenandaTanganController::class, 'searchAsn'])->name('penanda-tangan.search-asn');
+        Route::resource('penanda-tangan', \App\Http\Controllers\Admin\PenandaTanganController::class)->parameters([
+            'penanda-tangan' => 'penandaTangan'
+        ]);
     });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {

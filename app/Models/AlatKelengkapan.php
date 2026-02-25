@@ -10,7 +10,7 @@ class AlatKelengkapan extends Model
     use HasFactory;
 
     protected $table = 'alat_kelengkapan';
-    protected $fillable = ['nama', 'ket'];
+    protected $fillable = ['nama', 'ket', 'nama_komisi'];
 
     public function suratKeputusan()
     {

@@ -38,7 +38,8 @@ class AnggotaController extends Controller implements HasMiddleware
                     $query->where('id', 1);
                 })
                 ->select('anggota.*')
-                ->orderBy('id_dprd', 'asc');
+                ->orderBy('id_dprd', 'asc')
+                ->orderBy('id', 'asc');
 
             return DataTables::of($query)
                 ->addIndexColumn()

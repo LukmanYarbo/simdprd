@@ -7,9 +7,21 @@ use Illuminate\Http\Request;
 use App\Models\JabatanAsn;
 use App\Models\Esselon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class JabatanAsnController extends Controller
+class JabatanAsnController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view jabatan_asn|create jabatan_asn|edit jabatan_asn|delete jabatan_asn', only: ['index', 'show']),
+            new Middleware('permission:create jabatan_asn', only: ['create', 'store']),
+            new Middleware('permission:edit jabatan_asn', only: ['edit', 'update']),
+            new Middleware('permission:delete jabatan_asn', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $jabatan = JabatanAsn::with('esselon')

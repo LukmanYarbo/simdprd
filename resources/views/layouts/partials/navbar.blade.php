@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg px-4 py-3">
     <div class="d-flex align-items-center w-100 justify-content-between">
-        <button class="btn btn-link link-dark p-0 me-3" id="sidebarCollapse">
+        <button class="btn btn-link link-body-emphasis p-0 me-3" id="sidebarCollapse">
             <i class="bi bi-list fs-3"></i>
         </button>
         <div class="d-flex align-items-center gap-3">
@@ -11,7 +11,7 @@
 
             <!-- User Dropdown -->
             <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="d-flex align-items-center text-body text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}&background=random" alt="user" width="32" height="32" class="rounded-circle me-2">
                     <strong>{{ Auth::user()->name }}</strong>
                 </a>

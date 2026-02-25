@@ -11,15 +11,27 @@ use App\Models\JabatanAsn;
 use App\Models\StatusPegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PegawaiAsnController extends Controller
+class PegawaiAsnController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view pegawai_asn|create pegawai_asn|edit pegawai_asn|delete pegawai_asn', only: ['index', 'show']),
+            new Middleware('permission:create pegawai_asn', only: ['create', 'store']),
+            new Middleware('permission:edit pegawai_asn', only: ['edit', 'update']),
+            new Middleware('permission:delete pegawai_asn', only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $pegawai = PegawaiAsn::with(['agama', 'statusKawin', 'pangkatGolongan', 'jabatanAsn', 'statusPegawai'])
+        $pegawai = PegawaiAsn::with(['skpd', 'agama', 'statusKawin', 'pangkatGolongan', 'jabatanAsn', 'statusPegawai'])
             ->latest()
             ->paginate(10);
         return view('admin.pegawai_asn.index', compact('pegawai'));
@@ -45,8 +57,9 @@ class PegawaiAsnController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nip' => 'required|unique:pegawai_asns,nip',
-            'nik' => 'required|unique:pegawai_asns,nik',
+            'id_skpd'        => 'nullable|exists:skpds,id',
+            'nip'            => 'required|unique:pegawai_asns,nip',
+            'nik'            => 'required|unique:pegawai_asns,nik',
             'nokk' => 'nullable|string',
             'nama' => 'required|string',
             'tempat_lahir' => 'required|string',
@@ -104,8 +117,9 @@ class PegawaiAsnController extends Controller
     public function update(Request $request, PegawaiAsn $pegawaiAsn)
     {
         $validated = $request->validate([
-            'nip' => 'required|unique:pegawai_asns,nip,' . $pegawaiAsn->id,
-            'nik' => 'required|unique:pegawai_asns,nik,' . $pegawaiAsn->id,
+            'id_skpd'        => 'nullable|exists:skpds,id',
+            'nip'            => 'required|unique:pegawai_asns,nip,' . $pegawaiAsn->id,
+            'nik'            => 'required|unique:pegawai_asns,nik,' . $pegawaiAsn->id,
             'nokk' => 'nullable|string',
             'nama' => 'required|string',
             'tempat_lahir' => 'required|string',
