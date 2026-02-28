@@ -1,30 +1,35 @@
 <div>
     <style>
         .card-custom {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            transition: all 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: var(--glass-border) !important;
+            border-radius: 1.25rem;
+            box-shadow: var(--glass-shadow);
+            transition: all var(--transition-base);
         }
         .form-section-title {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
             color: var(--bs-primary);
-            border-bottom: 2px solid var(--bs-primary-bg-subtle);
+            border-bottom: 2px solid rgba(var(--bs-primary-rgb), 0.1);
             padding-bottom: 0.5rem;
             margin-bottom: 1.25rem;
+            font-weight: 800;
         }
         .bg-soft-primary { background-color: rgba(13, 110, 253, 0.05); }
         .bg-soft-info { background-color: rgba(13, 202, 240, 0.05); }
         .table-custom thead th {
-            background-color: #f8f9fa;
-            font-weight: 600;
+            background: rgba(var(--bs-primary-rgb), 0.03);
+            font-weight: 800;
             text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.025em;
-            color: #6c757d;
-            border-top: none;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: #94a3b8;
+            border: none;
+            padding: 1.25rem 1rem;
         }
         .btn-action {
             width: 32px;
@@ -124,19 +129,19 @@
                             </div>
                         </div>
 
-                        <div class="row g-2 mb-3 px-3 py-2 rounded bg-soft-primary border border-primary-subtle border-opacity-25">
+                        <div class="row g-2 mb-3 px-3 py-2 rounded-3 bg-white bg-opacity-5 border border-white border-opacity-10">
                             <div class="col-6">
                                 <label class="form-label small fw-bold">Berangkat</label>
-                                <input type="date" class="form-control form-control-sm" wire:model.live="tanggal_berangkat">
+                                <input type="date" class="form-control form-control-sm bg-transparent" wire:model.live="tanggal_berangkat">
                             </div>
                             <div class="col-6">
                                 <label class="form-label small fw-bold">Kembali</label>
-                                <input type="date" class="form-control form-control-sm" wire:model.live="tanggal_balik">
+                                <input type="date" class="form-control form-control-sm bg-transparent" wire:model.live="tanggal_balik">
                             </div>
                             <div class="col-12 mt-2">
-                                <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded border border-primary-subtle">
+                                <div class="d-flex justify-content-between align-items-center bg-dark bg-opacity-20 p-2 rounded-3 border border-white border-opacity-5">
                                     <span class="small fw-bold text-primary">Durasi:</span>
-                                    <span class="badge bg-primary rounded-pill">{{ $lama_hari }} Hari</span>
+                                    <span class="badge premium-gradient rounded-pill px-3">{{ $lama_hari }} Hari</span>
                                 </div>
                             </div>
                         </div>
@@ -161,11 +166,11 @@
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary w-100 rounded-3 py-2 fw-bold">
+                            <button type="submit" class="btn premium-gradient text-white w-100 rounded-3 py-2 fw-bold glow-shadow border-0">
                                 <i class="bi bi-save2-fill me-2"></i> {{ $isEditMode ? 'Perbarui Data' : 'Simpan Data' }}
                             </button>
                             @if($isEditMode)
-                                <button type="button" wire:click="resetFields" class="btn btn-outline-secondary rounded-3 px-4">Batal</button>
+                                <button type="button" wire:click="resetFields" class="btn btn-outline-secondary rounded-3 px-4 fw-bold">Batal</button>
                             @endif
                         </div>
                     </form>
@@ -176,15 +181,15 @@
         {{-- Right: List Section --}}
         <div class="col-xl-8">
             <div class="card card-custom h-100">
-                <div class="card-header bg-white pt-4 px-4 border-0 d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div class="card-header bg-transparent pt-4 px-4 border-0 d-flex flex-wrap justify-content-between align-items-center gap-3">
                     <div>
-                        <h5 class="fw-bold mb-0">Daftar Surat Tugas</h5>
+                        <h5 class="fw-bold mb-0 text-gradient">Daftar Surat Tugas</h5>
                         <p class="text-muted small mt-1 mb-0">Managemen dan pengelolaan data surat tugas anggota.</p>
                     </div>
                     <div class="ms-auto" style="min-width: 300px;">
-                        <div class="input-group input-group-sm rounded-pill border bg-light overflow-hidden px-2 py-1">
+                        <div class="input-group input-group-sm rounded-pill border border-white border-opacity-10 bg-white bg-opacity-5 overflow-hidden px-2 py-1">
                             <span class="input-group-text bg-transparent border-0"><i class="bi bi-search text-muted"></i></span>
-                            <input type="text" class="form-control bg-transparent border-0 shadow-none" 
+                            <input type="text" class="form-control bg-transparent border-0 shadow-none text-black placeholder-secondary" 
                                 placeholder="Cari nomor surat atau uraian..." wire:model.live="search">
                         </div>
                     </div>

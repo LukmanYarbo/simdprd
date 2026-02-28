@@ -13,54 +13,54 @@
             <h2 class="h4 mb-0 fw-bold">Manajemen Anggota</h2>
         </div>
         <div class="col-auto">
-            <a href="{{ route('admin.anggota.create') }}" class="btn btn-primary shadow-sm">
+            <a href="{{ route('admin.anggota.create') }}" class="btn premium-gradient text-white border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
                 <i class="bi bi-person-plus-fill me-2"></i>Tambah Anggota
             </a>
         </div>
     </div>
 
     <!-- Statistics Cards -->
-    <div class="row g-3 mb-4">
+    <div class="row g-4 mb-5">
         <div class="col-12 col-sm-6 col-xl-4">
-            <div class="card border-0 shadow-lg h-100 bg-primary text-white overflow-hidden">
-                <div class="card-body position-relative">
+            <div class="card glass-card border-0 glow-shadow h-100 overflow-hidden">
+                <div class="card-body p-4">
                     <div class="d-flex align-items-center">
-                        <div class="stats-icon  bg-opacity-25 rounded-3 p-3 me-3">
-                            <i class="bi bi-people-fill fs-3"></i>
+                        <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
+                            <i class="bi bi-person-badge-fill fs-3"></i>
                         </div>
                         <div>
-                            <p class="mb-0 text-white text-opacity-75 small fw-bold text-uppercase">Total Anggota</p>
-                            <h3 class="mb-0 fw-bold">{{ $stats['total'] }}</h3>
+                            <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Total Anggota</p>
+                            <h3 class="mb-0 fw-extrabold text-gradient">{{ $stats['total'] }}</h3>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-xl-4">
-            <div class="card border-0 shadow-lg h-100 bg-success text-white overflow-hidden">
-                <div class="card-body position-relative">
+            <div class="card glass-card border-0 glow-shadow h-100 overflow-hidden">
+                <div class="card-body p-4">
                     <div class="d-flex align-items-center">
-                        <div class="stats-icon  bg-opacity-25 rounded-3 p-3 me-3">
+                        <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
                             <i class="bi bi-person-check-fill fs-3"></i>
                         </div>
                         <div>
-                            <p class="mb-0 text-white text-opacity-75 small fw-bold text-uppercase">Anggota Aktif</p>
-                            <h3 class="mb-0 fw-bold">{{ $stats['aktif'] }}</h3>
+                            <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Anggota Aktif</p>
+                            <h3 class="mb-0 fw-extrabold text-success">{{ $stats['aktif'] }}</h3>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-xl-4">
-            <div class="card border-0 shadow-sm h-100 bg-warning text-body overflow-hidden">
-                <div class="card-body position-relative">
+            <div class="card glass-card border-0 glow-shadow h-100 overflow-hidden">
+                <div class="card-body p-4">
                     <div class="d-flex align-items-center">
-                        <div class="stats-icon bg-dark bg-opacity-10 rounded-3 p-3 me-3">
-                            <i class="bi bi-person-x-fill fs-3 text-body"></i>
+                        <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+                            <i class="bi bi-person-x-fill fs-3"></i>
                         </div>
                         <div>
-                            <p class="mb-0 text-body text-opacity-75 small fw-bold text-uppercase">Non-Aktif / Pensiun</p>
-                            <h3 class="mb-0 fw-bold">{{ $stats['nonAktif'] }}</h3>
+                            <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Non-Aktif</p>
+                            <h3 class="mb-0 fw-extrabold text-warning">{{ $stats['nonAktif'] }}</h3>
                         </div>
                     </div>
                 </div>
@@ -69,9 +69,9 @@
     </div>
 
     <!-- Data Table -->
-    <div class="card border-0 shadow-sm">
-        <div class="card-header py-3 border-0">
-            <h5 class="mb-0 fw-bold text-muted">Daftar Anggota</h5>
+    <div class="card glass-card border-0 shadow-lg fade-in-up">
+        <div class="card-header py-4 bg-transparent border-bottom border-white border-opacity-10">
+            <h5 class="mb-0 fw-bold text-gradient">Daftar Anggota</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -120,13 +120,23 @@
         background-color: #f8f9fa;
     }
     #anggota-table thead th {
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
-        font-size: 0.75rem;
-        letter-spacing: 0.5px;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        color: #94a3b8;
+        padding: 1.25rem 1rem;
     }
     .stats-icon i {
         line-height: 1;
+    }
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    [data-bs-theme="dark"] .glass-card {
+        background: rgba(15, 23, 42, 0.6);
     }
 </style>
 @endpush

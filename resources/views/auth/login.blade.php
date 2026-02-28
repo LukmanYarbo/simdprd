@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,13 +33,13 @@
 
                     <div class="input-field">
                         <i class="bi bi-person-fill"></i>
-                        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required />
+                        <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}" required />
                     </div>
                     <div class="input-field">
-                        <i class="bi bi-lock-fill"></i>
+                        <i class="bi bi-key-fill"></i>
                         <input type="password" name="password" placeholder="Password" required />
                     </div>
-                    <button type="submit" class="btn solid">Login</button>
+                    <button type="submit" class="btn solid w-100">Login</button>
                     
                     <p class="social-text">Or Sign in with social platforms</p>
                     <div class="social-media">
@@ -76,21 +75,21 @@
 
                     <div class="input-field">
                         <i class="bi bi-person"></i>
-                        <input type="text" name="name" placeholder="Username" value="{{ old('name') }}" required />
+                        <input type="text" name="name" placeholder="Full Name" value="{{ old('name') }}" required />
                     </div>
                     <div class="input-field">
                         <i class="bi bi-envelope"></i>
-                        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required />
+                        <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}" required />
                     </div>
                     <div class="input-field">
-                        <i class="bi bi-lock"></i>
-                        <input type="password" name="password" placeholder="Password" required />
+                        <i class="bi bi-key"></i>
+                        <input type="password" name="password" placeholder="Create Password" required />
                     </div>
                     <div class="input-field">
-                        <i class="bi bi-lock-fill"></i>
+                        <i class="bi bi-key-fill"></i>
                         <input type="password" name="password_confirmation" placeholder="Confirm Password" required />
                     </div>
-                    <button type="submit" class="btn solid">Sign up</button>
+                    <button type="submit" class="btn solid w-100">Sign up</button>
                     
                     <p class="social-text">Or Sign up with social platforms</p>
                     <div class="social-media">

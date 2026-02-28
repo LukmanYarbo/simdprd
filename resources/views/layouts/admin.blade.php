@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="light">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,9 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -22,7 +20,7 @@
     <!-- Scripts -->
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
         })();
     </script>
@@ -67,8 +65,8 @@
             @include('layouts.partials.navbar')
 
             <!-- Marquee Running Text with Fade Effect -->
-            <div class="marquee-wrapper border-bottom" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
-                <div class="marquee-content py-2 px-3 text-primary fw-medium small" id="marqueeText">
+            <div class="marquee-wrapper border-bottom border-white border-opacity-10 bg-white bg-opacity-5" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                <div class="marquee-content py-2 px-3 fw-medium small" style="color: var(--bs-primary);" id="marqueeText">
                     Selamat Datang {{ auth()->check() ? auth()->user()->name : 'Guest' }} di Sistem Informasi Manajemen DPRD
                 </div>
             </div>
@@ -80,7 +78,9 @@
                         @yield('breadcrumbs')
                     </div>
                     @endif
-                    @yield('content')
+                    <div class="fade-in-up">
+                        @yield('content')
+                    </div>
                 </main>
             </div>
 

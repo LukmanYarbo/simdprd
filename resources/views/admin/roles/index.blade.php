@@ -2,25 +2,28 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Roles</h2>
-        <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle me-1"></i> Add Role
+    <div class="d-flex justify-content-between align-items-center mb-5 fade-in-up">
+        <h2 class="h3 fw-extrabold text-gradient mb-0">Security Roles</h2>
+        <a href="{{ route('admin.roles.create') }}" class="btn premium-gradient text-white border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
+            <i class="bi bi-shield-lock-fill me-2"></i> Add New Role
         </a>
     </div>
 
 
-    <div class="card border-0 shadow-sm">
+    <div class="card glass-card border-0 shadow-lg fade-in-up">
+        <div class="card-header py-4 bg-transparent border-bottom border-white border-opacity-10">
+            <h5 class="mb-0 fw-bold text-gradient">Role Configuration</h5>
+        </div>
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-body-tertiary">
+                    <thead>
                         <tr>
-                            <th class="ps-4">No</th>
-                            <th>Name</th>
-                            <th>Permissions</th>
-                            <th>Users Count</th>
-                            <th class="text-end pe-4">Action</th>
+                            <th class="ps-4" style="font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; color: #94a3b8; padding: 1.25rem 1rem;">No</th>
+                            <th style="font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; color: #94a3b8; padding: 1.25rem 1rem;">Role Name</th>
+                            <th style="font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; color: #94a3b8; padding: 1.25rem 1rem;">Permissions</th>
+                            <th style="font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; color: #94a3b8; padding: 1.25rem 1rem;">Users</th>
+                            <th class="text-end pe-4" style="font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; color: #94a3b8; padding: 1.25rem 1rem;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
