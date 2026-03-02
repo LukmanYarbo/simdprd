@@ -28,6 +28,9 @@ class RoleAndUserSeeder extends Seeder
             'tunjangan',
             'pegawai_asn',
             'surat_tugas',
+            'penanda_tangan',
+            'parameter_gaji',
+            'tarif_pajak',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];
@@ -62,6 +65,9 @@ class RoleAndUserSeeder extends Seeder
             'view tunjangan', 'create tunjangan', 'edit tunjangan',
             'view pegawai_asn', 'create pegawai_asn', 'edit pegawai_asn',
             'view surat_tugas', 'create surat_tugas', 'edit surat_tugas',
+            'view penanda_tangan', 'create penanda_tangan', 'edit penanda_tangan',
+            'view parameter_gaji', 'create parameter_gaji', 'edit parameter_gaji',
+            'view tarif_pajak', 'create tarif_pajak', 'edit tarif_pajak',
         ];
         // Filter permissions that actually exist to avoid errors if something went wrong
         $validOperatorPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $operatorPermissions)->get();
@@ -71,7 +77,7 @@ class RoleAndUserSeeder extends Seeder
         $userPermissions = [
             'view dashboard',
             'view anggota',
-            'view alat_kelengkapan', // Users usually can view master data
+            'view alat_kelengkapan',
             'view surat_keputusan',
             'view pemda',
             'view jabatan_asn',
@@ -79,6 +85,9 @@ class RoleAndUserSeeder extends Seeder
             'view tunjangan',
             'view pegawai_asn',
             'view surat_tugas',
+            'view penanda_tangan',
+            'view parameter_gaji',
+            'view tarif_pajak',
         ];
         $validUserPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $userPermissions)->get();
         $userRole->syncPermissions($validUserPermissions);
