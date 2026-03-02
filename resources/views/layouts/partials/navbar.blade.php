@@ -1,8 +1,24 @@
 <nav class="navbar navbar-expand-lg px-4 py-3 sticky-top">
     <div class="d-flex align-items-center w-100 justify-content-between">
-        <button class="btn btn-link link-body-emphasis p-0 me-3" id="sidebarCollapse">
-            <i class="bi bi-list fs-3"></i>
-        </button>
+        <div class="d-flex align-items-center">
+            <button class="btn btn-link link-body-emphasis p-0 me-3" id="sidebarCollapse">
+                <i class="bi bi-list fs-3"></i>
+            </button>
+            
+            @php
+                $pemda = \App\Models\Pemda::first();
+            @endphp
+            @if($pemda)
+            <div class="d-flex align-items-center ms-2 px-3 py-1">
+                @if($pemda->logo_pemda)
+                    <img src="{{ Storage::url($pemda->logo_pemda) }}" alt="Logo {{ $pemda->namapemda }}" width="28" height="28" class="object-fit-contain me-2">
+                @else
+                    <i class="bi bi-bank text-primary fs-5 me-2"></i>
+                @endif
+                <span class="fw-bold fs-6 text-gradient">{{ $pemda->namapemda }}</span>
+            </div>
+            @endif
+        </div>
         <div class="d-flex align-items-center gap-3">
             <!-- Theme Toggle -->
             <button class="btn btn-link nav-link link-body-emphasis" id="theme-toggle" title="Toggle theme">

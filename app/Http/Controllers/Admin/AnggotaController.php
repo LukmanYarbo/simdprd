@@ -186,6 +186,23 @@ class AnggotaController extends Controller implements HasMiddleware
         return view('admin.anggota.show', compact('anggota'));
     }
 
+    public function print($id)
+    {
+        $anggota = Anggota::with([
+            'agama', 
+            'statusKawin', 
+            'statusKeanggotaan', 
+            'jabatan', 
+            'keluarga', 
+            'pendidikan', 
+            'jabatanAnggota.jabatanAlatKelengkapan'
+        ])->findOrFail($id);
+        
+        $pemda = \App\Models\Pemda::first();
+        
+        return view('admin.anggota.print', compact('anggota', 'pemda'));
+    }
+
     public function edit(Anggota $anggota)
     {
         $agamas = Agama::all();

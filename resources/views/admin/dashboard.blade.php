@@ -108,68 +108,52 @@
         <div class="col-12 col-xl-8">
             <div class="card glass-card border-0 glow-shadow fade-in-up" style="animation-delay: 0.5s;">
                 <div class="card-header bg-transparent border-bottom border-white border-opacity-10 py-4 px-4">
-                     <h5 class="mb-0 fw-bold text-gradient">Recent System Activity</h5>
+                     <h5 class="mb-0 fw-bold text-gradient">Anggota Baru Ditambahkan</h5>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="bg-body-tertiary">
                                 <tr>
-                                    <th class="border-0 ps-4">User</th>
-                                    <th class="border-0">Action</th>
-                                    <th class="border-0">Date</th>
+                                    <th class="border-0 ps-4">Nama Anggota</th>
+                                    <th class="border-0">Status / Partai</th>
+                                    <th class="border-0">Tanggal Ditambahkan</th>
                                     <th class="border-0 pe-4 text-end">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($recentAnggota ?? [] as $anggota)
                                 <tr>
                                     <td class="ps-4">
                                         <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" class="rounded-circle me-3" width="36" height="36" alt="">
+                                            @if($anggota->foto_anggota)
+                                                <img src="{{ Storage::url($anggota->foto_anggota) }}" class="rounded-circle me-3 object-fit-cover" width="36" height="36" alt="{{ $anggota->nama_anggota }}">
+                                            @else
+                                                <img src="https://ui-avatars.com/api/?name={{ urlencode($anggota->nama_anggota) }}&background=random" class="rounded-circle me-3" width="36" height="36" alt="{{ $anggota->nama_anggota }}">
+                                            @endif
                                             <div>
-                                                <h6 class="mb-0">John Doe</h6>
-                                                <small class="text-muted">Editor</small>
+                                                <h6 class="mb-0 fw-bold">{{ $anggota->nama_anggota }}</h6>
+                                                <small class="text-muted">{{ $anggota->jabatan ? $anggota->jabatan->nama_jabatan : 'Anggota DPRD' }}</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>Updated documentation</td>
-                                    <td>Oct 24, 2024</td>
-                                    <td class="pe-4 text-end"><span class="badge bg-success-subtle text-success">Completed</span></td>
+                                    <td>
+                                        <span class="badge bg-secondary-subtle text-secondary border border-secondary border-opacity-25">{{ $anggota->statusKeanggotaan ? $anggota->statusKeanggotaan->nama_status : '-' }}</span>
+                                    </td>
+                                    <td>{{ $anggota->created_at->format('M d, Y') }}</td>
+                                    <td class="pe-4 text-end"><span class="badge bg-success-subtle text-success">Aktif</span></td>
                                 </tr>
+                                @empty
                                 <tr>
-                                    <td class="ps-4">
-                                         <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Jane+Smith&background=random" class="rounded-circle me-3" width="36" height="36" alt="">
-                                            <div>
-                                                <h6 class="mb-0">Jane Smith</h6>
-                                                <small class="text-muted">Admin</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>System update</td>
-                                    <td>Oct 23, 2024</td>
-                                    <td class="pe-4 text-end"><span class="badge bg-warning-subtle text-warning">Pending</span></td>
+                                    <td colspan="4" class="text-center py-4 text-muted">Belum ada data anggota.</td>
                                 </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Alex+Johnson&background=random" class="rounded-circle me-3" width="36" height="36" alt="">
-                                            <div>
-                                                <h6 class="mb-0">Alex Johnson</h6>
-                                                <small class="text-muted">User</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Login attempt</td>
-                                    <td>Oct 23, 2024</td>
-                                    <td class="pe-4 text-end"><span class="badge bg-danger-subtle text-danger">Failed</span></td>
-                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-top border-white border-opacity-10 py-3 text-center">
-                    <a href="#" class="btn btn-link text-primary text-decoration-none fw-semibold small">View All Logs <i class="bi bi-arrow-right ms-1"></i></a>
+                    <a href="{{ route('admin.anggota.index') }}" class="btn btn-link text-primary text-decoration-none fw-semibold small px-4 py-2 rounded-pill hover-bg-primary-subtle transition-base">Lihat Semua Anggota <i class="bi bi-arrow-right ms-2 fs-6"></i></a>
                 </div>
             </div>
         </div>

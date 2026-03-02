@@ -212,6 +212,59 @@
             </div>
         </div>
 
+        <!-- Full Width Column (Pendidikan) -->
+        <div class="col-12">
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-transparent border-0 py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-mortarboard me-2"></i>Riwayat Pendidikan</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="bg-body-tertiary text-muted">
+                                <tr>
+                                    <th class="border-0 ps-3 rounded-start">Tingkat</th>
+                                    <th class="border-0">Tempat Pendidikan</th>
+                                    <th class="border-0">Tahun</th>
+                                    <th class="border-0">Detail</th>
+                                    <th class="border-0 rounded-end">No. Ijazah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($anggota->pendidikan as $p)
+                                <tr>
+                                    <td class="ps-3 border-bottom-0">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">{{ $p->jenisPendidikan->nama }}</span>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <div class="fw-semibold">{{ $p->tempat_pendidikan }}</div>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        {{ $p->tahun_masuk }} - {{ $p->tahun_lulus }}
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <div class="small text-muted">Jurusan: {{ $p->jurusan ?? '-' }}</div>
+                                        <div class="small text-muted">Prodi: {{ $p->program_studi ?? '-' }}</div>
+                                         <div class="small text-muted">Fakultas: {{ $p->fakultas ?? '-' }}</div>
+                                    </td>
+                                    <td class="border-bottom-0 text-muted">
+                                        {{ $p->no_ijazah ?? '-' }}
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-3 border-bottom-0">
+                                        Belum ada data pendidikan.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Full Width Column (Keluarga) -->
         <div class="col-12">
             <div class="card border-0 shadow-lg mb-4">

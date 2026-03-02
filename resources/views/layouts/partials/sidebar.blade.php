@@ -14,11 +14,11 @@
 
         <li>
             <a href="#masterDataSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-               aria-expanded="{{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.surat-tugas.*') || request()->routeIs('admin.penanda-tangan.*') || request()->routeIs('admin.tunjangan.*') ? 'true' : 'false' }}">
+               aria-expanded="{{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.surat-tugas.*') || request()->routeIs('admin.penanda-tangan.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.parameter-gaji.*') ? 'true' : 'false' }}">
                 <span><i class="bi bi-folder2-open me-2"></i> Master Data</span>
                 <i class="bi bi-chevron-down small"></i>
             </a>
-            <ul class="collapse {{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.surat-tugas.*') || request()->routeIs('admin.penanda-tangan.*') || request()->routeIs('admin.tunjangan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
+            <ul class="collapse {{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.surat-tugas.*') || request()->routeIs('admin.penanda-tangan.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.parameter-gaji.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
                 <li>
                     <a href="{{ route('admin.pemda.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pemda.*') ? 'active' : '' }}">
                         <i class="bi bi-bank me-2"></i> Data Pemda
@@ -69,6 +69,16 @@
                     </a>
                 </li>
                 @endcan
+                <li>
+                    <a href="{{ route('admin.parameter-gaji.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.parameter-gaji.*') ? 'active' : '' }}">
+                        <i class="bi bi-calculator me-2"></i> Parameter Gaji
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.tarif-pajak.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.tarif-pajak.*') ? 'active' : '' }}">
+                        <i class="bi bi-percent me-2"></i> Tarif Pajak
+                    </a>
+                </li>
             </ul>
         </li>
 

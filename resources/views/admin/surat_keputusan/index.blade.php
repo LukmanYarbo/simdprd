@@ -46,6 +46,19 @@
             </div>
         </div>
     </div>
+
+    {{-- PDF Preview Panel --}}
+    <div class="card border-0 shadow-lg mt-4" id="pdfPreviewCard" style="display:none;">
+        <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
+            <h6 class="m-0 fw-bold text-danger"><i class="bi bi-file-earmark-pdf me-2"></i>Preview SK: <span id="pdfTitle"></span></h6>
+            <button class="btn btn-sm btn-outline-secondary" onclick="closePdfPreview()">
+                <i class="bi bi-x-lg me-1"></i>Tutup
+            </button>
+        </div>
+        <div class="card-body p-0">
+            <iframe id="pdfFrame" src="" style="width:100%; height:80vh; border:none;"></iframe>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -235,6 +248,19 @@ $(function() {
             url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json',
         }
     });
+
+    window.previewPdf = function(url, title) {
+        var card = document.getElementById('pdfPreviewCard');
+        document.getElementById('pdfTitle').textContent = title;
+        document.getElementById('pdfFrame').src = url;
+        card.style.display = 'block';
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    window.closePdfPreview = function() {
+        document.getElementById('pdfPreviewCard').style.display = 'none';
+        document.getElementById('pdfFrame').src = '';
+    };
 
     const modal = new bootstrap.Modal(document.getElementById('modalSuratKeputusan'));
     

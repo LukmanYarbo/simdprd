@@ -11,7 +11,7 @@ class Show extends Component
 
     public function mount(Anggota $anggota)
     {
-        $this->anggota = $anggota->load(['agama', 'statusKawin', 'statusKeanggotaan', 'jabatan', 'keluarga.ikatanKeluarga']);
+        $this->anggota = $anggota->load(['agama', 'statusKawin', 'statusKeanggotaan', 'jabatan', 'keluarga.ikatanKeluarga', 'pendidikan.jenisPendidikan']);
     }
 
     public function render()

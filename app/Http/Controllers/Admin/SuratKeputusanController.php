@@ -47,9 +47,11 @@ class SuratKeputusanController extends Controller implements HasMiddleware
                 })
                 ->addColumn('file_download', function($row){
                     if($row->file_sk){
-                        return '<a href="'.asset('storage/'.$row->file_sk).'" target="_blank" class="btn btn-sm btn-info text-white"><i class="bi bi-download"></i> Unduh</a>';
+                        $url = asset('storage/'.$row->file_sk);
+                        $noSk = htmlspecialchars($row->no_sk, ENT_QUOTES);
+                        return '<button type="button" onclick="previewPdf(\''.addslashes($url).'\', \''.addslashes($row->no_sk).'\')" class="btn btn-sm btn-outline-danger"><i class="bi bi-file-earmark-pdf me-1"></i>Lihat Dokumen</button>';
                     }
-                    return '-';
+                    return '<span class="text-muted small">-</span>';
                 })
                 ->addColumn('action', function($row){
                     $user = auth()->user();

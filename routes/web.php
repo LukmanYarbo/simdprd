@@ -14,15 +14,13 @@ Route::post('logout', [LoginController::class , 'logout'])->name('logout');
 Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 
 Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        }
-        )->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
         Route::resource('permissions', \App\Http\Controllers\Admin\PermissionController::class);
         Route::post('anggota/validate-step', [\App\Http\Controllers\Admin\AnggotaController::class , 'validateStep'])->name('anggota.validate-step');
+        Route::get('anggota/{id}/print', [\App\Http\Controllers\Admin\AnggotaController::class , 'print'])->name('anggota.print');
         Route::resource('anggota', \App\Http\Controllers\Admin\AnggotaController::class)->parameters([
             'anggota' => 'anggota'
         ]);
@@ -72,6 +70,16 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::get('penanda-tangan/search-asn', [\App\Http\Controllers\Admin\PenandaTanganController::class, 'searchAsn'])->name('penanda-tangan.search-asn');
         Route::resource('penanda-tangan', \App\Http\Controllers\Admin\PenandaTanganController::class)->parameters([
             'penanda-tangan' => 'penandaTangan'
+        ]);
+
+        // Parameter Gaji
+        Route::resource('parameter-gaji', \App\Http\Controllers\Admin\ParameterGajiController::class)->parameters([
+            'parameter-gaji' => 'parameterGaji'
+        ]);
+
+        // Tarif Pajak
+        Route::resource('tarif-pajak', \App\Http\Controllers\Admin\TarifPajakController::class)->parameters([
+            'tarif-pajak' => 'tarifPajak'
         ]);
     });
 
