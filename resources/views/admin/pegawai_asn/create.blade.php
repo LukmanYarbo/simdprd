@@ -120,13 +120,9 @@
                             </div>
 
                             <div class="mb-3">
-                            <div class="mb-3">
                                 <label for="id_jabatan" class="form-label">Jabatan <span class="text-danger">*</span></label>
-                                <select class="form-select select2 @error('id_jabatan') is-invalid @enderror" id="id_jabatan" name="id_jabatan" style="width: 100%" required>
-                                    <option value="">Pilih Jabatan...</option>
-                                    @foreach($jabatan as $j)
-                                        <option value="{{ $j->id }}" {{ old('id_jabatan') == $j->id ? 'selected' : '' }}>{{ $j->nama_jabatan }}</option>
-                                    @endforeach
+                                <select class="form-select @error('id_jabatan') is-invalid @enderror" id="id_jabatan" name="id_jabatan" style="width: 100%" required>
+                                    <option value="">-- Pilih SKPD Terlebih Dahulu --</option>
                                 </select>
                                 @error('id_jabatan') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
@@ -224,11 +220,34 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Jabatan Select2
+        // Jabatan Select2 with AJAX filtering
         $('#id_jabatan').select2({
             theme: 'bootstrap-5',
             placeholder: 'Pilih Jabatan...',
-            allowClear: true
+            allowClear: true,
+            ajax: {
+                url: '{{ route("admin.jabatan-asn.search-by-skpd") }}',
+                dataType: 'json',
+                delay: 300,
+                data: function(params) {
+                    return {
+                        q: params.term || '',
+                        id_skpd: $('#id_skpd').val()
+                    };
+                },
+                processResults: function(data) {
+                    return { results: data.results };
+                },
+                cache: true
+            }
+        });
+
+        // Reset Jabatan when SKPD changes
+        $('#id_skpd').on('change', function() {
+            $('#id_jabatan').val(null).trigger('change');
+            if ($(this).val()) {
+                $('#id_jabatan').select2('open');
+            }
         });
 
         // SKPD Select2 AJAX

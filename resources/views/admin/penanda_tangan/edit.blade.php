@@ -141,8 +141,16 @@
     $(document).ready(function () {
 
         function toggleInputs() {
-            var skpdText = $('#id_skpd').select2('data')[0] ? $('#id_skpd').select2('data')[0].text : '';
             var skpdVal = $('#id_skpd').val();
+            var skpdText = '';
+
+            // Try Select2 data first, fallback to raw option text
+            var select2Data = $('#id_skpd').select2('data');
+            if (select2Data && select2Data[0] && select2Data[0].text) {
+                skpdText = $.trim(select2Data[0].text);
+            } else {
+                skpdText = $.trim($('#id_skpd option:selected').text());
+            }
 
             if (skpdVal) {
                 if (skpdText === 'Dewan Perwakilan Rakyat Daerah') {

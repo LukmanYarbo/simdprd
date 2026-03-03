@@ -8,6 +8,7 @@ use App\Models\Agama;
 use App\Models\StatusKawin;
 use App\Models\StatusKeanggotaan;
 use App\Models\JabatanDPRD;
+use App\Models\Skpd;
 use App\Http\Requests\Admin\StoreAnggotaRequest;
 use App\Http\Requests\Admin\UpdateAnggotaRequest;
 use Illuminate\Http\Request;
@@ -165,7 +166,8 @@ class AnggotaController extends Controller implements HasMiddleware
         $statusKawins = StatusKawin::all();
         $statusKeanggotaans = StatusKeanggotaan::all();
         $jabatans = JabatanDPRD::all();
-        return view('admin.anggota.create', compact('agamas', 'statusKawins', 'statusKeanggotaans', 'jabatans'));
+        $skpds = Skpd::where('namaskpd', 'Dewan Perwakilan Rakyat Daerah')->get();
+        return view('admin.anggota.create', compact('agamas', 'statusKawins', 'statusKeanggotaans', 'jabatans', 'skpds'));
     }
 
     public function store(StoreAnggotaRequest $request)
@@ -209,7 +211,8 @@ class AnggotaController extends Controller implements HasMiddleware
         $statusKawins = StatusKawin::all();
         $statusKeanggotaans = StatusKeanggotaan::all();
         $jabatans = JabatanDPRD::all();
-        return view('admin.anggota.edit', compact('anggota', 'agamas', 'statusKawins', 'statusKeanggotaans', 'jabatans'));
+        $skpds = Skpd::where('namaskpd', 'Dewan Perwakilan Rakyat Daerah')->get();
+        return view('admin.anggota.edit', compact('anggota', 'agamas', 'statusKawins', 'statusKeanggotaans', 'jabatans', 'skpds'));
     }
 
     public function update(UpdateAnggotaRequest $request, Anggota $anggota)

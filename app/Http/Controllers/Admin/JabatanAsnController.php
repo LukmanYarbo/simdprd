@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JabatanAsn;
 use App\Models\Esselon;
+use App\Models\Skpd;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -24,13 +25,14 @@ class JabatanAsnController extends Controller implements HasMiddleware
 
     public function index()
     {
-        $jabatan = JabatanAsn::with('esselon')
+        $jabatan = JabatanAsn::with(['esselon', 'skpd'])
             ->join('esselons', 'jabatan_asns.id_esselon', '=', 'esselons.id')
             ->orderBy('esselons.id', 'asc')
             ->select('jabatan_asns.*') // Ensure we select jabatan fields to avoid id collision
             ->paginate(10);
         $esselon = Esselon::all();
-        return view('admin.jabatan_asn.index', compact('jabatan', 'esselon'));
+        $skpd = Skpd::all();
+        return view('admin.jabatan_asn.index', compact('jabatan', 'esselon', 'skpd'));
     }
 
     public function store(Request $request)
@@ -73,5 +75,33 @@ class JabatanAsnController extends Controller implements HasMiddleware
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
+    }
+
+    public function searchBySkpd(Request $request)
+    {
+        $id_skpd = $request->id_skpd;
+        $search = $request->q;
+
+        $query = JabatanAsn::query();
+
+        if ($id_skpd) {
+            $query->where('id_skpd', $id_skpd);
+        }
+
+        if ($search) {
+            $query->where('nama_jabatan', 'LIKE', "%{$search}%");
+        }
+
+        $jabatans = $query->limit(20)->get();
+
+        $results = [];
+        foreach ($jabatans as $jabatan) {
+            $results[] = [
+                'id' => $jabatan->id,
+                'text' => $jabatan->nama_jabatan
+            ];
+        }
+
+        return response()->json(['results' => $results]);
     }
 }

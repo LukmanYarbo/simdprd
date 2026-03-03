@@ -31,6 +31,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Jabatan</th>
+                            <th>SKPD</th>
                             <th>Esselon</th>
                             <th class="text-center" style="width: 15%">Aksi</th>
                         </tr>
@@ -40,9 +41,10 @@
                         <tr>
                             <td>{{ $loop->iteration + ($jabatan->currentPage() - 1) * $jabatan->perPage() }}</td>
                             <td>{{ $item->nama_jabatan }}</td>
+                            <td>{{ $item->skpd->namaskpd ?? '-' }}</td>
                             <td>{{ $item->esselon->nama ?? '-' }}</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-warning py-0 px-2" style="font-size: 0.75rem;" onclick="editJabatan({{ $item->id }}, '{{ $item->nama_jabatan }}', '{{ $item->id_esselon }}')">
+                                <button class="btn btn-sm btn-warning py-0 px-2" style="font-size: 0.75rem;" onclick="editJabatan({{ $item->id }}, '{{ $item->nama_jabatan }}', '{{ $item->id_esselon }}', '{{ $item->id_skpd }}')">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                                 <button class="btn btn-sm btn-danger py-0 px-2" style="font-size: 0.75rem;" onclick="confirmDelete({{ $item->id }})">
@@ -56,7 +58,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada data jabatan.</td>
+                            <td colspan="5" class="text-center">Tidak ada data jabatan.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -87,6 +89,15 @@
                     <div class="mb-3">
                         <label for="nama_jabatan" class="form-label">Nama Jabatan</label>
                         <input type="text" class="form-control" id="nama_jabatan" name="nama_jabatan" required>
+                    </div>
+                     <div class="mb-3">
+                        <label for="id_skpd" class="form-label">SKPD</label>
+                        <select class="form-select" id="id_skpd" name="id_skpd">
+                            <option value="">Pilih SKPD (Opsional)</option>
+                            @foreach($skpd as $s)
+                                <option value="{{ $s->id }}">{{ $s->namaskpd }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="id_esselon" class="form-label">Esselon</label>
@@ -126,11 +137,12 @@
         document.getElementById('formJabatanAsn').action = "{{ route('admin.jabatan-asn.store') }}";
         document.getElementById('method-field').innerHTML = '';
         document.getElementById('nama_jabatan').value = '';
+        document.getElementById('id_skpd').value = '';
         document.getElementById('id_esselon').value = '';
         document.getElementById('modalJabatanAsnLabel').innerText = 'Tambah Jabatan ASN';
     }
 
-    function editJabatan(id, nama, esselonId) {
+    function editJabatan(id, nama, esselonId, skpdId) {
         // Reset form first to clear any potential issues
         resetForm();
         
@@ -140,6 +152,7 @@
         document.getElementById('formJabatanAsn').action = url;
         document.getElementById('method-field').innerHTML = '<input type="hidden" name="_method" value="PUT">';
         document.getElementById('nama_jabatan').value = nama;
+        document.getElementById('id_skpd').value = skpdId;
         document.getElementById('id_esselon').value = esselonId;
         document.getElementById('modalJabatanAsnLabel').innerText = 'Edit Jabatan ASN';
         

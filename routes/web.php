@@ -54,6 +54,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         }
         );
 
+        Route::get('jabatan-asn/search-by-skpd', [\App\Http\Controllers\Admin\JabatanAsnController::class, 'searchBySkpd'])->name('jabatan-asn.search-by-skpd');
         Route::resource('jabatan-asn', \App\Http\Controllers\Admin\JabatanAsnController::class);
         Route::resource('pegawai-asn', \App\Http\Controllers\Admin\PegawaiAsnController::class);
         Route::resource('skpd', \App\Http\Controllers\Admin\SkpdController::class);

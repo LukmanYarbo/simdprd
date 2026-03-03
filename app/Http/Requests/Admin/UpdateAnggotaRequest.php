@@ -24,6 +24,7 @@ class UpdateAnggotaRequest extends FormRequest
         $anggotaId = $this->route('anggota')->id;
 
         return [
+            'id_skpd' => ['nullable', 'exists:skpds,id'],
             'nik' => ['required', 'string', 'unique:anggota,nik,' . $anggotaId],
             'nokk' => ['required', 'string'],
             'nama_anggota' => ['required', 'string', 'max:255'],

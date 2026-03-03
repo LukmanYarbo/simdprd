@@ -22,6 +22,7 @@ class StoreAnggotaRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id_skpd' => ['nullable', 'exists:skpds,id'],
             'nik' => ['required', 'string', 'unique:anggota,nik'],
             'nokk' => ['required', 'string'],
             'nama_anggota' => ['required', 'string', 'max:255'],

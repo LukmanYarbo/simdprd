@@ -198,6 +198,16 @@
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
+                        <div class="col-12">
+                            <label for="id_skpd" class="form-label">SKPD</label>
+                            <select class="form-select @error('id_skpd') is-invalid @enderror" id="id_skpd" name="id_skpd">
+                                <option value="" disabled selected>Pilih SKPD</option>
+                                @foreach($skpds as $skpd)
+                                    <option value="{{ $skpd->id }}" {{ old('id_skpd') == $skpd->id ? 'selected' : '' }}>{{ $skpd->namaskpd }}</option>
+                                @endforeach
+                            </select>
+                            @error('id_skpd')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
                         <div class="col-md-6">
                             <label for="id_status_keanggotaan" class="form-label">Status Keanggotaan</label>
                             <select class="form-select @error('id_status_keanggotaan') is-invalid @enderror" id="id_status_keanggotaan" name="id_status_keanggotaan" required>

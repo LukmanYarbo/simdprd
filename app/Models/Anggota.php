@@ -12,6 +12,7 @@ class Anggota extends Model
     protected $table = 'anggota';
 
     protected $fillable = [
+        'id_skpd',
         'nik',
         'nokk',
         'nama_anggota',
@@ -51,6 +52,11 @@ class Anggota extends Model
         'tgl_mulai' => 'date',
         'tgl_berhenti' => 'date',
     ];
+
+    public function skpd()
+    {
+        return $this->belongsTo(Skpd::class, 'id_skpd');
+    }
 
     public function agama()
     {
