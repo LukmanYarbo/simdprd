@@ -66,11 +66,11 @@
         </li>
         <li>
             <a href="#masterGajiSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-               aria-expanded="{{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') ? 'true' : 'false' }}">
+               aria-expanded="{{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.potongan.*') ? 'true' : 'false' }}">
                 <span><i class="bi bi-wallet2 me-2"></i> Master Gaji dan Tunjangan</span>
                 <i class="bi bi-chevron-down small"></i>
             </a>
-            <ul class="collapse {{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterGajiSubmenu">
+            <ul class="collapse {{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.potongan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterGajiSubmenu">
                 @can('view parameter_gaji')
                 <li>
                     <a href="{{ route('admin.parameter-gaji.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.parameter-gaji.*') ? 'active' : '' }}">
@@ -89,6 +89,13 @@
                 <li>
                     <a href="{{ route('admin.tunjangan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.tunjangan.*') ? 'active' : '' }}">
                         <i class="bi bi-cash-stack me-2"></i> Data Tunjangan
+                    </a>
+                </li>
+                @endcan
+                @can('view potongan')
+                <li>
+                    <a href="{{ route('admin.potongan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.potongan.*') ? 'active' : '' }}">
+                        <i class="bi bi-scissors me-2"></i> Data Potongan
                     </a>
                 </li>
                 @endcan

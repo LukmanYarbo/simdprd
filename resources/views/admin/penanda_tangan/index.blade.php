@@ -49,6 +49,7 @@
                                                 'Surat Tugas'     => 'bg-success-subtle text-success border-success-subtle',
                                                 'SPPD'            => 'bg-warning-subtle text-warning border-warning-subtle',
                                                 'Surat Keputusan' => 'bg-primary-subtle text-primary border-primary-subtle',
+                                                'Pengajuan Gaji'  => 'bg-info-subtle text-info border-info-subtle',
                                                 default           => 'bg-secondary-subtle text-secondary border-secondary-subtle',
                                             };
                                         @endphp

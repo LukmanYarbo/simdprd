@@ -106,7 +106,7 @@
                             @endphp
                             <select name="jenis_dokumen[]" id="jenis_dokumen"
                                 class="form-select @error('jenis_dokumen') is-invalid @enderror" multiple required>
-                                @foreach(['Surat Tugas', 'SPPD', 'Surat Keputusan'] as $jenis)
+                                @foreach(['Surat Tugas', 'SPPD', 'Surat Keputusan','Pengajuan Gaji'] as $jenis)
                                     <option value="{{ $jenis }}"
                                         {{ (is_array(old('jenis_dokumen')) && in_array($jenis, old('jenis_dokumen'))) || (!old('jenis_dokumen') && in_array($jenis, $currentJenis)) ? 'selected' : '' }}>
                                         {{ $jenis }}

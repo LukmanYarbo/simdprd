@@ -57,7 +57,7 @@ class PenandaTanganController extends Controller implements HasMiddleware
     {
         $validated = $request->validate([
             'jenis_dokumen'  => 'required|array',
-            'jenis_dokumen.*' => 'in:Surat Tugas,SPPD,Surat Keputusan',
+            'jenis_dokumen.*' => 'in:Surat Tugas,SPPD,Surat Keputusan,Pengajuan Gaji',
             'id_anggota'     => 'nullable|exists:anggota,id',
             'id_skpd'        => 'nullable|exists:skpds,id',
             'id_pegawai_asn' => 'nullable|exists:pegawai_asns,id',
@@ -120,7 +120,7 @@ class PenandaTanganController extends Controller implements HasMiddleware
     {
         $validated = $request->validate([
             'jenis_dokumen'  => 'required|array',
-            'jenis_dokumen.*' => 'in:Surat Tugas,SPPD,Surat Keputusan',
+            'jenis_dokumen.*' => 'in:Surat Tugas,SPPD,Surat Keputusan,Pengajuan Gaji',
             'id_anggota'     => 'nullable|exists:anggota,id',
             'id_skpd'        => 'nullable|exists:skpds,id',
             'id_pegawai_asn' => 'nullable|exists:pegawai_asns,id',

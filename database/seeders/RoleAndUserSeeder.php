@@ -31,6 +31,7 @@ class RoleAndUserSeeder extends Seeder
             'penanda_tangan',
             'parameter_gaji',
             'tarif_pajak',
+            'potongan',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];

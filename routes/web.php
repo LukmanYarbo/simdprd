@@ -82,6 +82,9 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('tarif-pajak', \App\Http\Controllers\Admin\TarifPajakController::class)->parameters([
             'tarif-pajak' => 'tarifPajak'
         ]);
+
+        // Potongan
+        Route::resource('potongan', \App\Http\Controllers\Admin\PotonganController::class);
     });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {
