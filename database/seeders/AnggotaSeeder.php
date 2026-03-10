@@ -20,8 +20,8 @@ class AnggotaSeeder extends Seeder
 
         // 2. Create Wakil Ketua (2 people)
         $wakilKetuaNames = [
-            'FIKRI GAM',
-            'ABDUL MULO DAENG MULISA',
+            'DEPRI PONTOH',
+            'SAIFUL AMBARAK',
         ];
 
         foreach ($wakilKetuaNames as $name) {
@@ -41,7 +41,7 @@ class AnggotaSeeder extends Seeder
             'MASDIYANI LANTANA',
             'TIA APRILIA MODANGGU',
             'RAMLAN TINAMONGA',
-            'DEPRI PONTOH',
+            'FIKRI GAM',
             'SEM HASSAN',
             'MEIDI PONTOH',
             'ANDRIANSAH SEPTIAN PAKAYA',
@@ -49,7 +49,7 @@ class AnggotaSeeder extends Seeder
             'DONAL LAMUNTE',
             'MARDAN UMAR',
             'DEWI ZANDRA ASTUTI MONDO',
-            'SAIFUL AMBARAK',
+            'ABDUL MOLOH DAENG MULISA',
         ];
 
         foreach ($anggotaNames as $name) {
