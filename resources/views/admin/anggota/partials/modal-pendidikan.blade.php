@@ -11,7 +11,7 @@
             <div class="modal-body p-4">
                 <div class="row">
                     <!-- Form Input -->
-                    <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="col-12 mb-4">
                         <div class="card bg-body-tertiary border-0">
                             <div class="card-body">
                                 <h6 class="fw-bold mb-3">Form Pendidikan</h6>
@@ -20,63 +20,67 @@
                                     <input type="hidden" id="id_pendidikan" name="id">
                                     <input type="hidden" id="id_anggota_pendidikan" name="id_anggota">
                                     
-                                    <div class="mb-2">
-                                        <label class="form-label small">Tingkat Pendidikan <span class="text-danger">*</span></label>
-                                        <select class="form-select form-select-sm" id="id_jenis_pendidikan" name="id_jenis_pendidikan" required></select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Nama Institusi <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control form-control-sm" id="tempat_pendidikan" name="tempat_pendidikan" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="row g-2 mb-2">
-                                        <div class="col-6">
+                                    <div class="row g-3">
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label small">Tingkat Pendidikan <span class="text-danger">*</span></label>
+                                            <select class="form-select form-select-sm" id="id_jenis_pendidikan" name="id_jenis_pendidikan" required></select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label small">Nama Institusi <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control form-control-sm" id="tempat_pendidikan" name="tempat_pendidikan" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-3 mb-2">
                                             <label class="form-label small">Thn Masuk</label>
                                             <input type="number" class="form-control form-control-sm" id="tahun_masuk" name="tahun_masuk" placeholder="Ex: 2010">
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-3 mb-2">
                                             <label class="form-label small">Thn Lulus</label>
                                             <input type="number" class="form-control form-control-sm" id="tahun_lulus" name="tahun_lulus" placeholder="Ex: 2014">
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">No. Induk / NIM</label>
-                                        <input type="text" class="form-control form-control-sm" id="no_induk" name="no_induk">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Jurusan</label>
-                                        <input type="text" class="form-control form-control-sm" id="jurusan" name="jurusan">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Program Studi</label>
-                                        <input type="text" class="form-control form-control-sm" id="program_studi" name="program_studi">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Fakultas</label>
-                                        <input type="text" class="form-control form-control-sm" id="fakultas" name="fakultas">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">No. Ijazah</label>
-                                        <input type="text" class="form-control form-control-sm" id="no_ijazah" name="no_ijazah">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label small">File Ijazah (PDF/JPG)</label>
-                                        <input type="file" class="form-control form-control-sm" id="file_ijazah" name="file_ijazah">
-                                        <div class="form-text small" id="current_file_ijazah"></div>
-                                        <div class="invalid-feedback"></div>
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label small">No. Induk / NIM</label>
+                                            <input type="text" class="form-control form-control-sm" id="no_induk" name="no_induk">
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label class="form-label small">Jurusan</label>
+                                            <input type="text" class="form-control form-control-sm" id="jurusan" name="jurusan">
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label class="form-label small">Program Studi</label>
+                                            <input type="text" class="form-control form-control-sm" id="program_studi" name="program_studi">
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label class="form-label small">Fakultas</label>
+                                            <input type="text" class="form-control form-control-sm" id="fakultas" name="fakultas">
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label small">No. Ijazah</label>
+                                            <input type="text" class="form-control form-control-sm" id="no_ijazah" name="no_ijazah">
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label small">File Ijazah (PDF/JPG)</label>
+                                            <input type="file" class="form-control form-control-sm" id="file_ijazah" name="file_ijazah">
+                                            <div class="form-text small" id="current_file_ijazah"></div>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-end gap-2">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary border" onclick="resetFormPendidikan()">Reset</button>
-                                        <button type="submit" class="btn btn-sm btn-primary" id="btnSavePendidikan"><i class="bi bi-plus-lg"></i> Tambah</button>
+                                    <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+                                        <button type="button" class="btn btn-light px-4 rounded-pill fw-medium me-2 transition-base d-flex align-items-center" onclick="resetFormPendidikan()">
+                                            <i class="bi bi-arrow-counterclockwise fs-5 me-2 text-secondary"></i> Batal / Reset
+                                        </button>
+                                        <button type="submit" class="btn btn-primary px-4 rounded-pill fw-medium shadow-sm transition-base d-flex align-items-center" id="btnSavePendidikan">
+                                            <i class="bi bi-save fs-5 me-2"></i> Simpan Data
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -84,24 +88,30 @@
                     </div>
 
                     <!-- List Data -->
-                    <div class="col-lg-8">
-                        <h6 class="fw-bold mb-3">Ryawat Pendidikan</h6>
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0" id="tablePendidikanList">
-                                <thead class="bg-body-tertiary">
-                                    <tr>
-                                        <th>Tingkat</th>
-                                        <th>Institusi</th>
-                                        <th>Thn Lulus</th>
-                                        <th>Jurusan</th>
-                                        <th>Ijazah</th>
-                                        <th class="text-end">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Populated via JS -->
-                                </tbody>
-                            </table>
+                    <div class="col-12 mt-2">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-transparent py-3">
+                                <h6 class="fw-bold mb-0">Riwayat Pendidikan</h6>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0" id="tablePendidikanList">
+                                        <thead class="bg-body-tertiary">
+                                            <tr>
+                                                <th class="ps-4">Tingkat</th>
+                                                <th>Institusi</th>
+                                                <th>Thn Lulus</th>
+                                                <th>Jurusan</th>
+                                                <th>Ijazah</th>
+                                                <th class="text-end pe-4">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Populated via JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -161,9 +171,10 @@
                     html += '<td>' + (item.jurusan ? item.jurusan : '-') + '</td>';
                     html += '<td>' + fileLink + '</td>';
                     html += '<td class="text-end">';
-                    html += '<button type="button" class="btn btn-sm btn-outline-secondary border-end btn-edit-pendidikan" data-id="'+item.id+'"><i class="bi bi-pencil-square text-warning"></i></button>';
-                    html += '<button type="button" class="btn btn-sm btn-outline-secondary btn-delete-pendidikan" data-id="'+item.id+'"><i class="bi bi-trash3-fill text-danger"></i></button>';
-                    html += '</td>';
+                    html += '<div class="d-flex justify-content-end gap-2">';
+                    html += '<button type="button" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm border-0 btn-edit-pendidikan transition-base" data-id="'+item.id+'" title="Edit" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-pencil-fill"></i></button>';
+                    html += '<button type="button" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm border-0 btn-delete-pendidikan transition-base" data-id="'+item.id+'" title="Hapus" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-trash3-fill"></i></button>';
+                    html += '</div></td>';
                     html += '</tr>';
                 });
             }
@@ -241,7 +252,7 @@
                     $('#current_file_ijazah').html('');
                 }
 
-                $('#btnSavePendidikan').html('<i class="bi bi-check-lg"></i> Update');
+                $('#btnSavePendidikan').html('<i class="bi bi-check-circle fs-5 me-2"></i> Perbarui Data');
                 $('.is-invalid').removeClass('is-invalid');
             });
         });
@@ -278,7 +289,7 @@
             $('#id_pendidikan').val('');
             $('#id_anggota_pendidikan').val(currentAnggotaIdPendidikan);
             $('#current_file_ijazah').html('');
-            $('#btnSavePendidikan').html('<i class="bi bi-plus-lg"></i> Tambah');
+            $('#btnSavePendidikan').html('<i class="bi bi-save fs-5 me-2"></i> Simpan Data');
             $('.is-invalid').removeClass('is-invalid');
         }
     });

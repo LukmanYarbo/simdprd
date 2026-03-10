@@ -11,7 +11,7 @@
             <div class="modal-body p-4">
                 <div class="row">
                     <!-- Form Input -->
-                    <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="col-12 mb-4">
                         <div class="card bg-body-tertiary border-0">
                             <div class="card-body">
                                 <h6 class="fw-bold mb-3">Form Keluarga</h6>
@@ -20,80 +20,82 @@
                                     <input type="hidden" id="id_keluarga" name="id">
                                     <input type="hidden" id="id_anggota_keluarga" name="id_anggota">
                                     
-                                    <div class="mb-2">
-                                        <label class="form-label small">Hubungan</label>
-                                        <select class="form-select form-select-sm" id="id_ikatan_keluarga" name="id_ikatan_keluarga" required></select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">NIK</label>
-                                        <input type="text" class="form-control form-control-sm" id="nik_keluarga" name="nik" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Nama Lengkap</label>
-                                        <input type="text" class="form-control form-control-sm" id="nama_keluarga" name="nama" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="row g-2 mb-2">
-                                        <div class="col-6">
+                                    <div class="row g-3">
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label small">Hubungan</label>
+                                            <select class="form-select form-select-sm" id="id_ikatan_keluarga" name="id_ikatan_keluarga" required></select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label small">NIK</label>
+                                            <input type="text" class="form-control form-control-sm" id="nik_keluarga" name="nik" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label small">Nama Lengkap</label>
+                                            <input type="text" class="form-control form-control-sm" id="nama_keluarga" name="nama" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-md-3 mb-2">
                                             <label class="form-label small">Tempat Lahir</label>
                                             <input type="text" class="form-control form-control-sm" id="tempat_lahir_keluarga" name="tempat_lahir" required>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-3 mb-2">
                                             <label class="form-label small">Tgl Lahir</label>
                                             <input type="date" class="form-control form-control-sm" id="tgl_lahir_keluarga" name="tgl_lahir" required>
                                         </div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Umur</label>
-                                        <input type="text" class="form-control form-control-sm bg-body-secondary" id="umur_keluarga" readonly>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Jenis Kelamin</label>
-                                        <select class="form-select form-select-sm" id="jk_keluarga" name="jk" required>
-                                            <option value="L">Laki-laki</option>
-                                            <option value="P">Perempuan</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Status Kawin</label>
-                                        <select class="form-select form-select-sm" id="id_status_kawin_keluarga" name="id_status_kawin" required></select>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label class="form-label small">Pekerjaan</label>
-                                        <input type="text" class="form-control form-control-sm" id="pekerjaan_keluarga" name="pekerjaan" required>
-                                    </div>
-                                    <div class="row g-2 mb-2">
-                                        <div class="col-6" id="div_status_anak">
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label small">Umur</label>
+                                            <input type="text" class="form-control form-control-sm bg-body-secondary" id="umur_keluarga" readonly>
+                                        </div>
+                                        <div class="col-md-3 mb-2">
+                                            <label class="form-label small">Jenis Kelamin</label>
+                                            <select class="form-select form-select-sm" id="jk_keluarga" name="jk" required>
+                                                <option value="L">Laki-laki</option>
+                                                <option value="P">Perempuan</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label small">Status Kawin</label>
+                                            <select class="form-select form-select-sm" id="id_status_kawin_keluarga" name="id_status_kawin" required></select>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <label class="form-label small">Pekerjaan</label>
+                                            <input type="text" class="form-control form-control-sm" id="pekerjaan_keluarga" name="pekerjaan" required>
+                                        </div>
+                                        <div class="col-md-6 mb-2" id="div_status_anak">
                                             <label class="form-label small">Status Anak</label>
                                             <select class="form-select form-select-sm" id="status_anak" name="status_anak" required>
                                                 <option value="AK">Anak Kandung</option>
                                                 <option value="AA">Anak Angkat</option>
                                             </select>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6 mb-2">
                                             <label class="form-label small">Tunjangan</label>
                                             <select class="form-select form-select-sm" id="status_tunjangan" name="status_tunjangan" required>
                                                 <option value="Y">Ditunjang</option>
                                                 <option value="T">Tidak Ditunjang</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="mb-3" id="div_sk_pengadilan">
-                                        <label class="form-label small">No. SK Pengadilan (Opsional)</label>
-                                        <input type="text" class="form-control form-control-sm" id="no_sk_pengadilan" name="no_sk_pengadilan">
-                                    </div>
-                                    <div class="mb-3" id="div_file_surat_ket" style="display:none;">
-                                        <label class="form-label small">Surat Keterangan (Wajib jika > 21 Tahun)</label>
-                                        <input type="file" class="form-control form-control-sm" id="file_surat_ket" name="file_surat_ket" accept=".pdf,.jpg,.jpeg,.png">
-                                        <div id="link_file_surat_ket" class="small mt-1"></div>
-                                        <div class="invalid-feedback"></div>
+                                        <div class="col-md-6 mb-3" id="div_sk_pengadilan">
+                                            <label class="form-label small">No. SK Pengadilan (Opsional)</label>
+                                            <input type="text" class="form-control form-control-sm" id="no_sk_pengadilan" name="no_sk_pengadilan">
+                                        </div>
+                                        <div class="col-md-6 mb-3" id="div_file_surat_ket" style="display:none;">
+                                            <label class="form-label small">Surat Keterangan (> 21 Tahun & Tidak Bekerja)</label>
+                                            <input type="file" class="form-control form-control-sm" id="file_surat_ket" name="file_surat_ket" accept=".pdf,.jpg,.jpeg,.png">
+                                            <div id="link_file_surat_ket" class="small mt-1"></div>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-end gap-2">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary border" onclick="resetFormKeluarga()">Reset</button>
-                                        <button type="submit" class="btn btn-sm btn-primary" id="btnSaveKeluarga"><i class="bi bi-plus-lg"></i> Tambah</button>
+                                    <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+                                        <button type="button" class="btn btn-light px-4 rounded-pill fw-medium me-2 transition-base d-flex align-items-center" onclick="resetFormKeluarga()">
+                                            <i class="bi bi-arrow-counterclockwise fs-5 me-2 text-secondary"></i> Batal / Reset
+                                        </button>
+                                        <button type="submit" class="btn btn-primary px-4 rounded-pill fw-medium shadow-sm transition-base d-flex align-items-center" id="btnSaveKeluarga">
+                                            <i class="bi bi-save fs-5 me-2"></i> Simpan Data
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -101,23 +103,29 @@
                     </div>
 
                     <!-- List Data -->
-                    <div class="col-lg-8">
-                        <h6 class="fw-bold mb-3">Riwayat Keluarga</h6>
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0" id="tableKeluargaList">
-                                <thead class="bg-body-tertiary">
-                                    <tr>
-                                        <th>Nama / NIK</th>
-                                        <th>Hubungan</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Tunjangan</th>
-                                        <th class="text-end">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Populated via JS -->
-                                </tbody>
-                            </table>
+                    <div class="col-12 mt-2">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-transparent py-3">
+                                <h6 class="fw-bold mb-0">Riwayat Data Keluarga</h6>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0" id="tableKeluargaList">
+                                        <thead class="bg-body-tertiary">
+                                            <tr>
+                                                <th class="ps-4">Nama / NIK</th>
+                                                <th>Hubungan</th>
+                                                <th>Jenis Kelamin</th>
+                                                <th>Tunjangan</th>
+                                                <th class="text-end pe-4">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Populated via JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -407,9 +415,10 @@
                     html += '<td>' + (item.jk == 'L' ? 'Laki-laki' : 'Perempuan') + '</td>';
                     html += '<td><span class="badge ' + (item.status_tunjangan == 'Y' ? 'bg-success' : 'bg-secondary') + '">' + (item.status_tunjangan == 'Y' ? 'Ditunjang' : 'Tidak') + '</span></td>';
                     html += '<td class="text-end">';
-                    html += '<button type="button" class="btn btn-sm btn-outline-secondary border-end btn-edit-keluarga" data-id="'+item.id+'"><i class="bi bi-pencil-square text-warning"></i></button>';
-                    html += '<button type="button" class="btn btn-sm btn-outline-secondary btn-delete-keluarga" data-id="'+item.id+'"><i class="bi bi-trash3-fill text-danger"></i></button>';
-                    html += '</td>';
+                    html += '<div class="d-flex justify-content-end gap-2">';
+                    html += '<button type="button" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm border-0 btn-edit-keluarga transition-base" data-id="'+item.id+'" title="Edit" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-pencil-fill"></i></button>';
+                    html += '<button type="button" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm border-0 btn-delete-keluarga transition-base" data-id="'+item.id+'" title="Hapus" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-trash3-fill"></i></button>';
+                    html += '</div></td>';
                     html += '</tr>';
                 });
             }
@@ -452,7 +461,7 @@
                 toggleChildFields(); // Update visibility based on loaded data
                 checkFileSuratKet(); // Check file input visibility
 
-                $('#btnSaveKeluarga').html('<i class="bi bi-check-lg"></i> Update');
+                $('#btnSaveKeluarga').html('<i class="bi bi-check-circle fs-5 me-2"></i> Perbarui Data');
                 $('.is-invalid').removeClass('is-invalid');
             });
         });
@@ -490,7 +499,7 @@
             $('#id_anggota_keluarga').val(currentAnggotaId);
             $('#link_file_surat_ket').html('');
             $('#div_file_surat_ket').hide();
-            $('#btnSaveKeluarga').html('<i class="bi bi-plus-lg"></i> Tambah');
+            $('#btnSaveKeluarga').html('<i class="bi bi-save fs-5 me-2"></i> Simpan Data');
             $('.is-invalid').removeClass('is-invalid');
         }
     });

@@ -65,7 +65,7 @@ class Anggota extends Model
 
     public function statusKawin()
     {
-        return $this->belongsTo(StatusKawin::class , 'id_status_kawin');
+        return $this->belongsTo(StatusKawin::class, 'id_status_kawin', 'kode');
     }
 
     public function statusKeanggotaan()

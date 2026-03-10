@@ -291,13 +291,54 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             'nama_komisi' => $isKomisi ? $request->nama_komisi : null,
         ]);
 
+        $namaAlatKelengkapan = strtolower($suratKeputusan->alatKelengkapan->nama ?? '');
+        $anggotaField = '';
+        
+        switch ($namaAlatKelengkapan) {
+            case 'komisi': $anggotaField = 'id_komisi'; break;
+            case 'banggar': $anggotaField = 'id_banggar'; break;
+            case 'banmus': $anggotaField = 'id_banmus'; break;
+            case 'bk': $anggotaField = 'id_bk'; break;
+            case 'balegda': $anggotaField = 'id_balegda'; break;
+            case 'pansus': $anggotaField = 'id_pansus'; break;
+            case 'panja': $anggotaField = 'id_panja'; break;
+        }
+
+        if ($anggotaField) {
+            \App\Models\Anggota::where('id', $request->id_anggota)->update([
+                $anggotaField => $request->id_jabatan_alat_kelengkapan
+            ]);
+        }
+
         return response()->json(['success' => 'Anggota berhasil ditambahkan.']);
     }
 
     public function destroyAnggota($id)
     {
-        $jabatanAnggota = JabatanAnggota::findOrFail($id);
+        $jabatanAnggota = JabatanAnggota::with('suratKeputusan.alatKelengkapan')->findOrFail($id);
+        
+        $namaAlatKelengkapan = strtolower($jabatanAnggota->suratKeputusan->alatKelengkapan->nama ?? '');
+        $anggotaField = '';
+        
+        switch ($namaAlatKelengkapan) {
+            case 'komisi': $anggotaField = 'id_komisi'; break;
+            case 'banggar': $anggotaField = 'id_banggar'; break;
+            case 'banmus': $anggotaField = 'id_banmus'; break;
+            case 'bk': $anggotaField = 'id_bk'; break;
+            case 'balegda': $anggotaField = 'id_balegda'; break;
+            case 'pansus': $anggotaField = 'id_pansus'; break;
+            case 'panja': $anggotaField = 'id_panja'; break;
+        }
+
+        if ($anggotaField) {
+            // Nullify the field only if it currently points to the same jabatan.
+            \App\Models\Anggota::where('id', $jabatanAnggota->id_anggota)
+                ->where($anggotaField, $jabatanAnggota->id_jabatan_alat_kelengkapan)
+                ->update([$anggotaField => null]);
+        }
+
         $jabatanAnggota->delete();
+        
         return response()->json(['success' => 'Anggota berhasil dihapus.']);
     }
 

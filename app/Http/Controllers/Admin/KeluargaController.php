@@ -64,6 +64,8 @@ class KeluargaController extends Controller
 
         Keluarga::create($validated);
 
+        $this->syncAnggotaFamilyCounters($request->id_anggota);
+
         return response()->json(['success' => 'Data keluarga berhasil ditambahkan.']);
     }
 
@@ -109,6 +111,8 @@ class KeluargaController extends Controller
         }
 
         $keluarga->update($validated);
+        
+        $this->syncAnggotaFamilyCounters($keluarga->id_anggota);
 
         return response()->json(['success' => 'Data keluarga berhasil diperbarui.']);
     }
@@ -116,10 +120,35 @@ class KeluargaController extends Controller
     public function destroy($id)
     {
         $keluarga = Keluarga::findOrFail($id);
+        $id_anggota = $keluarga->id_anggota;
+        
         if ($keluarga->file_surat_ket) {
             Storage::disk('public')->delete($keluarga->file_surat_ket);
         }
         $keluarga->delete();
+        
+        $this->syncAnggotaFamilyCounters($id_anggota);
+        
         return response()->json(['success' => 'Data keluarga berhasil dihapus.']);
+    }
+
+    private function syncAnggotaFamilyCounters($id_anggota)
+    {
+        $jmlhIstri = Keluarga::where('id_anggota', $id_anggota)
+            ->where('status_tunjangan', 'Y')
+            ->whereHas('ikatanKeluarga', function($q) {
+                $q->whereIn('nama', ['Suami', 'Istri']);
+            })->count();
+
+        $jmlhAnak = Keluarga::where('id_anggota', $id_anggota)
+            ->where('status_tunjangan', 'Y')
+            ->whereHas('ikatanKeluarga', function($q) {
+                $q->where('nama', 'Anak');
+            })->count();
+
+        Anggota::where('id', $id_anggota)->update([
+            'jmlh_istri' => $jmlhIstri,
+            'jmlh_anak' => $jmlhAnak
+        ]);
     }
 }

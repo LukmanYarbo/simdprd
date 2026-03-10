@@ -94,7 +94,7 @@
                                         <select class="form-select @error('id_status_kawin') is-invalid @enderror" id="id_status_kawin" name="id_status_kawin" required>
                                             <option value="">Pilih...</option>
                                             @foreach($statusKawin as $s)
-                                                <option value="{{ $s->id }}" {{ old('id_status_kawin') == $s->id ? 'selected' : '' }}>{{ $s->nama }}</option>
+                                                <option value="{{ $s->kode }}" {{ old('id_status_kawin') == $s->kode ? 'selected' : '' }}>{{ $s->nama }}</option>
                                             @endforeach
                                         </select>
                                         <label for="id_status_kawin">Status Kawin <span class="text-danger">*</span></label>

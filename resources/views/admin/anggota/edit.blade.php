@@ -105,19 +105,21 @@
                             <label for="id_status_kawin" class="form-label">Status Perkawinan</label>
                             <select class="form-select @error('id_status_kawin') is-invalid @enderror" id="id_status_kawin" name="id_status_kawin" required>
                                 @foreach($statusKawins as $sk)
-                                    <option value="{{ $sk->id }}" {{ old('id_status_kawin', $anggota->id_status_kawin) == $sk->id ? 'selected' : '' }}>{{ $sk->nama }}</option>
+                                    <option value="{{ $sk->kode }}" {{ old('id_status_kawin', $anggota->id_status_kawin) == $sk->kode ? 'selected' : '' }}>{{ $sk->nama }}</option>
                                 @endforeach
                             </select>
                             @error('id_status_kawin')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-3">
-                            <label for="jmlh_istri" class="form-label">Jml Istri</label>
-                            <input type="number" class="form-control @error('jmlh_istri') is-invalid @enderror" id="jmlh_istri" name="jmlh_istri" value="{{ old('jmlh_istri', $anggota->jmlh_istri) }}" required>
+                            <label for="jmlh_istri" class="form-label">Jml Istri/Suami</label>
+                            <input type="number" class="form-control @error('jmlh_istri') is-invalid @enderror" id="jmlh_istri" name="jmlh_istri" value="{{ old('jmlh_istri', $anggota->jmlh_istri) }}" readonly tabindex="-1">
+                            <div class="form-text small text-muted">Otomatis dari form Keluarga</div>
                             @error('jmlh_istri')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-3">
                             <label for="jmlh_anak" class="form-label">Jml Anak</label>
-                            <input type="number" class="form-control @error('jmlh_anak') is-invalid @enderror" id="jmlh_anak" name="jmlh_anak" value="{{ old('jmlh_anak', $anggota->jmlh_anak) }}" required>
+                            <input type="number" class="form-control @error('jmlh_anak') is-invalid @enderror" id="jmlh_anak" name="jmlh_anak" value="{{ old('jmlh_anak', $anggota->jmlh_anak) }}" readonly tabindex="-1">
+                            <div class="form-text small text-muted">Otomatis dari form Keluarga</div>
                             @error('jmlh_anak')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>

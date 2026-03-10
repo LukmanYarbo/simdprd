@@ -32,7 +32,7 @@ class UpdateAnggotaRequest extends FormRequest
             'tgl_lahir' => ['required', 'date'],
             'id_agama' => ['required', 'exists:agama,id'],
             'jk' => ['required', 'in:L,P'],
-            'id_status_kawin' => ['required', 'exists:status_kawin,id'],
+            'id_status_kawin' => ['required', 'exists:status_kawin,kode'],
             'jmlh_istri' => ['required', 'integer', 'min:0'],
             'jmlh_anak' => ['required', 'integer', 'min:0'],
             'no_telp' => ['required', 'string'],
