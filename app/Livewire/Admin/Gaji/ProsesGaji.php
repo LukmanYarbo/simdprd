@@ -121,14 +121,10 @@ class ProsesGaji extends Component
         foreach ($anggotas as $anggota) {
             $data = $this->calculator->hitungGaji($anggota, $blnThn);
             TransaksiGaji::create($data);
-            $hasil[] = [
-                'nama'         => $anggota->nama_anggota,
-                'gaji_pokok'   => $data['gaji_pokok'],
-                'tunjangan_jabatan' => $data['tunjangan_jabatan'],
-                'brutto1'      => $data['brutto1'],
-                'potongan_pph21' => $data['potongan_pph21'],
-                'jumlah_bersih' => $data['jumlah_bersih'],
-            ];
+            
+            // Sertakan semua data untuk ditampilkan di tabel
+            $data['nama'] = $anggota->nama_anggota;
+            $hasil[] = $data;
         }
 
         $this->hasilProses = $hasil;
@@ -156,14 +152,11 @@ class ProsesGaji extends Component
             ? TransaksiGaji::where('bln_thn', $this->getBlnThn())
                 ->with('anggota')
                 ->get()
-                ->map(fn($t) => [
-                    'nama'              => $t->anggota->nama_anggota ?? '-',
-                    'gaji_pokok'        => $t->gaji_pokok,
-                    'tunjangan_jabatan' => $t->tunjangan_jabatan,
-                    'brutto1'           => $t->brutto1,
-                    'potongan_pph21'    => $t->potongan_pph21,
-                    'jumlah_bersih'     => $t->jumlah_bersih,
-                ])->toArray()
+                ->map(function ($t) {
+                    $arr = $t->toArray();
+                    $arr['nama'] = $t->anggota->nama_anggota ?? '-';
+                    return $arr;
+                })->toArray()
             : $this->hasilProses;
 
         return view('livewire.admin.gaji.proses-gaji', [

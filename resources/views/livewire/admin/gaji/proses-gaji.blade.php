@@ -51,23 +51,17 @@
                 </div>
                 <div class="col-md-5 d-flex gap-2 flex-wrap">
                     @if($sudahDiproses)
-                    <button wire:click="prosesGaji" wire:confirm="Periode ini sudah diproses. Proses ulang dan timpa data lama?"
-                            class="btn btn-warning" @if(!$paramLengkap) disabled @endif>
+                    <button onclick="confirmProses(true)" class="btn btn-warning" @if(!$paramLengkap) disabled @endif>
                         <i class="bi bi-arrow-clockwise me-1"></i> Proses Ulang
                     </button>
                     <button onclick="confirmHapus()" class="btn btn-outline-danger">
                         <i class="bi bi-trash me-1"></i> Hapus Data
                     </button>
                     @else
-                    <button wire:click="prosesGaji" wire:confirm="Mulai proses gaji untuk periode {{ $blnThnLabel }}?"
-                            class="btn btn-primary" @if(!$paramLengkap) disabled @endif>
+                    <button onclick="confirmProses(false)" class="btn btn-primary" @if(!$paramLengkap) disabled @endif>
                         <i class="bi bi-play-fill me-1"></i> Proses Gaji
                     </button>
                     @endif
-                    <div wire:loading wire:target="prosesGaji" class="d-flex align-items-center text-secondary ms-1">
-                        <div class="spinner-border spinner-border-sm me-2" role="status"></div>
-                        Memproses...
-                    </div>
                 </div>
             </div>
 
@@ -82,50 +76,146 @@
         </div>
     </div>
 
-    {{-- Tabel Ringkasan Hasil --}}
+    {{-- Tabel Hasil --}}
     @if(!empty($ringkasan))
-    <div class="card border-0 shadow-sm">
+    <div class="card border-0 shadow-sm mt-4">
         <div class="card-header bg-white py-3">
             <h6 class="mb-0 text-success fw-bold">
-                <i class="bi bi-table me-2"></i>Ringkasan Hasil — {{ $blnThnLabel }}
+                <i class="bi bi-table me-2"></i>Data Transaksi Gaji — {{ $blnThnLabel }}
                 <span class="badge bg-success ms-2">{{ count($ringkasan) }} anggota</span>
             </h6>
         </div>
         <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0 table-sm">
-                    <thead class="bg-light">
-                        <tr>
-                            <th class="ps-4">No</th>
-                            <th>Nama Anggota</th>
+            <div class="table-responsive" style="overflow-x: auto;">
+                <table class="table table-hover table-bordered align-middle mb-0 table-sm text-nowrap" style="font-size: 0.80rem;">
+                    <thead class="text-center">
+                        {{-- Row 1: Grup Header --}}
+                        <tr class="table-primary">
+                            <th rowspan="2" class="align-middle">No</th>
+                            <th rowspan="2" class="align-middle text-start" style="min-width:140px">Nama Anggota</th>
+                            <th colspan="9" class="table-primary border">Penghasilan Rutin</th>
+                            <th colspan="7" class="table-success border">Tunjangan Alat Kelengkapan</th>
+                            <th colspan="3" class="table-info border">Asuransi</th>
+                            <th colspan="2" class="table-secondary border">Brutto</th>
+                            <th colspan="6" class="table-danger border">Potongan</th>
+                            <th colspan="5" class="table-warning border">Rekap</th>
+                        </tr>
+                        {{-- Row 2: Sub-kolom --}}
+                        <tr class="table-light">
+                            {{-- Penghasilan Rutin (9) --}}
                             <th class="text-end">Gaji Pokok</th>
-                            <th class="text-end">Tunjangan Jabatan</th>
-                            <th class="text-end">Jumlah Brutto</th>
+                            <th class="text-end">Tj. Istri</th>
+                            <th class="text-end">Tj. Anak</th>
+                            <th class="text-end">Tj. Beras</th>
+                            <th class="text-end">Tj. Jabatan</th>
+                            <th class="text-end">Uang Paket</th>
+                            <th class="text-end">Tj. Perumahan</th>
+                            <th class="text-end">Tj. Transport</th>
+                            <th class="text-end">Tj. TKI</th>
+                            {{-- Alat Kelengkapan (7) --}}
+                            <th class="text-end">Komisi</th>
+                            <th class="text-end">Banggar</th>
+                            <th class="text-end">Banmus</th>
+                            <th class="text-end">Balegda</th>
+                            <th class="text-end">BK</th>
+                            <th class="text-end">Pansus</th>
+                            <th class="text-end">Panja</th>
+                            {{-- Asuransi (3) --}}
+                            <th class="text-end">Tj. BPJS</th>
+                            <th class="text-end">Tj. JKK</th>
+                            <th class="text-end">Tj. JKM</th>
+                            {{-- Brutto (2) --}}
+                            <th class="text-end">Brutto 1</th>
+                            <th class="text-end">Brutto 2</th>
+                            {{-- Potongan (6) --}}
                             <th class="text-end">Pot. PPh21</th>
-                            <th class="text-end pe-4">Jumlah Bersih</th>
+                            <th class="text-end">Pot. PPh Perum</th>
+                            <th class="text-end">Pot. PPh Trans</th>
+                            <th class="text-end">Pot. PPh TKI</th>
+                            <th class="text-end">Pot. BPJS</th>
+                            <th class="text-end">Pot. JKK+JKM</th>
+                            {{-- Rekap (5) --}}
+                            <th class="text-end">Tj. PPh21</th>
+                            <th class="text-end">Pembulatan</th>
+                            <th class="text-end">Total Pendapatan</th>
+                            <th class="text-end">Total Potongan</th>
+                            <th class="text-end">Jumlah Bersih</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($ringkasan as $idx => $row)
                         <tr>
-                            <td class="ps-4">{{ $idx + 1 }}</td>
+                            <td class="text-center">{{ $idx + 1 }}</td>
                             <td class="fw-semibold">{{ $row['nama'] }}</td>
-                            <td class="text-end">Rp {{ number_format($row['gaji_pokok'], 0, ',', '.') }}</td>
-                            <td class="text-end">Rp {{ number_format($row['tunjangan_jabatan'], 0, ',', '.') }}</td>
-                            <td class="text-end">Rp {{ number_format($row['brutto1'], 0, ',', '.') }}</td>
-                            <td class="text-end text-danger">Rp {{ number_format($row['potongan_pph21'], 0, ',', '.') }}</td>
-                            <td class="text-end pe-4 fw-bold text-success">Rp {{ number_format($row['jumlah_bersih'], 0, ',', '.') }}</td>
+                            {{-- Penghasilan Rutin --}}
+                            <td class="text-end">{{ number_format($row['gaji_pokok'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_istri'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_anak'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_beras'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_jabatan'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_paket'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_perumahan'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_transportasi'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_tki'], 0, ',', '.') }}</td>
+                            {{-- Alat Kelengkapan --}}
+                            <td class="text-end">{{ number_format($row['tunjangan_komisi'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_banggar'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_banmus'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_balegda'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_bk'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_pansus'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_panja'], 0, ',', '.') }}</td>
+                            {{-- Asuransi --}}
+                            <td class="text-end">{{ number_format($row['tunjangan_bpjs'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_jkk'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['tunjangan_jkm'], 0, ',', '.') }}</td>
+                            {{-- Brutto --}}
+                            <td class="text-end fw-semibold">{{ number_format($row['brutto1'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['brutto2'], 0, ',', '.') }}</td>
+                            {{-- Potongan --}}
+                            <td class="text-end text-danger">{{ number_format($row['potongan_pph21'], 0, ',', '.') }}</td>
+                            <td class="text-end text-danger">{{ number_format($row['potonganpph_perumahan'], 0, ',', '.') }}</td>
+                            <td class="text-end text-danger">{{ number_format($row['potonganpph_transportasi'], 0, ',', '.') }}</td>
+                            <td class="text-end text-danger">{{ number_format($row['potonganpph_tki'], 0, ',', '.') }}</td>
+                            <td class="text-end text-danger">{{ number_format($row['potongan_bpjs'], 0, ',', '.') }}</td>
+                            <td class="text-end text-danger">{{ number_format(($row['potongan_jkk'] ?? 0) + ($row['potongan_jkm'] ?? 0), 0, ',', '.') }}</td>
+                            {{-- Rekap --}}
+                            <td class="text-end">{{ number_format($row['tunjangan_pph21'], 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['pembulatan'], 0, ',', '.') }}</td>
+                            <td class="text-end fw-semibold text-primary">{{ number_format($row['nilai_gajitunjangan'], 0, ',', '.') }}</td>
+                            <td class="text-end text-danger">{{ number_format($row['total_potongan1'], 0, ',', '.') }}</td>
+                            <td class="text-end fw-bold text-success">{{ number_format($row['jumlah_bersih'], 0, ',', '.') }}</td>
                         </tr>
                         @endforeach
                     </tbody>
-                    <tfoot class="table-light fw-bold border-top">
+                    <tfoot class="table-secondary fw-bold text-end">
                         <tr>
-                            <td colspan="2" class="ps-4">Total</td>
-                            <td class="text-end">Rp {{ number_format(collect($ringkasan)->sum('gaji_pokok'), 0, ',', '.') }}</td>
-                            <td class="text-end">Rp {{ number_format(collect($ringkasan)->sum('tunjangan_jabatan'), 0, ',', '.') }}</td>
-                            <td class="text-end">Rp {{ number_format(collect($ringkasan)->sum('brutto1'), 0, ',', '.') }}</td>
-                            <td class="text-end text-danger">Rp {{ number_format(collect($ringkasan)->sum('potongan_pph21'), 0, ',', '.') }}</td>
-                            <td class="text-end pe-4 text-success">Rp {{ number_format(collect($ringkasan)->sum('jumlah_bersih'), 0, ',', '.') }}</td>
+                            <td colspan="2" class="text-center">TOTAL</td>
+                            @foreach([
+                                'gaji_pokok','tunjangan_istri','tunjangan_anak','tunjangan_beras',
+                                'tunjangan_jabatan','tunjangan_paket','tunjangan_perumahan',
+                                'tunjangan_transportasi','tunjangan_tki',
+                                'tunjangan_komisi','tunjangan_banggar','tunjangan_banmus',
+                                'tunjangan_balegda','tunjangan_bk','tunjangan_pansus','tunjangan_panja',
+                                'tunjangan_bpjs','tunjangan_jkk','tunjangan_jkm',
+                                'brutto1','brutto2',
+                                'potongan_pph21','potonganpph_perumahan','potonganpph_transportasi',
+                                'potonganpph_tki','potongan_bpjs'
+                            ] as $col)
+                            <td>{{ number_format(collect($ringkasan)->sum($col), 0, ',', '.') }}</td>
+                            @endforeach
+                            {{-- Pot. JKK+JKM --}}
+                            <td>{{ number_format(collect($ringkasan)->sum(fn($r) => ($r['potongan_jkk'] ?? 0) + ($r['potongan_jkm'] ?? 0)), 0, ',', '.') }}</td>
+                            {{-- Tj. PPh21 --}}
+                            <td>{{ number_format(collect($ringkasan)->sum('tunjangan_pph21'), 0, ',', '.') }}</td>
+                            {{-- Pembulatan --}}
+                            <td>{{ number_format(collect($ringkasan)->sum('pembulatan'), 0, ',', '.') }}</td>
+                            {{-- Total Pendapatan --}}
+                            <td class="text-primary">{{ number_format(collect($ringkasan)->sum('nilai_gajitunjangan'), 0, ',', '.') }}</td>
+                            {{-- Total Potongan --}}
+                            <td class="text-danger">{{ number_format(collect($ringkasan)->sum('total_potongan1'), 0, ',', '.') }}</td>
+                            {{-- Jumlah Bersih --}}
+                            <td class="text-success">{{ number_format(collect($ringkasan)->sum('jumlah_bersih'), 0, ',', '.') }}</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -136,6 +226,26 @@
 
     @script
     <script>
+        window.confirmProses = (isUlang) => {
+            let titleText = isUlang ? 'Proses Ulang Gaji?' : 'Proses Gaji?';
+            let msgText = isUlang ? 'Periode ini sudah diproses. Proses ulang dan timpa data lama?' : 'Mulai proses gaji untuk periode ini?';
+
+            Swal.fire({
+                title: titleText,
+                text: msgText,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#0d6efd',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Proses!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $wire.prosesGaji();
+                }
+            });
+        };
+
         window.confirmHapus = () => {
             Swal.fire({
                 title: 'Hapus Data Gaji?',
