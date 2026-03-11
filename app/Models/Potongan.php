@@ -13,6 +13,7 @@ class Potongan extends Model
         'jkk',
         'jkm',
         'maks_jkkjkm',
+        'pot_pph',
     ];
 
     protected $casts = [
@@ -22,5 +23,6 @@ class Potongan extends Model
         'jkk' => 'decimal:2',
         'jkm' => 'decimal:2',
         'maks_jkkjkm' => 'decimal:2',
+        'pot_pph' => 'decimal:2',
     ];
 }

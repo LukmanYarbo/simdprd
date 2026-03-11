@@ -14,6 +14,7 @@ class ManagePotongan extends Component
     public $jkk;
     public $jkm;
     public $maks_jkkjkm;
+    public $pot_pph;
 
     public $isEditMode = false;
 
@@ -35,6 +36,7 @@ class ManagePotongan extends Component
         $this->jkk = null;
         $this->jkm = null;
         $this->maks_jkkjkm = null;
+        $this->pot_pph = null;
         $this->isEditMode = false;
         $this->resetErrorBag();
     }
@@ -54,6 +56,7 @@ class ManagePotongan extends Component
             'jkk' => 'required|numeric|min:0|max:100',
             'jkm' => 'required|numeric|min:0|max:100',
             'maks_jkkjkm' => 'required|numeric|min:0',
+            'pot_pph' => 'required|numeric|min:0|max:100',
         ]);
 
         Potongan::create([
@@ -63,6 +66,7 @@ class ManagePotongan extends Component
             'jkk' => $this->jkk,
             'jkm' => $this->jkm,
             'maks_jkkjkm' => $this->maks_jkkjkm,
+            'pot_pph' => $this->pot_pph,
         ]);
 
         $this->dispatch('closeModal');
@@ -81,6 +85,7 @@ class ManagePotongan extends Component
         $this->jkk = $potongan->jkk;
         $this->jkm = $potongan->jkm;
         $this->maks_jkkjkm = $potongan->maks_jkkjkm;
+        $this->pot_pph = $potongan->pot_pph;
         $this->isEditMode = true;
         
         $this->dispatch('openModal');

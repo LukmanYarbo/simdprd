@@ -18,6 +18,7 @@
                             <th>JKK (%)</th>
                             <th>JKM (%)</th>
                             <th>Maks JKK/JKM</th>
+                            <th>Pot PPh (%)</th>
                             <th class="text-end pe-4">Aksi</th>
                         </tr>
                     </thead>
@@ -31,6 +32,7 @@
                             <td>{{ $item->jkk }}%</td>
                             <td>{{ $item->jkm }}%</td>
                             <td>Rp {{ number_format($item->maks_jkkjkm, 0, ',', '.') }}</td>
+                            <td>{{ $item->pot_pph }}%</td>
                             <td class="text-end pe-4">
                                 <button wire:click="edit({{ $item->id }})" class="btn btn-outline-primary btn-sm me-1" title="Edit">
                                     <i class="bi bi-pencil"></i>
@@ -42,7 +44,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">Belum ada data potongan.</td>
+                            <td colspan="8" class="text-center py-4 text-muted">Belum ada data potongan.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -90,6 +92,11 @@
                             <label class="form-label">Maksimal JKK dan JKM (Rupiah)</label>
                             <input type="number" wire:model="maks_jkkjkm" class="form-control @error('maks_jkkjkm') is-invalid @enderror" placeholder="0">
                             @error('maks_jkkjkm') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Potongan PPh (%)</label>
+                            <input type="number" step="0.01" wire:model="pot_pph" class="form-control @error('pot_pph') is-invalid @enderror" placeholder="0.00">
+                            @error('pot_pph') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
                     <div class="modal-footer">

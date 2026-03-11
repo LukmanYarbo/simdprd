@@ -85,6 +85,9 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
 
         // Potongan
         Route::resource('potongan', \App\Http\Controllers\Admin\PotonganController::class);
+
+        // Proses Gaji
+        Route::get('transaksi-gaji', [\App\Http\Controllers\Admin\TransaksiGajiController::class, 'index'])->name('transaksi-gaji.index');
     });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {
