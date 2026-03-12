@@ -22,7 +22,7 @@
 
             {{-- Form Pilih Periode --}}
             <div class="row g-3 align-items-end">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="form-label fw-semibold">Bulan / Periode</label>
                     <select wire:model.live="bulan" class="form-select">
                         <optgroup label="Gaji Bulanan">
@@ -45,11 +45,18 @@
                         </optgroup>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label class="form-label fw-semibold">Tahun</label>
                     <input type="number" wire:model.live="tahun" class="form-control" min="2020" max="2099" placeholder="2026">
                 </div>
-                <div class="col-md-5 d-flex gap-2 flex-wrap">
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Metode Pajak</label>
+                    <select wire:model.live="metodePajak" class="form-select">
+                        <option value="ter">Sistem Baru (TER)</option>
+                        <option value="lapis">Lapis Pajak Lama</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex gap-2 flex-wrap">
                     @if($sudahDiproses)
                     <button onclick="confirmProses(true)" class="btn btn-warning" @if(!$paramLengkap) disabled @endif>
                         <i class="bi bi-arrow-clockwise me-1"></i> Proses Ulang
@@ -173,14 +180,29 @@
                             <td class="text-end fw-semibold">{{ number_format($row['brutto1'], 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($row['brutto2'], 0, ',', '.') }}</td>
                             {{-- Potongan --}}
-                            <td class="text-end text-danger">{{ number_format($row['potongan_pph21'], 0, ',', '.') }}</td>
+                            <td class="text-end">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button wire:click.prevent="showPajakDetail({{ $idx }})" class="btn btn-sm btn-link p-0 text-info" title="Lihat Perhitungan Pajak">
+                                        <i class="bi bi-info-circle"></i>
+                                    </button>
+                                    <span>{{ number_format($row['potongan_pph21'], 0, ',', '.') }}</span>
+                                </div>
+                            </td>
+                            <!-- <td class="text-end text-danger">{{ number_format($row['potongan_pph21'], 0, ',', '.') }}</td> -->
                             <td class="text-end text-danger">{{ number_format($row['potonganpph_perumahan'], 0, ',', '.') }}</td>
                             <td class="text-end text-danger">{{ number_format($row['potonganpph_transportasi'], 0, ',', '.') }}</td>
                             <td class="text-end text-danger">{{ number_format($row['potonganpph_tki'], 0, ',', '.') }}</td>
                             <td class="text-end text-danger">{{ number_format($row['potongan_bpjs'], 0, ',', '.') }}</td>
                             <td class="text-end text-danger">{{ number_format(($row['potongan_jkk'] ?? 0) + ($row['potongan_jkm'] ?? 0), 0, ',', '.') }}</td>
                             {{-- Rekap --}}
-                            <td class="text-end">{{ number_format($row['tunjangan_pph21'], 0, ',', '.') }}</td>
+                            <td class="text-end">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button wire:click.prevent="showPajakDetail({{ $idx }})" class="btn btn-sm btn-link p-0 text-info" title="Lihat Perhitungan Pajak">
+                                        <i class="bi bi-info-circle"></i>
+                                    </button>
+                                    <span>{{ number_format($row['tunjangan_pph21'], 0, ',', '.') }}</span>
+                                </div>
+                            </td>
                             <td class="text-end">{{ number_format($row['pembulatan'], 0, ',', '.') }}</td>
                             <td class="text-end fw-semibold text-primary">{{ number_format($row['nilai_gajitunjangan'], 0, ',', '.') }}</td>
                             <td class="text-end text-danger">{{ number_format($row['total_potongan1'], 0, ',', '.') }}</td>
@@ -224,6 +246,96 @@
     </div>
     @endif
 
+    {{-- Modal Detail Pajak --}}
+    <div class="modal fade" id="pajakModal" tabindex="-1" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold text-primary">
+                        <i class="bi bi-calculator me-2"></i>Rincian PPh Pasal 21
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3 text-center">
+                        <h6 class="fw-semibold mb-0">{{ $selectedPajakName }}</h6>
+                        <small class="text-muted">Periode: {{ $blnThnLabel }}</small>
+                    </div>
+
+                    @if(!empty($selectedPajakDetail))
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                            @if(($selectedPajakDetail['metode'] ?? 'lapis') === 'ter')
+                            <tr>
+                                <td>Total Pendapatan</td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['Total Pendapatan'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Kategori PTKP TER <br><small class="text-muted">(Status: {{ $selectedPajakDetail['status_ptkp'] ?? '-' }})</small></td>
+                                <td class="text-end fw-bold text-primary">{{ $selectedPajakDetail['kategori_ter'] ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Persentase TER PMK 168</td>
+                                <td class="text-end text-danger">{{ $selectedPajakDetail['persen_ter'] ?? 0 }}%</td>
+                            </tr>
+                            <tr class="table-primary fw-bold border-top">
+                                <td>PPh21 Terutang Sebulan <br><small class="fw-normal">(Total Pendapatan × Persentase TER)</small></td>
+                                <td class="text-end text-success fs-5">Rp {{ number_format($selectedPajakDetail['pph_sebulan'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            @else
+                            <tr>
+                                <td>Penghasilan Bruto Sebulan</td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto_sebulan'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Biaya Jabatan ({{ $selectedPajakDetail['persen_biaya_jab'] ?? 0 }}%) <br><small class="text-muted">Maks. Rp {{ number_format($selectedPajakDetail['max_biaya_jab'] ?? 0, 0, ',', '.') }}</small></td>
+                                <td class="text-end text-danger">- Rp {{ number_format($selectedPajakDetail['biaya_jabatan'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="border-top">
+                                <td>Penghasilan Neto Sebulan</td>
+                                <td class="text-end fw-bold">Rp {{ number_format($selectedPajakDetail['neto_sebulan'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Penghasilan Neto Setahun <br><small class="text-muted">(Neto Sebulan × 12)</small></td>
+                                <td class="text-end fw-bold text-primary">Rp {{ number_format($selectedPajakDetail['neto_setahun'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>PTKP ({{ $selectedPajakDetail['status_ptkp'] ?? '-' }})</td>
+                                <td class="text-end text-danger">- Rp {{ number_format($selectedPajakDetail['nilai_ptkp'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="border-top">
+                                <td>PKP setahun</td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['pkp_kotor'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>PKP Pembulatan <br><small class="text-muted">(ke bawah ribuan penuh)</small></td>
+                                <td class="text-end fw-bold text-warning">Rp {{ number_format($selectedPajakDetail['pkp_pembulatan'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>PPh21 Terutang Setahun</td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['pph_setahun'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="table-primary fw-bold">
+                                <td>PPh21 Terutang Sebulan <br><small class="fw-normal">(PPh21 Setahun / 12)</small></td>
+                                <td class="text-end text-success fs-5">Rp {{ number_format($selectedPajakDetail['pph_sebulan'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                    @else
+                    <div class="text-center py-4 text-muted">
+                        <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                        Memuat detail perhitungan...
+                    </div>
+                    @endif
+                </div>
+                <div class="modal-footer bg-light py-2">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @script
     <script>
         window.confirmProses = (isUlang) => {
@@ -262,6 +374,14 @@
                 }
             });
         };
+
+        $wire.on('show-pajak-modal', () => {
+            const modalEl = document.getElementById('pajakModal');
+            if (modalEl) {
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        });
     </script>
     @endscript
 </div>

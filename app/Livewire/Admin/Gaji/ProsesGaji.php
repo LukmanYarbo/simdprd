@@ -11,6 +11,7 @@ class ProsesGaji extends Component
 {
     public int $tahun;
     public string $bulan = '1'; // '1' s/d '12', 'THR', 'G13'
+    public string $metodePajak = 'ter'; // 'lapis' atau 'ter'
 
     public bool $sudahDiproses = false;
     public bool $paramLengkap  = true;
@@ -18,6 +19,10 @@ class ProsesGaji extends Component
     public ?string $blnThnLabel = null;
 
     public array $hasilProses = [];
+
+    // State untuk View Detail Pajak
+    public array $selectedPajakDetail = [];
+    public string $selectedPajakName = '';
 
     protected GajiCalculatorService $calculator;
 
@@ -33,6 +38,11 @@ class ProsesGaji extends Component
     }
 
     public function updatedBulan(): void
+    {
+        $this->cekStatus();
+    }
+
+    public function updatedMetodePajak(): void
     {
         $this->cekStatus();
     }
@@ -119,7 +129,7 @@ class ProsesGaji extends Component
 
         $hasil = [];
         foreach ($anggotas as $anggota) {
-            $data = $this->calculator->hitungGaji($anggota, $blnThn);
+            $data = $this->calculator->hitungGaji($anggota, $blnThn, $this->metodePajak);
             TransaksiGaji::create($data);
             
             // Sertakan semua data untuk ditampilkan di tabel
@@ -146,21 +156,39 @@ class ProsesGaji extends Component
         $this->dispatch('swal', title: 'Berhasil', text: 'Data periode ' . $this->getBlnThnLabel() . ' berhasil dihapus.', icon: 'success');
     }
 
-    public function render()
+    public function showPajakDetail(int $index): void
     {
-        $ringkasan = $this->sudahDiproses && empty($this->hasilProses)
+        $ringkasan = $this->getRingkasanData();
+        if (isset($ringkasan[$index])) {
+            $row = $ringkasan[$index];
+            $this->selectedPajakName = $row['nama'] ?? 'Unknown';
+            $this->selectedPajakDetail = $row['detail_pajak'] ?? [];
+            $this->dispatch('show-pajak-modal');
+        }
+    }
+
+    protected function getRingkasanData(): array
+    {
+        return $this->sudahDiproses && empty($this->hasilProses)
             ? TransaksiGaji::where('bln_thn', $this->getBlnThn())
                 ->with('anggota')
                 ->get()
                 ->map(function ($t) {
                     $arr = $t->toArray();
                     $arr['nama'] = $t->anggota->nama_anggota ?? '-';
+                    // Fallback to decode detail_pajak JSON if it wasn't automatically casted
+                    if (is_string($arr['detail_pajak'] ?? null)) {
+                        $arr['detail_pajak'] = json_decode($arr['detail_pajak'], true);
+                    }
                     return $arr;
                 })->toArray()
             : $this->hasilProses;
+    }
 
+    public function render()
+    {
         return view('livewire.admin.gaji.proses-gaji', [
-            'ringkasan' => $ringkasan,
+            'ringkasan' => $this->getRingkasanData(),
         ]);
     }
 }

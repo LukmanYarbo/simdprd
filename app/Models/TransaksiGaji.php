@@ -40,6 +40,10 @@ class TransaksiGaji extends Model
         'tunjangan_bpjs',
         'tunjangan_jkk',
         'tunjangan_jkm',
+        'Kategori_TER',
+        'Nilai_TER',
+        'PPH21_Gaji',
+        'PPh21_Tunjangan',
         'potongan_pph21',
         'potongan_bpjs',
         'potongan_bpjs2',
@@ -58,6 +62,11 @@ class TransaksiGaji extends Model
         'total_potongan1',
         'total_potongan2',
         'jumlah_bersih',
+        'detail_pajak',
+    ];
+
+    protected $casts = [
+        'detail_pajak' => 'array',
     ];
 
     public function anggota(): BelongsTo
