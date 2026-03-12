@@ -190,12 +190,12 @@ class GajiCalculatorService
 
         // Status PTKP
         $JLH_TG     = $JLH_IS + $JLH_ANAK;
-        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'TK') . '/' . min($JLH_TG, 3);
+        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'T') . '/' . min($JLH_TG, 3);
 
         // Kategori TER
-        if (in_array($statusPtkp, ['TK/0', 'TK/1', 'K/0'])) {
+        if (in_array($statusPtkp, ['T/0', 'T/1', 'K/0'])) {
             $kategoriTer = 'A';
-        } elseif (in_array($statusPtkp, ['TK/2', 'TK/3', 'K/1', 'K/2'])) {
+        } elseif (in_array($statusPtkp, ['T/2', 'T/3', 'K/1', 'K/2'])) {
             $kategoriTer = 'B';
         } elseif ($statusPtkp === 'K/3') {
             $kategoriTer = 'C';
@@ -204,18 +204,18 @@ class GajiCalculatorService
         }
 
         // Tarif TER
-        $terArray  = config('ter_pajak.kategori_' . strtolower($kategoriTer), []);
         $persenTer = 0;
-        foreach ($terArray as $layer) {
-            if ($BRUTTO <= $layer['max']) {
-                $persenTer = $layer['persen'];
-                break;
-            }
+        if ($kategoriTer === 'A') {
+            $persenTer = $this->hitungNTAXPerKategoriA($BRUTTO);
+        } elseif ($kategoriTer === 'B') {
+            $persenTer = $this->hitungNTAXPerKategoriB($BRUTTO);
+        } elseif ($kategoriTer === 'C') {
+            $persenTer = $this->hitungNTAXPerKategoriC($BRUTTO);
         }
 
         $PPhTER          = round($BRUTTO * ($persenTer / 100));
-        $rasioTunjangan  = ($TOTALGAJI > 0) ? ($TUNJANGAN / $TOTALGAJI) : 0;
-        $PPH21_Gaji      = round($PPhTER * $rasioTunjangan);
+        $rasioTunjangan  = ($TOTALGAJI > 0) ? (($TUNJANGAN / $TOTALGAJI)/100) : 0;
+        $PPH21_Gaji      = round($PPhTER * $rasioTunjangan);      
         $PPH21_Tunjangan = $PPhTER - $PPH21_Gaji;
         $TOTAL_BERSIH    = $BRUTTO - $PPH21_Tunjangan;
 
@@ -224,6 +224,7 @@ class GajiCalculatorService
             'Total Pendapatan' => $BRUTTO,
             'Gaji'             => $TOTALGAJI,
             'Tunjangan'        => $TUNJANGAN,
+            'status_kawin'     => $STS_KAWIN,
             'status_ptkp'      => $statusPtkp,
             'kategori_ter'     => 'Kategori ' . $kategoriTer,
             'persen_ter'       => $persenTer,
@@ -431,7 +432,7 @@ class GajiCalculatorService
         $BRUTTO2    = $BRUTTO + $PEMBULATAN;
 
         $JLH_TG     = $JLH_IS + $JLH_ANAK;
-        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'TK') . '/' . min($JLH_TG, 3);
+        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'T') . '/' . min($JLH_ANAK, 3);
 
         $BJ_hitung = ($BIAYA_JAB / 100) * $BRUTTO2;
         $BJ        = min($BJ_hitung, $MAX_BIAYA_JAB);
@@ -454,6 +455,7 @@ class GajiCalculatorService
             'max_biaya_jab'    => $MAX_BIAYA_JAB,
             'neto_sebulan'     => $KRG,
             'neto_setahun'     => $STHN,
+            'status_kawin'     => $STS_KAWIN,
             'status_ptkp'      => $statusPtkp,
             'nilai_ptkp'       => $PJK1,
             'pkp_kotor'        => $PKP_KOTOR,
@@ -571,5 +573,44 @@ class GajiCalculatorService
         }
 
         return $PKP2;
+    }
+
+    protected function hitungNTAXPerKategoriA(float $BRUTTO): float
+    {
+        $thresholds = [11400000000, 910000000, 695000000, 550000000, 454000000, 337000000, 206000000, 157000000, 125000000, 103000000, 89000000, 77500000, 68600000, 62200000, 56300000, 51400000, 47800000, 43850000, 39100000, 35400000, 32400000, 30050000, 28000000, 26450000, 24150000, 19750000, 16950000, 15100000, 13750000, 12500000, 11600000, 11050000, 10700000, 10350000, 10050000, 9650000, 8550000, 7500000, 6750000, 6300000, 5950000, 5650000, 5400000];
+        $rates = [34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3.5, 3, 2.5, 2.25, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25, 0];
+        
+        foreach ($thresholds as $i => $threshold) {
+            if ($BRUTTO > $threshold) {
+                return (float) $rates[$i];
+            }
+        }
+        return 0;
+    }
+
+    protected function hitungNTAXPerKategoriB(float $BRUTTO): float
+    {
+        $thresholds = [1405000000, 957000000, 704000000, 555000000, 459000000, 374000000, 211000000, 163000000, 129000000, 109000000, 93000000, 80000000, 71000000, 64000000, 58500000, 53800000, 49500000, 45800000, 41100000, 37100000, 33950000, 31450000, 29350000, 27700000, 26000000, 21850000, 18450000, 16400000, 14950000, 13600000, 12600000, 11600000, 11250000, 10750000, 9200000, 7300000, 6850000, 6500000, 6200000];
+        $rates = [34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2.5, 2, 1.5, 1.25, 1, 0.75, 0.5, 0.25, 0];
+        
+        foreach ($thresholds as $i => $threshold) {
+            if ($BRUTTO > $threshold) {
+                return (float) $rates[$i];
+            }
+        }
+        return 0;
+    }
+
+    protected function hitungNTAXPerKategoriC(float $BRUTTO): float
+    {
+        $thresholds = [1419000000, 965000000, 709000000, 561000000, 463000000, 390000000, 221000000, 169000000, 134000000, 110000000, 95600000, 83200000, 74500000, 66700000, 60400000, 55800000, 51200000, 47400000, 43000000, 38900000, 35400000, 32600000, 30100000, 28100000, 26600000, 22700000, 19500000, 17050000, 15550000, 14150000, 12950000, 12050000, 11200000, 10950000, 9800000, 8850000, 7800000, 7350000, 6950000, 6600000];
+        $rates = [34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1.75, 1.5, 1.25, 1, 0.75, 0.5, 0.25, 0];
+        
+        foreach ($thresholds as $i => $threshold) {
+            if ($BRUTTO > $threshold) {
+                return (float) $rates[$i];
+            }
+        }
+        return 0;
     }
 }
