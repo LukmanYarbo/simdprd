@@ -61,7 +61,7 @@
         @include('layouts.partials.sidebar')
 
         <!-- Page Content -->
-        <div id="content" class="d-flex flex-column min-vh-100 w-100">
+        <div id="content" class="d-flex flex-column min-vh-100 w-100 overflow-hidden">
             @include('layouts.partials.navbar')
 
             <!-- Marquee Running Text with Fade Effect -->

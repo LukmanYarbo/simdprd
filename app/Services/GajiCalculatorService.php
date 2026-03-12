@@ -40,13 +40,13 @@ class GajiCalculatorService
     public function getMissingParams(): array
     {
         $missing = [];
-        if (!$this->param)      $missing[] = 'Parameter Gaji (status Y)';
-        if (!$this->tunUmum)    $missing[] = 'Tunjangan Umum (status Y)';
-        if (!$this->tunPerum)   $missing[] = 'Tunjangan Perumahan (status Y)';
-        if (!$this->tunTrans)   $missing[] = 'Tunjangan Transportasi (status Y)';
-        if (!$this->tunTki)     $missing[] = 'Tunjangan Komunikasi Intensif (status Y)';
-        if (!$this->pajakParam) $missing[] = 'Tarif Pajak (status Y)';
-        if (!$this->potongan)   $missing[] = 'Data Potongan';
+        if (!$this->param)      $missing[] = 'Parameter Gaji Belum ada';
+        if (!$this->tunUmum)    $missing[] = 'Tunjangan Umum Belum ada';
+        if (!$this->tunPerum)   $missing[] = 'Tunjangan Perumahan Belum ada';
+        if (!$this->tunTrans)   $missing[] = 'Tunjangan Transportasi Belum ada';
+        if (!$this->tunTki)     $missing[] = 'Tunjangan Komunikasi Intensif Belum ada';
+        if (!$this->pajakParam) $missing[] = 'Tarif Pajak Belum ada';
+        if (!$this->potongan)   $missing[] = 'Data Potongan Belum ada';
         return $missing;
     }
 
@@ -192,14 +192,12 @@ class GajiCalculatorService
             $POTBPJS = ($POT_BPJS / 100) * $baseGapok;
         }
 
-        // === JKK & JKM (Hanya Anggota / ID_DPRD > 2) ===
-        if ($ID_DPRD != 1 && $ID_DPRD != 2) {
-            if ($KD_JKK == 'Y') {
-                $JKK = ($GAPOK < $MAX_JKKJKM) ? $MAX_JKKJKM * ($POT_JKK / 100) : $GAPOK * ($POT_JKK / 100);
-            }
-            if ($KD_JKM == 'Y') {
-                $JKM = ($GAPOK < $MAX_JKKJKM) ? $MAX_JKKJKM * ($POT_JKM / 100) : $GAPOK * ($POT_JKM / 100);
-            }
+        // === JKK & JKM ===
+        if ($KD_JKK == 'Y') {
+            $JKK = ($GAPOK < $MAX_JKKJKM) ? $MAX_JKKJKM * ($POT_JKK / 100) : $GAPOK * ($POT_JKK / 100);
+        }
+        if ($KD_JKM == 'Y') {
+            $JKM = ($GAPOK < $MAX_JKKJKM) ? $MAX_JKKJKM * ($POT_JKM / 100) : $GAPOK * ($POT_JKM / 100);
         }
 
         // === Tunjangan Alat Kelengkapan ===

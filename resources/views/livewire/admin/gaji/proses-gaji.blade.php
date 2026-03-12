@@ -1,5 +1,5 @@
-<div>
-    <div class="card border-0 shadow-sm mb-4">
+<div style="min-width: 0; max-width: 100%;">
+    <div class="card border-0 shadow-sm mb-4" style="min-width: 0; max-width: 100%;">
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 text-primary fw-bold"><i class="bi bi-cash-coin me-2"></i>Proses Gaji Anggota DPRD</h5>
         </div>
