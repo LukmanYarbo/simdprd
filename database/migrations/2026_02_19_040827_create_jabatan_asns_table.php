@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('jabatan_asns', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_skpd')->nullable()->constrained('skpds')->onDelete('set null');
+            $table->foreignId('id_esselon')->nullable()->constrained('esselons')->onDelete('set null');
             $table->string('nama_jabatan');
-            $table->foreignId('id_esselon')->constrained('esselons')->onDelete('cascade');
             $table->timestamps();
         });
     }

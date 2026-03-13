@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('alat_kelengkapan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('ket')->nullable(); // ket as per request, nullable usually safe
+            $table->string('ket')->nullable();
+            $table->string('nama_komisi')->nullable();
             $table->timestamps();
         });
 
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->string('ket_sk')->nullable();
             $table->date('tgl_sk');
             $table->string('file_sk')->nullable();
+            $table->string('status', 1)->default('T')->comment('A: Aktif, T: Tidak Aktif');
             $table->foreignId('id_alat_kelengkapan')
                   ->constrained('alat_kelengkapan')
                   ->cascadeOnDelete()
@@ -33,7 +35,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 3. Tabel jabatan_anggota (Baru, untuk assignment)
+        // 3. Tabel jabatan_anggota
         Schema::create('jabatan_anggota', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_alat_kelengkapan')
@@ -41,6 +43,8 @@ return new class extends Migration
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
             
+            $table->string('nama_komisi')->nullable();
+
             $table->foreignId('id_jabatan_alat_kelengkapan')
                   ->constrained('jabatan_alat_kelengkapan')
                   ->cascadeOnDelete()

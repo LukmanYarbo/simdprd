@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('id_skpd')->nullable()->constrained('skpds')->onDelete('set null');
             $table->foreignId('id_anggota')->nullable()->constrained('anggota')->onDelete('set null');
             $table->foreignId('id_pegawai_asn')->nullable()->constrained('pegawai_asns')->onDelete('set null');
-            $table->enum('jenis_dokumen', ['Surat Tugas', 'SPPD', 'Surat Keputusan']);
+            $table->string('jenis_dokumen');
             $table->timestamps();
         });
     }

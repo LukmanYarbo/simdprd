@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pegawai_asns', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_skpd')->nullable()->constrained('skpds')->onDelete('set null');
             $table->string('nip')->unique();
             $table->string('nik')->unique();
             $table->string('nokk')->nullable();
@@ -21,10 +22,13 @@ return new class extends Migration
             $table->date('tgl_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->foreignId('id_agama')->constrained('agama')->onDelete('restrict');
-            $table->foreignId('id_status_kawin')->constrained('status_kawin')->onDelete('restrict');
+            $table->string('id_status_kawin');
             $table->foreignId('id_pangkat_golongan')->constrained('pangkat_golongans')->onDelete('restrict');
             $table->foreignId('id_jabatan')->constrained('jabatan_asns')->onDelete('restrict');
+            $table->foreignId('id_status_pegawai')->constrained('status_pegawais')->onDelete('restrict');
             $table->date('tanggal_mulai_kerja')->nullable();
+            $table->date('tanggal_berhenti')->nullable();
+            $table->string('ket_jabatan')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('nohp')->nullable();
             $table->string('norek')->nullable();

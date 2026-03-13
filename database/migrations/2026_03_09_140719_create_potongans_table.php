@@ -18,6 +18,8 @@ return new class extends Migration
             $table->decimal('maksimal_potongan_bpjs', 15, 2)->default(0)->comment('Maksimal Potongan BPJS (Rupiah)');
             $table->decimal('jkk', 8, 2)->default(0)->comment('Persen JKK');
             $table->decimal('jkm', 8, 2)->default(0)->comment('Persen JKM');
+            $table->decimal('maks_jkkjkm', 15, 2)->default(0)->comment('Maksimal JKK dan JKM (Rupiah)');
+            $table->decimal('pot_pph', 5, 2)->default(0);
             $table->timestamps();
         });
     }

@@ -27,8 +27,6 @@ class DatabaseSeeder extends Seeder
             TunjanganUmumSeeder::class,
             PotonganSeeder::class,
             TarifPajakSeeder::class,
-            AlatKelengkapanSeeder::class ,
-            AnggotaSeeder::class ,
             IkatanKeluargaSeeder::class ,
             JenisPendidikanSeeder::class ,
             EsselonSeeder::class ,
@@ -36,6 +34,11 @@ class DatabaseSeeder extends Seeder
             SkpdSeeder::class ,
             JabatanAsnSeeder::class ,
             StatusPegawaiSeeder::class ,
+            AlatKelengkapanSeeder::class ,
+            SuratKeputusanSeeder::class,
+            AnggotaSeeder::class ,
+            JabatanAnggotaSeeder::class ,
+            KeluargaSeeder::class ,
         ]);
     }
 }

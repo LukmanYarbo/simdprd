@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('anggota', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_skpd')->nullable()->constrained('skpds')->onDelete('set null');
             $table->string('nik')->unique();
             $table->string('nokk');
             $table->string('nama_anggota');
@@ -23,15 +24,13 @@ return new class extends Migration
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
             $table->enum('jk', ['L', 'P']);
-            $table->foreignId('id_status_kawin')
-                ->constrained('status_kawin')
-                ->restrictOnDelete()
-                ->cascadeOnUpdate();
+            $table->string('id_status_kawin');
             $table->integer('jmlh_istri')->default(0);
             $table->integer('jmlh_anak')->default(0);
             $table->string('no_telp');
             $table->string('email')->unique();
             $table->string('no_rekening');
+            $table->string('no_npwp')->nullable();
             $table->string('prov');
             $table->string('kab');
             $table->string('kec');
@@ -41,10 +40,19 @@ return new class extends Migration
                 ->constrained('status_keanggotaan')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
-            $table->foreignId('id_jabatan')
-                ->constrained('jabatan')
+            $table->foreignId('id_dprd')
+                ->constrained('jabatan_dprd')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
+            
+            $table->foreignId('id_komisi')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
+            $table->foreignId('id_banggar')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
+            $table->foreignId('id_banmus')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
+            $table->foreignId('id_balegda')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
+            $table->foreignId('id_bk')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
+            $table->foreignId('id_pansus')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
+            $table->foreignId('id_panja')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
+
             $table->date('tgl_mulai');
             $table->date('tgl_berhenti')->nullable();
 

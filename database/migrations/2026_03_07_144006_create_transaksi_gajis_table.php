@@ -43,6 +43,10 @@ return new class extends Migration
             $table->bigInteger('tunjangan_bpjs')->default(0);
             $table->bigInteger('tunjangan_jkk')->default(0);
             $table->bigInteger('tunjangan_jkm')->default(0);
+            $table->string('Kategori_TER')->nullable();
+            $table->double('Nilai_TER', 8, 2)->nullable();
+            $table->double('PPH21_Gaji')->nullable();
+            $table->double('PPh21_Tunjangan')->nullable();
             $table->bigInteger('potongan_pph21')->default(0);
             $table->bigInteger('potongan_bpjs')->default(0);
             $table->bigInteger('potongan_bpjs2')->default(0);
@@ -61,6 +65,7 @@ return new class extends Migration
             $table->bigInteger('total_potongan1')->default(0);
             $table->bigInteger('total_potongan2')->default(0);
             $table->bigInteger('jumlah_bersih')->default(0);
+            $table->json('detail_pajak')->nullable();
             $table->timestamps();
         });
     }

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('keluarga', function (Blueprint $table) {
+        Schema::create('keluarga_anggota', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_anggota')->constrained('anggota')->onDelete('cascade');
             $table->foreignId('id_ikatan_keluarga')->constrained('ikatan_keluarga')->onDelete('restrict');
@@ -22,12 +22,13 @@ return new class extends Migration
             $table->enum('status_anak', ['AK', 'AA'])->nullable(); // Anak Kandung, Anak Angkat
             $table->enum('status_tunjangan', ['Y', 'T']); // Ditunjang, Tidak
             $table->string('no_sk_pengadilan')->nullable();
+            $table->string('file_surat_ket')->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('keluarga');
+        Schema::dropIfExists('keluarga_anggota');
     }
 };
