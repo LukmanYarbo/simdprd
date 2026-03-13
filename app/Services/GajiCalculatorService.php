@@ -110,7 +110,7 @@ class GajiCalculatorService
         $JLH_IS       = $anggota->jmlh_istri ?? 0;
         $JLH_ANAK     = $anggota->jmlh_anak ?? 0;
         $skRow        = $anggota->statusKawin;
-        $STS_KAWIN    = $skRow ? $skRow->kode : 'T';
+        $STS_KAWIN    = $skRow ? $skRow->kode : 'TK';
         $KD_BPJS      = $anggota->status_bpjs;
         $KD_JKK       = $anggota->status_jkk;
         $KD_JKM       = $anggota->status_jkm;
@@ -190,12 +190,12 @@ class GajiCalculatorService
 
         // Status PTKP
         $JLH_TG     = $JLH_IS + $JLH_ANAK;
-        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'T') . '/' . min($JLH_TG, 3);
+        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'TK') . '/' . min($JLH_TG, 3);
 
         // Kategori TER
-        if (in_array($statusPtkp, ['T/0', 'T/1', 'K/0'])) {
+        if (in_array($statusPtkp, ['TK/0', 'TK/1', 'K/0'])) {
             $kategoriTer = 'A';
-        } elseif (in_array($statusPtkp, ['T/2', 'T/3', 'K/1', 'K/2'])) {
+        } elseif (in_array($statusPtkp, ['TK/2', 'TK/3', 'K/1', 'K/2'])) {
             $kategoriTer = 'B';
         } elseif ($statusPtkp === 'K/3') {
             $kategoriTer = 'C';
@@ -345,7 +345,7 @@ class GajiCalculatorService
         $JLH_IS       = $anggota->jmlh_istri ?? 0;
         $JLH_ANAK     = $anggota->jmlh_anak ?? 0;
         $skRow        = $anggota->statusKawin;
-        $STS_KAWIN    = $skRow ? $skRow->kode : 'T';
+        $STS_KAWIN    = $skRow ? $skRow->kode : 'TK';
         $KD_BPJS      = $anggota->status_bpjs;
         $KD_JKK       = $anggota->status_jkk;
         $KD_JKM       = $anggota->status_jkm;
@@ -432,7 +432,7 @@ class GajiCalculatorService
         $BRUTTO2    = $BRUTTO + $PEMBULATAN;
 
         $JLH_TG     = $JLH_IS + $JLH_ANAK;
-        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'T') . '/' . min($JLH_ANAK, 3);
+        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'TK') . '/' . min($JLH_ANAK, 3);
 
         $BJ_hitung = ($BIAYA_JAB / 100) * $BRUTTO2;
         $BJ        = min($BJ_hitung, $MAX_BIAYA_JAB);

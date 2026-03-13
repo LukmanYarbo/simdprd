@@ -20,6 +20,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleAndUserSeeder::class ,
             SupportingTablesSeeder::class ,
+            ParameterGajiSeeder::class,
+            TunjanganPerumahanSeeder::class,
+            TunjanganTransportasiSeeder::class,
+            TunjanganKomunikasiIntensifSeeder::class,
+            TunjanganUmumSeeder::class,
+            PotonganSeeder::class,
+            TarifPajakSeeder::class,
             AlatKelengkapanSeeder::class ,
             AnggotaSeeder::class ,
             IkatanKeluargaSeeder::class ,

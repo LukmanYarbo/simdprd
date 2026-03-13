@@ -22,7 +22,7 @@ class SupportingTablesSeeder extends Seeder
         ]);
 
         DB::table('status_kawin')->insert([
-            ['nama' => 'Belum Kawin', 'kode' => 'T'],
+            ['nama' => 'Belum Kawin', 'kode' => 'TK'],
             ['nama' => 'Kawin', 'kode' => 'K'],
             ['nama' => 'Cerai Hidup', 'kode' => 'CH'],
             ['nama' => 'Cerai Mati', 'kode' => 'CM'],
