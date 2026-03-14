@@ -142,7 +142,7 @@ class ProsesGaji extends Component
 
         $this->dispatch('swal',
             title: 'Berhasil',
-            text: 'Proses gaji ' . $this->getBlnThnLabel() . ' selesai untuk ' . count($hasil) . ' anggota.',
+            text: 'Proses gaji ' . count($hasil) . ' anggota aktif telah berhasil.',
             icon: 'success'
         );
     }

@@ -40,8 +40,8 @@
                         <div class="col-md-3">
                             <label for="status" class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
                             <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                                <option value="T" {{ old('status', 'T') === 'T' ? 'selected' : '' }}>Tidak Aktif (T)</option>
-                                <option value="Y" {{ old('status') === 'Y' ? 'selected' : '' }}>Aktif (Y)</option>
+                                <option value="T" {{ old('status', 'T') === 'T' ? 'selected' : '' }}>Tidak Aktif</option>
+                                <option value="Y" {{ old('status') === 'Y' ? 'selected' : '' }}>Aktif</option>
                             </select>
                             @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>

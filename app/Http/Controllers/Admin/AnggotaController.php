@@ -13,6 +13,7 @@ use App\Http\Requests\Admin\StoreAnggotaRequest;
 use App\Http\Requests\Admin\UpdateAnggotaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -23,7 +24,7 @@ class AnggotaController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view anggota|create anggota|edit anggota|delete anggota', only: ['index', 'show']),
+            new Middleware('permission:view anggota|create anggota|edit anggota|delete anggota', only: ['index', 'show', 'status']),
             new Middleware('permission:create anggota', only: ['create', 'store']),
             new Middleware('permission:edit anggota', only: ['edit', 'update']),
             new Middleware('permission:delete anggota', only: ['destroy']),
@@ -175,7 +176,11 @@ class AnggotaController extends Controller implements HasMiddleware
         $validated = $request->validated();
 
         if ($request->hasFile('foto_anggota')) {
-            $validated['foto_anggota'] = $request->file('foto_anggota')->store('foto_anggota', 'public');
+            $file = $request->file('foto_anggota');
+            $extension = $file->getClientOriginalExtension();
+            $nameSlug = Str::slug($validated['nama_anggota']);
+            $filename = $nameSlug . '_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $validated['foto_anggota'] = $file->storeAs('foto_anggota', $filename, 'public');
         }
 
         Anggota::create($validated);
@@ -223,12 +228,21 @@ class AnggotaController extends Controller implements HasMiddleware
             if ($anggota->foto_anggota) {
                 Storage::disk('public')->delete($anggota->foto_anggota);
             }
-            $validated['foto_anggota'] = $request->file('foto_anggota')->store('foto_anggota', 'public');
+            $file = $request->file('foto_anggota');
+            $extension = $file->getClientOriginalExtension();
+            $nameSlug = Str::slug($validated['nama_anggota'] ?? $anggota->nama_anggota);
+            $filename = $nameSlug . '_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $validated['foto_anggota'] = $file->storeAs('foto_anggota', $filename, 'public');
         }
 
         $anggota->update($validated);
 
         return redirect()->route('admin.anggota.index')->with('success', 'Anggota berhasil diperbarui.');
+    }
+
+    public function status()
+    {
+        return view('admin.anggota.status');
     }
 
     public function destroy(Request $request, Anggota $anggota)

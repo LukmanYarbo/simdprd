@@ -108,7 +108,10 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         $input = $request->all();
 
         if ($request->hasFile('file_sk')) {
-            $input['file_sk'] = $request->file('file_sk')->store('files_sk', 'public');
+            $file = $request->file('file_sk');
+            $extension = $file->getClientOriginalExtension();
+            $filename = 'surat_keputusan_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $input['file_sk'] = $file->storeAs('files_sk', $filename, 'public');
         }
 
         SuratKeputusan::create($input);
@@ -154,7 +157,10 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             if ($suratKeputusan->file_sk) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($suratKeputusan->file_sk);
             }
-            $input['file_sk'] = $request->file('file_sk')->store('files_sk', 'public');
+            $file = $request->file('file_sk');
+            $extension = $file->getClientOriginalExtension();
+            $filename = 'surat_keputusan_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $input['file_sk'] = $file->storeAs('files_sk', $filename, 'public');
         }
 
         $suratKeputusan->update($input);

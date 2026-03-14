@@ -9,6 +9,7 @@ use App\Models\TunjanganKomunikasiIntensif;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ManageTunjangan extends Component
 {
@@ -212,7 +213,10 @@ class ManageTunjangan extends Component
 
         $path = null;
         if ($this->tt_file_peraturan) {
-            $path = $this->tt_file_peraturan->store('tunjangan/transportasi', 'public');
+            $extension = $this->tt_file_peraturan->getClientOriginalExtension();
+            $noPeraturanSlug = Str::slug($this->tt_no_peraturan);
+            $filename = $noPeraturanSlug . '_tunjangan_transportasi_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $path = $this->tt_file_peraturan->storeAs('tunjangan/transportasi', $filename, 'public');
         }
 
         TunjanganTransportasi::create([
@@ -271,7 +275,10 @@ class ManageTunjangan extends Component
             if ($path && Storage::disk('public')->exists($path)) {
                 Storage::disk('public')->delete($path);
             }
-            $path = $this->tt_file_peraturan->store('tunjangan/transportasi', 'public');
+            $extension = $this->tt_file_peraturan->getClientOriginalExtension();
+            $noPeraturanSlug = Str::slug($this->tt_no_peraturan);
+            $filename = $noPeraturanSlug . '_tunjangan_transportasi_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $path = $this->tt_file_peraturan->storeAs('tunjangan/transportasi', $filename, 'public');
         }
 
         $data->update([
@@ -324,7 +331,10 @@ class ManageTunjangan extends Component
 
         $path = null;
         if ($this->tp_file_peraturan) {
-            $path = $this->tp_file_peraturan->store('tunjangan/perumahan', 'public');
+            $extension = $this->tp_file_peraturan->getClientOriginalExtension();
+            $noPeraturanSlug = Str::slug($this->tp_no_peraturan);
+            $filename = $noPeraturanSlug . '_tunjangan_perumahan_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $path = $this->tp_file_peraturan->storeAs('tunjangan/perumahan', $filename, 'public');
         }
 
         TunjanganPerumahan::create([
@@ -383,7 +393,10 @@ class ManageTunjangan extends Component
             if ($path && Storage::disk('public')->exists($path)) {
                 Storage::disk('public')->delete($path);
             }
-            $path = $this->tp_file_peraturan->store('tunjangan/perumahan', 'public');
+            $extension = $this->tp_file_peraturan->getClientOriginalExtension();
+            $noPeraturanSlug = Str::slug($this->tp_no_peraturan);
+            $filename = $noPeraturanSlug . '_tunjangan_perumahan_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $path = $this->tp_file_peraturan->storeAs('tunjangan/perumahan', $filename, 'public');
         }
 
         $data->update([
@@ -432,7 +445,10 @@ class ManageTunjangan extends Component
 
         $path = null;
         if ($this->tki_file_peraturan) {
-            $path = $this->tki_file_peraturan->store('tunjangan/komunikasi', 'public');
+            $extension = $this->tki_file_peraturan->getClientOriginalExtension();
+            $noPeraturanSlug = Str::slug($this->tki_no_peraturan);
+            $filename = $noPeraturanSlug . '_tunjangan_komunikasi_intensif_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $path = $this->tki_file_peraturan->storeAs('tunjangan/komunikasi', $filename, 'public');
         }
 
         TunjanganKomunikasiIntensif::create([
@@ -483,7 +499,10 @@ class ManageTunjangan extends Component
             if ($path && Storage::disk('public')->exists($path)) {
                 Storage::disk('public')->delete($path);
             }
-            $path = $this->tki_file_peraturan->store('tunjangan/komunikasi', 'public');
+            $extension = $this->tki_file_peraturan->getClientOriginalExtension();
+            $noPeraturanSlug = Str::slug($this->tki_no_peraturan);
+            $filename = $noPeraturanSlug . '_tunjangan_komunikasi_intensif_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $path = $this->tki_file_peraturan->storeAs('tunjangan/komunikasi', $filename, 'public');
         }
 
         $data->update([

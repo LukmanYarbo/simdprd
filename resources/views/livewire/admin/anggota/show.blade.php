@@ -16,8 +16,8 @@
                         <div class="ms-md-4 mt-3 mt-md-0 text-center text-md-start flex-grow-1">
                             <h3 class="fw-bold mb-1">{{ $anggota->nama_anggota }}</h3>
                             <p class="text-muted mb-2"><i class="bi bi-person-badge me-2"></i>{{ $anggota->nik }}</p>
-                            <span class="badge bg-primary px-3 py-2 fs-6">{{ $anggota->jabatan->nama }}</span>
-                            <span class="badge bg-{{ $anggota->statusKeanggotaan->nama == 'Aktif' ? 'success' : 'warning' }} px-3 py-2 fs-6 ms-2">{{ $anggota->statusKeanggotaan->nama }}</span>
+                            <span class="badge bg-primary px-3 py-2 fs-6">{{ $anggota->jabatan->nama ?? '-' }}</span>
+                            <span class="badge bg-{{ ($anggota->statusKeanggotaan->nama ?? '') == 'Aktif' ? 'success' : 'warning' }} px-3 py-2 fs-6 ms-2">{{ $anggota->statusKeanggotaan->nama ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -50,11 +50,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="text-muted small d-block">Agama</label>
-                                    <p class="fw-semibold mb-0">{{ $anggota->agama->nama }}</p>
+                                    <p class="fw-semibold mb-0">{{ $anggota->agama->nama ?? '-' }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="text-muted small d-block">Status Kawin</label>
-                                    <p class="fw-semibold mb-0">{{ $anggota->statusKawin->nama }} ({{ $anggota->jmlh_istri }} Istri, {{ $anggota->jmlh_anak }} Anak)</p>
+                                    <p class="fw-semibold mb-0">{{ $anggota->statusKawin->nama ?? '-' }} ({{ $anggota->jmlh_istri }} Istri, {{ $anggota->jmlh_anak }} Anak)</p>
                                 </div>
                             </div>
                         </div>
@@ -188,10 +188,10 @@
                                 @forelse($anggota->jabatanAnggota as $ja)
                                 <tr>
                                     <td class="ps-3 border-bottom-0">
-                                        <div class="fw-semibold">{{ $ja->alatKelengkapan->nama }}</div>
+                                        <div class="fw-semibold">{{ $ja->alatKelengkapan->nama ?? '-' }}</div>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25">{{ $ja->jabatanAlatKelengkapan->nama }}</span>
+                                        <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25">{{ $ja->jabatanAlatKelengkapan->nama ?? '-' }}</span>
                                     </td>
                                     <td class="border-bottom-0">
                                         <div class="small fw-semibold">{{ $ja->suratKeputusan->no_sk }}</div>
@@ -234,7 +234,7 @@
                                 @forelse($anggota->pendidikan as $p)
                                 <tr>
                                     <td class="ps-3 border-bottom-0">
-                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">{{ $p->jenisPendidikan->nama }}</span>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">{{ $p->jenisPendidikan->nama ?? '-' }}</span>
                                     </td>
                                     <td class="border-bottom-0">
                                         <div class="fw-semibold">{{ $p->tempat_pendidikan }}</div>
@@ -289,7 +289,7 @@
                                 <tr>
                                     <td class="ps-3 border-bottom-0 fw-semibold">{{ $k->nama }}</td>
                                     <td class="border-bottom-0 text-muted">{{ $k->nik }}</td>
-                                    <td class="border-bottom-0">{{ $k->ikatanKeluarga->nama }}</td>
+                                    <td class="border-bottom-0">{{ $k->ikatanKeluarga->nama ?? '-' }}</td>
                                     <td class="border-bottom-0">{{ $k->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                     <td class="border-bottom-0">{{ $k->tgl_lahir->format('d F Y') }} ({{ $k->tgl_lahir->age }} Thn)</td>
                                     <td class="border-bottom-0 text-center">

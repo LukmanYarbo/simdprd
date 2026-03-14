@@ -28,7 +28,7 @@
                         </tr>
                         <tr>
                             <th>Alat Kelengkapan</th>
-                            <td>{{ $suratKeputusan->alatKelengkapan->nama }}</td>
+                            <td>{{ $suratKeputusan->alatKelengkapan->nama ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th>Status</th>

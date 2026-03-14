@@ -24,6 +24,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('anggota', \App\Http\Controllers\Admin\AnggotaController::class)->parameters([
             'anggota' => 'anggota'
         ]);
+        Route::get('anggota-status', [\App\Http\Controllers\Admin\AnggotaController::class, 'status'])->name('anggota-status.index');
         Route::resource('alat-kelengkapan', \App\Http\Controllers\Admin\AlatKelengkapanController::class)->parameters([
             'alat-kelengkapan' => 'alatKelengkapan'
         ]);
@@ -87,6 +88,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('potongan', \App\Http\Controllers\Admin\PotonganController::class);
 
         // Proses Gaji
+        Route::get('transaksi-gaji/dsb-report', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'report'])->name('transaksi-gaji.dsb-report');
         Route::get('transaksi-gaji', [\App\Http\Controllers\Admin\TransaksiGajiController::class, 'index'])->name('transaksi-gaji.index');
     });
 

@@ -1,4 +1,67 @@
 <div style="min-width: 0; max-width: 100%;">
+    {{-- CSS untuk Animasi Loading Modern --}}
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .loader-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .spinner-modern {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(#00d2ff, #3a7bd5, #00d2ff);
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff 0);
+            mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff 0);
+            animation: spin-modern 1.2s linear infinite;
+        }
+
+        @keyframes spin-modern {
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #00d2ff, #91eaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+
+    {{-- Loading Overlay --}}
+    <div wire:loading wire:target="prosesGaji">
+        <div class="loading-overlay">
+            <div class="loader-box">
+                <div class="spinner-modern mb-3 mx-auto"></div>
+                <div class="loading-text">Sedang Menghitung Gaji...</div>
+                <p class="mb-0 text-white-50 mt-2">Mohon tunggu sebentar, data sedang diproses.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="card border-0 shadow-sm mb-4" style="min-width: 0; max-width: 100%;">
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 text-primary fw-bold"><i class="bi bi-cash-coin me-2"></i>Proses Gaji Anggota DPRD</h5>
@@ -64,6 +127,9 @@
                     <button onclick="confirmHapus()" class="btn btn-outline-danger">
                         <i class="bi bi-trash me-1"></i> Hapus Data
                     </button>
+                    <a href="{{ route('admin.transaksi-gaji.dsb-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-success">
+                        <i class="bi bi-printer me-1"></i> Cetak DSB
+                    </a>
                     @else
                     <button onclick="confirmProses(false)" class="btn btn-primary" @if(!$paramLengkap) disabled @endif>
                         <i class="bi bi-play-fill me-1"></i> Proses Gaji
@@ -103,9 +169,10 @@
                             <th colspan="9" class="table-primary border">Penghasilan Rutin</th>
                             <th colspan="7" class="table-success border">Tunjangan Alat Kelengkapan</th>
                             <th colspan="3" class="table-info border">Asuransi</th>
+                            <th colspan="4" class="table-warning border">Detail TER</th>
                             <th colspan="2" class="table-secondary border">Brutto</th>
                             <th colspan="6" class="table-danger border">Potongan</th>
-                            <th colspan="5" class="table-warning border">Rekap</th>
+                            <th colspan="5" class="table-primary border">Rekap</th>
                         </tr>
                         {{-- Row 2: Sub-kolom --}}
                         <tr class="table-light">
@@ -131,6 +198,11 @@
                             <th class="text-end">Tj. BPJS</th>
                             <th class="text-end">Tj. JKK</th>
                             <th class="text-end">Tj. JKM</th>
+                            {{-- Detail TER (4) --}}
+                            <th class="text-center">Kategori</th>
+                            <th class="text-end">Tarif (%)</th>
+                            <th class="text-end">PPh Gaji</th>
+                            <th class="text-end">PPh Tun</th>
                             {{-- Brutto (2) --}}
                             <th class="text-end">Brutto 1</th>
                             <th class="text-end">Brutto 2</th>
@@ -176,6 +248,11 @@
                             <td class="text-end">{{ number_format($row['tunjangan_bpjs'], 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($row['tunjangan_jkk'], 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($row['tunjangan_jkm'], 0, ',', '.') }}</td>
+                            {{-- Detail TER --}}
+                            <td class="text-center"><span class="badge bg-light text-dark border">{{ $row['Kategori_TER'] ?? '-' }}</span></td>
+                            <td class="text-end">{{ number_format($row['Nilai_TER'] ?? 0, 2, ',', '.') }}%</td>
+                            <td class="text-end">{{ number_format($row['PPH21_Gaji'] ?? 0, 0, ',', '.') }}</td>
+                            <td class="text-end">{{ number_format($row['PPh21_Tunjangan'] ?? 0, 0, ',', '.') }}</td>
                             {{-- Brutto --}}
                             <td class="text-end fw-semibold">{{ number_format($row['brutto1'], 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($row['brutto2'], 0, ',', '.') }}</td>
@@ -211,20 +288,35 @@
                         @endforeach
                     </tbody>
                     <tfoot class="table-secondary fw-bold text-end">
-                        <tr>
                             <td colspan="2" class="text-center">TOTAL</td>
-                            @foreach([
-                                'gaji_pokok','tunjangan_istri','tunjangan_anak','tunjangan_beras',
-                                'tunjangan_jabatan','tunjangan_paket','tunjangan_perumahan',
-                                'tunjangan_transportasi','tunjangan_tki',
-                                'tunjangan_komisi','tunjangan_banggar','tunjangan_banmus',
-                                'tunjangan_balegda','tunjangan_bk','tunjangan_pansus','tunjangan_panja',
-                                'tunjangan_bpjs','tunjangan_jkk','tunjangan_jkm',
-                                'brutto1','brutto2',
-                                'potongan_pph21','potonganpph_perumahan','potonganpph_transportasi',
-                                'potonganpph_tki','potongan_bpjs'
-                            ] as $col)
-                            <td>{{ number_format(collect($ringkasan)->sum($col), 0, ',', '.') }}</td>
+                            @php 
+                                $colsBeforeTer = [
+                                    'gaji_pokok','tunjangan_istri','tunjangan_anak','tunjangan_beras',
+                                    'tunjangan_jabatan','tunjangan_paket','tunjangan_perumahan',
+                                    'tunjangan_transportasi','tunjangan_tki',
+                                    'tunjangan_komisi','tunjangan_banggar','tunjangan_banmus',
+                                    'tunjangan_balegda','tunjangan_bk','tunjangan_pansus','tunjangan_panja',
+                                    'tunjangan_bpjs','tunjangan_jkk','tunjangan_jkm'
+                                ];
+                                $colsAfterTer = [
+                                    'brutto1','brutto2',
+                                    'potongan_pph21','potonganpph_perumahan','potonganpph_transportasi',
+                                    'potonganpph_tki','potongan_bpjs'
+                                ];
+                            @endphp
+
+                            @foreach($colsBeforeTer as $col)
+                                <td>{{ number_format(collect($ringkasan)->sum($col), 0, ',', '.') }}</td>
+                            @endforeach
+
+                            {{-- Footer Detail TER (Tarif tidak ditotal, Kategori tidak ditotal) --}}
+                            <td>-</td>
+                            <td>-</td>
+                            <td>{{ number_format(collect($ringkasan)->sum('PPH21_Gaji'), 0, ',', '.') }}</td>
+                            <td>{{ number_format(collect($ringkasan)->sum('PPh21_Tunjangan'), 0, ',', '.') }}</td>
+
+                            @foreach($colsAfterTer as $col)
+                                <td>{{ number_format(collect($ringkasan)->sum($col), 0, ',', '.') }}</td>
                             @endforeach
                             {{-- Pot. JKK+JKM --}}
                             <td>{{ number_format(collect($ringkasan)->sum(fn($r) => ($r['potongan_jkk'] ?? 0) + ($r['potongan_jkm'] ?? 0)), 0, ',', '.') }}</td>

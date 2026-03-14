@@ -190,7 +190,7 @@ class GajiCalculatorService
 
         // Status PTKP
         $JLH_TG     = $JLH_IS + $JLH_ANAK;
-        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'TK') . '/' . min($JLH_TG, 3);
+        $statusPtkp = ($STS_KAWIN === 'K' ? 'K' : 'TK') . '/' . min($JLH_ANAK, 3);
 
         // Kategori TER
         if (in_array($statusPtkp, ['TK/0', 'TK/1', 'K/0'])) {

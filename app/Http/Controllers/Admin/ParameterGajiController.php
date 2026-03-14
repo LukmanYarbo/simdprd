@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ParameterGaji;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -66,8 +67,11 @@ class ParameterGajiController extends Controller implements HasMiddleware
         ]);
 
         if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('parameter-gaji', 'public');
-            $validated['file'] = $path;
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            $noPeraturanSlug = Str::slug($validated['no_peraturan']);
+            $filename = $noPeraturanSlug . '_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $validated['file'] = $file->storeAs('parameter-gaji', $filename, 'public');
         }
 
         ParameterGaji::create($validated);
@@ -105,8 +109,11 @@ class ParameterGajiController extends Controller implements HasMiddleware
             if ($parameterGaji->file) {
                 Storage::disk('public')->delete($parameterGaji->file);
             }
-            $path = $request->file('file')->store('parameter-gaji', 'public');
-            $validated['file'] = $path;
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            $noPeraturanSlug = Str::slug($validated['no_peraturan'] ?? $parameterGaji->no_peraturan);
+            $filename = $noPeraturanSlug . '_' . now()->format('Y-m-d_H-i-s') . '.' . $extension;
+            $validated['file'] = $file->storeAs('parameter-gaji', $filename, 'public');
         }
 
         $parameterGaji->update($validated);

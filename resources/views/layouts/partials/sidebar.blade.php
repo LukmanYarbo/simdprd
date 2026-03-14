@@ -62,6 +62,11 @@
                     </a>
                 </li>
                 @endcan
+                <li>
+                    <a href="{{ route('admin.anggota-status.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggota-status.*') ? 'active' : '' }}">
+                        <i class="bi bi-person-gear me-2"></i> Perubahan Status Anggota
+                    </a>
+                </li>
             </ul>
         </li>
         <li>
