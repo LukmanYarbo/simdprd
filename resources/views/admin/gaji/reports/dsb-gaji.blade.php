@@ -152,12 +152,12 @@
                 </tr>
             </table>
 
-            <table class="table-data mt-2">
+            <table class="table-data mt-2 border-top">
                 <tr class="fw-bold" style="font-size: 10pt;">
-                    <td>JUMLAH BERSIH</td><td>: Rp.</td><td class="text-right">{{ number_format($summary['jumlah_bersih'], 0, ',', '.') }}</td>
+                    <td style="width: 140px;">JUMLAH BERSIH :</td><td style="width: 30px;">Rp.</td><td class="text-right">{{ number_format($summary['jumlah_bersih'], 0, ',', '.') }}</td>
                 </tr>
                 <tr>
-                    <td class="small fw-bold">Terbilang</td><td>:</td><td class="small fw-bold" style="font-style: italic;">{{ $summary['terbilang'] }}</td>
+                    <td class="small fw-bold">Terbilang :</td><td colspan="2" class="small fw-bold" style="font-style: italic; padding-left: 4px;">{{ $summary['terbilang'] }}</td>
                 </tr>
             </table>
         </div>
