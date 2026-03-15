@@ -12,27 +12,56 @@ class JabatanAsnSeeder extends Seeder
      */
     public function run(): void
     {
-        $jabatans = [
-            'Kepala Dinas',
-            'Sekretaris Dinas',
-            'Kepala Bidang',
-            'Kepala Seksi',
-            'Staf Pelaksana',
-            'Fungsional',
-        ];
+        $data = array (
+  0 => 
+  array (
+    'id' => 1,
+    'id_skpd' => 3,
+    'id_esselon' => 6,
+    'nama_jabatan' => 'Sekretaris DPRD',
+    'created_at' => '2026-03-13T15:47:19.000000Z',
+    'updated_at' => '2026-03-13T15:50:49.000000Z',
+  ),
+  1 => 
+  array (
+    'id' => 7,
+    'id_skpd' => 3,
+    'id_esselon' => 7,
+    'nama_jabatan' => 'Kepala Bagian',
+    'created_at' => '2026-03-13T15:51:21.000000Z',
+    'updated_at' => '2026-03-13T15:51:21.000000Z',
+  ),
+  2 => 
+  array (
+    'id' => 8,
+    'id_skpd' => 3,
+    'id_esselon' => 9,
+    'nama_jabatan' => 'Kepala Sub Bagian',
+    'created_at' => '2026-03-13T15:51:43.000000Z',
+    'updated_at' => '2026-03-13T15:51:43.000000Z',
+  ),
+  3 => 
+  array (
+    'id' => 9,
+    'id_skpd' => 3,
+    'id_esselon' => 11,
+    'nama_jabatan' => 'Staf',
+    'created_at' => '2026-03-13T15:51:59.000000Z',
+    'updated_at' => '2026-03-13T15:51:59.000000Z',
+  ),
+  4 => 
+  array (
+    'id' => 10,
+    'id_skpd' => 3,
+    'id_esselon' => 11,
+    'nama_jabatan' => 'Bendahara',
+    'created_at' => '2026-03-14T14:59:23.000000Z',
+    'updated_at' => '2026-03-14T14:59:23.000000Z',
+  ),
+);
 
-        // Ensure at least one esselon exists
-        $esselon = \App\Models\Esselon::first();
-        if (!$esselon) {
-            $esselon = \App\Models\Esselon::create(['nama' => 'Non-Esselon']);
-        }
-
-        foreach ($jabatans as $jabatan) {
-            JabatanAsn::firstOrCreate([
-                'nama_jabatan' => $jabatan,
-            ], [
-                'id_esselon' => $esselon->id
-            ]);
+        foreach ($data as $item) {
+            JabatanAsn::updateOrCreate(['id' => $item['id']], $item);
         }
     }
 }

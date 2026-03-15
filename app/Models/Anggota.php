@@ -34,6 +34,7 @@ class Anggota extends Model
         'alamat_lengkap',
         'id_status_keanggotaan',
         'id_dprd',
+        'nama_komisi',
         'tgl_mulai',
         'tgl_berhenti',
         'status_bpjs',

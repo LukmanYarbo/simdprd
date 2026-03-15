@@ -311,9 +311,11 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         }
 
         if ($anggotaField) {
-            \App\Models\Anggota::where('id', $request->id_anggota)->update([
-                $anggotaField => $request->id_jabatan_alat_kelengkapan
-            ]);
+            $updateData = [$anggotaField => $request->id_jabatan_alat_kelengkapan];
+            if ($namaAlatKelengkapan === 'komisi') {
+                $updateData['nama_komisi'] = $request->nama_komisi;
+            }
+            \App\Models\Anggota::where('id', $request->id_anggota)->update($updateData);
         }
 
         return response()->json(['success' => 'Anggota berhasil ditambahkan.']);
@@ -337,10 +339,14 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         }
 
         if ($anggotaField) {
+            $updateData = [$anggotaField => null];
+            if ($namaAlatKelengkapan === 'komisi') {
+                $updateData['nama_komisi'] = null;
+            }
             // Nullify the field only if it currently points to the same jabatan.
             \App\Models\Anggota::where('id', $jabatanAnggota->id_anggota)
                 ->where($anggotaField, $jabatanAnggota->id_jabatan_alat_kelengkapan)
-                ->update([$anggotaField => null]);
+                ->update($updateData);
         }
 
         $jabatanAnggota->delete();

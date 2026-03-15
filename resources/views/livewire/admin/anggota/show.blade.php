@@ -68,6 +68,10 @@
                                 <label class="text-muted small d-block">Tanggal Berhenti</label>
                                 <p class="fw-semibold mb-0">{{ $anggota->tgl_berhenti ? $anggota->tgl_berhenti->format('d M Y') : '-' }}</p>
                             </div>
+                            <div class="mb-3">
+                                <label class="text-muted small d-block">Komisi</label>
+                                <p class="fw-semibold mb-0">{{ $anggota->nama_komisi ? 'Komisi ' . $anggota->nama_komisi : '-' }}</p>
+                            </div>
                             <div class="mb-0">
                                 <label class="text-muted small d-block">Nomor Rekening</label>
                                 <p class="fw-semibold mb-0">{{ $anggota->no_rekening }}</p>

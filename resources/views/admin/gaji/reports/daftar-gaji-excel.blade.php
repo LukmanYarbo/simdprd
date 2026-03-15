@@ -35,7 +35,7 @@
             <th style="font-weight: bold; border: 1px solid #000;">POT. JKK</th>
             <th style="font-weight: bold; border: 1px solid #000;">POT. JKM</th>
             <th style="font-weight: bold; border: 1px solid #000;">PAJAK</th>
-            <th style="font-weight: bold; border: 1px solid #000;">POT. BPJS 1%</th>
+            
             <th style="font-weight: bold; border: 1px solid #000;">JUMLAH POTONGAN</th>
             <th style="font-weight: bold; border: 1px solid #000;">JUMLAH BERSIH</th>
         </tr>
@@ -76,16 +76,16 @@
                     'tun_bpjs' => $t->tunjangan_bpjs ?? 0,
                     'tun_jkm' => $t->tunjangan_jkm ?? 0,
                     'tun_jkk' => $t->tunjangan_jkk ?? 0,
-                    'tun_tax' => $t->PPH21_Gaji ?? 0,
+                    'tun_tax' => $t->tunjangan_pph21 ?? 0,
                     'brutto' => $t->brutto2 ?? 0,
                     'pot_bpjs3' => $t->potongan_bpjs ?? 0,
                     'pot_jkk' => $t->potongan_jkk ?? 0,
                     'pot_jkm' => $t->potongan_jkm ?? 0,
                     'pot_tax' => $t->potongan_pph21 ?? 0,
                     'pot_bpjs1' => $t->potongan_bpjs2 ?? 0,
-                    'jlh_pot' => $t->jumlah_potongan ?? 0,
-                    'jlh_bersih' => $t->brutto1 ?? 0,
                 ];
+                $data['jlh_pot'] = $data['pot_jkk'] + $data['pot_jkm'] + $data['pot_bpjs3'] + $data['pot_tax'];
+                $data['jlh_bersih'] = $t->brutto1 ?? 0;
 
                 // Update totals
                 $totals['gaji_pokok'] += $data['gp'];
@@ -111,11 +111,12 @@
                 $totals['pot_jkk'] += $data['pot_jkk'];
                 $totals['pot_jkm'] += $data['pot_jkm'];
                 $totals['pot_tax'] += $data['pot_tax'];
-                $totals['pot_bpjs1'] += $data['pot_bpjs1'];
+                $totals['pot_bpjs3'] += $data['pot_bpjs3'];
                 $totals['jlh_pot'] += $data['jlh_pot'];
                 $totals['jlh_bersih'] += $data['jlh_bersih'];
 
-                $status = ($a->status_perkawinan == 'Menikah' ? 'K' : 'T') . '/' . ($a->jumlah_istri ?? 0) . '/' . ($a->jumlah_anak ?? 0);
+                $stsKawin = $t->status_kawin;
+                $status = $stsKawin . '/' . min($t->jumlah_anak ?? 0, 3);
             @endphp
             <tr>
                 <td style="border: 1px solid #000;">{{ $no++ }}</td>
@@ -145,7 +146,7 @@
                 <td style="border: 1px solid #000; text-align: right;">{{ $data['pot_jkk'] }}</td>
                 <td style="border: 1px solid #000; text-align: right;">{{ $data['pot_jkm'] }}</td>
                 <td style="border: 1px solid #000; text-align: right;">{{ $data['pot_tax'] }}</td>
-                <td style="border: 1px solid #000; text-align: right;">{{ $data['pot_bpjs1'] }}</td>
+             
                 <td style="border: 1px solid #000; text-align: right; font-weight: bold;">{{ $data['jlh_pot'] }}</td>
                 <td style="border: 1px solid #000; text-align: right; font-weight: bold;">{{ $data['jlh_bersih'] }}</td>
             </tr>
@@ -177,7 +178,7 @@
             <td style="font-weight: bold; border: 1px solid #000; text-align: right;">{{ $totals['pot_jkk'] }}</td>
             <td style="font-weight: bold; border: 1px solid #000; text-align: right;">{{ $totals['pot_jkm'] }}</td>
             <td style="font-weight: bold; border: 1px solid #000; text-align: right;">{{ $totals['pot_tax'] }}</td>
-            <td style="font-weight: bold; border: 1px solid #000; text-align: right;">{{ $totals['pot_bpjs1'] }}</td>
+          
             <td style="font-weight: bold; border: 1px solid #000; text-align: right;">{{ $totals['jlh_pot'] }}</td>
             <td style="font-weight: bold; border: 1px solid #000; text-align: right;">{{ $totals['jlh_bersih'] }}</td>
         </tr>

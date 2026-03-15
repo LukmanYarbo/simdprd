@@ -12,18 +12,74 @@ class AlatKelengkapanSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = [
-            ['nama' => 'KOMISI', 'ket' => 'Komisi DPRD'],
-            ['nama' => 'BANMUS', 'ket' => 'Badan Musyawarah'],
-            ['nama' => 'BANGGAR', 'ket' => 'Badan Anggaran'],
-            ['nama' => 'BK', 'ket' => 'Badan Kehormatan'],
-            ['nama' => 'BALEGDA', 'ket' => 'Badan Legislasi Daerah'],
-            ['nama' => 'PANSUS', 'ket' => 'Panitia Khusus'],
-            ['nama' => 'PANJA', 'ket' => 'Panitia Kerja'],
-        ];
+        $data = array (
+  0 => 
+  array (
+    'id' => 1,
+    'nama' => 'KOMISI',
+    'ket' => 'Komisi DPRD',
+    'nama_komisi' => NULL,
+    'created_at' => '2026-03-13T15:47:19.000000Z',
+    'updated_at' => '2026-03-13T15:47:19.000000Z',
+  ),
+  1 => 
+  array (
+    'id' => 2,
+    'nama' => 'BANMUS',
+    'ket' => 'Badan Musyawarah',
+    'nama_komisi' => NULL,
+    'created_at' => '2026-03-13T15:47:19.000000Z',
+    'updated_at' => '2026-03-13T15:47:19.000000Z',
+  ),
+  2 => 
+  array (
+    'id' => 3,
+    'nama' => 'BANGGAR',
+    'ket' => 'Badan Anggaran',
+    'nama_komisi' => NULL,
+    'created_at' => '2026-03-13T15:47:19.000000Z',
+    'updated_at' => '2026-03-13T15:47:19.000000Z',
+  ),
+  3 => 
+  array (
+    'id' => 4,
+    'nama' => 'BK',
+    'ket' => 'Badan Kehormatan',
+    'nama_komisi' => NULL,
+    'created_at' => '2026-03-13T15:47:19.000000Z',
+    'updated_at' => '2026-03-13T15:47:19.000000Z',
+  ),
+  4 => 
+  array (
+    'id' => 5,
+    'nama' => 'BALEGDA',
+    'ket' => 'Badan Legislasi Daerah',
+    'nama_komisi' => NULL,
+    'created_at' => '2026-03-13T15:47:19.000000Z',
+    'updated_at' => '2026-03-13T15:47:19.000000Z',
+  ),
+  5 => 
+  array (
+    'id' => 6,
+    'nama' => 'PANSUS',
+    'ket' => 'Panitia Khusus',
+    'nama_komisi' => NULL,
+    'created_at' => '2026-03-13T15:47:19.000000Z',
+    'updated_at' => '2026-03-13T15:47:19.000000Z',
+  ),
+  6 => 
+  array (
+    'id' => 7,
+    'nama' => 'PANJA',
+    'ket' => 'Panitia Kerja',
+    'nama_komisi' => NULL,
+    'created_at' => '2026-03-13T15:47:19.000000Z',
+    'updated_at' => '2026-03-13T15:47:19.000000Z',
+  ),
+);
 
         foreach ($data as $item) {
-            \App\Models\AlatKelengkapan::create($item);
+            \App\Models\AlatKelengkapan::updateOrCreate(['id' => $item['id']], $item);
         }
     }
 }

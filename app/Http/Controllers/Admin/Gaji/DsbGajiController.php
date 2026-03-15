@@ -113,9 +113,11 @@ class DsbGajiController extends Controller
         $transaksi = TransaksiGaji::where('bln_thn', $blnThn)
             ->with(['anggota', 'anggota.jabatan'])
             ->join('anggota', 'transaksi_gaji.id_anggota', '=', 'anggota.id')
-            ->orderBy('anggota.id_dprd', 'asc')
-            ->orderBy('anggota.nama_anggota', 'asc')
             ->select('transaksi_gaji.*')
+            ->orderBy('anggota.id_dprd', 'asc')            
+            ->orderBy('anggota.id_komisi', 'asc')
+            ->orderBy('anggota.nama_komisi', 'asc')
+            ->orderBy('anggota.nama_anggota', 'asc')
             ->get();
 
         if ($transaksi->isEmpty()) {
