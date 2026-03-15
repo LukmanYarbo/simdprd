@@ -7,11 +7,20 @@ use App\Models\TransaksiGaji;
 use App\Models\PenandaTangan;
 use App\Models\Anggota;
 use App\Models\Pemda;
+use App\Models\DsbGaji;
+use App\Services\GajiCalculatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DsbGajiController extends Controller
 {
+    protected $gajiService;
+
+    public function __construct(GajiCalculatorService $gajiService)
+    {
+        $this->gajiService = $gajiService;
+    }
+
     public function report(Request $request)
     {
         $bulan = $request->get('bulan', date('n'));
@@ -64,45 +73,66 @@ class DsbGajiController extends Controller
         
         $summary['terbilang'] = ucwords(trim($this->terbilang($summary['jumlah_bersih']))) . " Rupiah";
 
-        // Group by position (Ketua, Wakil Ketua, Anggota)
-        $detailsByPosition = TransaksiGaji::where('bln_thn', $blnThn)
-            ->join('anggota', 'transaksi_gaji.id_anggota', '=', 'anggota.id')
-            ->select(
-                DB::raw('CASE WHEN anggota.id_dprd = 1 THEN "KETUA" 
-                             WHEN anggota.id_dprd = 2 THEN "WAKIL KETUA" 
-                             ELSE "ANGGOTA" END as jabatan_group'),
-                'anggota.id_dprd',
-                DB::raw('COUNT(*) as pegawai'),
-                DB::raw('SUM(transaksi_gaji.jumlah_is) as istri'),
-                DB::raw('SUM(transaksi_gaji.jumlah_anak) as anak'),
-                DB::raw('SUM(transaksi_gaji.jumlah_jiwa) as jiwa')
-            )
-            ->groupBy('anggota.id_dprd', 'jabatan_group')
-            ->orderBy('anggota.id_dprd', 'asc')
-            ->get();
+        // Use GajiCalculatorService for details, signatories, and pemda
+        $dsbData = $this->gajiService->getDsbGajiData($blnThn);
+        $detailsByPosition = $dsbData['detailsByPosition'];
+        $bendahara = $dsbData['bendahara'];
+        $sekretaris = $dsbData['sekretaris'];
+        $pemda = $dsbData['pemda'];
 
-        // Signatories
-        $bendahara = PenandaTangan::where('jenis_dokumen', 'like', '%Pengajuan Gaji%')
-            ->orWhere('jenis_dokumen', 'like', '%pengesahan gaji%')
-            ->with(['pegawaiAsn.jabatanAsn', 'pegawaiAsn.pangkatGolongan'])
-            ->get()
-            ->filter(function($item) {
-                return str_contains(strtolower($item->pegawaiAsn->jabatanAsn->nama_jabatan ?? ''), 'bendahara');
-            })->first();
+        // Fetch existing dsb_gaji to preserve the user-selected tanggal_proses
+        $existingDsb = DsbGaji::where('bln_thn', $blnThn)->first();
+        $tanggalTerakhir = $existingDsb->tanggal_proses ?? null;
 
-        $sekretaris = PenandaTangan::where('jenis_dokumen', 'like', '%Pengajuan Gaji%')
-            ->orWhere('jenis_dokumen', 'like', '%pengesahan gaji%')
-            ->with(['pegawaiAsn.jabatanAsn', 'pegawaiAsn.pangkatGolongan'])
-            ->get()
-            ->filter(function($item) {
-                return str_contains(strtolower($item->pegawaiAsn->jabatanAsn->nama_jabatan ?? ''), 'sekretaris dprd');
-            })->first();
+        // Save/Update to dsb_gaji table with preserved date
+        $this->gajiService->saveDsbGaji($blnThn, $tanggalTerakhir);
 
-        $pemda = Pemda::first();
+        // Fetch the fresh record for the report
+        $dsbGaji = DsbGaji::where('bln_thn', $blnThn)->first();
 
         $bulanLabel = $this->getBulanLabel($bulan);
 
-        return view('admin.gaji.reports.dsb-gaji', compact('summary', 'detailsByPosition', 'bendahara', 'sekretaris', 'pemda', 'bulanLabel', 'tahun'));
+        return view('admin.gaji.reports.dsb-gaji', compact(
+            'summary', 
+            'detailsByPosition', 
+            'bendahara', 
+            'sekretaris', 
+            'pemda', 
+            'bulanLabel', 
+            'tahun',
+            'dsbGaji'
+        ));
+    }
+
+    public function daftarGaji(Request $request)
+    {
+        $bulan = $request->get('bulan', date('n'));
+        $tahun = $request->get('tahun', date('Y'));
+        $blnThn = $bulan . '-' . $tahun;
+
+        $transaksi = TransaksiGaji::where('bln_thn', $blnThn)
+            ->with(['anggota', 'anggota.jabatan'])
+            ->join('anggota', 'transaksi_gaji.id_anggota', '=', 'anggota.id')
+            ->orderBy('anggota.id_dprd', 'asc')
+            ->orderBy('anggota.nama_anggota', 'asc')
+            ->select('transaksi_gaji.*')
+            ->get();
+
+        if ($transaksi->isEmpty()) {
+            return back()->with('error', 'Data gaji untuk periode ini belum diproses.');
+        }
+
+        $dsbGaji = DsbGaji::where('bln_thn', $blnThn)->first();
+        $bulanLabel = $this->getBulanLabel($bulan);
+        $pemda = Pemda::first();
+
+        return view('admin.gaji.reports.daftar-gaji', compact(
+            'transaksi',
+            'dsbGaji',
+            'bulanLabel',
+            'tahun',
+            'pemda'
+        ));
     }
 
     private function getBulanLabel($bulan)

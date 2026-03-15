@@ -10,6 +10,11 @@ use App\Models\TunjanganTransportasi;
 use App\Models\TunjanganKomunikasiIntensif;
 use App\Models\TarifPajak;
 use App\Models\Potongan;
+use App\Models\TransaksiGaji;
+use App\Models\PenandaTangan;
+use App\Models\Pemda;
+use App\Models\DsbGaji;
+use Illuminate\Support\Facades\DB;
 
 class GajiCalculatorService
 {
@@ -612,5 +617,130 @@ class GajiCalculatorService
             }
         }
         return 0;
+    }
+
+    public function getDsbGajiData(string $blnThn): array
+    {
+        $detailsByPosition = TransaksiGaji::where('bln_thn', $blnThn)
+            ->join('anggota', 'transaksi_gaji.id_anggota', '=', 'anggota.id')
+            ->where('anggota.id_status_keanggotaan', 1) // Only Active members
+            ->select(
+                DB::raw('CASE WHEN anggota.id_dprd = 1 THEN "KETUA" 
+                             WHEN anggota.id_dprd = 2 THEN "WAKIL KETUA" 
+                             ELSE "ANGGOTA" END as jabatan_group'),
+                'anggota.id_dprd',
+                DB::raw('COUNT(*) as pegawai'),
+                DB::raw('SUM(transaksi_gaji.jumlah_is) as istri'),
+                DB::raw('SUM(transaksi_gaji.jumlah_anak) as anak'),
+                DB::raw('SUM(transaksi_gaji.jumlah_jiwa) as jiwa')
+            )
+            ->groupBy('anggota.id_dprd', 'jabatan_group')
+            ->orderBy('anggota.id_dprd', 'asc')
+            ->get();
+
+        $bendahara = PenandaTangan::where(function($q) {
+                $q->where('jenis_dokumen', 'like', '%pengesahan%gaji%')
+                  ->orWhere('jenis_dokumen', 'like', '%pengesahan_gaji%')
+                  ->orWhere('jenis_dokumen', 'like', '%pegesahan_gaji%') // potential typo from user
+                  ->orWhere('jenis_dokumen', 'like', '%Pengajuan Gaji%');
+            })
+            ->with(['pegawaiAsn.jabatanAsn', 'pegawaiAsn.pangkatGolongan'])
+            ->get()
+            ->filter(function($item) {
+                $jabatan = strtolower($item->pegawaiAsn->jabatanAsn->nama_jabatan ?? '');
+                $ket = strtolower($item->pegawaiAsn->ket_jabatan ?? '');
+                return str_contains($jabatan, 'bendahara') || str_contains($ket, 'bendahara');
+            })->first();
+
+        $sekretaris = PenandaTangan::where(function($q) {
+                $q->where('jenis_dokumen', 'like', '%pengesahan%gaji%')
+                  ->orWhere('jenis_dokumen', 'like', '%pengesahan_gaji%')
+                  ->orWhere('jenis_dokumen', 'like', '%pegesahan_gaji%')
+                  ->orWhere('jenis_dokumen', 'like', '%Pengajuan Gaji%');
+            })
+            ->with(['pegawaiAsn.jabatanAsn', 'pegawaiAsn.pangkatGolongan'])
+            ->get()
+            ->filter(function($item) {
+                $jabatan = strtolower($item->pegawaiAsn->jabatanAsn->nama_jabatan ?? '');
+                $ket = strtolower($item->pegawaiAsn->ket_jabatan ?? '');
+                return str_contains($jabatan, 'sekretaris dprd') || str_contains($ket, 'sekretaris dprd');
+            })->first();
+
+        $pemda = Pemda::first();
+
+        return [
+            'detailsByPosition' => $detailsByPosition,
+            'bendahara' => $bendahara,
+            'sekretaris' => $sekretaris,
+            'pemda' => $pemda
+        ];
+    }
+
+    public function deleteDsbGaji(string $blnThn): void
+    {
+        DsbGaji::where('bln_thn', $blnThn)->delete();
+    }
+
+    public function saveDsbGaji(string $blnThn, $tanggalProses = null): void
+    {
+        $data = $this->getDsbGajiData($blnThn);
+        $details = $data['detailsByPosition'];
+        $sekretaris = $data['sekretaris'];
+        $bendahara = $data['bendahara'];
+
+        $ketua = $details->where('id_dprd', 1)->first();
+        $wakil = $details->where('id_dprd', 2)->first();
+        $anggotaList = $details->where('id_dprd', '>', 2);
+
+        // Accumulations as requested
+        $jumlah_is_ketua = $ketua->istri ?? 0;
+        $jumlah_is_wakil = $wakil->istri ?? 0;
+        $jumlah_is_anggota = $anggotaList->sum('istri') ?? 0;
+        $jumlah_is = $jumlah_is_ketua + $jumlah_is_wakil + $jumlah_is_anggota;
+
+        $jumlah_anak_ketua = $ketua->anak ?? 0;
+        $jumlah_anak_wakil = $wakil->anak ?? 0;
+        $jumlah_anak_anggota = $anggotaList->sum('anak') ?? 0;
+        $jumlah_anak = $jumlah_anak_ketua + $jumlah_anak_wakil + $jumlah_anak_anggota;
+
+        $jumlah_ketua = $ketua->pegawai ?? 0;
+        $jumlah_wakil = $wakil->pegawai ?? 0;
+        $jumlah_anggota_count = $anggotaList->sum('pegawai') ?? 0;
+        $jumlah_pegawai = $jumlah_ketua + $jumlah_wakil + $jumlah_anggota_count;
+
+        $jumlah_jiwa = $jumlah_pegawai + $jumlah_is + $jumlah_anak;
+
+        DsbGaji::updateOrCreate(
+            ['bln_thn' => $blnThn],
+            [
+                'jumlah_jiwa' => $jumlah_jiwa,
+                'jumlah_pegawai' => $jumlah_pegawai,
+                'jumlah_is' => $jumlah_is,
+                'jumlah_anak' => $jumlah_anak,
+                'jumlah_ketua' => $jumlah_ketua,
+                'jumlah_wakil' => $jumlah_wakil,
+                'jumlah_anggota' => $jumlah_anggota_count,
+                'jumlah_is_ketua' => $jumlah_is_ketua,
+                'jumlah_anak_ketua' => $jumlah_anak_ketua,
+                'jumlah_is_wakil' => $jumlah_is_wakil,
+                'jumlah_anak_wakil' => $jumlah_anak_wakil,
+                'jumlah_is_anggota' => $jumlah_is_anggota,
+                'jumlah_anak_anggota' => $jumlah_anak_anggota,
+                'nama_pa' => $sekretaris?->pegawaiAsn?->nama ?? '',
+                'nip_pa' => $sekretaris?->pegawaiAsn?->nip ?? '',
+                'golongan_pa' => isset($sekretaris?->pegawaiAsn?->pangkatGolongan) 
+                    ? ($sekretaris->pegawaiAsn->pangkatGolongan->pangkat . ', ' . $sekretaris->pegawaiAsn->pangkatGolongan->golongan) 
+                    : '',
+                'jabatan_pa' => $sekretaris?->pegawaiAsn?->jabatanAsn?->nama_jabatan ?? ($sekretaris?->pegawaiAsn?->ket_jabatan ?? ''),
+                'nama_bendahara' => $bendahara?->pegawaiAsn?->nama ?? '',
+                'nip_bendahara' => $bendahara?->pegawaiAsn?->nip ?? '',
+                'golongan_bendahara' => isset($bendahara?->pegawaiAsn?->pangkatGolongan) 
+                    ? ($bendahara->pegawaiAsn->pangkatGolongan->pangkat . ', ' . $bendahara->pegawaiAsn->pangkatGolongan->golongan) 
+                    : '',
+                'jabatan_bendahara' => $bendahara?->pegawaiAsn?->ket_jabatan ?? '',
+                'tanggal_proses' => \Illuminate\Support\Carbon::parse($tanggalProses ?? now())->format('Y-m-d'),
+                'status' => 'FINAL',
+            ]
+        );
     }
 }

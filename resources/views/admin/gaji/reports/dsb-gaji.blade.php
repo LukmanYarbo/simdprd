@@ -175,23 +175,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $tp=0; $ti=0; $ta=0; $tj=0; @endphp
-                    @foreach($detailsByPosition as $row)
                     <tr>
-                        <td class="text-start">{{ $row->jabatan_group }}</td>
-                        <td>{{ $row->pegawai }}</td>
-                        <td>{{ $row->istri }}</td>
-                        <td>{{ $row->anak }}</td>
-                        <td>{{ $row->jiwa }}</td>
+                        <td class="text-start">KETUA</td>
+                        <td>{{ $dsbGaji->jumlah_ketua ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_is_ketua ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_anak_ketua ?? 0 }}</td>
+                        <td>{{ ($dsbGaji->jumlah_ketua ?? 0) + ($dsbGaji->jumlah_is_ketua ?? 0) + ($dsbGaji->jumlah_anak_ketua ?? 0) }}</td>
                     </tr>
-                    @php $tp+=$row->pegawai; $ti+=$row->istri; $ta+=$row->anak; $tj+=$row->jiwa; @endphp
-                    @endforeach
+                    <tr>
+                        <td class="text-start">WAKIL KETUA</td>
+                        <td>{{ $dsbGaji->jumlah_wakil ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_is_wakil ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_anak_wakil ?? 0 }}</td>
+                        <td>{{ ($dsbGaji->jumlah_wakil ?? 0) + ($dsbGaji->jumlah_is_wakil ?? 0) + ($dsbGaji->jumlah_anak_wakil ?? 0) }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">ANGGOTA</td>
+                        <td>{{ $dsbGaji->jumlah_anggota ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_is_anggota ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_anak_anggota ?? 0 }}</td>
+                        <td>{{ ($dsbGaji->jumlah_anggota ?? 0) + ($dsbGaji->jumlah_is_anggota ?? 0) + ($dsbGaji->jumlah_anak_anggota ?? 0) }}</td>
+                    </tr>
                     <tr class="fw-bold">
                         <td>TOTAL</td>
-                        <td>{{ $tp }}</td>
-                        <td>{{ $ti }}</td>
-                        <td>{{ $ta }}</td>
-                        <td>{{ $tj }}</td>
+                        <td>{{ $dsbGaji->jumlah_pegawai ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_is ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_anak ?? 0 }}</td>
+                        <td>{{ $dsbGaji->jumlah_jiwa ?? 0 }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -208,19 +218,27 @@
 
             <div class="signature-section">
                 <div class="signature-box">
-                    <div>BOROKO, {{ date('d F Y') }}</div>
+                    @php
+                        $tgl = $dsbGaji->tanggal_proses ?? now();
+                        $formattedDate = \Carbon\Carbon::parse($tgl)->translatedFormat('d F Y');
+                    @endphp
+                    <div>BOROKO, {{ strtoupper($formattedDate) }}</div>
                     <div class="fw-bold">BENDAHARA PENGELUARAN</div>
                     <div class="signature-space"></div>
-                    <div class="fw-bold" style="text-decoration: underline;">{{ $bendahara->pegawaiAsn->nama ?? '..........................' }}</div>
-                    <div class="small">NIP : {{ $bendahara->pegawaiAsn->nip ?? '' }}</div>
+                    <div class="fw-bold" style="text-decoration: underline;">{{ $dsbGaji->nama_bendahara ?? '..........................' }}</div>
+                    <div class="small">{{ $dsbGaji->golongan_bendahara ?? '' }}</div>
+                    <div class="small">NIP : {{ $dsbGaji->nip_bendahara ?? '' }}</div>
+                    
                 </div>
-
+                
                 <div class="signature-box mt-3">
                     <div class="fw-bold">Mengetahui / Menyetujui,</div>
                     <div class="fw-bold">SEKRETARIS DPRD</div>
                     <div class="signature-space"></div>
-                    <div class="fw-bold" style="text-decoration: underline;">{{ $sekretaris->pegawaiAsn->nama ?? '..........................' }}</div>
-                    <div class="small">NIP : {{ $sekretaris->pegawaiAsn->nip ?? '' }}</div>
+                    <div class="fw-bold" style="text-decoration: underline;">{{ $dsbGaji->nama_pa ?? '..........................' }}</div>
+                    <div class="small">{{ $dsbGaji->golongan_pa ?? '' }}</div>
+                    <div class="small">NIP : {{ $dsbGaji->nip_pa ?? '' }}</div>
+                    
                 </div>
             </div>
         </div>

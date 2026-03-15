@@ -89,6 +89,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
 
         // Proses Gaji
         Route::get('transaksi-gaji/dsb-report', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'report'])->name('transaksi-gaji.dsb-report');
+        Route::get('transaksi-gaji/daftar-gaji', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'daftarGaji'])->name('transaksi-gaji.daftar-gaji');
         Route::get('transaksi-gaji', [\App\Http\Controllers\Admin\TransaksiGajiController::class, 'index'])->name('transaksi-gaji.index');
     });
 

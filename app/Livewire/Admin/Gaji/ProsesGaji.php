@@ -24,6 +24,13 @@ class ProsesGaji extends Component
     public array $selectedPajakDetail = [];
     public string $selectedPajakName = '';
 
+    // Status Management
+    public bool $showStatusModal = false;
+    public string $newStatus = '';
+    public string $alasanStatus = '';
+    public string $tanggalCetak = '';
+    public $dsbGajiRecord = null;
+
     protected GajiCalculatorService $calculator;
 
     public function boot(GajiCalculatorService $calculator)
@@ -33,7 +40,8 @@ class ProsesGaji extends Component
 
     public function mount()
     {
-        $this->tahun  = (int) date('Y');
+        $this->tahun = (int) date('Y');
+        $this->tanggalCetak = date('Y-m-d');
         $this->cekStatus();
     }
 
@@ -90,6 +98,14 @@ class ProsesGaji extends Component
         $blnThn = $this->getBlnThn();
         $this->blnThnLabel = $this->getBlnThnLabel();
         $this->sudahDiproses = TransaksiGaji::where('bln_thn', $blnThn)->exists();
+        $this->dsbGajiRecord = \App\Models\DsbGaji::where('bln_thn', $blnThn)->first();
+        
+        if ($this->dsbGajiRecord) {
+            $this->tanggalCetak = date('Y-m-d', strtotime($this->dsbGajiRecord->tanggal_proses));
+        } else {
+            $this->tanggalCetak = date('Y-m-d');
+        }
+
         $this->hasilProses   = [];
 
         // Cek parameter
@@ -140,19 +156,69 @@ class ProsesGaji extends Component
         $this->hasilProses = $hasil;
         $this->sudahDiproses = true;
 
+        // Populate dsb_gaji table
+        try {
+            $this->calculator->saveDsbGaji($blnThn, $this->tanggalCetak);
+        } catch (\Exception $e) {
+            // Log error or handle gracefully
+            \Illuminate\Support\Facades\Log::error("Failed to save dsb_gaji for $blnThn: " . $e->getMessage());
+        }
+
         $this->dispatch('swal',
             title: 'Berhasil',
             text: 'Proses gaji ' . count($hasil) . ' anggota aktif telah berhasil.',
             icon: 'success'
         );
+
+        $this->cekStatus();
+    }
+
+    public function openStatusModal(): void
+    {
+        if (!$this->dsbGajiRecord) return;
+        
+        $this->newStatus = $this->dsbGajiRecord->status;
+        $this->alasanStatus = $this->dsbGajiRecord->alasan_perubahan ?? '';
+        $this->showStatusModal = true;
+    }
+
+    public function closeStatusModal(): void
+    {
+        $this->showStatusModal = false;
+    }
+
+    public function updateStatus(): void
+    {
+        if (!$this->dsbGajiRecord) return;
+
+        $this->validate([
+            'newStatus' => 'required|in:FINAL,DRAF',
+            'alasanStatus' => 'required|string|min:5',
+        ], [
+            'alasanStatus.required' => 'Alasan perubahan status wajib diisi.',
+            'alasanStatus.min' => 'Alasan perubahan status minimal 5 karakter.',
+        ]);
+
+        $this->dsbGajiRecord->update([
+            'status' => $this->newStatus,
+            'alasan_perubahan' => $this->alasanStatus,
+            'tanggal_proses' => $this->tanggalCetak,
+        ]);
+
+        $this->closeStatusModal();
+        $this->cekStatus();
+        
+        $this->dispatch('swal', title: 'Berhasil', text: 'Status gaji berhasil diperbarui.', icon: 'success');
     }
 
     public function hapusData(): void
     {
         $blnThn = $this->getBlnThn();
         TransaksiGaji::where('bln_thn', $blnThn)->delete();
-        $this->sudahDiproses = false;
-        $this->hasilProses   = [];
+        $this->calculator->deleteDsbGaji($blnThn);
+        
+        $this->cekStatus();
+        
         $this->dispatch('swal', title: 'Berhasil', text: 'Data periode ' . $this->getBlnThnLabel() . ' berhasil dihapus.', icon: 'success');
     }
 

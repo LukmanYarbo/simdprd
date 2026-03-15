@@ -33,6 +33,7 @@ class DsbGaji extends Model
         'jabatan_bendahara',
         'tanggal_proses',
         'status',
+        'alasan_perubahan',
     ];
 
     /**
