@@ -250,6 +250,9 @@
                 <a href="{{ route('admin.transaksi-gaji.daftar-gaji', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-primary px-4 rounded-pill shadow-sm">
                     <i class="bi bi-table me-2"></i> Cetak Daftar Gaji
                 </a>
+                <a href="{{ route('admin.transaksi-gaji.export-excel', ['bulan' => $bulan, 'tahun' => $tahun]) }}" class="btn btn-outline-success px-4 rounded-pill shadow-sm">
+                    <i class="bi bi-file-earmark-excel me-2"></i> Export Excel
+                </a>
                 <a href="{{ route('admin.transaksi-gaji.dsb-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-success px-4 rounded-pill shadow-sm">
                     <i class="bi bi-printer-fill me-2"></i> Cetak DSB
                 </a>

@@ -74,7 +74,6 @@
         }
         table.gaji-table th {
             border: 1px solid #555;
-            background: #f5f5f0;
             text-align: center;
             font-weight: 700;
             font-size: 7pt;
@@ -162,7 +161,8 @@
         <div class="sub-title">DEWAN PERWAKILAN RAKYAT DAERAH</div>
         <div class="period">BULAN {{ $bulanLabel }} {{ $tahun }}</div>
     </div>
-    <div class="sheet-label">LEMBAR KE - 1</div>
+
+
 
     <table class="gaji-table">
         {{-- === HEADER ROWS === --}}
@@ -182,15 +182,15 @@
                 <th class="col-num" style="font-size: 6.5pt;">TUN. JABATAN<br>UANG PAKET<br>TUN. KOMISI</th>
                 <th class="col-num" style="font-size: 6.5pt;">TUN. BANMUS<br>TUN. BANGGAR<br>TUN. BALEG<br>TUN. BK</th>
                 <th class="col-num" style="font-size: 6.5pt;">TUN. PANSUS<br>TUN. PANJA<br>PEMBULATAN</th>
-                <th class="col-num" style="font-size: 6.5pt;">TUN. BPJS 3 %<br>TUN. JKM<br>TUN. JKK<br>TUN. PAJAK</th>
-                <th class="col-num" style="font-size: 6.5pt;">POT BPJS 3 %<br>POT. JKK<br>POT. JKM<br>PAJAK</th>
-                <th class="col-pot" style="font-size: 6.5pt;">POT BPJS 2%<br><br>JLH. POT</th>
+                <th class="col-num" style="font-size: 6.5pt;">TUN. BPJS 3%<br>TUN. JKM<br>TUN. JKK<br>TUN. PAJAK</th>
+                <th class="col-num" style="font-size: 6.5pt;">POT BPJS 3%<br>POT. JKK<br>POT. JKM<br>PAJAK</th>
+                <th class="col-pot" style="font-size: 6.5pt;">POT BPJS 1%<br><br>JLH. POT</th>
             </tr>
             <tr>
                 <th class="col-nama" style="text-align: center;">J A B A T A N</th>
                 <th class="col-num" colspan="5" style="background: #fff; border: none;">&nbsp;</th>
                 <th class="col-num" colspan="2" style="background: #fff; border: none;">&nbsp;</th>
-                <th class="col-ttd" style="vertical-align: middle;">NO. REKENING</th>
+                <th class="col-ttd" rowspan="2" style="vertical-align: middle;">NO. REKENING</th>
             </tr>
             <tr>
                 <th class="col-nama" style="text-align: center;">NPWP / TGL LAHIR</th>
@@ -261,7 +261,7 @@
                 $potTax = $t->potongan_pph21 ?? 0;
                 
                 $potBpjs2 = $t->potongan_bpjs2 ?? 0;
-                $jlhPot = $t->total_potongan1 ?? 0;
+                $jlhPot = $potBpjs1+$potJkk+$potJkm+$potTax+$potBpjs2 ?? 0;
                 
                 $jlhBersih = $t->brutto1 ?? 0; // JUMLAH BERSIH (using brutto1 as requested)
 
@@ -396,10 +396,6 @@
     <div class="page-footer">
         <div class="footer-info">
             Jumlah Pegawai = {{ $dsbGaji->jumlah_pegawai ?? $transaksi->count() }} , Jumlah Istri= {{ $dsbGaji->jumlah_is ?? 0 }} , Jumlah Anak = {{ $dsbGaji->jumlah_anak ?? 0 }} , Jumlah Jiwa = {{ $dsbGaji->jumlah_jiwa ?? 0 }}
-        </div>
-        <div style="font-size: 7pt;">
-            <em>Formulir Daftar Pembayaran Gaji Pegawai</em>
-            <span style="margin-left: 30px;">Halaman 1 dari 1</span>
         </div>
     </div>
 

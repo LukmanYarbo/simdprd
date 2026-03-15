@@ -173,4 +173,17 @@ class DsbGajiController extends Controller
         }     
         return $temp;
     }
+    public function exportExcel(Request $request)
+    {
+        $bulan = $request->get('bulan', date('n'));
+        $tahun = $request->get('tahun', date('Y'));
+        $bulanLabel = $this->getBulanLabel($bulan);
+
+        $fileName = 'Daftar_Gaji_' . $bulanLabel . '_' . $tahun . '.xlsx';
+
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\DaftarGajiExport($bulan, $tahun), 
+            $fileName
+        );
+    }
 }
