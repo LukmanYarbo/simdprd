@@ -146,9 +146,10 @@ class ProsesGaji extends Component
         $hasil = [];
         foreach ($anggotas as $anggota) {
             $data = $this->calculator->hitungGaji($anggota, $blnThn, $this->metodePajak);
-            TransaksiGaji::create($data);
+            $newTrx = TransaksiGaji::create($data);
             
             // Sertakan semua data untuk ditampilkan di tabel
+            $data['id'] = $newTrx->id;
             $data['nama'] = $anggota->nama_anggota;
             $hasil[] = $data;
         }

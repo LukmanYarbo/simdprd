@@ -54,12 +54,23 @@
         .modern-input-group .input-group-text {
             border-top-left-radius: 12px;
             border-bottom-left-radius: 12px;
+            font-size: 0.85rem;
         }
         .modern-input-group .form-select, .modern-input-group .form-control {
             border-top-right-radius: 12px;
             border-bottom-right-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
+        .form-label { font-size: 0.8rem; font-weight: 600; }
+        .input-group-text { font-size: 0.85rem; }
+        .form-select, .form-control { font-size: 0.85rem; }
+        .btn { font-size: 0.85rem; }
+        .badge { font-size: 0.75rem; }
+        
+        /* Table Scaling */
+        .table { font-size: 0.75rem !important; }
+        .table thead th { font-size: 0.72rem !important; letter-spacing: 0.02em; }
+        
         .shadow-xs { box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .shadow-primary-subtle { box-shadow: 0 10px 15px -3px rgba(13, 110, 253, 0.2); }
         .animate__zoomIn { animation: zoomIn 0.3s ease-out; }
@@ -250,6 +261,9 @@
                 <a href="{{ route('admin.transaksi-gaji.daftar-gaji', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-primary px-4 rounded-pill shadow-sm">
                     <i class="bi bi-table me-2"></i> Cetak Daftar Gaji
                 </a>
+                <a href="{{ route('admin.transaksi-gaji.tunjangan-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-warning px-4 rounded-pill shadow-sm">
+                    <i class="bi bi-cash me-2"></i> Cetak Daftar Tunjangan
+                </a>
                 <a href="{{ route('admin.transaksi-gaji.export-excel', ['bulan' => $bulan, 'tahun' => $tahun]) }}" class="btn btn-outline-success px-4 rounded-pill shadow-sm">
                     <i class="bi bi-file-earmark-excel me-2"></i> Export Excel
                 </a>
@@ -272,7 +286,7 @@
         </div>
         <div class="card-body p-0">
             <div class="table-responsive" style="overflow-x: auto;">
-                <table class="table table-hover table-bordered align-middle mb-0 table-sm text-nowrap" style="font-size: 0.80rem;">
+                <table class="table table-hover table-bordered align-middle mb-0 table-sm text-nowrap">
                     <thead class="text-center">
                         {{-- Row 1: Grup Header --}}
                         <tr class="table-primary">
@@ -337,7 +351,16 @@
                         @foreach($ringkasan as $idx => $row)
                         <tr>
                             <td class="text-center">{{ $idx + 1 }}</td>
-                            <td class="fw-semibold">{{ $row['nama'] }}</td>
+                            <td>
+                                <div class="d-flex justify-content-between align-items-center gap-2">
+                                    <span class="fw-semibold">{{ $row['nama'] }}</span>
+                                    @if(isset($row['id']))
+                                        <a href="{{ route('admin.transaksi-gaji.slip-gaji', $row['id']) }}" target="_blank" class="btn btn-sm btn-outline-success py-0 px-1 border-0" title="Cetak Slip Gaji" style="font-size: 0.85rem;">
+                                            <i class="bi bi-printer"></i>
+                                        </a>
+                                    @endif
+                                </div>
+                            </td>
                             {{-- Penghasilan Rutin --}}
                             <td class="text-end">{{ number_format($row['gaji_pokok'], 0, ',', '.') }}</td>
                             <td class="text-end">{{ number_format($row['tunjangan_istri'], 0, ',', '.') }}</td>

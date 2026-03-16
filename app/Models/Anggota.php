@@ -127,4 +127,5 @@ class Anggota extends Model
     {
         return $this->hasMany(PendidikanAnggota::class , 'id_anggota');
     }
+
 }

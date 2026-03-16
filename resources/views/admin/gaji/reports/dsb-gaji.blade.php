@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DSB Gaji - {{ $bulanLabel }} {{ $tahun }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         @page {
-            size: 330mm 215mm;
-            margin: 10mm;
+            size: 330mm 215.9mm; /* F4 Landscape */
+            margin: 10mm 15mm;
         }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            font-size: 9pt;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            font-size: 8pt;
             line-height: 1.25;
-            margin: 0;
-            padding: 0;
-            color: #333;
+            color: #000;
         }
         .header {
             text-align: center;
@@ -57,7 +57,7 @@
             margin-bottom: 20px;
         }
         .table-summary th, .table-summary td {
-            border: 1px solid #444;
+            border: 1px solid #000;
             padding: 5px;
             text-align: center;
             font-size: 8pt;

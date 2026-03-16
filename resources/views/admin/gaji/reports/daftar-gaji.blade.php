@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         @page {
-            size: 355.6mm 215.9mm; /* Legal Landscape */
+            size: 330mm 215.9mm; /* Legal Landscape */
             margin: 8mm 10mm;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
             font-size: 8pt;
-            line-height: 1.3;
-            color: #222;
+            line-height: 1.25;
+            color: #000;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
@@ -73,7 +73,7 @@
             page-break-after: auto;
         }
         table.gaji-table th {
-            border: 1px solid #555;
+            border: 1px solid #000;
             text-align: center;
             font-weight: 700;
             font-size: 7pt;
@@ -82,7 +82,7 @@
             padding: 2px 2px;
         }
         table.gaji-table td {
-            border: 1px solid #555;
+            border: 1px solid #000;
             padding: 1px 3px;
             vertical-align: top;
             text-align: right;
@@ -107,11 +107,11 @@
         td.t-center { text-align: center !important; }
 
         /* Member separator row */
-        tr.member-sep td { border-bottom: 2px solid #333; }
+        tr.member-sep td { border-bottom: 2px solid #000; }
 
         /* Subtotal row */
         tr.subtotal td {
-            border-top: 2px solid #333;
+            border-top: 2px solid #000;
             font-weight: 700;
         }
 
@@ -123,7 +123,7 @@
             font-size: 7.5pt;
         }
         .footer-info {
-            border: 1px solid #555;
+            border: 1px solid #000;
             padding: 3px 8px;
             display: inline-block;
         }
@@ -171,9 +171,9 @@
                 <th class="col-no" rowspan="4" style="vertical-align: middle;">No.</th>
                 <th class="col-nama" rowspan="2" style="vertical-align: middle;">N A M A</th>
                 <th class="col-sts" rowspan="4" style="vertical-align: middle;">STS KAWIN<br><small>JLH ISTRI/ANAK</small><br><small>JLH JIWA</small></th>
-                <th colspan="5" style="text-align:center; border-bottom: 2px solid #555;">P E N G H A S I L A N</th>
+                <th colspan="5" style="text-align:center; border-bottom: 2px solid #000;">P E N G H A S I L A N</th>
                 <th class="col-jlh" rowspan="4" style="vertical-align: middle;">JLH. KOTOR</th>
-                <th colspan="2" style="text-align:center; border-bottom: 2px solid #555;">P O T O N G A N</th>
+                <th colspan="2" style="text-align:center; border-bottom: 2px solid #000;">P O T O N G A N</th>
                 <th class="col-bersih" rowspan="4" style="vertical-align: middle;">JUMLAH<br>BERSIH</th>
                 <th class="col-ttd" rowspan="2" style="vertical-align: middle;">TANDA<br>TANGAN</th>
             </tr>
@@ -281,7 +281,7 @@
 
             {{-- Row 1: Nama, Gaji Pokok, Tun Jabatan, Tun Banmus, Tun Pansus, Tun BPJS 3%, JLH KOTOR, Pot BPJS 3%, Pot BPJS 2%, No --}}
             <tr>
-                <td rowspan="4" class="t-center" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #333;">{{ $no }}.</td>
+                <td rowspan="4" class="t-center" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #000;">{{ $no }}.</td>
                 <td class="t-left" style="font-weight:700;">{{ strtoupper($a->nama_anggota) }}</td>
                 <td class="t-center" style="border-bottom: none;"></td>
                 <td>{{ $fmt($gajiPokok) }}</td>
@@ -289,10 +289,10 @@
                 <td>{{ $fmt($tunBanmus) }}</td>
                 <td>{{ $fmt($tunPansus) }}</td>
                 <td>{{ $fmt($tunBpjs1) }}</td>
-                <td rowspan="4" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #333;">{{ $fmt($brutto) }}</td>
+                <td rowspan="4" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #000;">{{ $fmt($brutto) }}</td>
                 <td>{{ $fmt($potBpjs1) }}</td>
                 <td>{{ $fmt($potBpjs2) }}</td>
-                <td rowspan="4" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #333;">{{ $fmt($jlhBersih) }}</td>
+                <td rowspan="4" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #000;">{{ $fmt($jlhBersih) }}</td>
                 <td class="t-center" style="font-weight:700;">{{ $no }}</td>
             </tr>
             {{-- Row 2: Jabatan, STS Kawin, Tun Istri, Uang Paket, Tun Banggar, Tun Panja, Tun JKM, Pot JKK --}}
@@ -323,16 +323,16 @@
             </tr>
             {{-- Row 4: Tgl Lahir, JLH Jiwa, Tun Beras, -, Tun BK, -, Tun Pajak, Pajak, JLH POT, No Rekening --}}
             <tr class="member-sep">
-                <td class="t-left" style="font-size: 7pt; border-bottom: 2px solid #333;">{{ $a->tgl_lahir ? $a->tgl_lahir->format('d/m/Y') : '-' }}</td>
-                <td class="t-center" style="vertical-align: middle; border-bottom: 2px solid #333;">{{ $jlhJiwa }}</td>
-                <td style="border-bottom: 2px solid #333;">{{ $fmt($tunBeras) }}</td>
-                <td style="border-bottom: 2px solid #333;">0</td>
-                <td style="border-bottom: 2px solid #333;">{{ $fmt($tunBk) }}</td>
-                <td style="border-bottom: 2px solid #333;">0</td>
-                <td style="border-bottom: 2px solid #333;">{{ $fmt($tunTax) }}</td>
-                <td style="border-bottom: 2px solid #333;">{{ $fmt($potTax) }}</td>
-                <td style="border-bottom: 2px solid #333; font-weight:700;">{{ $fmt($jlhPot) }}</td>
-                <td class="t-left" style="font-size: 6.5pt; vertical-align: middle; border-bottom: 2px solid #333;">{{ $a->no_rekening ?? '-' }}</td>
+                <td class="t-left" style="font-size: 7pt; border-bottom: 2px solid #000;">{{ $a->tgl_lahir ? $a->tgl_lahir->format('d/m/Y') : '-' }}</td>
+                <td class="t-center" style="vertical-align: middle; border-bottom: 2px solid #000;">{{ $jlhJiwa }}</td>
+                <td style="border-bottom: 2px solid #000;">{{ $fmt($tunBeras) }}</td>
+                <td style="border-bottom: 2px solid #000;">0</td>
+                <td style="border-bottom: 2px solid #000;">{{ $fmt($tunBk) }}</td>
+                <td style="border-bottom: 2px solid #000;">0</td>
+                <td style="border-bottom: 2px solid #000;">{{ $fmt($tunTax) }}</td>
+                <td style="border-bottom: 2px solid #000;">{{ $fmt($potTax) }}</td>
+                <td style="border-bottom: 2px solid #000; font-weight:700;">{{ $fmt($jlhPot) }}</td>
+                <td class="t-left" style="font-size: 6.5pt; vertical-align: middle; border-bottom: 2px solid #000;">{{ $a->no_rekening ?? '-' }}</td>
             </tr>
         </tbody>
         @endforeach
@@ -387,7 +387,7 @@
                 <td></td>
                 <td style="font-weight:700;">{{ $fmt($totalTunPajak) }}</td>
                 <td style="font-weight:700;">{{ $fmt($totalPotPajak) }}</td>
-                <td style="font-weight:700; border-top: 1px solid #555;">{{ $fmt($totalJlhPot) }}</td>
+                <td style="font-weight:700; border-top: 1px solid #000;">{{ $fmt($totalJlhPot) }}</td>
                 <td></td>
             </tr>
         </tbody>
@@ -401,7 +401,7 @@
 
     @php
         $tgl = $dsbGaji->tanggal_proses ?? now();
-        $formattedDate = \Carbon\Carbon::parse($tgl)->translatedFormat('d F Y');
+        $formattedDate = \Carbon\Carbon::parse($tgl)->locale('id')->translatedFormat('d F Y');
         $kota = strtoupper($pemda->ibu_kota ?? 'BOROKO');
     @endphp
 

@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             KeluargaSeeder::class ,
             PegawaiAsnSeeder::class ,
             PenandaTanganSeeder::class ,
+            PemdaSeeder::class,
         ]);
     }
 }
