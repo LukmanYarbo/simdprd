@@ -5,33 +5,33 @@
 @section('content')
 <div class="container-fluid">
     <x-breadcrumbs title="Parameter Gaji" :items="[
-        ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
-        ['label' => 'Parameter Gaji']
+        ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+        ['label' => 'Parameter Gaji', 'icon' => 'ti ti-calculator']
     ]" />
 
     <div class="card shadow-lg border-0 mb-4 mt-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between bg-white border-bottom">
-            <h6 class="m-0 fw-bold text-primary"><i class="bi bi-calculator me-2"></i>Daftar Parameter Gaji</h6>
+            <h6 class="m-0 fw-bold text-primary"><i class="ti ti-calculator me-2"></i>Daftar Parameter Gaji</h6>
             @if($hasActive)
-                <button class="btn btn-primary btn-sm disabled" data-bs-toggle="tooltip" title="Tidak dapat menambah peraturan baru selagi ada peraturan yang masih aktif (Status Y)">
-                    <i class="bi bi-plus-lg me-1"></i> Tambah Parameter
+                <button class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm disabled" data-bs-toggle="tooltip" title="Tidak dapat menambah peraturan baru selagi ada peraturan yang masih aktif (Status Y)">
+                    <i class="ti ti-plus me-1"></i> Tambah Parameter
                 </button>
             @else
-                <a href="{{ route('admin.parameter-gaji.create') }}" class="btn btn-primary btn-sm shadow-sm">
-                    <i class="bi bi-plus-lg me-1"></i> Tambah Parameter
+                <a href="{{ route('admin.parameter-gaji.create') }}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm transition-base">
+                    <i class="ti ti-plus me-1"></i> Tambah Parameter
                 </a>
             @endif
         </div>
         <div class="card-body">
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
+                <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
+                    <i class="ti ti-circle-check me-2"></i>{{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
             @if(session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="bi bi-exclamation-triangle me-2"></i>{{ session('error') }}
+                    <i class="ti ti-exclamation-triangle me-2"></i>{{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
@@ -55,8 +55,8 @@
                             <td>
                                 <div class="fw-semibold">{{ $item->no_peraturan }}</div>
                                 @if($item->file)
-                                    <a href="javascript:void(0)" onclick="previewPdf('{{ asset('storage/' . $item->file) }}', '{{ $item->no_peraturan }}')" class="text-decoration-none small">
-                                        <i class="bi bi-file-earmark-pdf text-danger me-1"></i>Lihat Dokumen
+                                    <a href="javascript:void(0)" onclick="previewPdf('{{ asset('storage/' . $item->file) }}', '{{ $item->no_peraturan }}')" class="text-decoration-none small text-danger fw-medium">
+                                        <i class="ti ti-file-type-pdf me-1"></i>Lihat Dokumen
                                     </a>
                                 @endif
                             </td>
@@ -64,38 +64,40 @@
                             <td class="text-end">Rp {{ number_format($item->gajipokok_ketua, 0, ',', '.') }}</td>
                             <td class="text-center">
                                 @if($item->status == 'Y')
-                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2">
-                                        <i class="bi bi-check-circle-fill me-1"></i>Aktif
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                                        <i class="ti ti-circle-check me-1"></i>Aktif
                                     </span>
                                 @else
-                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 px-3 py-2">
-                                        <i class="bi bi-x-circle me-1"></i>Tidak Aktif
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 px-3 py-2 rounded-pill">
+                                        <i class="ti ti-circle-x me-1"></i>Tidak Aktif
                                     </span>
                                 @endif
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.parameter-gaji.edit', $item->id) }}" class="btn btn-sm btn-outline-warning py-1 px-2" title="Edit">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                @if($item->status != 'Y')
-                                <button class="btn btn-sm btn-outline-danger py-1 px-2" onclick="confirmDelete({{ $item->id }})" title="Hapus">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                                <form id="delete-form-{{ $item->id }}" action="{{ route('admin.parameter-gaji.destroy', $item->id) }}" method="POST" class="d-none">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                                @else
-                                <button class="btn btn-sm btn-outline-secondary py-1 px-2 disabled" title="Tidak dapat menghapus peraturan aktif">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                                @endif
+                                <div class="btn-group">
+                                    <a href="{{ route('admin.parameter-gaji.edit', $item->id) }}" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit">
+                                        <i class="ti ti-pencil"></i>
+                                    </a>
+                                    @if($item->status != 'Y')
+                                    <button class="btn btn-icon-only btn-sm btn-outline-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus">
+                                        <i class="ti ti-trash"></i>
+                                    </button>
+                                    <form id="delete-form-{{ $item->id }}" action="{{ route('admin.parameter-gaji.destroy', $item->id) }}" method="POST" class="d-none">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                    @else
+                                    <button class="btn btn-icon-only btn-sm btn-outline-secondary disabled" title="Tidak dapat menghapus peraturan aktif">
+                                        <i class="ti ti-trash"></i>
+                                    </button>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
                             <td colspan="6" class="text-center text-muted py-4">
-                                <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                                <i class="ti ti-inbox fs-3 d-block mb-2"></i>
                                 Belum ada data parameter gaji.
                             </td>
                         </tr>
@@ -107,11 +109,11 @@
     </div>
 
     {{-- PDF Preview Panel --}}
-    <div class="card shadow-lg border-0 mb-4" id="pdfPreviewCard" style="display:none;">
+    <div class="card shadow-lg border-0 mb-4 overflow-hidden" id="pdfPreviewCard" style="display:none;">
         <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
-            <h6 class="m-0 fw-bold text-danger"><i class="bi bi-file-earmark-pdf me-2"></i>Preview: <span id="pdfTitle"></span></h6>
-            <button class="btn btn-sm btn-outline-secondary" onclick="closePdfPreview()">
-                <i class="bi bi-x-lg me-1"></i>Tutup
+            <h6 class="m-0 fw-bold text-danger"><i class="ti ti-file-type-pdf me-2"></i>Preview: <span id="pdfTitle"></span></h6>
+            <button class="btn btn-sm btn-light rounded-pill px-3" onclick="closePdfPreview()">
+                <i class="ti ti-x me-1"></i>Tutup
             </button>
         </div>
         <div class="card-body p-0">

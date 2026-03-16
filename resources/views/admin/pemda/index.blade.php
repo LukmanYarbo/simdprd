@@ -6,8 +6,8 @@
 @section('content')
 <div class="container-fluid">
     <x-breadcrumbs title="Data Pemda" :items="[
-        ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
-        ['label' => 'Data Pemda']
+        ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+        ['label' => 'Data Pemda', 'icon' => 'ti ti-building-community']
     ]" />
 
     <div class="card shadow mb-4 mt-4">
@@ -15,8 +15,8 @@
     
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Pemda</h6>
-            <a href="{{ route('admin.pemda.create') }}" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus-lg"></i> Tambah Data Pemda
+            <a href="{{ route('admin.pemda.create') }}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm transition-base">
+                <i class="ti ti-plus me-1"></i> Tambah Data Pemda
             </a>
         </div>
         <div class="card-body">
@@ -51,11 +51,11 @@
                             </td>
                             <td>{{ $item->kota }} / {{ $item->kabupaten }}</td>
                             <td class="text-center">
-                                <a href="{{ route('admin.pemda.edit', $item->id) }}" class="btn btn-sm btn-warning py-0 px-2" style="font-size: 0.75rem;">
-                                    <i class="bi bi-pencil-square"></i>
+                                <a href="{{ route('admin.pemda.edit', $item->id) }}" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit">
+                                    <i class="ti ti-pencil"></i>
                                 </a>
-                                <button class="btn btn-sm btn-danger py-0 px-2" style="font-size: 0.75rem;" onclick="confirmDelete({{ $item->id }})">
-                                    <i class="bi bi-trash-fill"></i>
+                                <button class="btn btn-icon-only btn-sm btn-outline-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus">
+                                    <i class="ti ti-trash"></i>
                                 </button>
                                 <form id="delete-form-{{ $item->id }}" action="{{ route('admin.pemda.destroy', $item->id) }}" method="POST" class="d-none">
                                     @csrf

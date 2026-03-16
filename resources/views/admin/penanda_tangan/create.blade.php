@@ -25,7 +25,7 @@
             <div class="card shadow border-0">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="bi bi-plus-circle me-2"></i>Tambah Penanda Tangan
+                        <i class="ti ti-plus-circle me-2"></i>Tambah Penanda Tangan
                     </h6>
                 </div>
                 <div class="card-body">
@@ -103,10 +103,10 @@
 
                         <div class="d-flex gap-2 justify-content-end mt-4">
                             <a href="{{ route('admin.penanda-tangan.index') }}" class="btn btn-secondary">
-                                <i class="bi bi-arrow-left me-1"></i> Kembali
+                                <i class="ti ti-arrow-left me-1"></i> Kembali
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-floppy me-1"></i> Simpan
+                                <i class="ti ti-floppy me-1"></i> Simpan
                             </button>
                         </div>
                     </form>

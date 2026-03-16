@@ -4,8 +4,8 @@
 
 @section('breadcrumbs')
 <x-breadcrumbs :items="[
-    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
-    ['label' => 'SKPD', 'icon' => 'bi-building-fill']
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+    ['label' => 'SKPD', 'icon' => 'ti ti-building-community']
 ]" />
 @endsection
 
@@ -17,8 +17,8 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Daftar SKPD</h6>
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createSkpdModal">
-            <i class="bi bi-plus-lg"></i> Tambah SKPD
+        <button type="button" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm transition-base" data-bs-toggle="modal" data-bs-target="#createSkpdModal">
+            <i class="ti ti-plus me-1"></i> Tambah SKPD
         </button>
     </div>
     <div class="card-body">
@@ -37,19 +37,19 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $skpd->namaskpd }}</td>
                         <td>
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-1">
                                 <button type="button" 
-                                        class="btn btn-warning btn-sm py-0 px-2 btn-edit" 
+                                        class="btn btn-icon-only btn-sm btn-outline-primary btn-edit" 
                                         data-id="{{ $skpd->id }}" 
                                         data-nama="{{ $skpd->namaskpd }}" 
                                         title="Edit">
-                                    <i class="bi bi-pencil-square" style="font-size: 0.8rem;"></i>
+                                    <i class="ti ti-pencil"></i>
                                 </button>
                                 <form action="{{ route('admin.skpd.destroy', $skpd->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm py-0 px-2" title="Hapus">
-                                        <i class="bi bi-trash" style="font-size: 0.8rem;"></i>
+                                    <button type="submit" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus">
+                                        <i class="ti ti-trash"></i>
                                     </button>
                                 </form>
                             </div>
@@ -66,8 +66,10 @@
 <div class="modal fade" id="createSkpdModal" tabindex="-1" aria-labelledby="createSkpdModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createSkpdModalLabel">Tambah SKPD Baru</h5>
+            <div class="modal-header bg-light border-bottom-0 pt-4 px-4 pb-2">
+                <h5 class="modal-title fw-bold text-primary" id="createSkpdModalLabel">
+                    <i class="ti ti-plus me-2"></i>Tambah SKPD Baru
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('admin.skpd.store') }}" method="POST">
@@ -81,9 +83,11 @@
                         @enderror
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                <div class="modal-footer border-top-0 pb-4 px-4 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm transition-base">
+                        <i class="ti ti-device-floppy me-1"></i>Simpan
+                    </button>
                 </div>
             </form>
         </div>
@@ -94,8 +98,10 @@
 <div class="modal fade" id="editSkpdModal" tabindex="-1" aria-labelledby="editSkpdModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editSkpdModalLabel">Edit SKPD</h5>
+            <div class="modal-header bg-light border-bottom-0 pt-4 px-4 pb-2">
+                <h5 class="modal-title fw-bold text-primary" id="editSkpdModalLabel">
+                    <i class="ti ti-pencil me-2"></i>Edit SKPD
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="editSkpdForm" action="#" method="POST">
@@ -111,9 +117,11 @@
                         @enderror
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                <div class="modal-footer border-top-0 pb-4 px-4 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm transition-base">
+                        <i class="ti ti-device-floppy me-1"></i>Simpan Perubahan
+                    </button>
                 </div>
             </form>
         </div>

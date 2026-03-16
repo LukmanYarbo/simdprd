@@ -11,29 +11,29 @@
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
+            <i class="ti ti-check-circle-fill me-2"></i>{{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
     @if(session('error'))
         <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ session('error') }}
+            <i class="ti ti-exclamation-triangle-fill me-2"></i>{{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
 
     <div class="card shadow-lg border-0 mb-4 mt-4">
         <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
-            <h6 class="m-0 fw-bold text-primary"><i class="bi bi-percent me-2"></i>Daftar Tarif Pajak PPh 21</h6>
+            <h6 class="m-0 fw-bold text-primary"><i class="ti ti-percentage me-2"></i>Daftar Tarif Pajak PPh 21</h6>
             @can('create tarif_pajak')
                 @if($hasActive)
                     <button class="btn btn-primary btn-sm px-3 shadow-sm disabled" disabled
                         data-bs-toggle="tooltip" title="Nonaktifkan tarif aktif terlebih dahulu.">
-                        <i class="bi bi-plus-lg me-1"></i>Tambah Tarif
+                        <i class="ti ti-plus-lg me-1"></i>Tambah Tarif
                     </button>
                 @else
                     <a href="{{ route('admin.tarif-pajak.create') }}" class="btn btn-primary btn-sm px-3 shadow-sm">
-                        <i class="bi bi-plus-lg me-1"></i>Tambah Tarif
+                        <i class="ti ti-plus-lg me-1"></i>Tambah Tarif
                     </a>
                 @endif
             @endcan
@@ -92,14 +92,14 @@
                                 <div class="btn-group shadow-sm">
                                     @can('edit tarif_pajak')
                                         <a href="{{ route('admin.tarif-pajak.edit', $item->id) }}" class="btn btn-sm btn-light border" title="Edit">
-                                            <i class="bi bi-pencil-square text-warning"></i>
+                                            <i class="ti ti-pencil text-warning"></i>
                                         </a>
                                     @endcan
                                     @can('delete tarif_pajak')
                                         <button type="button" onclick="confirmDelete('{{ route('admin.tarif-pajak.destroy', $item->id) }}')"
                                             class="btn btn-sm btn-light border {{ $item->status === 'Y' ? 'disabled' : '' }}"
                                             title="{{ $item->status === 'Y' ? 'Tidak bisa hapus tarif aktif' : 'Hapus' }}">
-                                            <i class="bi bi-trash3-fill text-danger"></i>
+                                            <i class="ti ti-trash text-danger"></i>
                                         </button>
                                     @endcan
                                 </div>
@@ -108,7 +108,7 @@
                         @empty
                         <tr>
                             <td colspan="8" class="text-center py-5 text-muted">
-                                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                                <i class="ti ti-inbox display-6 d-block mb-2"></i>
                                 Belum ada data tarif pajak.
                             </td>
                         </tr>

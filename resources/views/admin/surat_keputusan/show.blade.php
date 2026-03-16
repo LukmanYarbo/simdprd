@@ -49,7 +49,7 @@
                             <td>
                                 @if($suratKeputusan->file_sk)
                                     <a href="{{ asset('storage/' . $suratKeputusan->file_sk) }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-download me-1"></i> Unduh File
+                                        <i class="ti ti-download me-1"></i> Unduh File
                                     </a>
                                 @else
                                     -

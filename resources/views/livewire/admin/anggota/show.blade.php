@@ -15,7 +15,7 @@
                         </div>
                         <div class="ms-md-4 mt-3 mt-md-0 text-center text-md-start flex-grow-1">
                             <h3 class="fw-bold mb-1">{{ $anggota->nama_anggota }}</h3>
-                            <p class="text-muted mb-2"><i class="bi bi-person-badge me-2"></i>{{ $anggota->nik }}</p>
+                            <p class="text-muted mb-2"><i class="ti ti-id-badge-2 me-2"></i>{{ $anggota->nik }}</p>
                             <span class="badge bg-primary px-3 py-2 fs-6">{{ $anggota->jabatan->nama ?? '-' }}</span>
                             <span class="badge bg-{{ ($anggota->statusKeanggotaan->nama ?? '') == 'Aktif' ? 'success' : 'warning' }} px-3 py-2 fs-6 ms-2">{{ $anggota->statusKeanggotaan->nama ?? '-' }}</span>
                         </div>
@@ -30,7 +30,7 @@
                 <div class="card-body p-4">
                     <div class="row g-4">
                         <div class="col-12 col-lg-8">
-                            <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2"></i>Data Diri</h5>
+                            <h5 class="fw-bold mb-3"><i class="ti ti-info-circle me-2"></i>Data Diri</h5>
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="text-muted small d-block">NIK</label>
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-lg-4">
-                            <h5 class="fw-bold mb-3"><i class="bi bi-briefcase me-2"></i>Keanggotaan</h5>
+                            <h5 class="fw-bold mb-3"><i class="ti ti-briefcase me-2"></i>Keanggotaan</h5>
                             <div class="mb-3">
                                 <label class="text-muted small d-block">Tanggal Mulai</label>
                                 <p class="fw-semibold mb-0">{{ $anggota->tgl_mulai->format('d M Y') }}</p>
@@ -89,7 +89,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="card border-0 shadow-lg h-100">
                         <div class="card-header bg-transparent border-0 py-3">
-                            <h5 class="mb-0 fw-bold"><i class="bi bi-geo-alt me-2"></i>Kontak & Alamat</h5>
+                            <h5 class="mb-0 fw-bold"><i class="ti ti-geo-alt me-2"></i>Kontak & Alamat</h5>
                         </div>
                         <div class="card-body p-4 pt-0">
                             <div class="mb-3">
@@ -112,7 +112,7 @@
                 <div class="col-12 col-lg-6">
                     <div class="card border-0 shadow-lg h-100">
                         <div class="card-header bg-transparent border-0 py-3">
-                            <h5 class="mb-0 fw-bold"><i class="bi bi-shield-check me-2"></i>Asuransi & Tunjangan</h5>
+                            <h5 class="mb-0 fw-bold"><i class="ti ti-shield-check me-2"></i>Asuransi & Tunjangan</h5>
                         </div>
                         <div class="card-body p-4 pt-0">
                             <div class="table-responsive">
@@ -122,7 +122,7 @@
                                             <td class="text-muted border-0 ps-0">BPJS Kesehatan</td>
                                             <td class="border-0 fw-semibold text-end">
                                                 @if($anggota->status_bpjs == 'Y')
-                                                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif</span>
+                                                    <span class="text-success"><i class="ti ti-check-circle-fill me-1"></i>Aktif</span>
                                                     <div class="small text-muted">{{ $anggota->no_bpjs }}</div>
                                                 @else
                                                     <span class="text-muted">Tidak Terdaftar</span>
@@ -133,7 +133,7 @@
                                             <td class="text-muted ps-0">JKK</td>
                                             <td class="fw-semibold text-end">
                                                 @if($anggota->status_jkk == 'Y')
-                                                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif</span>
+                                                    <span class="text-success"><i class="ti ti-check-circle-fill me-1"></i>Aktif</span>
                                                     <div class="small text-muted">{{ $anggota->no_jkk }}</div>
                                                 @else
                                                     <span class="text-muted">Tidak Terdaftar</span>
@@ -144,7 +144,7 @@
                                             <td class="text-muted ps-0">JKM</td>
                                             <td class="fw-semibold text-end">
                                                 @if($anggota->status_jkm == 'Y')
-                                                    <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Aktif</span>
+                                                    <span class="text-success"><i class="ti ti-check-circle-fill me-1"></i>Aktif</span>
                                                     <div class="small text-muted">{{ $anggota->no_jkm }}</div>
                                                 @else
                                                     <span class="text-muted">Tidak Terdaftar</span>
@@ -176,7 +176,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-lg mb-4">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-diagram-3 me-2"></i>Jabatan Alat Kelengkapan</h5>
+                    <h5 class="mb-0 fw-bold"><i class="ti ti-diagram-3 me-2"></i>Jabatan Alat Kelengkapan</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="table-responsive">
@@ -220,7 +220,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-lg mb-4">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-mortarboard me-2"></i>Riwayat Pendidikan</h5>
+                    <h5 class="mb-0 fw-bold"><i class="ti ti-school me-2"></i>Riwayat Pendidikan</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="table-responsive">
@@ -273,7 +273,7 @@
         <div class="col-12">
             <div class="card border-0 shadow-lg mb-4">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-people me-2"></i>Daftar Keluarga</h5>
+                    <h5 class="mb-0 fw-bold"><i class="ti ti-users me-2"></i>Daftar Keluarga</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="table-responsive">

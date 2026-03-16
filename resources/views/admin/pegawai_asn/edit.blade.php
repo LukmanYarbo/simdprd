@@ -13,13 +13,13 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Edit Pegawai ASN</h1>
         <a href="{{ route('admin.pegawai-asn.index') }}" class="btn btn-sm btn-secondary shadow-sm">
-            <i class="bi bi-arrow-left"></i> Kembali
+            <i class="ti ti-arrow-left"></i> Kembali
         </a>
     </div>
 
     <div class="card shadow-sm border-0">
         <div class="card-header py-3  border-bottom">
-            <h6 class="m-0 font-weight-bold text-primary"><i class="bi bi-pencil-square me-2"></i>Form Edit Pegawai</h6>
+            <h6 class="m-0 font-weight-bold text-primary"><i class="ti ti-pencil me-2"></i>Form Edit Pegawai</h6>
         </div>
         <div class="card-body p-4">
             <form action="{{ route('admin.pegawai-asn.update', $pegawaiAsn->id) }}" method="POST" enctype="multipart/form-data">
@@ -29,7 +29,7 @@
                     <!-- Data Pribadi -->
                     <div class="col-lg-6">
                         <div class="p-3 bg-body-tertiary rounded-3 h-100">
-                            <h5 class="mb-3 text-primary border-bottom pb-2"><i class="bi bi-person-vcard me-2"></i>Data Pribadi</h5>
+                            <h5 class="mb-3 text-primary border-bottom pb-2"><i class="ti ti-person-vcard me-2"></i>Data Pribadi</h5>
                             
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip" value="{{ old('nip', $pegawaiAsn->nip) }}" placeholder="NIP" required>
@@ -76,10 +76,10 @@
                                 <label class="form-label d-block text-secondary small text-uppercase fw-bold">Jenis Kelamin <span class="text-danger">*</span></label>
                                 <div class="btn-group w-100" role="group">
                                     <input type="radio" class="btn-check" name="jenis_kelamin" id="jk_l" value="L" {{ old('jenis_kelamin', $pegawaiAsn->jenis_kelamin) == 'L' ? 'checked' : '' }} required>
-                                    <label class="btn btn-outline-primary" for="jk_l"><i class="bi bi-gender-male me-1"></i> Laki-laki</label>
+                                    <label class="btn btn-outline-primary" for="jk_l"><i class="ti ti-gender-male me-1"></i> Laki-laki</label>
                                     
                                     <input type="radio" class="btn-check" name="jenis_kelamin" id="jk_p" value="P" {{ old('jenis_kelamin', $pegawaiAsn->jenis_kelamin) == 'P' ? 'checked' : '' }}>
-                                    <label class="btn btn-outline-danger" for="jk_p"><i class="bi bi-gender-female me-1"></i> Perempuan</label>
+                                    <label class="btn btn-outline-danger" for="jk_p"><i class="ti ti-gender-female me-1"></i> Perempuan</label>
                                 </div>
                                 @error('jenis_kelamin') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                             </div>
@@ -116,7 +116,7 @@
                     <!-- Data Kepegawaian & Kontak -->
                     <div class="col-lg-6">
                         <div class="p-3 bg-body-tertiary rounded-3 h-100">
-                            <h5 class="mb-3 text-primary border-bottom pb-2"><i class="bi bi-briefcase me-2"></i>Kepegawaian & Kontak</h5>
+                            <h5 class="mb-3 text-primary border-bottom pb-2"><i class="ti ti-briefcase me-2"></i>Kepegawaian & Kontak</h5>
 
                             {{-- SKPD (Select2 AJAX, pre-filled) --}}
                             <div class="mb-3">
@@ -233,8 +233,8 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-                     <button type="button" class="btn btn-outline-secondary px-4" onclick="window.history.back()"><i class="bi bi-x-circle me-2"></i>Batal</button>
-                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-save me-2"></i>Simpan Perubahan</button>
+                     <button type="button" class="btn btn-outline-secondary px-4" onclick="window.history.back()"><i class="ti ti-x-circle me-2"></i>Batal</button>
+                    <button type="submit" class="btn btn-primary px-4"><i class="ti ti-save me-2"></i>Simpan Perubahan</button>
                 </div>
             </form>
         </div>

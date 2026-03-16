@@ -2,9 +2,8 @@
 
 @section('breadcrumbs')
 <x-breadcrumbs :items="[
-    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
-    
-    ['label' => 'Surat Keputusan', 'icon' => 'bi-envelope-paper']
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+    ['label' => 'Surat Keputusan', 'icon' => 'ti ti-award']
 ]" />
 @endsection
 
@@ -16,8 +15,8 @@
         </div>
         <div class="col-auto">
             @can('create surat_keputusan')
-            <button type="button" class="btn btn-primary shadow-sm btn-add">
-                <i class="bi bi-plus-lg me-2"></i>Tambah SK
+            <button type="button" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm transition-base btn-add">
+                <i class="ti ti-plus me-1"></i>Tambah SK
             </button>
             @endcan
         </div>
@@ -50,9 +49,9 @@
     {{-- PDF Preview Panel --}}
     <div class="card border-0 shadow-lg mt-4" id="pdfPreviewCard" style="display:none;">
         <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
-            <h6 class="m-0 fw-bold text-danger"><i class="bi bi-file-earmark-pdf me-2"></i>Preview SK: <span id="pdfTitle"></span></h6>
-            <button class="btn btn-sm btn-outline-secondary" onclick="closePdfPreview()">
-                <i class="bi bi-x-lg me-1"></i>Tutup
+            <h6 class="m-0 fw-bold text-danger"><i class="ti ti-file-earmark-pdf me-2"></i>Preview SK: <span id="pdfTitle"></span></h6>
+            <button class="btn btn-icon-only btn-sm btn-outline-secondary" onclick="closePdfPreview()">
+                <i class="ti ti-x"></i>
             </button>
         </div>
         <div class="card-body p-0">
@@ -65,8 +64,8 @@
 <div class="modal fade" id="modalSuratKeputusan" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header border-bottom-0 pb-0">
-                <h5 class="modal-title fw-bold" id="modalTitle">Tambah Surat Keputusan</h5>
+            <div class="modal-header bg-light border-bottom-0 pt-4 px-4 pb-2">
+                <h5 class="modal-title fw-bold text-primary" id="modalTitle">Tambah Surat Keputusan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
@@ -112,9 +111,11 @@
                         <small class="text-muted d-none" id="fileHelp">Biarkan kosong jika tidak ingin mengubah file.</small>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary" id="btnSave">Simpan</button>
+                    <div class="modal-footer border-top-0 pb-4 px-4 pt-0">
+                        <button type="button" class="btn btn-light rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm transition-base" id="btnSave">
+                            <i class="ti ti-device-floppy me-1"></i>Simpan
+                        </button>
                     </div>
                 </form>
             </div>
@@ -126,9 +127,9 @@
 <div class="modal fade" id="modalAnggota" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header border-bottom-0 pb-0">
+            <div class="modal-header bg-light border-bottom-0 pt-4 px-4 pb-2">
                 <div>
-                    <h5 class="modal-title fw-bold" id="modalAnggotaTitle">Kelola Anggota</h5>
+                    <h5 class="modal-title fw-bold text-primary" id="modalAnggotaTitle">Kelola Anggota</h5>
                     <p class="text-muted mb-0 small" id="modalAnggotaSubtitle">Surat Keputusan</p>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -144,12 +145,12 @@
                             <!-- Nama Komisi row (only visible for Komisi-type SK) -->
                             <div class="col-12 d-none" id="nama_komisi_row">
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-diagram-3"></i></span>
+                                    <span class="input-group-text"><i class="ti ti-diagram-3"></i></span>
                                     <input type="text" class="form-control" id="nama_komisi" name="nama_komisi"
                                         list="namaKomisiList" autocomplete="off"
                                         placeholder="Nama Komisi, contoh: Komisi A">
                                     <button type="button" class="btn btn-outline-secondary" id="btnClearKomisi" title="Hapus isian Nama Komisi">
-                                        <i class="bi bi-x-lg"></i>
+                                        <i class="ti ti-x"></i>
                                     </button>
                                 </div>
                                 <datalist id="namaKomisiList"></datalist>
@@ -168,7 +169,9 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-plus-lg"></i> Tambah</button>
+                                <button type="submit" class="btn btn-primary btn-sm rounded-pill w-100 shadow-sm transition-base py-2">
+                                    <i class="ti ti-plus me-1"></i> Tambah
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -455,7 +458,7 @@ $(function() {
                     html += '<td>' + (item.nama_komisi || '-') + '</td>';
                 }
                 html += '<td>' + item.jabatan_alat_kelengkapan.nama + '</td>';
-                html += '<td class="text-end"><button type="button" class="btn btn-sm btn-danger btn-delete-member" data-id="'+item.id+'"><i class="bi bi-trash"></i></button></td>';
+                html += '<td class="text-end"><button type="button" class="btn btn-icon-only btn-sm btn-outline-danger btn-delete-member" data-id="'+item.id+'"><i class="ti ti-trash"></i></button></td>';
                 html += '</tr>';
             });
         }

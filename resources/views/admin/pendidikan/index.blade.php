@@ -9,10 +9,10 @@
         </div>
         <div class="col-auto">
             <a href="{{ route('admin.anggota.index') }}" class="btn btn-secondary shadow-sm me-2">
-                <i class="bi bi-arrow-left me-2"></i>Kembali
+                <i class="ti ti-arrow-left me-2"></i>Kembali
             </a>
             <a href="{{ route('admin.pendidikan.create', $anggota->id) }}" class="btn btn-primary shadow-sm">
-                <i class="bi bi-plus-lg me-2"></i>Tambah Pendidikan
+                <i class="ti ti-plus-lg me-2"></i>Tambah Pendidikan
             </a>
         </div>
     </div>
@@ -53,7 +53,7 @@
                             <td>
                                 @if($item->file_ijazah)
                                 <a href="{{ asset('storage/'.$item->file_ijazah) }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                    <i class="bi bi-file-earmark-pdf"></i> Lihat
+                                    <i class="ti ti-file-earmark-pdf"></i> Lihat
                                 </a>
                                 @else
                                 <span class="text-muted">-</span>
@@ -61,13 +61,13 @@
                             </td>
                             <td class="text-end">
                                 <a href="{{ route('admin.pendidikan.edit', $item->id) }}" class="btn btn-sm btn-light border-end text-warning">
-                                    <i class="bi bi-pencil-square"></i>
+                                    <i class="ti ti-pencil"></i>
                                 </a>
                                 <form action="{{ route('admin.pendidikan.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-light text-danger">
-                                        <i class="bi bi-trash3-fill"></i>
+                                        <i class="ti ti-trash"></i>
                                     </button>
                                 </form>
                             </td>

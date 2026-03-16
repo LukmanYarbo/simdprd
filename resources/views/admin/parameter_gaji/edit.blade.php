@@ -5,14 +5,14 @@
 @section('content')
 <div class="container-fluid">
     <x-breadcrumbs title="Edit Parameter Gaji" :items="[
-        ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
-        ['label' => 'Parameter Gaji', 'url' => route('admin.parameter-gaji.index'), 'icon' => 'bi-calculator'],
+        ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+        ['label' => 'Parameter Gaji', 'url' => route('admin.parameter-gaji.index'), 'icon' => 'ti ti-calculator'],
         ['label' => 'Edit Data']
     ]" />
 
     <div class="card shadow-lg border-0 mb-4 mt-4">
         <div class="card-header py-3 bg-white border-bottom">
-            <h6 class="m-0 fw-bold text-primary"><i class="bi bi-pencil-square me-2"></i>Form Edit Parameter Gaji</h6>
+            <h6 class="m-0 fw-bold text-primary"><i class="ti ti-pencil me-2"></i>Form Edit Parameter Gaji</h6>
         </div>
         <div class="card-body p-4">
             <form action="{{ route('admin.parameter-gaji.update', $parameterGaji->id) }}" method="POST" enctype="multipart/form-data">
@@ -22,7 +22,7 @@
                 {{-- Section 1: Informasi Peraturan --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
-                        <i class="bi bi-file-earmark-text me-2"></i>Informasi Peraturan
+                        <i class="ti ti-file-description me-2"></i>Informasi Peraturan
                     </h6>
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -50,8 +50,8 @@
                             @error('file') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             @if($parameterGaji->file)
                                 <div class="mt-2">
-                                    <a href="{{ asset('storage/' . $parameterGaji->file) }}" target="_blank" class="text-decoration-none small">
-                                        <i class="bi bi-file-earmark-pdf text-danger me-1"></i>Lihat dokumen saat ini
+                                    <a href="{{ asset('storage/' . $parameterGaji->file) }}" target="_blank" class="text-decoration-none small text-danger fw-medium">
+                                        <i class="ti ti-file-type-pdf me-1"></i>Lihat dokumen saat ini
                                     </a>
                                 </div>
                             @endif
@@ -62,7 +62,7 @@
                 {{-- Section 2: Gaji Pokok --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
-                        <i class="bi bi-cash me-2"></i>Gaji Pokok
+                        <i class="ti ti-cash me-2"></i>Gaji Pokok
                     </h6>
                     <div class="row g-3">
                         <div class="col-md-4">
@@ -98,7 +98,7 @@
                 {{-- Section 3: Tunjangan Jabatan --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
-                        <i class="bi bi-briefcase me-2"></i>Tunjangan Jabatan
+                        <i class="ti ti-briefcase me-2"></i>Tunjangan Jabatan
                         <small class="text-muted fw-normal fs-6">(dari masing-masing Gaji Pokok)</small>
                     </h6>
                     <div class="row g-3">
@@ -135,7 +135,7 @@
                 {{-- Section 4: Tunjangan Alat Kelengkapan --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
-                        <i class="bi bi-layers me-2"></i>Tunjangan Alat Kelengkapan
+                        <i class="ti ti-layers me-2"></i>Tunjangan Alat Kelengkapan
                         <small class="text-muted fw-normal fs-6">(dari masing-masing Gaji Pokok)</small>
                     </h6>
                     <div class="row g-3">
@@ -181,7 +181,7 @@
                 {{-- Section 5: Uang Paket --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
-                        <i class="bi bi-wallet2 me-2"></i>Uang Paket
+                        <i class="ti ti-wallet me-2"></i>Uang Paket
                     </h6>
                     <div class="row g-3">
                         <div class="col-md-4">
@@ -196,11 +196,11 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-                    <a href="{{ route('admin.parameter-gaji.index') }}" class="btn btn-secondary px-4">
-                        <i class="bi bi-arrow-left me-1"></i>Batal
+                    <a href="{{ route('admin.parameter-gaji.index') }}" class="btn btn-light rounded-pill px-4 transition-base">
+                        <i class="ti ti-arrow-left me-1"></i>Batal
                     </a>
-                    <button type="submit" class="btn btn-primary px-4 shadow-sm">
-                        <i class="bi bi-check-lg me-1"></i>Perbarui Data
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm transition-base">
+                        <i class="ti ti-device-floppy me-1"></i>Perbarui Data
                     </button>
                 </div>
             </form>

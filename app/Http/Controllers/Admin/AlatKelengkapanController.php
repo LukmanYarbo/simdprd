@@ -37,10 +37,10 @@ class AlatKelengkapanController extends Controller implements HasMiddleware
                 ->addColumn('action', function($row){
                     $btn = '<div class="btn-group shadow-sm">';
                     if(auth()->user()->can('edit alat_kelengkapan')){
-                        $btn .= '<button type="button" class="btn btn-sm btn-light border-end btn-edit" data-id="'.$row->id.'" title="Edit"><i class="bi bi-pencil-square text-warning"></i></button>';
+                        $btn .= '<button type="button" class="btn btn-icon-only btn-sm btn-outline-primary btn-edit" data-id="'.$row->id.'" title="Edit"><i class="ti ti-pencil"></i></button>';
                     }
                     if(auth()->user()->can('delete alat_kelengkapan')){
-                        $btn .= '<button type="button" onclick="deleteItem('.$row->id.')" class="btn btn-sm btn-light" title="Hapus"><i class="bi bi-trash3-fill text-danger"></i></button>';
+                        $btn .= '<button type="button" onclick="deleteItem('.$row->id.')" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>';
                     }
                     $btn .= '</div>';
                     return $btn;

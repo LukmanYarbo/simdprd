@@ -44,7 +44,7 @@
             <!-- Update Profile Form -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-person me-2"></i>Informasi Profil</h5>
+                    <h5 class="mb-0 fw-bold"><i class="ti ti-person me-2"></i>Informasi Profil</h5>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('profile.update') }}" method="POST">
@@ -66,7 +66,7 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary px-4">
-                                <i class="bi bi-check-circle me-1"></i> Simpan Perubahan
+                                <i class="ti ti-check-circle me-1"></i> Simpan Perubahan
                             </button>
                         </div>
                     </form>
@@ -76,7 +76,7 @@
             <!-- Update Password Form -->
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-lock me-2"></i>Ubah Password</h5>
+                    <h5 class="mb-0 fw-bold"><i class="ti ti-lock me-2"></i>Ubah Password</h5>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ route('profile.password') }}" method="POST">
@@ -102,7 +102,7 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-warning px-4">
-                                <i class="bi bi-shield-lock me-1"></i> Ubah Password
+                                <i class="ti ti-shield-lock me-1"></i> Ubah Password
                             </button>
                         </div>
                     </form>

@@ -4,22 +4,22 @@
             <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-body-tertiary rounded-5 shadow-sm" id="tunjanganTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link rounded-5 py-2 {{ $activeTab === 'umum' ? 'active fw-bold shadow-sm' : 'text-body' }}" wire:click="switchTab('umum')" type="button">
-                        <i class="bi bi-wallet2 me-1"></i> Umum
+                        <i class="ti ti-wallet me-1"></i> Umum
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link rounded-5 py-2 {{ $activeTab === 'transportasi' ? 'active fw-bold shadow-sm' : 'text-body' }}" wire:click="switchTab('transportasi')" type="button">
-                        <i class="bi bi-car-front-fill me-1"></i> Transportasi
+                        <i class="ti ti-car me-1"></i> Transportasi
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link rounded-5 py-2 {{ $activeTab === 'perumahan' ? 'active fw-bold shadow-sm' : 'text-body' }}" wire:click="switchTab('perumahan')" type="button">
-                        <i class="bi bi-house-door-fill me-1"></i> Perumahan
+                        <i class="ti ti-home me-1"></i> Perumahan
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link rounded-5 py-2 {{ $activeTab === 'komunikasi_intensif' ? 'active fw-bold shadow-sm' : 'text-body' }}" wire:click="switchTab('komunikasi_intensif')" type="button">
-                        <i class="bi bi-telephone-fill me-1"></i> Komunikasi Intensif
+                        <i class="ti ti-phone me-1"></i> Komunikasi Intensif
                     </button>
                 </li>
             </ul>
@@ -75,8 +75,8 @@
                                         @error('tu_status') <span class="text-danger small">{{ $message }}</span> @enderror
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <button type="submit" class="btn btn-primary btn-sm rounded-3">
-                                            <i class="bi bi-save me-1"></i> Simpan
+                                        <button type="submit" class="btn btn-primary btn-sm rounded-pill py-2 shadow-sm transition-base">
+                                            <i class="ti ti-device-floppy me-1"></i> Simpan
                                         </button>
                                         @if($isEditMode)
                                         <button type="button" class="btn btn-light btn-sm rounded-3" wire:click="resetForms">Batal</button>
@@ -112,8 +112,10 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <button wire:click="editUmum({{ $item->id }})" class="btn btn-sm btn-light text-primary rounded-circle"><i class="bi bi-pencil-square"></i></button>
-                                            <button onclick="confirmLivewireDelete('umum', {{ $item->id }})" class="btn btn-sm btn-light text-danger rounded-circle"><i class="bi bi-trash-fill"></i></button>
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button wire:click="editUmum({{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit"><i class="ti ti-pencil"></i></button>
+                                                <button onclick="confirmLivewireDelete('umum', {{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @empty
@@ -160,7 +162,7 @@
                                         <label class="form-label text-muted small fw-bold">File Peraturan (PDF)</label>
                                         <input type="file" accept=".pdf" class="form-control form-control-sm rounded-3 @error('tt_file_peraturan') is-invalid @enderror" wire:model="tt_file_peraturan">
                                         @if($tt_file_peraturan_old)
-                                            <a href="{{ Storage::url($tt_file_peraturan_old) }}" target="_blank" class="small mt-1 d-block"><i class="bi bi-file-earmark-pdf"></i> Lihat File Saat Ini</a>
+                                            <a href="{{ Storage::url($tt_file_peraturan_old) }}" target="_blank" class="small mt-1 d-block"><i class="ti ti-file-earmark-pdf"></i> Lihat File Saat Ini</a>
                                         @endif
                                         <div wire:loading wire:target="tt_file_peraturan" class="small text-info mt-1">Mengunggah...</div>
                                     </div>
@@ -172,8 +174,8 @@
                                         </select>
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <button type="submit" class="btn btn-primary btn-sm rounded-3">
-                                            <i class="bi bi-save me-1"></i> Simpan
+                                        <button type="submit" class="btn btn-primary btn-sm rounded-pill py-2 shadow-sm transition-base">
+                                            <i class="ti ti-device-floppy me-1"></i> Simpan
                                         </button>
                                         @if($isEditMode)
                                         <button type="button" class="btn btn-light btn-sm rounded-3" wire:click="resetForms">Batal</button>
@@ -201,7 +203,7 @@
                                             <div class="fw-medium">{{ $item->no_peraturan }}</div>
                                             <div class="small text-muted">{{ \Carbon\Carbon::parse($item->tgl_berlaku)->format('d M Y') }}</div>
                                             @if($item->file_peraturan)
-                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
+                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="ti ti-file-pdf"></i> PDF</a>
                                             @endif
                                         </td>
                                         <td class="small">
@@ -217,8 +219,10 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <button wire:click="editTransportasi({{ $item->id }})" class="btn btn-sm btn-light text-primary rounded-circle"><i class="bi bi-pencil-square"></i></button>
-                                            <button onclick="confirmLivewireDelete('transportasi', {{ $item->id }})" class="btn btn-sm btn-light text-danger rounded-circle"><i class="bi bi-trash-fill"></i></button>
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button wire:click="editTransportasi({{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit"><i class="ti ti-pencil"></i></button>
+                                                <button onclick="confirmLivewireDelete('transportasi', {{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @empty
@@ -266,7 +270,7 @@
                                         <label class="form-label text-muted small fw-bold">File Peraturan (PDF)</label>
                                         <input type="file" accept=".pdf" class="form-control form-control-sm rounded-3 @error('tp_file_peraturan') is-invalid @enderror" wire:model="tp_file_peraturan">
                                         @if($tp_file_peraturan_old)
-                                            <a href="{{ Storage::url($tp_file_peraturan_old) }}" target="_blank" class="small mt-1 d-block"><i class="bi bi-file-earmark-pdf"></i> Lihat File Saat Ini</a>
+                                            <a href="{{ Storage::url($tp_file_peraturan_old) }}" target="_blank" class="small mt-1 d-block"><i class="ti ti-file-earmark-pdf"></i> Lihat File Saat Ini</a>
                                         @endif
                                         <div wire:loading wire:target="tp_file_peraturan" class="small text-info mt-1">Mengunggah...</div>
                                     </div>
@@ -278,8 +282,8 @@
                                         </select>
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <button type="submit" class="btn btn-primary btn-sm rounded-3">
-                                            <i class="bi bi-save me-1"></i> Simpan
+                                        <button type="submit" class="btn btn-primary btn-sm rounded-pill py-2 shadow-sm transition-base">
+                                            <i class="ti ti-device-floppy me-1"></i> Simpan
                                         </button>
                                         @if($isEditMode)
                                         <button type="button" class="btn btn-light btn-sm rounded-3" wire:click="resetForms">Batal</button>
@@ -307,7 +311,7 @@
                                             <div class="fw-medium">{{ $item->no_peraturan }}</div>
                                             <div class="small text-muted">{{ \Carbon\Carbon::parse($item->tgl_berlaku)->format('d M Y') }}</div>
                                             @if($item->file_peraturan)
-                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
+                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="ti ti-file-pdf"></i> PDF</a>
                                             @endif
                                         </td>
                                         <td class="small">
@@ -323,8 +327,10 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <button wire:click="editPerumahan({{ $item->id }})" class="btn btn-sm btn-light text-primary rounded-circle"><i class="bi bi-pencil-square"></i></button>
-                                            <button onclick="confirmLivewireDelete('perumahan', {{ $item->id }})" class="btn btn-sm btn-light text-danger rounded-circle"><i class="bi bi-trash-fill"></i></button>
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button wire:click="editPerumahan({{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit"><i class="ti ti-pencil"></i></button>
+                                                <button onclick="confirmLivewireDelete('perumahan', {{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @empty
@@ -363,7 +369,7 @@
                                         <label class="form-label text-muted small fw-bold">File Peraturan (PDF)</label>
                                         <input type="file" accept=".pdf" class="form-control form-control-sm rounded-3 @error('tki_file_peraturan') is-invalid @enderror" wire:model="tki_file_peraturan">
                                         @if($tki_file_peraturan_old)
-                                            <a href="{{ Storage::url($tki_file_peraturan_old) }}" target="_blank" class="small mt-1 d-block"><i class="bi bi-file-earmark-pdf"></i> Lihat File Saat Ini</a>
+                                            <a href="{{ Storage::url($tki_file_peraturan_old) }}" target="_blank" class="small mt-1 d-block"><i class="ti ti-file-earmark-pdf"></i> Lihat File Saat Ini</a>
                                         @endif
                                         <div wire:loading wire:target="tki_file_peraturan" class="small text-info mt-1">Mengunggah...</div>
                                     </div>
@@ -375,8 +381,8 @@
                                         </select>
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <button type="submit" class="btn btn-primary btn-sm rounded-3">
-                                            <i class="bi bi-save me-1"></i> Simpan
+                                        <button type="submit" class="btn btn-primary btn-sm rounded-pill py-2 shadow-sm transition-base">
+                                            <i class="ti ti-device-floppy me-1"></i> Simpan
                                         </button>
                                         @if($isEditMode)
                                         <button type="button" class="btn btn-light btn-sm rounded-3" wire:click="resetForms">Batal</button>
@@ -404,7 +410,7 @@
                                             <div class="fw-medium">{{ $item->no_peraturan }}</div>
                                             <div class="small text-muted">{{ \Carbon\Carbon::parse($item->tgl_berlaku)->format('d M Y') }}</div>
                                             @if($item->file_peraturan)
-                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="bi bi-file-pdf"></i> PDF</a>
+                                                <a href="{{ Storage::url($item->file_peraturan) }}" target="_blank" class="badge bg-body-tertiary text-primary border text-decoration-none mt-1"><i class="ti ti-file-pdf"></i> PDF</a>
                                             @endif
                                         </td>
                                         <td class="fw-medium text-primary">Rp {{ number_format($item->nilai_tunjangan_tki, 0, ',', '.') }}</td>
@@ -416,8 +422,10 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <button wire:click="editKomunikasi({{ $item->id }})" class="btn btn-sm btn-light text-primary rounded-circle"><i class="bi bi-pencil-square"></i></button>
-                                            <button onclick="confirmLivewireDelete('komp', {{ $item->id }})" class="btn btn-sm btn-light text-danger rounded-circle"><i class="bi bi-trash-fill"></i></button>
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button wire:click="editKomunikasi({{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit"><i class="ti ti-pencil"></i></button>
+                                                <button onclick="confirmLivewireDelete('komp', {{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @empty

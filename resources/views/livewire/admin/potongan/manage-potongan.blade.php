@@ -2,8 +2,8 @@
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 text-primary fw-bold">Data Potongan</h5>
-            <button wire:click="create" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus-lg me-1"></i> Tambah Potongan
+            <button wire:click="create" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm transition-base">
+                <i class="ti ti-plus me-1"></i> Tambah Potongan
             </button>
         </div>
         <div class="card-body p-0">
@@ -34,12 +34,14 @@
                             <td>Rp {{ number_format($item->maks_jkkjkm, 0, ',', '.') }}</td>
                             <td>{{ $item->pot_pph }}%</td>
                             <td class="text-end pe-4">
-                                <button wire:click="edit({{ $item->id }})" class="btn btn-outline-primary btn-sm me-1" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button onclick="confirmDelete({{ $item->id }})" class="btn btn-outline-danger btn-sm" title="Hapus">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <div class="btn-group" role="group">
+                                    <button wire:click="edit({{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit">
+                                        <i class="ti ti-pencil"></i>
+                                    </button>
+                                    <button onclick="confirmDelete({{ $item->id }})" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus">
+                                        <i class="ti ti-trash"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         @empty
@@ -57,8 +59,11 @@
     <div wire:ignore.self class="modal fade" id="modalPotongan" tabindex="-1" aria-labelledby="modalPotonganLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalPotonganLabel">{{ $isEditMode ? 'Edit' : 'Tambah' }} Potongan</h5>
+                <div class="modal-header bg-light border-bottom-0 pt-4 px-4 pb-2">
+                    <h5 class="modal-title fw-bold text-primary" id="modalPotonganLabel">
+                        <i class="ti ti-{{ $isEditMode ? 'pencil' : 'plus' }} me-2"></i>
+                        {{ $isEditMode ? 'Edit' : 'Tambah' }} Potongan
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form wire:submit.prevent="{{ $isEditMode ? 'update' : 'store' }}">
@@ -99,9 +104,12 @@
                             @error('pot_pph') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">{{ $isEditMode ? 'Update' : 'Simpan' }}</button>
+                    <div class="modal-footer border-top-0 pb-4 px-4 pt-0">
+                        <button type="button" class="btn btn-light rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm transition-base">
+                            <i class="ti ti-device-floppy me-1"></i>
+                            {{ $isEditMode ? 'Update' : 'Simpan' }}
+                        </button>
                     </div>
                 </form>
             </div>

@@ -9,7 +9,7 @@
         </div>
         <div class="col-auto">
             <a href="{{ route('admin.pendidikan.index', $anggota->id) }}" class="btn btn-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-2"></i>Kembali
+                <i class="ti ti-arrow-left me-2"></i>Kembali
             </a>
         </div>
     </div>
@@ -106,7 +106,7 @@
                     
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-light border me-2">Reset</button>
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-save me-2"></i>Simpan</button>
+                        <button type="submit" class="btn btn-primary"><i class="ti ti-save me-2"></i>Simpan</button>
                     </div>
                 </div>
             </form>

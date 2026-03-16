@@ -12,7 +12,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Tambah Anggota</h2>
         <a href="{{ route('admin.anggota.index') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left-circle me-1"></i> Kembali
+            <i class="ti ti-arrow-left-circle me-1"></i> Kembali
         </a>
     </div>
 
@@ -42,7 +42,7 @@
         @if ($errors->any())
             <div class="alert alert-danger border-0 shadow-lg mb-4">
                 <div class="d-flex align-items-center">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <i class="ti ti-exclamation-triangle-fill me-2"></i>
                     <div>
                         <strong>Terjadi Kesalahan!</strong> Mohon periksa kembali isian Anda pada semua langkah.
                     </div>
@@ -54,7 +54,7 @@
         <div class="form-step active" id="step1">
             <div class="card border-0 shadow-lg">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-person me-2"></i>Langkah 1: Data Pribadi</h5>
+                    <h5 class="mb-0 fw-bold text-primary"><i class="ti ti-person me-2"></i>Langkah 1: Data Pribadi</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 text-end">
-                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="2">Next <i class="bi bi-arrow-right ms-1"></i></button>
+                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="2">Next <i class="ti ti-arrow-right ms-1"></i></button>
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
         <div class="form-step" id="step2">
             <div class="card border-0 shadow-lg">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-geo-alt me-2"></i>Langkah 2: Kontak & Alamat</h5>
+                    <h5 class="mb-0 fw-bold text-primary"><i class="ti ti-geo-alt me-2"></i>Langkah 2: Kontak & Alamat</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -186,8 +186,8 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="1"><i class="bi bi-arrow-left me-1"></i> Previous</button>
-                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="3">Next <i class="bi bi-arrow-right ms-1"></i></button>
+                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="1"><i class="ti ti-arrow-left me-1"></i> Previous</button>
+                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="3">Next <i class="ti ti-arrow-right ms-1"></i></button>
                 </div>
             </div>
         </div>
@@ -196,7 +196,7 @@
         <div class="form-step" id="step3">
             <div class="card border-0 shadow-lg">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-briefcase me-2"></i>Langkah 3: Keanggotaan & Keuangan</h5>
+                    <h5 class="mb-0 fw-bold text-primary"><i class="ti ti-briefcase me-2"></i>Langkah 3: Keanggotaan & Keuangan</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -253,8 +253,8 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="2"><i class="bi bi-arrow-left me-1"></i> Previous</button>
-                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="4">Next <i class="bi bi-arrow-right ms-1"></i></button>
+                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="2"><i class="ti ti-arrow-left me-1"></i> Previous</button>
+                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="4">Next <i class="ti ti-arrow-right ms-1"></i></button>
                 </div>
             </div>
         </div>
@@ -263,7 +263,7 @@
         <div class="form-step" id="step4">
             <div class="card border-0 shadow-lg">
                 <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-shield-check me-2"></i>Langkah 4: Asuransi & Foto</h5>
+                    <h5 class="mb-0 fw-bold text-primary"><i class="ti ti-shield-check me-2"></i>Langkah 4: Asuransi & Foto</h5>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-4">
@@ -355,9 +355,9 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="3"><i class="bi bi-arrow-left me-1"></i> Previous</button>
+                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="3"><i class="ti ti-arrow-left me-1"></i> Previous</button>
                     <button type="submit" class="btn btn-success btn-lg px-5">
-                        <i class="bi bi-save me-1"></i> Simpan Data Anggota
+                        <i class="ti ti-save me-1"></i> Simpan Data Anggota
                     </button>
                 </div>
             </div>

@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Create Role</h2>
         <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left-circle me-1"></i> Back to List
+            <i class="ti ti-arrow-left-circle me-1"></i> Back to List
         </a>
     </div>
 

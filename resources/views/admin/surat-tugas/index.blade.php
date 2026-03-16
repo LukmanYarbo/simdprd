@@ -4,8 +4,8 @@
 
 @section('breadcrumbs')
 <x-breadcrumbs :items="[
-    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
-    ['label' => 'Surat Tugas', 'icon' => 'bi-file-earmark-text-fill']
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+    ['label' => 'Surat Tugas', 'icon' => 'ti ti-file-certificate']
 ]" />
 @endsection
 

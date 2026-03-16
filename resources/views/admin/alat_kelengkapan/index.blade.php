@@ -17,7 +17,7 @@
         <div class="col-auto">
             @can('create alat_kelengkapan')
             <button type="button" class="btn btn-primary shadow-sm btn-add">
-                <i class="bi bi-plus-lg me-2"></i>Tambah Baru
+                <i class="ti ti-plus-lg me-2"></i>Tambah Baru
             </button>
             @endcan
         </div>

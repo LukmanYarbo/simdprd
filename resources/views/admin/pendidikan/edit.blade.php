@@ -9,7 +9,7 @@
         </div>
         <div class="col-auto">
             <a href="{{ route('admin.pendidikan.index', $anggota->id) }}" class="btn btn-secondary shadow-sm">
-                <i class="bi bi-arrow-left me-2"></i>Kembali
+                <i class="ti ti-arrow-left me-2"></i>Kembali
             </a>
         </div>
     </div>
@@ -101,7 +101,7 @@
                         <label class="form-label">File Ijazah (PDF/JPG, Max 2MB)</label>
                         <input type="file" name="file_ijazah" class="form-control @error('file_ijazah') is-invalid @enderror">
                         @if($pendidikan->file_ijazah)
-                            <div class="form-text text-success"><i class="bi bi-check-circle-fill"></i> File saat ini: <a href="{{ asset('storage/'.$pendidikan->file_ijazah) }}" target="_blank">Lihat</a></div>
+                            <div class="form-text text-success"><i class="ti ti-check-circle-fill"></i> File saat ini: <a href="{{ asset('storage/'.$pendidikan->file_ijazah) }}" target="_blank">Lihat</a></div>
                         @endif
                         @error('file_ijazah')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -109,7 +109,7 @@
                     </div>
                     
                     <div class="col-12 text-end">
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-save me-2"></i>Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-primary"><i class="ti ti-save me-2"></i>Simpan Perubahan</button>
                     </div>
                 </div>
             </form>

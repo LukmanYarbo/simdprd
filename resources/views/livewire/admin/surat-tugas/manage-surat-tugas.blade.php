@@ -77,7 +77,7 @@
             <div class="card card-custom h-100">
                 <div class="card-header bg-white pt-4 pb-0 px-4 border-0">
                     <h5 class="fw-bold mb-0">
-                        <i class="bi bi-pencil-square text-primary me-2"></i>
+                        <i class="ti ti-pencil text-primary me-2"></i>
                         {{ $isEditMode ? 'Edit Surat Tugas' : 'Input Surat Tugas' }}
                     </h5>
                     <p class="text-muted small mt-1">Lengkapi informasi detail perjalanan dinas anggota.</p>
@@ -86,12 +86,12 @@
                     <form wire:submit.prevent="{{ $isEditMode ? 'update' : 'store' }}">
                         {{-- Administration Section --}}
                         <div class="form-section-title">
-                            <i class="bi bi-info-circle me-1"></i> Administrasi
+                            <i class="ti ti-info-circle me-1"></i> Administrasi
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-bold">Nomor Surat Tugas</label>
                             <div class="input-group input-group-sm">
-                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-hash"></i></span>
+                                <span class="input-group-text bg-white border-end-0"><i class="ti ti-hash"></i></span>
                                 <input type="text" class="form-control border-start-0 @error('no_surat_tugas') is-invalid @enderror" 
                                     wire:model="no_surat_tugas" placeholder="000/ST/2026">
                             </div>
@@ -107,7 +107,7 @@
 
                         {{-- Details Section --}}
                         <div class="form-section-title mt-4">
-                            <i class="bi bi-geo-alt me-1"></i> Detail Perjalanan
+                            <i class="ti ti-map-2 me-1"></i> Detail Perjalanan
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-bold">Uraian / Tugas</label>
@@ -148,7 +148,7 @@
 
                         {{-- Signatory Section --}}
                         <div class="form-section-title mt-4">
-                            <i class="bi bi-person-check me-1"></i> Penandatangan
+                            <i class="ti ti-person-check me-1"></i> Penandatangan
                         </div>
                         <div class="mb-4">
                             <select class="form-select form-select-sm @error('id_anggota_penandatangan') is-invalid @enderror" 
@@ -167,7 +167,7 @@
 
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn premium-gradient text-white w-100 rounded-3 py-2 fw-bold glow-shadow border-0">
-                                <i class="bi bi-save2-fill me-2"></i> {{ $isEditMode ? 'Perbarui Data' : 'Simpan Data' }}
+                                <i class="ti ti-device-floppy me-2"></i> {{ $isEditMode ? 'Perbarui Data' : 'Simpan Data' }}
                             </button>
                             @if($isEditMode)
                                 <button type="button" wire:click="resetFields" class="btn btn-outline-secondary rounded-3 px-4 fw-bold">Batal</button>
@@ -188,7 +188,7 @@
                     </div>
                     <div class="ms-auto" style="min-width: 300px;">
                         <div class="input-group input-group-sm rounded-pill border border-white border-opacity-10 bg-white bg-opacity-5 overflow-hidden px-2 py-1">
-                            <span class="input-group-text bg-transparent border-0"><i class="bi bi-search text-muted"></i></span>
+                            <span class="input-group-text bg-transparent border-0"><i class="ti ti-search text-muted"></i></span>
                             <input type="text" class="form-control bg-transparent border-0 shadow-none text-black placeholder-secondary" 
                                 placeholder="Cari nomor surat atau uraian..." wire:model.live="search">
                         </div>
@@ -211,7 +211,7 @@
                                     <td class="ps-4">
                                         <div class="fw-bold text-dark">{{ $item->no_surat_tugas }}</div>
                                         <div class="small text-muted mt-1">
-                                            <i class="bi bi-calendar-event me-1"></i>
+                                            <i class="ti ti-calendar-event me-1"></i>
                                             Ditetapkan: {{ $item->tanggal_ditetapkan->format('d/m/Y') }}
                                         </div>
                                     </td>
@@ -220,15 +220,15 @@
                                             {{ $item->uraian }}
                                         </div>
                                         <div class="small text-primary fw-medium mt-1">
-                                            <i class="bi bi-person-fill me-1"></i> {{ $item->penandatangan->nama_anggota ?? '-' }}
+                                            <i class="ti ti-user me-1"></i> {{ $item->penandatangan->nama_anggota ?? '-' }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="badge bg-light text-dark border border-secondary-subtle px-2 py-1 mb-1">
-                                            {{ $item->tempat_asal }} <i class="bi bi-arrow-right mx-1"></i> {{ $item->tempat_tujuan }}
+                                            {{ $item->tempat_asal }} <i class="ti ti-arrow-right mx-1"></i> {{ $item->tempat_tujuan }}
                                         </div>
                                         <div class="small text-muted">
-                                            <i class="bi bi-clock-history me-1"></i>
+                                            <i class="ti ti-clock-history me-1"></i>
                                             {{ $item->tanggal_berangkat->format('d M') }} - {{ $item->tanggal_balik->format('d M Y') }}
                                             <span class="fw-bold fs-xsmall ms-1">({{ $item->lama_hari }} Hari)</span>
                                         </div>
@@ -238,22 +238,22 @@
                                             <a href="{{ route('admin.surat-tugas.print', $item->id) }}" target="_blank" 
                                                 class="btn btn-action btn-soft-info border-info-subtle text-info shadow-none" 
                                                 title="Preview Surat Tugas">
-                                                <i class="bi bi-printer"></i>
+                                                <i class="ti ti-printer"></i>
                                             </a>
                                             <button wire:click="openManageAnggota({{ $item->id }})" 
                                                 class="btn btn-action btn-soft-info border-info-subtle text-info shadow-none" 
                                                 title="Kelola Anggota">
-                                                <i class="bi bi-people-fill"></i>
+                                                <i class="ti ti-users"></i>
                                             </button>
                                             <button wire:click="edit({{ $item->id }})" 
                                                 class="btn btn-action btn-soft-primary border-primary-subtle text-primary shadow-none" 
                                                 title="Edit">
-                                                <i class="bi bi-pencil-square"></i>
+                                                <i class="ti ti-pencil"></i>
                                             </button>
                                             <button onclick="confirmDeleteSuratTugas({{ $item->id }})" 
                                                 class="btn btn-action btn-light border text-danger shadow-none" 
                                                 title="Hapus">
-                                                <i class="bi bi-trash-fill"></i>
+                                                <i class="ti ti-trash"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -262,7 +262,7 @@
                                 <tr>
                                     <td colspan="4" class="text-center py-5">
                                         <div class="py-4">
-                                            <i class="bi bi-clipboard2-x fs-1 text-muted opacity-25"></i>
+                                            <i class="ti ti-clipboard2-x fs-1 text-muted opacity-25"></i>
                                             <p class="text-muted mt-2">Belum ada data surat tugas yang ditemukan.</p>
                                         </div>
                                     </td>
@@ -286,7 +286,7 @@
                 <div class="modal-header pt-4 px-4 pb-3">
                     <div>
                         <h5 class="fw-bold text-primary mb-0">
-                            <i class="bi bi-people-fill me-2 fs-4"></i> Kelola Anggota Surat Tugas
+                            <i class="ti ti-users me-2 fs-4"></i> Kelola Anggota Surat Tugas
                         </h5>
                         <p class="text-muted small mb-0 mt-1">Daftarkan anggota yang bertugas untuk surat tugas ini.</p>
                     </div>
@@ -301,7 +301,7 @@
                                     <div class="card-body p-3">
                                         <div class="d-flex align-items-center">
                                             <div class="p-2 bg-soft-primary rounded-3 me-3">
-                                                <i class="bi bi-file-earmark-text-fill text-primary fs-4"></i>
+                                                <i class="ti ti-file-description text-primary fs-4"></i>
                                             </div>
                                             <div>
                                                 <div class="small text-muted fw-bold">NO. SURAT TUGAS</div>
@@ -338,7 +338,7 @@
                                         </div>
 
                                         <button type="button" wire:click="addAnggota" class="btn btn-primary w-100 py-2 rounded-3 shadow-sm fw-bold">
-                                            <i class="bi bi-person-plus-fill me-2"></i> Tambahkan ke Daftar
+                                            <i class="ti ti-user-plus me-2"></i> Tambahkan ke Daftar
                                         </button>
                                     </div>
                                 </div>
@@ -362,14 +362,14 @@
                                             </div>
                                             <button wire:click="removeAnggota({{ $member->id }})" 
                                                 class="btn btn-link text-danger p-0 border-0 shadow-none ms-2">
-                                                <i class="bi bi-x-circle-fill shadow-sm rounded-circle"></i>
+                                                <i class="ti ti-circle-x text-danger fs-5"></i>
                                             </button>
                                         </div>
                                     </div>
                                 @empty
                                     <div class="col-12 py-5 text-center bg-light rounded-4 border border-dashed text-muted">
                                         <div class="py-3">
-                                            <i class="bi bi-people fs-1 opacity-25"></i>
+                                            <i class="ti ti-users fs-1 opacity-25"></i>
                                             <p class="mt-2 small">Belum ada anggota yang didaftarkan.</p>
                                         </div>
                                     </div>

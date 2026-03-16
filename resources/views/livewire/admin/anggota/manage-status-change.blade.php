@@ -10,14 +10,14 @@
         <div class="position-relative container-fluid h-100 d-flex flex-column justify-content-center px-4">
             <div class="row align-items-center">
                 <div class="col">
-                    <h2 class="fw-bold mb-1"><i class="bi bi-person-badge-fill me-2"></i>Perubahan Status Anggota</h2>
+                    <h2 class="fw-bold mb-1"><i class="ti ti-id-badge-2-fill me-2"></i>Perubahan Status Anggota</h2>
                     <p class="lead mb-0 opacity-75">Kelola riwayat dan transisi status keanggotaan secara profesional.</p>
                 </div>
                 <div class="col-md-4">
                     <div class="glass-search p-1 rounded-pill">
                         <div class="input-group">
                             <span class="input-group-text border-0 bg-transparent text-white opacity-75">
-                                <i class="bi bi-search"></i>
+                                <i class="ti ti-search"></i>
                             </span>
                             <input type="text" wire:model.live.debounce.300ms="search" class="form-control border-0 bg-transparent text-white placeholder-white" placeholder="Cari Nama atau NIK anggota...">
                         </div>
@@ -63,7 +63,7 @@
                                                 </div>
                                                 <div>
                                                     <div class="fw-bold text-dark fs-6">{{ $item->nama_anggota }}</div>
-                                                    <div class="text-muted small"><i class="bi bi-credit-card-2-front me-1"></i>{{ $item->nik }}</div>
+                                                    <div class="text-muted small"><i class="ti ti-credit-card-2-front me-1"></i>{{ $item->nik }}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -83,7 +83,7 @@
                                         </td>
                                         <td class="text-end pe-4">
                                             <button type="button" wire:click="openModal({{ $item->id }})" class="btn btn-white btn-sm border shadow-sm px-3 rounded-pill btn-hover-primary">
-                                                <i class="bi bi-gear-wide-connected me-1"></i> Transisi Status
+                                                <i class="ti ti-settings-wide-connected me-1"></i> Transisi Status
                                             </button>
                                         </td>
                                     </tr>
@@ -113,7 +113,7 @@
             <div class="col-lg-4">
                 <div class="card border-0 shadow-sm rounded-4 h-100">
                     <div class="card-header bg-white py-3">
-                        <h5 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2 text-warning"></i>Riwayat Terbaru</h5>
+                        <h5 class="mb-0 fw-bold"><i class="ti ti-clock-history me-2 text-warning"></i>Riwayat Terbaru</h5>
                     </div>
                     <div class="card-body p-4">
                         <div class="timeline">
@@ -131,11 +131,11 @@
                                         </div>
                                         <div class="bg-light rounded-3 p-2 border border-secondary border-opacity-10">
                                             <div class="d-flex align-items-center gap-2 mb-1">
-                                                <i class="bi bi-arrow-right-circle text-primary small"></i>
+                                                <i class="ti ti-arrow-right-circle text-primary small"></i>
                                                 <span class="badge bg-white text-dark border small shadow-xs">{{ $h->statusKeanggotaan->nama }}</span>
                                             </div>
                                             @if($h->no_sk)
-                                            <small class="d-block text-muted" style="font-size: 0.7rem;"><i class="bi bi-file-earmark-text me-1"></i>SK: {{ $h->no_sk }}</small>
+                                            <small class="d-block text-muted" style="font-size: 0.7rem;"><i class="ti ti-file-earmark-text me-1"></i>SK: {{ $h->no_sk }}</small>
                                             @endif
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                             </div>
                             @empty
                             <div class="text-center py-5 text-muted small">
-                                <i class="bi bi-journal-x fs-2 d-block mb-2 opacity-50"></i>
+                                <i class="ti ti-journal-x fs-2 d-block mb-2 opacity-50"></i>
                                 Belum ada riwayat aktivitas.
                             </div>
                             @endforelse
@@ -162,7 +162,7 @@
                 <div class="modal-header border-0 bg-primary text-white p-4">
                     <div class="d-flex align-items-center">
                         <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
-                            <i class="bi bi-shield-check fs-4"></i>
+                            <i class="ti ti-shield-check fs-4"></i>
                         </div>
                         <div>
                             <h5 class="modal-title fw-bold mb-0">Kelola Transisi Status</h5>
@@ -188,7 +188,7 @@
                             <div class="col-12">
                                 <label class="form-label fw-bold small text-muted text-uppercase mb-1">Status Keanggotaan Baru</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-check2-circle"></i></span>
+                                    <span class="input-group-text bg-light border-end-0"><i class="ti ti-check2-circle"></i></span>
                                     <select wire:model="id_status_keanggotaan" class="form-select bg-light border-start-0 @error('id_status_keanggotaan') is-invalid @enderror">
                                         <option value="">Pilih Status Baru...</option>
                                         @foreach($statuses as $status)
@@ -202,7 +202,7 @@
                             <div class="col-12">
                                 <label class="form-label fw-bold small text-muted text-uppercase mb-1">Tanggal Perubahan</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-calendar-event"></i></span>
+                                    <span class="input-group-text bg-light border-end-0"><i class="ti ti-calendar-event"></i></span>
                                     <input type="date" wire:model="tgl_perubahan" class="form-control bg-light border-start-0 @error('tgl_perubahan') is-invalid @enderror">
                                 </div>
                                 @error('tgl_perubahan') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
@@ -211,7 +211,7 @@
                             <div class="col-12">
                                 <label class="form-label fw-bold small text-muted text-uppercase mb-1">Referensi Nomor SK</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-hash"></i></span>
+                                    <span class="input-group-text bg-light border-end-0"><i class="ti ti-hash"></i></span>
                                     <input type="text" wire:model="no_sk" class="form-control bg-light border-start-0 @error('no_sk') is-invalid @enderror" placeholder="Isi jika ada SK terkait">
                                 </div>
                             </div>
@@ -226,7 +226,7 @@
                                 <div class="upload-zone rounded-3 p-2 bg-light border border-dashed text-center position-relative">
                                     <input type="file" wire:model="file_sk" class="position-absolute top-0 start-0 w-100 h-100 opacity-0 cursor-pointer" style="z-index: 2;">
                                     <div class="d-flex align-items-center justify-content-center py-1">
-                                        <i class="bi bi-cloud-arrow-up fs-4 text-primary me-2"></i>
+                                        <i class="ti ti-cloud-arrow-up fs-4 text-primary me-2"></i>
                                         <span class="small text-muted">{{ $file_sk ? $file_sk->getClientOriginalName() : 'Klik atau seret file ke sini' }}</span>
                                     </div>
                                     <div wire:loading wire:target="file_sk" class="position-absolute top-50 start-50 translate-middle bg-light w-100 h-100 d-flex align-items-center justify-content-center rounded-3">
@@ -240,7 +240,7 @@
                     <div class="modal-footer border-0 p-4 pt-1 bg-white justify-content-between">
                         <button type="button" class="btn btn-light px-4 rounded-pill" wire:click="closeModal">Kembali</button>
                         <button type="submit" class="btn btn-primary px-4 rounded-pill shadow-lg shadow-primary-subtle">
-                            <i class="bi bi-send-fill me-1"></i> Perbarui Status Anggota
+                            <i class="ti ti-send-fill me-1"></i> Perbarui Status Anggota
                         </button>
                     </div>
                 </form>

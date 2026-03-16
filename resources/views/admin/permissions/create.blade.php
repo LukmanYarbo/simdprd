@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Create Permission</h2>
         <a href="{{ route('admin.permissions.index') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left-circle me-1"></i> Back to List
+            <i class="ti ti-arrow-left-circle me-1"></i> Back to List
         </a>
     </div>
 
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary px-4"><i class="bi bi-save me-1"></i> Create Permission</button>
+                            <button type="submit" class="btn btn-primary px-4"><i class="ti ti-save me-1"></i> Create Permission</button>
                         </div>
                     </form>
                 </div>

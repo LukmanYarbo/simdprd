@@ -3,7 +3,7 @@
         <div class="col-md-4">
             <div class="input-group">
                 <span class="input-group-text  border-end-0">
-                    <i class="bi bi-search text-muted"></i>
+                    <i class="ti ti-search text-muted"></i>
                 </span>
                 <input type="text" wire:model.live.debounce.300ms="search" class="form-control border-start-0 ps-0" placeholder="Cari Nama atau NIK...">
             </div>
@@ -53,19 +53,19 @@
                                 </span>
                             </td>
                             <td>
-                                <div><small><i class="bi bi-envelope me-1"></i>{{ $item->email }}</small></div>
-                                <div><small><i class="bi bi-telephone me-1"></i>{{ $item->no_telp }}</small></div>
+                                <div><small><i class="ti ti-envelope me-1"></i>{{ $item->email }}</small></div>
+                                <div><small><i class="ti ti-telephone me-1"></i>{{ $item->no_telp }}</small></div>
                             </td>
                             <td class="text-end pe-4">
                                 <div class="btn-group">
-                                    <a href="{{ route('admin.anggota.show', $item) }}" class="btn btn-sm btn-outline-info" title="Detail">
-                                        <i class="bi bi-eye"></i>
+                                    <a href="{{ route('admin.anggota.show', $item) }}" class="btn btn-icon-only btn-sm btn-outline-info" title="Detail">
+                                        <i class="ti ti-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.anggota.edit', $item) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
-                                        <i class="bi bi-pencil-square"></i>
+                                    <a href="{{ route('admin.anggota.edit', $item) }}" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit">
+                                        <i class="ti ti-pencil"></i>
                                     </a>
-                                    <button type="button" wire:click="delete({{ $item->id }})" wire:confirm="Yakin ingin menghapus anggota ini?" class="btn btn-sm btn-outline-danger" title="Hapus">
-                                        <i class="bi bi-trash3-fill"></i>
+                                    <button type="button" wire:click="delete({{ $item->id }})" wire:confirm="Yakin ingin menghapus anggota ini?" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus">
+                                        <i class="ti ti-trash"></i>
                                     </button>
                                 </div>
                             </td>

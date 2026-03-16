@@ -32,11 +32,11 @@
                     @endif
 
                     <div class="input-field">
-                        <i class="bi bi-person-fill"></i>
+                        <i class="ti ti-person-fill"></i>
                         <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}" required />
                     </div>
                     <div class="input-field">
-                        <i class="bi bi-key-fill"></i>
+                        <i class="ti ti-key-fill"></i>
                         <input type="password" name="password" placeholder="Password" required />
                     </div>
                     <button type="submit" class="btn solid w-100">Login</button>
@@ -44,16 +44,16 @@
                     <p class="social-text">Or Sign in with social platforms</p>
                     <div class="social-media">
                         <a href="#" class="social-icon">
-                            <i class="bi bi-facebook"></i>
+                            <i class="ti ti-facebook"></i>
                         </a>
                         <a href="#" class="social-icon">
-                            <i class="bi bi-twitter"></i>
+                            <i class="ti ti-twitter"></i>
                         </a>
                         <a href="#" class="social-icon">
-                            <i class="bi bi-google"></i>
+                            <i class="ti ti-google"></i>
                         </a>
                         <a href="#" class="social-icon">
-                            <i class="bi bi-linkedin"></i>
+                            <i class="ti ti-linkedin"></i>
                         </a>
                     </div>
                 </form>
@@ -74,19 +74,19 @@
                     @endif
 
                     <div class="input-field">
-                        <i class="bi bi-person"></i>
+                        <i class="ti ti-person"></i>
                         <input type="text" name="name" placeholder="Full Name" value="{{ old('name') }}" required />
                     </div>
                     <div class="input-field">
-                        <i class="bi bi-envelope"></i>
+                        <i class="ti ti-envelope"></i>
                         <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}" required />
                     </div>
                     <div class="input-field">
-                        <i class="bi bi-key"></i>
+                        <i class="ti ti-key"></i>
                         <input type="password" name="password" placeholder="Create Password" required />
                     </div>
                     <div class="input-field">
-                        <i class="bi bi-key-fill"></i>
+                        <i class="ti ti-key-fill"></i>
                         <input type="password" name="password_confirmation" placeholder="Confirm Password" required />
                     </div>
                     <button type="submit" class="btn solid w-100">Sign up</button>
@@ -94,16 +94,16 @@
                     <p class="social-text">Or Sign up with social platforms</p>
                     <div class="social-media">
                         <a href="#" class="social-icon">
-                            <i class="bi bi-facebook"></i>
+                            <i class="ti ti-facebook"></i>
                         </a>
                         <a href="#" class="social-icon">
-                            <i class="bi bi-twitter"></i>
+                            <i class="ti ti-twitter"></i>
                         </a>
                         <a href="#" class="social-icon">
-                            <i class="bi bi-google"></i>
+                            <i class="ti ti-google"></i>
                         </a>
                         <a href="#" class="social-icon">
-                            <i class="bi bi-linkedin"></i>
+                            <i class="ti ti-linkedin"></i>
                         </a>
                     </div>
                 </form>

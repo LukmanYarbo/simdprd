@@ -23,7 +23,7 @@
                         <div class="card-header bg-transparent border-bottom" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#collapse-{{ Str::slug($groupName) }}" aria-expanded="false" aria-controls="collapse-{{ Str::slug($groupName) }}">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h6 class="mb-0 fw-bold text-capitalize">{{ $groupName }} Permissions</h6>
-                                <i class="bi bi-chevron-down small text-muted"></i>
+                                <i class="ti ti-chevron-down small text-muted"></i>
                             </div>
                         </div>
                         <div id="collapse-{{ Str::slug($groupName) }}" class="collapse collapse-card">
@@ -53,7 +53,7 @@
 
         <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary px-4">
-                    <i class="bi bi-save me-1"></i> {{ $role && $role->exists ? 'Update Role' : 'Create Role' }}
+                    <i class="ti ti-save me-1"></i> {{ $role && $role->exists ? 'Update Role' : 'Create Role' }}
                 </button>
         </div>
     </form>

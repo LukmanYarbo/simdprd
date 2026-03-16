@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Permissions</h2>
         <a href="{{ route('admin.permissions.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle me-1"></i> Add Permission
+            <i class="ti ti-plus-circle me-1"></i> Add Permission
         </a>
     </div>
 
@@ -37,13 +37,13 @@
                             <td class="text-end pe-4">
                                 <div class="d-flex gap-2 justify-content-end">
                                     <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
-                                        <i class="bi bi-pencil-square"></i>
+                                        <i class="ti ti-pencil"></i>
                                     </a>
                                     <form action="{{ route('admin.permissions.destroy', $permission) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this permission?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="bi bi-trash3-fill"></i>
+                                            <i class="ti ti-trash"></i>
                                         </button>
                                     </form>
                                 </div>

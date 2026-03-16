@@ -57,7 +57,7 @@ class AnggotaController extends Controller implements HasMiddleware
                             </a>
                             <div>
                                 <h6 class="mb-0 text-red-500 fw-bold">'.$row->nama_anggota.'</h6>
-                                <small class="text-muted"><i class="bi bi-card-text me-1"></i>'.$row->nik.'</small>
+                                <small class="text-muted"><i class="ti ti-id-badge-2 me-1"></i>'.$row->nik.'</small>
                             </div>
                         </div>';
                 })
@@ -67,19 +67,19 @@ class AnggotaController extends Controller implements HasMiddleware
                 })
                 ->addColumn('kontak', function($row) {
                     return '
-                        <div class="mb-1"><small class="text-muted"><i class="bi bi-envelope me-2 text-primary"></i>'.$row->email.'</small></div>
-                        <div><small class="text-muted"><i class="bi bi-telephone me-2 text-success"></i>'.$row->no_telp.'</small></div>';
+                        <div class="mb-1"><small class="text-muted"><i class="ti ti-mail me-2 text-primary"></i>'.$row->email.'</small></div>
+                        <div><small class="text-muted"><i class="ti ti-phone me-2 text-success"></i>'.$row->no_telp.'</small></div>';
                 })
                 ->addColumn('action', function($row) {
                     $btn = '<div class="btn-group shadow-sm">';
                     
                     if (auth()->user()->can('edit anggota')) {
-                        $btn .= '<button type="button" class="btn btn-sm btn-info text-white border-end btn-keluarga" data-id="'.$row->id.'" title="Keluarga"><i class="bi bi-people-fill"></i></button>';
-                        $btn .= '<a href="'.route('admin.anggota.edit', $row->id).'" class="btn btn-sm btn-light border-end" title="Edit"><i class="bi bi-pencil-square text-warning"></i></a>';
+                        $btn .= '<button type="button" class="btn btn-icon-only btn-sm btn-info text-white btn-keluarga" data-id="'.$row->id.'" title="Kelola Keluarga"><i class="ti ti-users"></i></button>';
+                        $btn .= '<a href="'.route('admin.anggota.edit', $row->id).'" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit"><i class="ti ti-pencil"></i></a>';
                     }
                     
                     if (auth()->user()->can('delete anggota')) {
-                        $btn .= '<button type="button" onclick="deleteAnggota('.$row->id.')" class="btn btn-sm btn-light" title="Hapus"><i class="bi bi-trash3-fill text-danger"></i></button>';
+                        $btn .= '<button type="button" onclick="deleteAnggota('.$row->id.')" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>';
                     }
                     
                     $btn .= '</div>';

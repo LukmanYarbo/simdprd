@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Edit User</h2>
         <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left-circle me-1"></i> Back to List
+            <i class="ti ti-arrow-left-circle me-1"></i> Back to List
         </a>
     </div>
 
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary px-4"><i class="bi bi-check-circle-fill me-1"></i> Update User</button>
+                            <button type="submit" class="btn btn-primary px-4"><i class="ti ti-check-circle-fill me-1"></i> Update User</button>
                         </div>
                     </form>
                 </div>

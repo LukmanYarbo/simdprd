@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between align-items-center mb-5 fade-in-up">
         <h2 class="h3 fw-extrabold text-gradient mb-0">Security Roles</h2>
         <a href="{{ route('admin.roles.create') }}" class="btn premium-gradient text-white border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
-            <i class="bi bi-shield-lock-fill me-2"></i> Add New Role
+            <i class="ti ti-shield-lock-fill me-2"></i> Add New Role
         </a>
     </div>
 
@@ -42,14 +42,14 @@
                             <td class="text-end pe-4">
                                 <div class="d-flex gap-2 justify-content-end">
                                     <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-outline-warning" title="Edit">
-                                        <i class="bi bi-pencil-square"></i>
+                                        <i class="ti ti-pencil"></i>
                                     </a>
                                     @if($role->name !== 'admin')
                                     <form action="{{ route('admin.roles.destroy', $role) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this role?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="bi bi-trash3-fill"></i>
+                                            <i class="ti ti-trash"></i>
                                         </button>
                                     </form>
                                     @endif

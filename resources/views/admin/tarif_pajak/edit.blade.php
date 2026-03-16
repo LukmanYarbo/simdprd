@@ -12,7 +12,7 @@
 
     <div class="card shadow-lg border-0 mb-4 mt-4">
         <div class="card-header py-3 bg-white border-bottom">
-            <h6 class="m-0 fw-bold text-primary"><i class="bi bi-pencil-square me-2"></i>Form Edit Tarif Pajak PPh 21</h6>
+            <h6 class="m-0 fw-bold text-primary"><i class="ti ti-pencil me-2"></i>Form Edit Tarif Pajak PPh 21</h6>
         </div>
         <div class="card-body p-4">
             <form action="{{ route('admin.tarif-pajak.update', $tarifPajak->id) }}" method="POST">
@@ -22,7 +22,7 @@
                 {{-- Section 1: Informasi Peraturan --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
-                        <i class="bi bi-file-earmark-text me-2"></i>Informasi Peraturan
+                        <i class="ti ti-file-earmark-text me-2"></i>Informasi Peraturan
                     </h6>
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -53,7 +53,7 @@
                 {{-- Section 2: PTKP --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
-                        <i class="bi bi-person-check me-2"></i>Penghasilan Tidak Kena Pajak (PTKP)
+                        <i class="ti ti-person-check me-2"></i>Penghasilan Tidak Kena Pajak (PTKP)
                     </h6>
                     <div class="row g-3">
                         <div class="col-md-4">
@@ -94,7 +94,7 @@
                 {{-- Section 3: Biaya Jabatan --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
-                        <i class="bi bi-briefcase me-2"></i>Biaya Jabatan
+                        <i class="ti ti-briefcase me-2"></i>Biaya Jabatan
                     </h6>
                     <div class="row g-3">
                         <div class="col-md-4">
@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-md-4 d-flex align-items-end">
                             <div class="alert alert-info py-2 px-3 mb-0 w-100 small">
-                                <i class="bi bi-info-circle me-1"></i>
+                                <i class="ti ti-info-circle me-1"></i>
                                 Maks/Tahun: <strong id="fmt_maxbiaya_tahun"></strong>
                             </div>
                         </div>
@@ -130,9 +130,9 @@
                 {{-- Section 4: Tarif Lapis Pajak --}}
                 <div class="border rounded-3 p-4 mb-4 bg-light bg-opacity-50">
                     <h6 class="fw-bold text-primary mb-3 border-bottom pb-2 d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-layers me-2"></i>Tarif Lapis Pajak (Progresif)</span>
+                        <span><i class="ti ti-layers me-2"></i>Tarif Lapis Pajak (Progresif)</span>
                         <button type="button" class="btn btn-sm btn-success" onclick="addLapisRow()">
-                            <i class="bi bi-plus-lg me-1"></i>Tambah Lapis
+                            <i class="ti ti-plus-lg me-1"></i>Tambah Lapis
                         </button>
                     </h6>
                     <div class="table-responsive">
@@ -153,21 +153,21 @@
                                     <td><div class="input-group input-group-sm"><span class="input-group-text">Rp</span><input type="number" class="form-control" name="lapis[{{ $idx }}][dari]" value="{{ $lapis->dari }}" min="0" required></div></td>
                                     <td><div class="input-group input-group-sm"><span class="input-group-text">Rp</span><input type="number" class="form-control" name="lapis[{{ $idx }}][sampai]" value="{{ $lapis->sampai }}" min="0" placeholder="Tak terbatas (kosongkan)"></div></td>
                                     <td><div class="input-group input-group-sm"><input type="number" step="0.01" class="form-control" name="lapis[{{ $idx }}][persen]" value="{{ $lapis->persen }}" min="0" max="100" required><span class="input-group-text">%</span></div></td>
-                                    <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger" onclick="removeLapisRow(this)"><i class="bi bi-trash3"></i></button></td>
+                                    <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger" onclick="removeLapisRow(this)"><i class="ti ti-trash3"></i></button></td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i>Kolom "Sampai" dikosongkan untuk lapis terakhir (penghasilan tak terbatas).</div>
+                    <div class="form-text mt-2"><i class="ti ti-info-circle me-1"></i>Kolom "Sampai" dikosongkan untuk lapis terakhir (penghasilan tak terbatas).</div>
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
                     <a href="{{ route('admin.tarif-pajak.index') }}" class="btn btn-secondary px-4">
-                        <i class="bi bi-arrow-left me-1"></i>Batal
+                        <i class="ti ti-arrow-left me-1"></i>Batal
                     </a>
                     <button type="submit" class="btn btn-primary px-4 shadow-sm">
-                        <i class="bi bi-check-lg me-1"></i>Perbarui Data
+                        <i class="ti ti-check-lg me-1"></i>Perbarui Data
                     </button>
                 </div>
             </form>
@@ -217,7 +217,7 @@
             <td><div class="input-group input-group-sm"><span class="input-group-text">Rp</span><input type="number" class="form-control" name="lapis[${idx}][dari]" min="0" required></div></td>
             <td><div class="input-group input-group-sm"><span class="input-group-text">Rp</span><input type="number" class="form-control" name="lapis[${idx}][sampai]" min="0" placeholder="Tak terbatas (kosongkan)"></div></td>
             <td><div class="input-group input-group-sm"><input type="number" step="0.01" class="form-control" name="lapis[${idx}][persen]" min="0" max="100" required><span class="input-group-text">%</span></div></td>
-            <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger" onclick="removeLapisRow(this)"><i class="bi bi-trash3"></i></button></td>`;
+            <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger" onclick="removeLapisRow(this)"><i class="ti ti-trash3"></i></button></td>`;
         tbody.appendChild(tr);
         renumberLapis();
     }

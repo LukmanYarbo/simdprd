@@ -14,7 +14,7 @@
         </div>
         <div class="col-auto">
             <a href="{{ route('admin.anggota.create') }}" class="btn premium-gradient text-white border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
-                <i class="bi bi-person-plus-fill me-2"></i>Tambah Anggota
+                <i class="ti ti-plus me-2"></i>Tambah Anggota
             </a>
         </div>
     </div>
@@ -26,7 +26,7 @@
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
-                            <i class="bi bi-person-badge-fill fs-3"></i>
+                            <i class="ti ti-id-badge-2-fill fs-3"></i>
                         </div>
                         <div>
                             <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Total Anggota</p>
@@ -41,7 +41,7 @@
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
-                            <i class="bi bi-person-check-fill fs-3"></i>
+                            <i class="ti ti-person-check-fill fs-3"></i>
                         </div>
                         <div>
                             <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Anggota Aktif</p>
@@ -56,7 +56,7 @@
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
-                            <i class="bi bi-person-x-fill fs-3"></i>
+                            <i class="ti ti-person-x-fill fs-3"></i>
                         </div>
                         <div>
                             <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Non-Aktif</p>
@@ -165,7 +165,7 @@ $(function() {
             {data: 'kontak', name: 'email'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-end pe-4', render: function(data, type, row) {
                 var btn = '<div class="btn-group">';
-                btn += '<a href="#" data-id="' + row.id + '" class="btn btn-sm btn-info text-white btn-pendidikan" title="Kelola Pendidikan"><i class="bi bi-mortarboard-fill"></i></a>';
+                btn += '<a href="#" data-id="' + row.id + '" class="btn btn-icon-only btn-sm btn-info text-white btn-pendidikan" title="Kelola Pendidikan"><i class="ti ti-school"></i></a>';
                 btn += data; // Append existing actions
                 btn += '</div>';
                 return btn;

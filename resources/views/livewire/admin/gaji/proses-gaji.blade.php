@@ -93,13 +93,13 @@
 
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-header bg-white py-3">
-            <h5 class="mb-0 text-primary fw-bold"><i class="bi bi-cash-coin me-2"></i>Proses Gaji Anggota DPRD</h5>
+            <h5 class="mb-0 text-primary fw-bold"><i class="ti ti-coin me-2"></i>Proses Gaji Anggota DPRD</h5>
         </div>
         <div class="card-body">
             {{-- Alert parameter tidak lengkap --}}
             @if(!$paramLengkap)
             <div class="alert alert-danger d-flex align-items-start gap-2 mb-4">
-                <i class="bi bi-exclamation-triangle-fill mt-1"></i>
+                <i class="ti ti-exclamation-triangle-fill mt-1"></i>
                 <div>
                     <strong>Parameter tidak lengkap!</strong> Pastikan data berikut sudah diisi dengan status Aktif (Y):
                     <ul class="mb-0 mt-1">
@@ -116,7 +116,7 @@
                 <div class="col-md-4">
                     <label class="form-label fw-bold small text-muted text-uppercase">Bulan / Periode Gaji</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-calendar3 text-primary"></i></span>
+                        <span class="input-group-text bg-light border-end-0"><i class="ti ti-calendar3 text-primary"></i></span>
                         <select wire:model.live="bulan" class="form-select bg-light border-start-0 shadow-none">
                             <optgroup label="Gaji Bulanan">
                                 <option value="1">Januari</option>
@@ -142,14 +142,14 @@
                 <div class="col-md-3">
                     <label class="form-label fw-bold small text-muted text-uppercase">Tahun</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-calendar-event text-primary"></i></span>
+                        <span class="input-group-text bg-light border-end-0"><i class="ti ti-calendar-event text-primary"></i></span>
                         <input type="number" wire:model.live="tahun" class="form-control bg-light border-start-0 shadow-none" min="2020" max="2099" placeholder="2026">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label fw-bold small text-muted text-uppercase">Metode Perhitungan Pajak</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-calculator text-primary"></i></span>
+                        <span class="input-group-text bg-light border-end-0"><i class="ti ti-calculator text-primary"></i></span>
                         <select wire:model.live="metodePajak" class="form-select bg-light border-start-0 shadow-none">
                             <option value="ter">Sistem Baru (TER)</option>
                             <option value="lapis">Lapis Pajak Lama</option>
@@ -159,7 +159,7 @@
                 <div class="col-md-2">
                     <label class="form-label fw-bold small text-muted text-uppercase">Tanggal Cetak</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-calendar-check text-primary"></i></span>
+                        <span class="input-group-text bg-light border-end-0"><i class="ti ti-calendar-check text-primary"></i></span>
                         <input type="date" wire:model.live="tanggalCetak" class="form-control bg-light border-start-0 shadow-none">
                     </div>
                 </div>
@@ -186,12 +186,12 @@
                                         {{ strtoupper($dsbGajiRecord->status) }}
                                     </span>
                                     <button wire:click="openStatusModal" class="btn btn-sm btn-link text-decoration-none fw-semibold p-0 ms-1">
-                                        <i class="bi bi-pencil-square me-1"></i>Ganti Status
+                                        <i class="ti ti-pencil me-1"></i>Ganti Status
                                     </button>
                                 </div>
                                 @if($dsbGajiRecord->alasan_perubahan)
                                     <div class="text-muted mt-1 small text-truncate" style="max-width: 300px;" title="{{ $dsbGajiRecord->alasan_perubahan }}">
-                                        <i class="bi bi-chat-left-dots me-1"></i>{{ $dsbGajiRecord->alasan_perubahan }}
+                                        <i class="ti ti-chat-left-dots me-1"></i>{{ $dsbGajiRecord->alasan_perubahan }}
                                     </div>
                                 @endif
                             @else
@@ -207,14 +207,14 @@
                                 $isFinal = strtoupper($dsbGajiRecord->status ?? '') === 'FINAL';
                             @endphp
                             <button onclick="confirmProses(true)" class="btn btn-warning px-4 py-2 rounded-pill shadow-sm" @if(!$paramLengkap || $isFinal) disabled @endif @if($isFinal) title="Status FINAL - Tidak dapat diproses ulang" @endif>
-                                <i class="bi bi-arrow-clockwise me-1"></i> Proses Ulang
+                                <i class="ti ti-arrow-clockwise me-1"></i> Proses Ulang
                             </button>
                             <button onclick="confirmHapus()" class="btn btn-outline-danger px-4 py-2 rounded-pill" @if($isFinal) disabled @endif @if($isFinal) title="Status FINAL - Tidak dapat dihapus" @endif>
-                                <i class="bi bi-trash3 me-1"></i> Hapus Seluruh Data
+                                <i class="ti ti-trash3 me-1"></i> Hapus Seluruh Data
                             </button>
                         @else
                             <button onclick="confirmProses(false)" class="btn btn-primary px-5 py-2 rounded-pill shadow-lg shadow-primary-subtle" @if(!$paramLengkap) disabled @endif>
-                                <i class="bi bi-lightning-charge-fill me-1"></i> Mulai Proses Gaji Periode Ini
+                                <i class="ti ti-lightning-charge-fill me-1"></i> Mulai Proses Gaji Periode Ini
                             </button>
                         @endif
                     </div>
@@ -250,7 +250,7 @@
         <div class="card-body py-3 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3">
                 <div class="bg-success bg-opacity-10 p-2 rounded-circle">
-                    <i class="bi bi-file-earmark-pdf text-success fs-4"></i>
+                    <i class="ti ti-file-earmark-pdf text-success fs-4"></i>
                 </div>
                 <div>
                     <h6 class="mb-0 fw-bold">Dokumen Laporan Gaji</h6>
@@ -259,16 +259,16 @@
             </div>
             <div class="d-flex gap-2">
                 <a href="{{ route('admin.transaksi-gaji.daftar-gaji', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-primary px-4 rounded-pill shadow-sm">
-                    <i class="bi bi-table me-2"></i> Cetak Daftar Gaji
+                    <i class="ti ti-table me-2"></i> Cetak Daftar Gaji
                 </a>
                 <a href="{{ route('admin.transaksi-gaji.tunjangan-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-warning px-4 rounded-pill shadow-sm">
-                    <i class="bi bi-cash me-2"></i> Cetak Daftar Tunjangan
+                    <i class="ti ti-cash me-2"></i> Cetak Daftar Tunjangan
                 </a>
                 <a href="{{ route('admin.transaksi-gaji.export-excel', ['bulan' => $bulan, 'tahun' => $tahun]) }}" class="btn btn-outline-success px-4 rounded-pill shadow-sm">
-                    <i class="bi bi-file-earmark-excel me-2"></i> Export Excel
+                    <i class="ti ti-file-earmark-excel me-2"></i> Export Excel
                 </a>
                 <a href="{{ route('admin.transaksi-gaji.dsb-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-success px-4 rounded-pill shadow-sm">
-                    <i class="bi bi-printer-fill me-2"></i> Cetak DSB
+                    <i class="ti ti-printer-fill me-2"></i> Cetak DSB
                 </a>
             </div>
         </div>
@@ -280,7 +280,7 @@
     <div class="card border-0 shadow-sm mt-4">
         <div class="card-header bg-white py-3">
             <h6 class="mb-0 text-success fw-bold">
-                <i class="bi bi-table me-2"></i>Data Transaksi Gaji — {{ $blnThnLabel }}
+                <i class="ti ti-table me-2"></i>Data Transaksi Gaji — {{ $blnThnLabel }}
                 <span class="badge bg-success ms-2">{{ count($ringkasan) }} anggota</span>
             </h6>
         </div>
@@ -356,7 +356,7 @@
                                     <span class="fw-semibold">{{ $row['nama'] }}</span>
                                     @if(isset($row['id']))
                                         <a href="{{ route('admin.transaksi-gaji.slip-gaji', $row['id']) }}" target="_blank" class="btn btn-sm btn-outline-success py-0 px-1 border-0" title="Cetak Slip Gaji" style="font-size: 0.85rem;">
-                                            <i class="bi bi-printer"></i>
+                                            <i class="ti ti-printer"></i>
                                         </a>
                                     @endif
                                 </div>
@@ -395,7 +395,7 @@
                             <td class="text-end">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <button wire:click.prevent="showPajakDetail({{ $idx }})" class="btn btn-sm btn-link p-0 text-info" title="Lihat Perhitungan Pajak">
-                                        <i class="bi bi-info-circle"></i>
+                                        <i class="ti ti-info-circle"></i>
                                     </button>
                                     <span>{{ number_format($row['potongan_pph21'], 0, ',', '.') }}</span>
                                 </div>
@@ -410,7 +410,7 @@
                             <td class="text-end">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <button wire:click.prevent="showPajakDetail({{ $idx }})" class="btn btn-sm btn-link p-0 text-info" title="Lihat Perhitungan Pajak">
-                                        <i class="bi bi-info-circle"></i>
+                                        <i class="ti ti-info-circle"></i>
                                     </button>
                                     <span>{{ number_format($row['tunjangan_pph21'], 0, ',', '.') }}</span>
                                 </div>
@@ -479,7 +479,7 @@
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-light">
                     <h5 class="modal-title fw-bold text-primary">
-                        <i class="bi bi-calculator me-2"></i>Rincian PPh Pasal 21
+                        <i class="ti ti-calculator me-2"></i>Rincian PPh Pasal 21
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -572,7 +572,7 @@
                 <div class="modal-header border-0 bg-primary text-white p-4">
                     <div class="d-flex align-items-center">
                         <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
-                            <i class="bi bi-shield-check fs-4"></i>
+                            <i class="ti ti-shield-check fs-4"></i>
                         </div>
                         <div>
                             <h5 class="modal-title fw-bold mb-0">Kelola Status Gaji</h5>
@@ -588,7 +588,7 @@
                             <div class="col-12">
                                 <label class="form-label fw-bold small text-muted text-uppercase mb-1">Status Gaji Baru</label>
                                 <div class="input-group modern-input-group">
-                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-check2-circle text-primary"></i></span>
+                                    <span class="input-group-text bg-light border-end-0"><i class="ti ti-check2-circle text-primary"></i></span>
                                     <select wire:model="newStatus" class="form-select bg-light border-start-0 @error('newStatus') is-invalid @enderror">
                                         <option value="DRAF">DRAF (Terbuka untuk Perubahan)</option>
                                         <option value="FINAL">FINAL (Terkunci / Selesai)</option>
@@ -600,18 +600,18 @@
                             <div class="col-12">
                                 <label class="form-label fw-bold small text-muted text-uppercase mb-1">Alasan Perubahan Status</label>
                                 <div class="input-group modern-input-group">
-                                    <span class="input-group-text bg-light border-end-0 align-items-start pt-2"><i class="bi bi-chat-dots text-primary"></i></span>
+                                    <span class="input-group-text bg-light border-end-0 align-items-start pt-2"><i class="ti ti-chat-dots text-primary"></i></span>
                                     <textarea wire:model="alasanStatus" class="form-control bg-light border-start-0 @error('alasanStatus') is-invalid @enderror" rows="3" placeholder="Contoh: Selesai verifikasi data bendahara, atau Perbaikan parameter pajak..."></textarea>
                                 </div>
                                 @error('alasanStatus') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
-                                <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Wajib diisi untuk audit log riwayat status.</small>
+                                <small class="text-muted"><i class="ti ti-info-circle me-1"></i>Wajib diisi untuk audit log riwayat status.</small>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer border-0 p-4 pt-1 bg-white justify-content-between">
                         <button type="button" class="btn btn-light px-4 rounded-pill" wire:click="closeStatusModal">Batal</button>
                         <button type="submit" class="btn btn-primary px-4 rounded-pill shadow-lg shadow-primary-subtle">
-                            <i class="bi bi-send-fill me-1"></i> Perbarui Status Gaji
+                            <i class="ti ti-send-fill me-1"></i> Perbarui Status Gaji
                         </button>
                     </div>
                 </form>

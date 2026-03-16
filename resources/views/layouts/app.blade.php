@@ -28,7 +28,7 @@
             <ul class="list-unstyled components mb-0 p-2 flex-grow-1">
                 <li>
                     <a href="{{ route('dashboard') }}" class="sidebar-link rounded">
-                        <i class="bi bi-grid-1x2-fill me-2"></i> Dashboard
+                        <i class="ti ti-grid-1x2-fill me-2"></i> Dashboard
                     </a>
                 </li>
             </ul>
@@ -36,7 +36,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="sidebar-link rounded btn btn-link text-white text-decoration-none w-100 text-start">
-                        <i class="bi bi-box-arrow-left me-2"></i> Logout
+                        <i class="ti ti-logout me-2"></i> Logout
                     </button>
                 </form>
             </div>
@@ -50,7 +50,7 @@
                     <div class="d-flex align-items-center gap-3">
                         <!-- Theme Toggle -->
                         <button class="btn btn-link nav-link" id="theme-toggle" title="Toggle theme">
-                            <i class="bi bi-moon-stars-fill fs-5" id="theme-icon"></i>
+                            <i class="ti ti-moon-filled fs-5" id="theme-icon"></i>
                         </button>
 
                         <!-- User Dropdown -->
@@ -60,7 +60,7 @@
                                 <strong>{{ Auth::user()->name }}</strong>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i class="ti ti-person me-2"></i>Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">

@@ -18,7 +18,7 @@
                 <div class="card-body d-flex flex-column justify-content-center p-4">
                     <div class="d-flex align-items-center mb-3">
                         <div class="icon-box bg-primary bg-opacity-10 text-primary p-3 rounded me-3">
-                            <i class="bi bi-person-circle fs-2"></i>
+                            <i class="ti ti-user-circle fs-2"></i>
                         </div>
                         <div>
                             <h4 class="fw-bold mb-1">Selamat Datang, {{ Auth::user()->name }}!</h4>
@@ -27,7 +27,7 @@
                     </div>
                     <hr>
                     <p class="text-muted mb-0">
-                        <i class="bi bi-info-circle me-1"></i>
+                        <i class="ti ti-info-circle me-1"></i>
                         Halaman ini adalah dashboard utama Anda. Fitur tambahan akan segera tersedia.
                     </p>
                 </div>
@@ -58,7 +58,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body d-flex align-items-center">
                     <div class="icon-box bg-success bg-opacity-10 text-success p-2 rounded me-3">
-                        <i class="bi bi-check-circle fs-4"></i>
+                        <i class="ti ti-check-circle fs-4"></i>
                     </div>
                     <div>
                         <h6 class="mb-0 fw-bold">Status Akun</h6>
@@ -71,7 +71,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body d-flex align-items-center">
                     <div class="icon-box bg-info bg-opacity-10 text-info p-2 rounded me-3">
-                        <i class="bi bi-shield-check fs-4"></i>
+                        <i class="ti ti-shield-check fs-4"></i>
                     </div>
                     <div>
                         <h6 class="mb-0 fw-bold">Role</h6>
@@ -84,7 +84,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body d-flex align-items-center">
                     <div class="icon-box bg-warning bg-opacity-10 text-warning p-2 rounded me-3">
-                        <i class="bi bi-people-fill fs-4"></i>
+                        <i class="ti ti-users fs-4"></i>
                     </div>
                     <div>
                         <h6 class="mb-0 fw-bold">Jumlah Anggota</h6>

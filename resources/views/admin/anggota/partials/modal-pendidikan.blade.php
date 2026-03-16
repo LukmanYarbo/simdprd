@@ -74,12 +74,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-end mt-4 pt-3 border-top">
-                                        <button type="button" class="btn btn-light px-4 rounded-pill fw-medium me-2 transition-base d-flex align-items-center" onclick="resetFormPendidikan()">
-                                            <i class="bi bi-arrow-counterclockwise fs-5 me-2 text-secondary"></i> Batal / Reset
+                                    <div class="d-flex justify-content-end mt-4 pt-3 border-top gap-2">
+                                        <button type="button" class="btn btn-light rounded-pill px-4 transition-base" onclick="resetFormPendidikan()">
+                                            <i class="ti ti-rotate-clockwise-2 text-secondary"></i> Batal / Reset
                                         </button>
-                                        <button type="submit" class="btn btn-primary px-4 rounded-pill fw-medium shadow-sm transition-base d-flex align-items-center" id="btnSavePendidikan">
-                                            <i class="bi bi-save fs-5 me-2"></i> Simpan Data
+                                        <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm transition-base" id="btnSavePendidikan">
+                                            <i class="ti ti-device-floppy"></i> Simpan Data
                                         </button>
                                     </div>
                                 </form>
@@ -162,7 +162,7 @@
                 html = '<tr><td colspan="6" class="text-center text-muted">Belum ada data pendidikan.</td></tr>';
             } else {
                 $.each(data, function(index, item) {
-                    var fileLink = item.file_ijazah ? '<a href="/storage/'+item.file_ijazah+'" target="_blank" class="btn btn-xs btn-outline-primary"><i class="bi bi-file-earmark-pdf"></i></a>' : '-';
+                    var fileLink = item.file_ijazah ? '<a href="/storage/'+item.file_ijazah+'" target="_blank" class="btn btn-xs btn-outline-primary"><i class="ti ti-file-earmark-pdf"></i></a>' : '-';
                     
                     html += '<tr>';
                     html += '<td>' + (item.jenis_pendidikan ? item.jenis_pendidikan.nama : '-') + '</td>';
@@ -172,8 +172,8 @@
                     html += '<td>' + fileLink + '</td>';
                     html += '<td class="text-end">';
                     html += '<div class="d-flex justify-content-end gap-2">';
-                    html += '<button type="button" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm border-0 btn-edit-pendidikan transition-base" data-id="'+item.id+'" title="Edit" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-pencil-fill"></i></button>';
-                    html += '<button type="button" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm border-0 btn-delete-pendidikan transition-base" data-id="'+item.id+'" title="Hapus" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-trash3-fill"></i></button>';
+                    html += '<button type="button" class="btn btn-icon-only btn-sm btn-outline-primary shadow-sm btn-edit-pendidikan transition-base" data-id="'+item.id+'" title="Edit"><i class="ti ti-pencil"></i></button>';
+                    html += '<button type="button" class="btn btn-icon-only btn-sm btn-outline-danger shadow-sm btn-delete-pendidikan transition-base" data-id="'+item.id+'" title="Hapus"><i class="ti ti-trash"></i></button>';
                     html += '</div></td>';
                     html += '</tr>';
                 });
@@ -252,7 +252,7 @@
                     $('#current_file_ijazah').html('');
                 }
 
-                $('#btnSavePendidikan').html('<i class="bi bi-check-circle fs-5 me-2"></i> Perbarui Data');
+                $('#btnSavePendidikan').html('<i class="ti ti-check"></i> Perbarui Data');
                 $('.is-invalid').removeClass('is-invalid');
             });
         });
@@ -289,7 +289,7 @@
             $('#id_pendidikan').val('');
             $('#id_anggota_pendidikan').val(currentAnggotaIdPendidikan);
             $('#current_file_ijazah').html('');
-            $('#btnSavePendidikan').html('<i class="bi bi-save fs-5 me-2"></i> Simpan Data');
+            $('#btnSavePendidikan').html('<i class="ti ti-device-floppy"></i> Simpan Data');
             $('.is-invalid').removeClass('is-invalid');
         }
     });

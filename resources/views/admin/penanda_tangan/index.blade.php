@@ -4,8 +4,8 @@
 
 @section('breadcrumbs')
 <x-breadcrumbs :items="[
-    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
-    ['label' => 'Penanda Tangan', 'icon' => 'bi-pen-fill']
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+    ['label' => 'Penanda Tangan', 'icon' => 'ti ti-writing-sign']
 ]" />
 @endsection
 
@@ -16,8 +16,8 @@
         <div class="card-header py-3 d-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Daftar Penanda Tangan</h6>
             @can('create penanda_tangan')
-            <a href="{{ route('admin.penanda-tangan.create') }}" class="btn btn-sm btn-primary shadow-sm">
-                <i class="bi bi-plus-lg text-white-50"></i> Tambah Penanda Tangan
+            <a href="{{ route('admin.penanda-tangan.create') }}" class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm transition-base">
+                <i class="ti ti-plus me-1"></i> Tambah Penanda Tangan
             </a>
             @endcan
         </div>
@@ -77,13 +77,13 @@
                             <td class="text-center">
                                 <div class="btn-group" role="group">
                                     @can('edit penanda_tangan')
-                                    <a href="{{ route('admin.penanda-tangan.edit', $item->id) }}" class="btn btn-sm btn-outline-warning" title="Edit Data">
-                                        <i class="bi bi-pencil-square"></i>
+                                    <a href="{{ route('admin.penanda-tangan.edit', $item->id) }}" class="btn btn-icon-only btn-sm btn-outline-primary shadow-sm" title="Edit Data">
+                                        <i class="ti ti-pencil"></i>
                                     </a>
                                     @endcan
                                     @can('delete penanda_tangan')
-                                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus Data">
-                                        <i class="bi bi-trash-fill"></i>
+                                    <button type="button" class="btn btn-icon-only btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete({{ $item->id }})" title="Hapus Data">
+                                        <i class="ti ti-trash"></i>
                                     </button>
                                     <form id="delete-form-{{ $item->id }}" action="{{ route('admin.penanda-tangan.destroy', $item->id) }}" method="POST" class="d-none">
                                         @csrf
@@ -96,7 +96,7 @@
                         @empty
                         <tr>
                             <td colspan="6" class="text-center py-4 text-muted">
-                                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                <i class="ti ti-inbox fs-1 d-block mb-2"></i>
                                 Belum ada data penanda tangan.
                             </td>
                         </tr>

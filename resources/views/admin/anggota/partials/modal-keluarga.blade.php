@@ -89,12 +89,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-end mt-4 pt-3 border-top">
-                                        <button type="button" class="btn btn-light px-4 rounded-pill fw-medium me-2 transition-base d-flex align-items-center" onclick="resetFormKeluarga()">
-                                            <i class="bi bi-arrow-counterclockwise fs-5 me-2 text-secondary"></i> Batal / Reset
+                                    <div class="d-flex justify-content-end mt-4 pt-3 border-top gap-2">
+                                        <button type="button" class="btn btn-light rounded-pill px-4 transition-base" onclick="resetFormKeluarga()">
+                                            <i class="ti ti-rotate-clockwise-2 text-secondary"></i> Batal / Reset
                                         </button>
-                                        <button type="submit" class="btn btn-primary px-4 rounded-pill fw-medium shadow-sm transition-base d-flex align-items-center" id="btnSaveKeluarga">
-                                            <i class="bi bi-save fs-5 me-2"></i> Simpan Data
+                                        <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm transition-base" id="btnSaveKeluarga">
+                                            <i class="ti ti-device-floppy"></i> Simpan Data
                                         </button>
                                     </div>
                                 </form>
@@ -416,8 +416,8 @@
                     html += '<td><span class="badge ' + (item.status_tunjangan == 'Y' ? 'bg-success' : 'bg-secondary') + '">' + (item.status_tunjangan == 'Y' ? 'Ditunjang' : 'Tidak') + '</span></td>';
                     html += '<td class="text-end">';
                     html += '<div class="d-flex justify-content-end gap-2">';
-                    html += '<button type="button" class="btn btn-sm btn-light text-primary rounded-circle shadow-sm border-0 btn-edit-keluarga transition-base" data-id="'+item.id+'" title="Edit" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-pencil-fill"></i></button>';
-                    html += '<button type="button" class="btn btn-sm btn-light text-danger rounded-circle shadow-sm border-0 btn-delete-keluarga transition-base" data-id="'+item.id+'" title="Hapus" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-trash3-fill"></i></button>';
+                    html += '<button type="button" class="btn btn-icon-only btn-sm btn-outline-primary shadow-sm btn-edit-keluarga transition-base" data-id="'+item.id+'" title="Edit"><i class="ti ti-pencil"></i></button>';
+                    html += '<button type="button" class="btn btn-icon-only btn-sm btn-outline-danger shadow-sm btn-delete-keluarga transition-base" data-id="'+item.id+'" title="Hapus"><i class="ti ti-trash"></i></button>';
                     html += '</div></td>';
                     html += '</tr>';
                 });
@@ -453,7 +453,7 @@
                 $('#no_sk_pengadilan').val(data.no_sk_pengadilan);
                 
                 if (data.file_surat_ket) {
-                    $('#link_file_surat_ket').html('<a href="{{ asset('storage') }}/' + data.file_surat_ket + '" target="_blank" class="text-decoration-none"><i class="bi bi-file-earmark-text"></i> Lihat Surat Keterangan</a>');
+                    $('#link_file_surat_ket').html('<a href="{{ asset('storage') }}/' + data.file_surat_ket + '" target="_blank" class="text-decoration-none"><i class="ti ti-file-earmark-text"></i> Lihat Surat Keterangan</a>');
                 } else {
                     $('#link_file_surat_ket').html('');
                 }
@@ -461,7 +461,7 @@
                 toggleChildFields(); // Update visibility based on loaded data
                 checkFileSuratKet(); // Check file input visibility
 
-                $('#btnSaveKeluarga').html('<i class="bi bi-check-circle fs-5 me-2"></i> Perbarui Data');
+                $('#btnSaveKeluarga').html('<i class="ti ti-check"></i> Perbarui Data');
                 $('.is-invalid').removeClass('is-invalid');
             });
         });
@@ -499,7 +499,7 @@
             $('#id_anggota_keluarga').val(currentAnggotaId);
             $('#link_file_surat_ket').html('');
             $('#div_file_surat_ket').hide();
-            $('#btnSaveKeluarga').html('<i class="bi bi-save fs-5 me-2"></i> Simpan Data');
+            $('#btnSaveKeluarga').html('<i class="ti ti-device-floppy"></i> Simpan Data');
             $('.is-invalid').removeClass('is-invalid');
         }
     });

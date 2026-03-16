@@ -21,12 +21,12 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <span class="text-secondary text-uppercase fw-bold small tracking-wider">Total Users</span>
                         <div class="stats-icon rounded-3 p-2" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
-                            <i class="bi bi-people-fill fs-4"></i>
+                            <i class="ti ti-users fs-4"></i>
                         </div>
                     </div>
                     <h2 class="mb-2 fw-extrabold">{{ \App\Models\User::count() }}</h2>
                     <div class="d-flex align-items-center">
-                        <span class="text-success small fw-bold me-2"><i class="bi bi-arrow-up-short"></i> 12%</span> 
+                        <span class="text-success small fw-bold me-2"><i class="ti ti-arrow-up-short"></i> 12%</span> 
                         <span class="text-secondary small">active now</span>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <span class="text-secondary text-uppercase fw-bold small tracking-wider">Anggota Aktif</span>
                         <div class="stats-icon rounded-3 p-2" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
-                            <i class="bi bi-person-check-fill fs-4"></i>
+                            <i class="ti ti-person-check-fill fs-4"></i>
                         </div>
                     </div>
                     @php
@@ -64,7 +64,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <span class="text-secondary text-uppercase fw-bold small tracking-wider">AKD Aktif</span>
                         <div class="stats-icon rounded-3 p-2" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
-                            <i class="bi bi-layers-half fs-4"></i>
+                            <i class="ti ti-layers-intersect fs-4"></i>
                         </div>
                     </div>
                     @php
@@ -90,7 +90,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                          <span class="text-secondary text-uppercase fw-bold small tracking-wider">System Health</span>
                          <div class="stats-icon rounded-3 p-2" style="background: rgba(14, 165, 233, 0.15); color: #0ea5e9;">
-                            <i class="bi bi-activity fs-4"></i>
+                            <i class="ti ti-activity fs-4"></i>
                         </div>
                     </div>
                     <h2 class="mb-2 fw-extrabold text-info">99.9%</h2>
@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-top border-white border-opacity-10 py-3 text-center">
-                    <a href="{{ route('admin.anggota.index') }}" class="btn btn-link text-primary text-decoration-none fw-semibold small px-4 py-2 rounded-pill hover-bg-primary-subtle transition-base">Lihat Semua Anggota <i class="bi bi-arrow-right ms-2 fs-6"></i></a>
+                    <a href="{{ route('admin.anggota.index') }}" class="btn btn-link text-primary text-decoration-none fw-semibold small px-4 py-2 rounded-pill hover-bg-primary-subtle transition-base">Lihat Semua Anggota <i class="ti ti-arrow-right ms-2 fs-6"></i></a>
                 </div>
             </div>
         </div>
