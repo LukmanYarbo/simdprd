@@ -374,10 +374,14 @@
         </table>
         
         <div class="photo-placeholder">
-            <!-- Generic SVG avatar -->
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
-            </svg>
+            @if($a->foto_anggota)
+                <img src="{{ asset('storage/' . $a->foto_anggota) }}" alt="Foto {{ $a->nama_anggota }}" style="width: 100%; height: 100%; object-fit: cover;">
+            @else
+                <!-- Generic SVG avatar -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+                </svg>
+            @endif
         </div>
     </div>
 
