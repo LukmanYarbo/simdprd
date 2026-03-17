@@ -34,6 +34,12 @@
             display: flex;
             align-items: center;
             width: 100%;
+            position: sticky;
+            top: 72px; /* var(--header-height) */
+            z-index: 0; /* Stays above cards but below navbar dropdowns (1000+) */
+            background: rgba(var(--bs-tertiary-bg-rgb), 0.9) !important;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .marquee-content {
             display: inline-block;

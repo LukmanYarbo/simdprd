@@ -246,7 +246,7 @@
 
     {{-- Kartu Kedua: Pencetakan DSB --}}
     @if($sudahDiproses)
-    <div class="card border-0 shadow-sm mb-4 animate__animated animate__fadeInUp animate__faster">
+    <div class="card border-0 shadow-sm mb-4 animate__animated animate__fadeInUp animate__faster" style="position: relative; z-index: 1020;">
         <div class="card-body py-3 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3">
                 <div class="bg-success bg-opacity-10 p-2 rounded-circle">
@@ -258,17 +258,34 @@
                 </div>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('admin.transaksi-gaji.daftar-gaji', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-primary px-4 rounded-pill shadow-sm">
-                    <i class="ti ti-table me-2"></i> Cetak Daftar Gaji
-                </a>
-                <a href="{{ route('admin.transaksi-gaji.tunjangan-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-warning px-4 rounded-pill shadow-sm">
-                    <i class="ti ti-cash me-2"></i> Cetak Daftar Tunjangan
-                </a>
-                <a href="{{ route('admin.transaksi-gaji.export-excel', ['bulan' => $bulan, 'tahun' => $tahun]) }}" class="btn btn-outline-success px-4 rounded-pill shadow-sm">
+                {{-- Dropdown Cetak PDF --}}
+                <div class="dropdown">
+                    <button class="btn btn-primary px-4 rounded-pill shadow-sm dropdown-toggle" type="button" id="dropdownCetak" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="ti ti-printer me-2"></i> Cetak Laporan PDF
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg p-2 rounded-4" aria-labelledby="dropdownCetak">
+                        <li>
+                            <a class="dropdown-item p-2 rounded-3" href="{{ route('admin.transaksi-gaji.daftar-gaji', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank">
+                                <i class="ti ti-table text-primary me-2"></i> Daftar Gaji
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item p-2 rounded-3" href="{{ route('admin.transaksi-gaji.tunjangan-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank">
+                                <i class="ti ti-cash text-warning me-2"></i> Daftar Tunjangan
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider my-2 opacity-10"></li>
+                        <li>
+                            <a class="dropdown-item p-2 rounded-3 fw-bold" href="{{ route('admin.transaksi-gaji.dsb-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank">
+                                <i class="ti ti-file-certificate text-success me-2"></i> Cetak DSB (Final)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                {{-- Export Excel --}}
+                <a href="{{ route('admin.transaksi-gaji.export-excel', ['bulan' => $bulan, 'tahun' => $tahun]) }}" class="btn btn-outline-success px-4 rounded-pill">
                     <i class="ti ti-file-spreadsheet me-2"></i> Export Excel
-                </a>
-                <a href="{{ route('admin.transaksi-gaji.dsb-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-success px-4 rounded-pill shadow-sm">
-                    <i class="ti ti-printer me-2"></i> Cetak DSB
                 </a>
             </div>
         </div>

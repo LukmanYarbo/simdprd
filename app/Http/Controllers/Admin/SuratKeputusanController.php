@@ -163,6 +163,35 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             $input['file_sk'] = $file->storeAs('files_sk', $filename, 'public');
         }
 
+        if ($suratKeputusan->status == 'A' && $request->status == 'T') {
+            $namaAlatKelengkapan = strtolower($suratKeputusan->alatKelengkapan->nama ?? '');
+            $anggotaField = '';
+            
+            switch ($namaAlatKelengkapan) {
+                case 'komisi': $anggotaField = 'id_komisi'; break;
+                case 'banggar': $anggotaField = 'id_banggar'; break;
+                case 'banmus': $anggotaField = 'id_banmus'; break;
+                case 'bk': $anggotaField = 'id_bk'; break;
+                case 'balegda': $anggotaField = 'id_balegda'; break;
+                case 'pansus': $anggotaField = 'id_pansus'; break;
+                case 'panja': $anggotaField = 'id_panja'; break;
+            }
+
+            if ($anggotaField) {
+                $jabatanAnggotaIds = JabatanAnggota::where('id_surat_keputusan', $suratKeputusan->id)
+                    ->pluck('id_anggota')
+                    ->toArray();
+
+                if (!empty($jabatanAnggotaIds)) {
+                    $updateData = [$anggotaField => null];
+                    if ($namaAlatKelengkapan === 'komisi') {
+                        $updateData['nama_komisi'] = null;
+                    }
+                    \App\Models\Anggota::whereIn('id', $jabatanAnggotaIds)->update($updateData);
+                }
+            }
+        }
+
         $suratKeputusan->update($input);
 
         return response()->json(['success' => 'Surat Keputusan berhasil diperbarui.']);
@@ -170,11 +199,9 @@ class SuratKeputusanController extends Controller implements HasMiddleware
 
     public function destroy(SuratKeputusan $suratKeputusan)
     {
-        if ($suratKeputusan->status == 'A') {
-            $memberCount = JabatanAnggota::where('id_surat_keputusan', $suratKeputusan->id)->count();
-            if ($memberCount > 0) {
-                return response()->json(['error' => 'Gagal! SK Aktif yang memiliki anggota tidak dapat dihapus.'], 422);
-            }
+        $memberCount = JabatanAnggota::where('id_surat_keputusan', $suratKeputusan->id)->count();
+        if ($memberCount > 0) {
+            return response()->json(['error' => 'Gagal! SK yang memiliki anggota tidak dapat dihapus.'], 422);
         }
 
         if ($suratKeputusan->file_sk) {

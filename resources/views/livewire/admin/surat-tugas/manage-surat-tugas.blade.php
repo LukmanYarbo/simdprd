@@ -73,7 +73,7 @@
 
     <div class="row g-4">
         {{-- Left: Form Section --}}
-        <div class="col-xl-4">
+        <div class="col-xl-5">
             <div class="card card-custom h-100">
                 <div class="card-header bg-white pt-4 pb-0 px-4 border-0">
                     <h5 class="fw-bold mb-0">
@@ -179,7 +179,7 @@
         </div>
 
         {{-- Right: List Section --}}
-        <div class="col-xl-8">
+        <div class="col-xl-7">
             <div class="card card-custom h-100">
                 <div class="card-header bg-transparent pt-4 px-4 border-0 d-flex flex-wrap justify-content-between align-items-center gap-3">
                     <div>

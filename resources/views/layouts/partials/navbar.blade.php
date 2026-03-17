@@ -27,18 +27,56 @@
 
             <!-- User Dropdown -->
             <div class="dropdown">
-                <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle px-3 py-2 rounded-pill bg-body-tertiary border border-secondary-subtle transition-base" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}&background=6366f1&color=fff" alt="user" width="32" height="32" class="rounded-circle me-2 shadow-sm">
-                    <span class="d-none d-md-inline fw-semibold me-1">{{ Auth::user()->name }}</span>
+                <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle px-2 py-1 rounded-pill bg-body-tertiary border border-secondary-subtle transition-base hover-shadow" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="padding-right: 1.25rem !important;">
+                    <div class="position-relative">
+                        <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}&background=6366f1&color=fff" alt="user" width="34" height="34" class="rounded-circle shadow-sm border border-2 border-white">
+                        <span class="position-absolute bottom-0 end-0 p-1 bg-success border border-white rounded-circle" style="transform: translate(25%, 25%);"></span>
+                    </div>
+                    <div class="ms-2 d-none d-md-block text-start" style="line-height: 1.1;">
+                        <div class="fw-bold fs-7">{{ Auth::user()->name }}</div>
+                        <small class="text-muted" style="font-size: 0.65rem;">Administrator</small>
+                    </div>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end glass-card border-0 shadow-lg mt-3 p-2" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item rounded-3 py-2" href="{{ route('profile.show') }}"><i class="ti ti-user-circle me-2"></i>Profile</a></li>
-                    <li><a class="dropdown-item rounded-3 py-2" href="#"><i class="ti ti-settings-wide-connected me-2"></i>Settings</a></li>
-                    <li><hr class="dropdown-divider opacity-10"></li>
+                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-4 animate__animated animate__fadeIn animate__faster" aria-labelledby="dropdownUser1" style="min-width: 220px;">
+                    <li class="px-3 py-2 mb-2 bg-light rounded-3 d-md-none text-center">
+                        <div class="fw-bold">{{ Auth::user()->name }}</div>
+                        <small class="text-muted">Administrator</small>
+                    </li>
+                    <li>
+                        <a class="dropdown-item rounded-3 py-2 d-flex align-items-center" href="{{ route('profile.show') }}">
+                            <div class="bg-primary bg-opacity-10 p-2 rounded-2 me-3">
+                                <i class="ti ti-user-circle text-primary fs-5"></i>
+                            </div>
+                            <div>
+                                <div class="fw-semibold small">Profil Saya</div>
+                                <div class="text-muted extra-small">Detail akun anda</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item rounded-3 py-2 d-flex align-items-center" href="#">
+                            <div class="bg-warning bg-opacity-10 p-2 rounded-2 me-3">
+                                <i class="ti ti-settings-2 text-warning fs-5"></i>
+                            </div>
+                            <div>
+                                <div class="fw-semibold small">Pengaturan</div>
+                                <div class="text-muted extra-small">Kofigurasi sistem</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider opacity-10 my-2"></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="dropdown-item rounded-3 py-2 text-danger"><i class="ti ti-logout me-2"></i>Sign out</button>
+                            <button type="submit" class="dropdown-item rounded-3 py-2 text-danger d-flex align-items-center w-100">
+                                <div class="bg-danger bg-opacity-10 p-2 rounded-2 me-3">
+                                    <i class="ti ti-logout text-danger fs-5"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold small">Keluar</div>
+                                    <div class="text-muted extra-small">Akhiri sesi ini</div>
+                                </div>
+                            </button>
                         </form>
                     </li>
                 </ul>
