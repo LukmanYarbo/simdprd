@@ -162,7 +162,7 @@
                 html = '<tr><td colspan="6" class="text-center text-muted">Belum ada data pendidikan.</td></tr>';
             } else {
                 $.each(data, function(index, item) {
-                    var fileLink = item.file_ijazah ? '<a href="/storage/'+item.file_ijazah+'" target="_blank" class="btn btn-xs btn-outline-primary"><i class="ti ti-file-earmark-pdf"></i></a>' : '-';
+                    var fileLink = item.file_ijazah ? '<a href="/storage/'+item.file_ijazah+'" target="_blank" class="btn-icon-modern text-primary"><i class="ti ti-file-earmark-pdf"></i></a>' : '-';
                     
                     html += '<tr>';
                     html += '<td>' + (item.jenis_pendidikan ? item.jenis_pendidikan.nama : '-') + '</td>';
@@ -172,8 +172,8 @@
                     html += '<td>' + fileLink + '</td>';
                     html += '<td class="text-end">';
                     html += '<div class="d-flex justify-content-end gap-2">';
-                    html += '<button type="button" class="btn btn-icon-only btn-sm btn-outline-primary shadow-sm btn-edit-pendidikan transition-base" data-id="'+item.id+'" title="Edit"><i class="ti ti-pencil"></i></button>';
-                    html += '<button type="button" class="btn btn-icon-only btn-sm btn-outline-danger shadow-sm btn-delete-pendidikan transition-base" data-id="'+item.id+'" title="Hapus"><i class="ti ti-trash"></i></button>';
+                    html += '<button type="button" class="btn-icon-modern text-primary btn-edit-pendidikan" data-id="'+item.id+'" title="Edit"><i class="ti ti-edit"></i></button>';
+                    html += '<button type="button" class="btn-icon-modern text-danger btn-delete-pendidikan" data-id="'+item.id+'" title="Hapus"><i class="ti ti-trash"></i></button>';
                     html += '</div></td>';
                     html += '</tr>';
                 });

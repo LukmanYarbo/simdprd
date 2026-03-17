@@ -416,8 +416,8 @@
                     html += '<td><span class="badge ' + (item.status_tunjangan == 'Y' ? 'bg-success' : 'bg-secondary') + '">' + (item.status_tunjangan == 'Y' ? 'Ditunjang' : 'Tidak') + '</span></td>';
                     html += '<td class="text-end">';
                     html += '<div class="d-flex justify-content-end gap-2">';
-                    html += '<button type="button" class="btn btn-icon-only btn-sm btn-outline-primary shadow-sm btn-edit-keluarga transition-base" data-id="'+item.id+'" title="Edit"><i class="ti ti-pencil"></i></button>';
-                    html += '<button type="button" class="btn btn-icon-only btn-sm btn-outline-danger shadow-sm btn-delete-keluarga transition-base" data-id="'+item.id+'" title="Hapus"><i class="ti ti-trash"></i></button>';
+                    html += '<button type="button" class="btn-icon-modern text-primary btn-edit-keluarga" data-id="'+item.id+'" title="Edit"><i class="ti ti-edit"></i></button>';
+                    html += '<button type="button" class="btn-icon-modern text-danger btn-delete-keluarga" data-id="'+item.id+'" title="Hapus"><i class="ti ti-trash"></i></button>';
                     html += '</div></td>';
                     html += '</tr>';
                 });

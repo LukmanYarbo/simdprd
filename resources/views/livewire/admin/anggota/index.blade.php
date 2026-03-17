@@ -57,14 +57,14 @@
                                 <div><small><i class="ti ti-telephone me-1"></i>{{ $item->no_telp }}</small></div>
                             </td>
                             <td class="text-end pe-4">
-                                <div class="btn-group">
-                                    <a href="{{ route('admin.anggota.show', $item) }}" class="btn btn-icon-only btn-sm btn-outline-info" title="Detail">
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <a href="{{ route('admin.anggota.show', $item) }}" class="btn-icon-modern" title="Detail">
                                         <i class="ti ti-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.anggota.edit', $item) }}" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit">
-                                        <i class="ti ti-pencil"></i>
+                                    <a href="{{ route('admin.anggota.edit', $item) }}" class="btn-icon-modern text-primary" title="Edit">
+                                        <i class="ti ti-edit"></i>
                                     </a>
-                                    <button type="button" wire:click="delete({{ $item->id }})" wire:confirm="Yakin ingin menghapus anggota ini?" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus">
+                                    <button type="button" wire:click="delete({{ $item->id }})" wire:confirm="Yakin ingin menghapus anggota ini?" class="btn-icon-modern text-danger" title="Hapus">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </div>

@@ -203,6 +203,46 @@ class DsbGajiController extends Controller
         ));
     }
 
+    public function slipGajiBulk(Request $request)
+    {
+        $bulan = $request->get('bulan', date('n'));
+        $tahun = $request->get('tahun', date('Y'));
+        $blnThn = $bulan . '-' . $tahun;
+
+        $transaksi = TransaksiGaji::where('bln_thn', $blnThn)
+            ->with([
+                'anggota.jabatan', 
+                'anggota.statusKeanggotaan',
+                'anggota.jabatanAnggota.alatKelengkapan',
+                'anggota.jabatanAnggota.jabatanAlatKelengkapan'
+            ])
+            ->join('anggota', 'transaksi_gaji.id_anggota', '=', 'anggota.id')
+            ->select('transaksi_gaji.*')
+            ->orderBy('anggota.id_dprd', 'asc')
+            ->orderBy('anggota.nama_anggota', 'asc')
+            ->get();
+
+        if ($transaksi->isEmpty()) {
+            return back()->with('error', 'Data gaji untuk periode ini belum diproses.');
+        }
+
+        $dsbGaji = DsbGaji::where('bln_thn', $blnThn)->first();
+        $bulanLabel = $this->getBulanLabel($bulan);
+        $pemda = Pemda::first();
+
+        // We'll need a way to calculate terbilang for each slip in the view or pass it as a helper
+        $controller = $this;
+
+        return view('admin.gaji.reports.slip-gaji-bulk', compact(
+            'transaksi',
+            'dsbGaji',
+            'bulanLabel',
+            'tahun',
+            'pemda',
+            'controller'
+        ));
+    }
+
     private function getBulanLabel($bulan)
     {
         $bulan = (int)$bulan;
@@ -214,7 +254,7 @@ class DsbGajiController extends Controller
         return $labels[$bulan] ?? '';
     }
 
-    private function terbilang($nilai)
+    public function terbilang($nilai)
     {
         $nilai = abs($nilai);
         $huruf = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];

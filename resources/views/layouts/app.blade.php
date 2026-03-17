@@ -8,12 +8,13 @@
     <title>{{ config('app.name', 'Laravel') }} - Dashboard</title>
 
     <!-- Tabler Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/libs/tabler-icons/tabler-icons.min.css') }}">
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/plus-jakarta-sans/plus-jakarta-sans.css') }}">
+
+    <!-- Modern Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-modern.css') }}">
 
     <!-- Scripts -->
     @vite(['resources/css/app.scss', 'resources/js/app.js'])

@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg px-4 py-3 sticky-top">
     <div class="d-flex align-items-center w-100 justify-content-between">
         <div class="d-flex align-items-center">
-            <button class="btn btn-link link-body-emphasis p-0 me-3" id="sidebarCollapse">
-                <i class="ti ti-menu-2 fs-3"></i>
+            <button class="btn btn-link link-body-emphasis p-0 me-3 btn-premium p-1 rounded-3" id="sidebarCollapse">
+                <i class="ti ti-menu-deep fs-3"></i>
             </button>
             
             @php
@@ -21,7 +21,7 @@
         </div>
         <div class="d-flex align-items-center gap-3">
             <!-- Theme Toggle -->
-            <button class="btn btn-link nav-link link-body-emphasis" id="theme-toggle" title="Toggle theme">
+            <button class="btn btn-link nav-link link-body-emphasis icon-hover-rotate" id="theme-toggle" title="Toggle theme">
                 <i class="ti ti-sun fs-5 text-primary" id="theme-icon"></i>
             </button>
 
@@ -45,7 +45,7 @@
                     <li>
                         <a class="dropdown-item rounded-3 py-2 d-flex align-items-center" href="{{ route('profile.show') }}">
                             <div class="bg-primary bg-opacity-10 p-2 rounded-2 me-3">
-                                <i class="ti ti-user-circle text-primary fs-5"></i>
+                                <i class="ti ti-user-bolt text-primary fs-5"></i>
                             </div>
                             <div>
                                 <div class="fw-semibold small">Profil Saya</div>
@@ -56,7 +56,7 @@
                     <li>
                         <a class="dropdown-item rounded-3 py-2 d-flex align-items-center" href="#">
                             <div class="bg-warning bg-opacity-10 p-2 rounded-2 me-3">
-                                <i class="ti ti-settings-2 text-warning fs-5"></i>
+                                <i class="ti ti-settings-cog text-warning fs-5"></i>
                             </div>
                             <div>
                                 <div class="fw-semibold small">Pengaturan</div>
@@ -70,7 +70,7 @@
                             @csrf
                             <button type="submit" class="dropdown-item rounded-3 py-2 text-danger d-flex align-items-center w-100">
                                 <div class="bg-danger bg-opacity-10 p-2 rounded-2 me-3">
-                                    <i class="ti ti-logout text-danger fs-5"></i>
+                                    <i class="ti ti-door-exit text-danger fs-5"></i>
                                 </div>
                                 <div>
                                     <div class="fw-bold small">Keluar</div>

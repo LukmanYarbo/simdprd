@@ -89,6 +89,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('potongan', \App\Http\Controllers\Admin\PotonganController::class);
 
         // Proses Gaji
+        Route::get('transaksi-gaji/slip-gaji-bulk', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'slipGajiBulk'])->name('transaksi-gaji.slip-gaji-bulk');
         Route::get('transaksi-gaji/slip-gaji/{id}', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'slipGaji'])->name('transaksi-gaji.slip-gaji');
         Route::get('transaksi-gaji/dsb-report', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'report'])->name('transaksi-gaji.dsb-report');
         Route::get('transaksi-gaji/daftar-gaji', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'daftarGaji'])->name('transaksi-gaji.daftar-gaji');

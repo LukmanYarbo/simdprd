@@ -93,7 +93,7 @@
 
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-header bg-white py-3">
-            <h5 class="mb-0 text-primary fw-bold"><i class="ti ti-coin me-2"></i>Proses Gaji Anggota DPRD</h5>
+            <h5 class="mb-0 text-primary fw-bold"><i class="ti ti-coins me-2"></i>Proses Gaji Anggota DPRD</h5>
         </div>
         <div class="card-body">
             {{-- Alert parameter tidak lengkap --}}
@@ -117,7 +117,7 @@
                     <label class="form-label fw-bold small text-muted text-uppercase">Bulan / Periode Gaji</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="ti ti-calendar text-primary"></i></span>
-                        <select wire:model.live="bulan" class="form-select bg-light border-start-0 shadow-none">
+                        <select wire:model.live="bulan" class="form-select bg-light border-start-0 shadow-none rounded-end-3">
                             <optgroup label="Gaji Bulanan">
                                 <option value="1">Januari</option>
                                 <option value="2">Februari</option>
@@ -213,8 +213,8 @@
                                 <i class="ti ti-trash3 me-1"></i> Hapus Seluruh Data
                             </button>
                         @else
-                            <button onclick="confirmProses(false)" class="btn btn-primary px-5 py-2 rounded-pill shadow-lg shadow-primary-subtle" @if(!$paramLengkap) disabled @endif>
-                                <i class="ti ti-lightning-charge-fill me-1"></i> Mulai Proses Gaji Periode Ini
+                            <button onclick="confirmProses(false)" class="btn btn-premium btn-primary px-5 py-2 rounded-pill shadow-lg shadow-primary-subtle" @if(!$paramLengkap) disabled @endif>
+                                <i class="ti ti-lightning me-1"></i> Mulai Proses Gaji Periode Ini
                             </button>
                         @endif
                     </div>
@@ -274,6 +274,11 @@
                                 <i class="ti ti-cash text-warning me-2"></i> Daftar Tunjangan
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item p-2 rounded-3" href="{{ route('admin.transaksi-gaji.slip-gaji-bulk', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank">
+                                <i class="ti ti-printer text-info me-2"></i> Slip Gaji (Semua Anggota)
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider my-2 opacity-10"></li>
                         <li>
                             <a class="dropdown-item p-2 rounded-3 fw-bold" href="{{ route('admin.transaksi-gaji.dsb-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank">
@@ -297,8 +302,8 @@
     <div class="card border-0 shadow-sm mt-4">
         <div class="card-header bg-white py-3">
             <h6 class="mb-0 text-success fw-bold">
-                <i class="ti ti-table me-2"></i>Data Transaksi Gaji — {{ $blnThnLabel }}
-                <span class="badge bg-success ms-2">{{ count($ringkasan) }} anggota</span>
+                <i class="ti ti-table-alias me-2"></i>Data Transaksi Gaji — {{ $blnThnLabel }}
+                <span class="badge bg-success ms-2 rounded-pill">{{ count($ringkasan) }} anggota</span>
             </h6>
         </div>
         <div class="card-body p-0">

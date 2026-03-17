@@ -7,10 +7,13 @@
     <title>Login - {{ config('app.name', 'SIMDPRD') }}</title>
 
     <!-- Tabler Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/libs/tabler-icons/tabler-icons.min.css') }}">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/plus-jakarta-sans/plus-jakarta-sans.css') }}">
+
+    <!-- Modern Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-modern.css') }}">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -377,7 +380,7 @@
             <div class="visual-pane">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <a href="{{ url('/') }}" class="navbar-brand mb-0">SIMDPRD</a>
-                    <button class="btn btn-link nav-link p-0" id="theme-toggle" title="Toggle theme">
+                    <button class="btn btn-link nav-link p-0 icon-hover-rotate" id="theme-toggle" title="Toggle theme">
                         <i class="ti ti-sun fs-4 text-primary" id="theme-icon"></i>
                     </button>
                 </div>
@@ -413,7 +416,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
                                 <div class="input-group-premium">
-                                    <i class="ti ti-mail"></i>
+                                    <i class="ti ti-mail-opened"></i>
                                     <input type="email" name="email" placeholder="nama@instansi.id" value="{{ old('email') }}" required autofocus />
                                 </div>
                             </div>
@@ -478,7 +481,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
                                 <div class="input-group-premium">
-                                    <i class="ti ti-lock"></i>
+                                    <i class="ti ti-lock-access"></i>
                                     <input type="password" name="password" required />
                                 </div>
                             </div>
@@ -495,9 +498,9 @@
                         <span>Layanan lainnya</span>
                     </div>
                     <div class="social-btns">
-                        <a href="#" class="btn-social"><i class="ti ti-brand-google"></i></a>
-                        <a href="#" class="btn-social"><i class="ti ti-brand-facebook"></i></a>
-                        <a href="#" class="btn-social"><i class="ti ti-brand-apple"></i></a>
+                        <a href="#" class="btn-social"><i class="ti ti-brand-google-filled"></i></a>
+                        <a href="#" class="btn-social"><i class="ti ti-brand-facebook-filled"></i></a>
+                        <a href="#" class="btn-social"><i class="ti ti-brand-apple-filled"></i></a>
                     </div>
                 </div>
             </div>

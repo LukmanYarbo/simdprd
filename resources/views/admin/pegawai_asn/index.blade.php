@@ -64,14 +64,14 @@
                             <td>{{ $item->skpd->namaskpd ?? '-' }}</td>
                             <td>{{ $item->pangkatGolongan->pangkat ?? '-' }} <span class="text-muted small">({{ $item->pangkatGolongan->golongan ?? '-' }})</span></td>
                             <td class="text-center">
-                                 <div class="d-flex gap-1 justify-content-center">
-                                    <a href="{{ route('admin.pegawai-asn.show', $item->id) }}" class="btn btn-icon-only btn-sm btn-outline-info" title="Lihat Detail">
+                                 <div class="d-flex gap-2 justify-content-center">
+                                    <a href="{{ route('admin.pegawai-asn.show', $item->id) }}" class="btn-icon-modern" title="Lihat Detail">
                                         <i class="ti ti-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.pegawai-asn.edit', $item->id) }}" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit Data">
-                                        <i class="ti ti-pencil"></i>
+                                    <a href="{{ route('admin.pegawai-asn.edit', $item->id) }}" class="btn-icon-modern text-primary" title="Edit Data">
+                                        <i class="ti ti-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-icon-only btn-sm btn-outline-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus Data">
+                                    <button type="button" class="btn-icon-modern text-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus Data">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </div>

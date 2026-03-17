@@ -49,24 +49,22 @@ class SuratKeputusanController extends Controller implements HasMiddleware
                     if($row->file_sk){
                         $url = asset('storage/'.$row->file_sk);
                         $noSk = htmlspecialchars($row->no_sk, ENT_QUOTES);
-                        return '<button type="button" onclick="previewPdf(\''.addslashes($url).'\', \''.addslashes($row->no_sk).'\')" class="btn btn-sm btn-outline-danger"><i class="ti ti-file-type-pdf me-1"></i>Lihat Dokumen</button>';
+                        return '<button type="button" onclick="previewPdf(\''.addslashes($url).'\', \''.addslashes($row->no_sk).'\')" class="btn btn-sm btn-premium text-danger border-danger-subtle"><i class="ti ti-file-type-pdf me-1"></i>Lihat Dokumen</button>';
                     }
                     return '<span class="text-muted small">-</span>';
                 })
                 ->addColumn('action', function($row){
                     $user = auth()->user();
-                    \Illuminate\Support\Facades\Log::info('User: ' . $user->email . ' | Role: ' . $user->getRoleNames() . ' | Can Edit SK: ' . ($user->can('edit surat_keputusan') ? 'Yes' : 'No') . ' | Can Delete SK: ' . ($user->can('delete surat_keputusan') ? 'Yes' : 'No'));
-                    
-                    $btn = '<div class="btn-group shadow-sm">';
+                    $btn = '<div class="d-flex gap-2 justify-content-end">';
                     if($user->can('view surat_keputusan')){
-                        $btn .= '<a href="'.route('admin.surat-keputusan.print', $row->id).'" target="_blank" class="btn btn-icon-only btn-sm btn-dark text-white" title="Cetak"><i class="ti ti-printer"></i></a>';
+                        $btn .= '<a href="'.route('admin.surat-keputusan.print', $row->id).'" target="_blank" class="btn-icon-modern" title="Cetak"><i class="ti ti-printer"></i></a>';
                     }
                     if($user->can('edit surat_keputusan')){
-                        $btn .= '<button type="button" class="btn btn-icon-only btn-sm btn-info text-white btn-members" data-id="'.$row->id.'" title="Kelola Anggota"><i class="ti ti-users"></i></button>';
-                        $btn .= '<button type="button" class="btn btn-icon-only btn-sm btn-outline-primary btn-edit" data-id="'.$row->id.'" title="Edit"><i class="ti ti-pencil"></i></button>';
+                        $btn .= '<button type="button" class="btn-icon-modern text-info btn-members" data-id="'.$row->id.'" title="Kelola Anggota"><i class="ti ti-users"></i></button>';
+                        $btn .= '<button type="button" class="btn-icon-modern text-primary btn-edit" data-id="'.$row->id.'" title="Edit"><i class="ti ti-edit"></i></button>';
                     }
                     if($user->can('delete surat_keputusan')){
-                        $btn .= '<button type="button" onclick="deleteItem('.$row->id.')" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>';
+                        $btn .= '<button type="button" onclick="deleteItem('.$row->id.')" class="btn-icon-modern text-danger" title="Hapus"><i class="ti ti-trash"></i></button>';
                     }
                     $btn .= '</div>';
                     return $btn;

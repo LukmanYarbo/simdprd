@@ -71,15 +71,15 @@ class AnggotaController extends Controller implements HasMiddleware
                         <div><small class="text-muted"><i class="ti ti-phone me-2 text-success"></i>'.$row->no_telp.'</small></div>';
                 })
                 ->addColumn('action', function($row) {
-                    $btn = '<div class="btn-group shadow-sm">';
+                    $btn = '<div class="d-flex gap-2 justify-content-end">';
                     
                     if (auth()->user()->can('edit anggota')) {
-                        $btn .= '<button type="button" class="btn btn-icon-only btn-sm btn-info text-white btn-keluarga" data-id="'.$row->id.'" title="Kelola Keluarga"><i class="ti ti-users"></i></button>';
-                        $btn .= '<a href="'.route('admin.anggota.edit', $row->id).'" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit"><i class="ti ti-pencil"></i></a>';
+                        $btn .= '<button type="button" class="btn-icon-modern text-info btn-keluarga" data-id="'.$row->id.'" title="Kelola Keluarga"><i class="ti ti-users"></i></button>';
+                        $btn .= '<a href="'.route('admin.anggota.edit', $row->id).'" class="btn-icon-modern text-primary" title="Edit"><i class="ti ti-edit"></i></a>';
                     }
                     
                     if (auth()->user()->can('delete anggota')) {
-                        $btn .= '<button type="button" onclick="deleteAnggota('.$row->id.')" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>';
+                        $btn .= '<button type="button" onclick="deleteAnggota('.$row->id.')" class="btn-icon-modern text-danger" title="Hapus"><i class="ti ti-trash"></i></button>';
                     }
                     
                     $btn .= '</div>';

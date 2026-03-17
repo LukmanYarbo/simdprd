@@ -37,18 +37,18 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $skpd->namaskpd }}</td>
                         <td>
-                            <div class="d-flex gap-1">
+                            <div class="d-flex gap-2">
                                 <button type="button" 
-                                        class="btn btn-icon-only btn-sm btn-outline-primary btn-edit" 
+                                        class="btn-icon-modern text-primary btn-edit" 
                                         data-id="{{ $skpd->id }}" 
                                         data-nama="{{ $skpd->namaskpd }}" 
                                         title="Edit">
-                                    <i class="ti ti-pencil"></i>
+                                    <i class="ti ti-edit"></i>
                                 </button>
                                 <form action="{{ route('admin.skpd.destroy', $skpd->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus">
+                                    <button type="submit" class="btn-icon-modern text-danger" title="Hapus">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                 </form>

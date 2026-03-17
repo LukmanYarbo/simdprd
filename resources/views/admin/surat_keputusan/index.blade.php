@@ -50,7 +50,7 @@
     <div class="card border-0 shadow-lg mt-4" id="pdfPreviewCard" style="display:none;">
         <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
             <h6 class="m-0 fw-bold text-danger"><i class="ti ti-file-earmark-pdf me-2"></i>Preview SK: <span id="pdfTitle"></span></h6>
-            <button class="btn btn-icon-only btn-sm btn-outline-secondary" onclick="closePdfPreview()">
+            <button class="btn-icon-modern" onclick="closePdfPreview()">
                 <i class="ti ti-x"></i>
             </button>
         </div>
@@ -149,7 +149,7 @@
                                     <input type="text" class="form-control" id="nama_komisi" name="nama_komisi"
                                         list="namaKomisiList" autocomplete="off"
                                         placeholder="Nama Komisi, contoh: Komisi A">
-                                    <button type="button" class="btn btn-outline-secondary" id="btnClearKomisi" title="Hapus isian Nama Komisi">
+                                    <button type="button" class="btn btn-link link-secondary p-0" id="btnClearKomisi" title="Hapus isian Nama Komisi">
                                         <i class="ti ti-x"></i>
                                     </button>
                                 </div>
@@ -458,7 +458,7 @@ $(function() {
                     html += '<td>' + (item.nama_komisi || '-') + '</td>';
                 }
                 html += '<td>' + item.jabatan_alat_kelengkapan.nama + '</td>';
-                html += '<td class="text-end"><button type="button" class="btn btn-icon-only btn-sm btn-outline-danger btn-delete-member" data-id="'+item.id+'"><i class="ti ti-trash"></i></button></td>';
+                html += '<td class="text-end"><button type="button" class="btn-icon-modern text-danger btn-delete-member" data-id="'+item.id+'"><i class="ti ti-trash"></i></button></td>';
                 html += '</tr>';
             });
         }
