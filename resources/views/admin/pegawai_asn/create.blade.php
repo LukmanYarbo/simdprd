@@ -2,6 +2,14 @@
 
 @section('title', 'Tambah Pegawai ASN')
 
+@section('breadcrumbs')
+<x-breadcrumbs :items="[
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+    ['label' => 'Pegawai ASN', 'url' => route('admin.pegawai-asn.index'), 'icon' => 'ti ti-user-shield'],
+    ['label' => 'Tambah Pegawai', 'icon' => 'ti ti-plus']
+]" />
+@endsection
+
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />

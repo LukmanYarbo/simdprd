@@ -44,17 +44,20 @@ const setTheme = theme => {
 
   const themeIcon = document.getElementById('theme-icon');
   if (themeIcon) {
-    // Reset icons
-    themeIcon.classList.remove('bi-sun-fill', 'bi-moon-stars-fill', 'bi-droplet-fill');
+    // Reset icons - remove both filled and standard Tabler icon classes
+    themeIcon.classList.remove(
+      'ti-sun-filled', 'ti-moon-stars-filled', 'ti-glass-full', 
+      'ti-sun', 'ti-moon-stars', 'ti-moon-filled', 'ti-droplet', 'ti-glass'
+    );
     
     if (theme === 'dark') {
-        themeIcon.classList.add('bi-moon-stars-fill');
+        themeIcon.classList.add('ti-moon-stars'); // Using standard icon for better compatibility
         themeIcon.title = "Dark Mode";
     } else if (theme === 'transparent') {
-        themeIcon.classList.add('bi-droplet-fill'); // Icon for transparent/glass theme
-        themeIcon.title = "Transparent Mode";
+        themeIcon.classList.add('ti-glass'); // Using standard icon
+        themeIcon.title = "Premium Mode";
     } else {
-        themeIcon.classList.add('bi-sun-fill');
+        themeIcon.classList.add('ti-sun'); // Using standard icon
         themeIcon.title = "Light Mode";
     }
   }

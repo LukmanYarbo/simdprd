@@ -71,11 +71,11 @@
         </li>
         <li>
             <a href="#masterGajiSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-               aria-expanded="{{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.potongan.*') || request()->routeIs('admin.transaksi-gaji.*') ? 'true' : 'false' }}">
-                <span><i class="ti ti-wallet me-2"></i> Master Gaji dan Tunjangan</span>
+               aria-expanded="{{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.potongan.*') ? 'true' : 'false' }}">
+                <span><i class="ti ti-wallet me-2"></i>Gaji dan Tunjangan</span>
                 <i class="ti ti-chevron-down small"></i>
             </a>
-            <ul class="collapse {{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.potongan.*') || request()->routeIs('admin.transaksi-gaji.*') ? 'show' : '' }} list-unstyled ps-3" id="masterGajiSubmenu">
+            <ul class="collapse {{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.potongan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterGajiSubmenu">
                 @can('view parameter_gaji')
                 <li>
                     <a href="{{ route('admin.parameter-gaji.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.parameter-gaji.*') ? 'active' : '' }}">
@@ -104,12 +104,12 @@
                     </a>
                 </li>
                 @endcan
-                <li>
-                    <a href="{{ route('admin.transaksi-gaji.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.transaksi-gaji.*') ? 'active' : '' }}">
-                        <i class="ti ti-coin me-2"></i> Proses Gaji
-                    </a>
-                </li>
             </ul>
+        </li>
+        <li>
+            <a href="{{ route('admin.transaksi-gaji.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.transaksi-gaji.*') ? 'active' : '' }}">
+                <i class="ti ti-coin me-2"></i> Proses Gaji
+            </a>
         </li>
 
         <li>

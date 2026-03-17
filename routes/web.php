@@ -5,12 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 });
 
 Route::get('login', [LoginController::class , 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class , 'login']);
 Route::post('logout', [LoginController::class , 'logout'])->name('logout');
+Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 
 Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin.')->group(function () {

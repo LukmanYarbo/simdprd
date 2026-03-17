@@ -2,8 +2,8 @@
 
 @section('breadcrumbs')
 <x-breadcrumbs :items="[
-    ['label' => 'Anggota', 'url' => route('admin.anggota.index'), 'icon' => 'bi-people'],
-    ['label' => 'Tambah Anggota', 'icon' => 'bi-person-plus']
+    ['label' => 'Anggota', 'url' => route('admin.anggota.index'), 'icon' => 'ti ti-users'],
+    ['label' => 'Tambah Anggota', 'icon' => 'ti ti-user-plus']
 ]" />
 @endsection
 
@@ -84,13 +84,15 @@
                             @error('tgl_lahir')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <label for="jk" class="form-label">Jenis Kelamin</label>
-                            <select class="form-select @error('jk') is-invalid @enderror" id="jk" name="jk" required>
-                                <option value="" disabled selected>Pilih JK</option>
-                                <option value="L" {{ old('jk') == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                                <option value="P" {{ old('jk') == 'P' ? 'selected' : '' }}>Perempuan</option>
-                            </select>
-                            @error('jk')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            <label class="form-label d-block text-secondary small text-uppercase fw-bold">Jenis Kelamin <span class="text-danger">*</span></label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="jk" id="jk_l" value="L" {{ old('jk') == 'L' ? 'checked' : '' }} required>
+                                <label class="btn btn-outline-primary" for="jk_l"><i class="ti ti-gender-male me-1"></i> Laki-laki</label>
+                                
+                                <input type="radio" class="btn-check" name="jk" id="jk_p" value="P" {{ old('jk') == 'P' ? 'checked' : '' }}>
+                                <label class="btn btn-outline-danger" for="jk_p"><i class="ti ti-gender-female me-1"></i> Perempuan</label>
+                            </div>
+                            @error('jk') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-6">
                             <label for="id_agama" class="form-label">Agama</label>

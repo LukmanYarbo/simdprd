@@ -99,7 +99,7 @@
             {{-- Alert parameter tidak lengkap --}}
             @if(!$paramLengkap)
             <div class="alert alert-danger d-flex align-items-start gap-2 mb-4">
-                <i class="ti ti-exclamation-triangle-fill mt-1"></i>
+                <i class="ti ti-alert-triangle mt-1"></i>
                 <div>
                     <strong>Parameter tidak lengkap!</strong> Pastikan data berikut sudah diisi dengan status Aktif (Y):
                     <ul class="mb-0 mt-1">
@@ -116,7 +116,7 @@
                 <div class="col-md-4">
                     <label class="form-label fw-bold small text-muted text-uppercase">Bulan / Periode Gaji</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-light border-end-0"><i class="ti ti-calendar3 text-primary"></i></span>
+                        <span class="input-group-text bg-light border-end-0"><i class="ti ti-calendar text-primary"></i></span>
                         <select wire:model.live="bulan" class="form-select bg-light border-start-0 shadow-none">
                             <optgroup label="Gaji Bulanan">
                                 <option value="1">Januari</option>
@@ -172,7 +172,7 @@
                 <div class="col-md-6 border-end-md">
                     <div class="d-flex align-items-center gap-3">
                         <div class="p-3 rounded-4 {{ $sudahDiproses ? (strtoupper($dsbGajiRecord->status ?? 'DRAF') === 'FINAL' ? 'bg-success-subtle' : 'bg-warning-subtle') : 'bg-light' }}">
-                            <i class="bi {{ $sudahDiproses ? (strtoupper($dsbGajiRecord->status ?? 'DRAF') === 'FINAL' ? 'bi-shield-fill-check text-success' : 'bi-shield-fill-exclamation text-warning') : 'bi-shield-slash text-muted' }} fs-3"></i>
+                            <i class="ti {{ $sudahDiproses ? (strtoupper($dsbGajiRecord->status ?? 'DRAF') === 'FINAL' ? 'ti-shield-check text-success' : 'ti-shield-half text-warning') : 'ti-shield-off text-muted' }} fs-3"></i>
                         </div>
                         <div>
                             <label class="form-label fw-bold small text-muted text-uppercase mb-1 d-block">Status Dokumen Gaji</label>
@@ -182,7 +182,7 @@
                                         $isFinalStatus = strtoupper($dsbGajiRecord->status ?? '') === 'FINAL';
                                     @endphp
                                     <span class="badge {{ $isFinalStatus ? 'bg-success' : 'bg-warning text-dark' }} px-3 py-2 rounded-pill shadow-sm">
-                                        <i class="bi {{ $isFinalStatus ? 'bi-lock-fill' : 'bi-pencil-square' }} me-1"></i>
+                                        <i class="ti {{ $isFinalStatus ? 'ti-lock' : 'ti-edit' }} me-1"></i>
                                         {{ strtoupper($dsbGajiRecord->status) }}
                                     </span>
                                     <button wire:click="openStatusModal" class="btn btn-sm btn-link text-decoration-none fw-semibold p-0 ms-1">
@@ -227,7 +227,7 @@
                 $currStatus = strtoupper($dsbGajiRecord->status ?? 'DRAF');
             @endphp
             <div class="alert {{ $currStatus === 'FINAL' ? 'alert-success border-success-subtle' : 'alert-info border-info-subtle' }} d-flex align-items-center gap-3 mt-4 mb-0 rounded-4">
-                <div class="fs-4"><i class="bi {{ $currStatus === 'FINAL' ? 'bi-lock-fill' : 'bi-info-circle-fill' }}"></i></div>
+                <div class="fs-4"><i class="ti {{ $currStatus === 'FINAL' ? 'ti-lock' : 'ti-info-circle' }}"></i></div>
                 <div>
                     <div class="fw-bold mb-0">Informasi Periode {{ $blnThnLabel }}</div>
                     <div class="small">
@@ -250,7 +250,7 @@
         <div class="card-body py-3 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3">
                 <div class="bg-success bg-opacity-10 p-2 rounded-circle">
-                    <i class="ti ti-file-earmark-pdf text-success fs-4"></i>
+                    <i class="ti ti-file-description text-success fs-4"></i>
                 </div>
                 <div>
                     <h6 class="mb-0 fw-bold">Dokumen Laporan Gaji</h6>
@@ -265,10 +265,10 @@
                     <i class="ti ti-cash me-2"></i> Cetak Daftar Tunjangan
                 </a>
                 <a href="{{ route('admin.transaksi-gaji.export-excel', ['bulan' => $bulan, 'tahun' => $tahun]) }}" class="btn btn-outline-success px-4 rounded-pill shadow-sm">
-                    <i class="ti ti-file-earmark-excel me-2"></i> Export Excel
+                    <i class="ti ti-file-spreadsheet me-2"></i> Export Excel
                 </a>
                 <a href="{{ route('admin.transaksi-gaji.dsb-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" class="btn btn-success px-4 rounded-pill shadow-sm">
-                    <i class="ti ti-printer-fill me-2"></i> Cetak DSB
+                    <i class="ti ti-printer me-2"></i> Cetak DSB
                 </a>
             </div>
         </div>

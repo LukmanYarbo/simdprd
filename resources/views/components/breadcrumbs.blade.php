@@ -6,7 +6,7 @@
             @if($loop->last)
                 <li class="breadcrumb-item active" aria-current="page">
                     @if(isset($item['icon']))
-                        <i class="bi {{ $item['icon'] }} me-1"></i>
+                        <i class="{{ $item['icon'] }} me-1"></i>
                     @endif
                     <span>{{ $item['label'] }}</span>
                 </li>
@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                     <a href="{{ $item['url'] ?? '#' }}">
                         @if(isset($item['icon']))
-                            <i class="bi {{ $item['icon'] }} me-1"></i>
+                            <i class="{{ $item['icon'] }} me-1"></i>
                         @endif
                         <span>{{ $item['label'] }}</span>
                     </a>

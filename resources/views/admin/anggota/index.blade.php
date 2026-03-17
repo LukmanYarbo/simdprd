@@ -2,8 +2,8 @@
 
 @section('breadcrumbs')
 <x-breadcrumbs :items="[
-     ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'bi-house-door-fill'],
-    ['label' => 'Anggota', 'icon' => 'bi-people']]" />
+     ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+    ['label' => 'Anggota', 'icon' => 'ti ti-users']]" />
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(99, 102, 241, 0.15); color: #6366f1;">
-                            <i class="ti ti-id-badge-2-fill fs-3"></i>
+                            <i class="ti ti-users fs-3"></i>
                         </div>
                         <div>
                             <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Total Anggota</p>
@@ -41,7 +41,7 @@
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
-                            <i class="ti ti-person-check-fill fs-3"></i>
+                            <i class="ti ti-user-check fs-3"></i>
                         </div>
                         <div>
                             <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Anggota Aktif</p>
@@ -56,7 +56,7 @@
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center">
                         <div class="stats-icon rounded-4 p-3 me-3" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
-                            <i class="ti ti-person-x-fill fs-3"></i>
+                            <i class="ti ti-user-off fs-3"></i>
                         </div>
                         <div>
                             <p class="mb-0 text-secondary small fw-bold text-uppercase tracking-wider">Non-Aktif</p>

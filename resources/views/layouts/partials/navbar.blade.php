@@ -22,7 +22,7 @@
         <div class="d-flex align-items-center gap-3">
             <!-- Theme Toggle -->
             <button class="btn btn-link nav-link link-body-emphasis" id="theme-toggle" title="Toggle theme">
-                <i class="ti ti-moon-filled fs-5" id="theme-icon"></i>
+                <i class="ti ti-sun fs-5 text-primary" id="theme-icon"></i>
             </button>
 
             <!-- User Dropdown -->

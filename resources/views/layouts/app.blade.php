@@ -7,8 +7,8 @@
 
     <title>{{ config('app.name', 'Laravel') }} - Dashboard</title>
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,7 +50,7 @@
                     <div class="d-flex align-items-center gap-3">
                         <!-- Theme Toggle -->
                         <button class="btn btn-link nav-link" id="theme-toggle" title="Toggle theme">
-                            <i class="ti ti-moon-filled fs-5" id="theme-icon"></i>
+                            <i class="ti ti-sun fs-5 text-primary" id="theme-icon"></i>
                         </button>
 
                         <!-- User Dropdown -->
