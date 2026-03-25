@@ -202,6 +202,7 @@ class AnggotaController extends Controller implements HasMiddleware
             'jabatan', 
             'keluarga', 
             'pendidikan', 
+            'harta',
             'jabatanAnggota.jabatanAlatKelengkapan'
         ])->findOrFail($id);
         

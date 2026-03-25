@@ -37,7 +37,12 @@ class PemdaController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        $pegawai = PegawaiAsn::with(['jabatanAsn', 'pangkatGolongan'])->get();
+        $pegawai = PegawaiAsn::with(['jabatanAsn', 'pangkatGolongan'])
+            ->join('jabatan_asns', 'pegawai_asns.id_jabatan', '=', 'jabatan_asns.id')
+            ->orderBy('jabatan_asns.id_esselon', 'asc')
+            ->orderBy('pegawai_asns.id_pangkat_golongan', 'desc')
+            ->select('pegawai_asns.*')
+            ->get();
         return view('admin.pemda.create', compact('pegawai'));
     }
 
@@ -94,7 +99,12 @@ class PemdaController extends Controller implements HasMiddleware
     public function edit(string $id)
     {
         $pemda = Pemda::findOrFail($id);
-        $pegawai = PegawaiAsn::with(['jabatanAsn', 'pangkatGolongan'])->get();
+        $pegawai = PegawaiAsn::with(['jabatanAsn', 'pangkatGolongan'])
+            ->join('jabatan_asns', 'pegawai_asns.id_jabatan', '=', 'jabatan_asns.id')
+            ->orderBy('jabatan_asns.id_esselon', 'asc')
+            ->orderBy('pegawai_asns.id_pangkat_golongan', 'desc')
+            ->select('pegawai_asns.*')
+            ->get();
         return view('admin.pemda.edit', compact('pemda', 'pegawai'));
     }
 

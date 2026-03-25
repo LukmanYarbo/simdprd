@@ -11,9 +11,9 @@
 @endsection
 
 @push('styles')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
-<style>.select2-container { width: 100% !important; }</style>
+    <link rel="stylesheet" href="{{ asset('assets/libs/select2/select2.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/select2/select2-bootstrap-5-theme.min.css') }}" />
+    <style>.select2-container { width: 100% !important; }</style>
 @endpush
 
 @section('content')
@@ -225,7 +225,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
 <script>
     $(document).ready(function() {
         // Jabatan Select2 with AJAX filtering

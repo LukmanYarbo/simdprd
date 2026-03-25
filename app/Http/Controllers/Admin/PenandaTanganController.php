@@ -177,7 +177,11 @@ class PenandaTanganController extends Controller implements HasMiddleware
             $query->where('id_skpd', $idSkpd);
         }
 
-        $asns = $query->orderBy('nama')->limit(20)->get(['id', 'nama', 'nip']);
+        $asns = $query->join('jabatan_asns', 'pegawai_asns.id_jabatan', '=', 'jabatan_asns.id')
+            ->orderBy('jabatan_asns.id_esselon', 'asc')
+            ->orderBy('pegawai_asns.id_pangkat_golongan', 'desc')
+            ->limit(20)
+            ->get(['pegawai_asns.id', 'pegawai_asns.nama', 'pegawai_asns.nip']);
 
         $results = $asns->map(fn($a) => [
             'id'   => $a->id,

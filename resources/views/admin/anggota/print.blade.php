@@ -287,6 +287,43 @@
         </table>
         @endif
 
+        <div class="section-title">V. Data Harta Anggota</div>
+        @if($anggota->harta && $anggota->harta->count() > 0)
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">No</th>
+                    <th style="width: 25%;">Jenis Harta</th>
+                    <th>Nama / Rincian Harta</th>
+                    <th style="width: 120px;">Tahun</th>
+                    <th style="width: 180px;">Harga Perolehan (Rp)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($anggota->harta->sortByDesc('tahun_perolehan') as $index => $h)
+                <tr>
+                    <td style="text-align: center;">{{ $index + 1 }}</td>
+                    <td>{{ $h->jenis_harta }}</td>
+                    <td>
+                        {{ $h->nama_harta }}
+                        @if($h->keterangan)
+                            <br><small style="color: #64748b;">{{ $h->keterangan }}</small>
+                        @endif
+                    </td>
+                    <td style="text-align: center;">{{ $h->tahun_perolehan }}</td>
+                    <td style="text-align: right;">{{ number_format($h->harga_perolehan, 0, ',', '.') }}</td>
+                </tr>
+                @endforeach
+                <tr>
+                    <td colspan="4" style="text-align: right; font-weight: bold;">Total Keseluruhan</td>
+                    <td style="text-align: right; font-weight: bold;">{{ number_format($anggota->harta->sum('harga_perolehan'), 0, ',', '.') }}</td>
+                </tr>
+            </tbody>
+        </table>
+        @else
+        <p>Tidak ada data harta yang tercatat.</p>
+        @endif
+
         <div class="signature-box">
             <p class="signature-date">{{ $pemda->kota ?? ($pemda->kabupaten ?? '...') }}, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
             <p class="signature-title">Mengetahui,<br>Sekretaris DPRD</p>

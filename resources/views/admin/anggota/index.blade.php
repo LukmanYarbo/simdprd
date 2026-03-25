@@ -97,10 +97,11 @@
 @include('admin.anggota.partials.modal-keluarga')
 
 @include('admin.anggota.partials.modal-pendidikan')
+@include('admin.anggota.partials.modal-harta')
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="{{ asset('assets/libs/datatables/css/dataTables.bootstrap5.min.css') }}">
 <style>
     .dataTables_wrapper .dataTables_paginate .paginate_button {
         padding: 0;
@@ -142,9 +143,8 @@
 @endpush
 
 @prepend('scripts')
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{ asset('assets/libs/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/libs/datatables/js/dataTables.bootstrap5.min.js') }}"></script>
 @endprepend
 
 @push('scripts')
@@ -164,16 +164,15 @@ $(function() {
             {data: 'status', name: 'statusKeanggotaan.nama'},
             {data: 'kontak', name: 'email'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-end pe-4', render: function(data, type, row) {
-                var btn = '<div class="btn-group">';
-                btn += '<a href="#" data-id="' + row.id + '" class="btn btn-icon-only btn-sm btn-info text-white btn-pendidikan" title="Kelola Pendidikan"><i class="ti ti-school"></i></a>';
-                btn += data; // Append existing actions
-                btn += '</div>';
-                return btn;
+                var $btn = $(data);
+                $btn.prepend('<button type="button" class="btn-icon-modern text-success btn-harta" data-id="' + row.id + '" title="Kelola Harta"><i class="ti ti-wallet"></i></button>');
+                $btn.prepend('<button type="button" class="btn-icon-modern text-info btn-pendidikan" data-id="' + row.id + '" title="Kelola Pendidikan"><i class="ti ti-school"></i></button>');
+                return $btn[0].outerHTML;
             }},
         ],
         order: [], // Disable initial sort to respect server-side ordering
         language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json',
+            url: "{{ asset('assets/libs/datatables/i18n/id.json') }}",
             search: "_INPUT_",
             searchPlaceholder: "Cari data..."
         },

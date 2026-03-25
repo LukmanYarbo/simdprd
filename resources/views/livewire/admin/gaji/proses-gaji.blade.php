@@ -78,6 +78,77 @@
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
+
+        /* Premium Button Animations */
+        .btn-premium {
+            background: linear-gradient(45deg, #0d6efd, #00d2ff);
+            border: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden !important;
+        }
+        
+        .btn-premium:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -10px rgba(13, 110, 253, 0.5);
+        }
+        
+        .btn-premium:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* Shimmer Effect for Premium Button */
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: all 0.6s;
+            pointer-events: none;
+        }
+
+        .btn-premium:hover::before {
+            left: 100%;
+        }
+
+        /* Proses Ulang Button Enhancement */
+        .btn-warning-premium {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden !important;
+        }
+        .btn-warning-premium:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px -5px rgba(255, 193, 7, 0.4);
+        }
+        .btn-warning-premium:active {
+            transform: scale(0.95);
+        }
+
+        /* Ripple Animation */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
     </style>
 
     {{-- Loading Overlay --}}
@@ -206,14 +277,14 @@
                             @php 
                                 $isFinal = strtoupper($dsbGajiRecord->status ?? '') === 'FINAL';
                             @endphp
-                            <button onclick="confirmProses(true)" class="btn btn-warning px-4 py-2 rounded-pill shadow-sm" @if(!$paramLengkap || $isFinal) disabled @endif @if($isFinal) title="Status FINAL - Tidak dapat diproses ulang" @endif>
+                            <button onclick="createRipple(event); confirmProses(true)" class="btn btn-warning btn-warning-premium px-4 py-2 rounded-pill shadow-sm" @if(!$paramLengkap || $isFinal) disabled @endif @if($isFinal) title="Status FINAL - Tidak dapat diproses ulang" @endif>
                                 <i class="ti ti-arrow-clockwise me-1"></i> Proses Ulang
                             </button>
                             <button onclick="confirmHapus()" class="btn btn-outline-danger px-4 py-2 rounded-pill" @if($isFinal) disabled @endif @if($isFinal) title="Status FINAL - Tidak dapat dihapus" @endif>
                                 <i class="ti ti-trash3 me-1"></i> Hapus Seluruh Data
                             </button>
                         @else
-                            <button onclick="confirmProses(false)" class="btn btn-premium btn-primary px-5 py-2 rounded-pill shadow-lg shadow-primary-subtle" @if(!$paramLengkap) disabled @endif>
+                            <button onclick="createRipple(event); confirmProses(false)" class="btn btn-premium btn-primary px-5 py-2 rounded-pill shadow-lg shadow-primary-subtle" @if(!$paramLengkap) disabled @endif>
                                 <i class="ti ti-lightning me-1"></i> Mulai Proses Gaji Periode Ini
                             </button>
                         @endif
@@ -644,6 +715,22 @@
  
     @script
     <script>
+        window.createRipple = (event) => {
+            const button = event.currentTarget;
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+            circle.classList.add("ripple");
+
+            const ripple = button.getElementsByClassName("ripple")[0];
+            if (ripple) { ripple.remove(); }
+            button.appendChild(circle);
+        };
+
         window.confirmProses = (isUlang) => {
             let titleText = isUlang ? 'Proses Ulang Gaji?' : 'Proses Gaji?';
             let msgText = isUlang ? 'Periode ini sudah diproses. Proses ulang dan timpa data lama?' : 'Mulai proses gaji untuk periode ini?';
