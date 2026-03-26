@@ -14,17 +14,13 @@ class AnggotaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'nama_anggota' => $this->nama_anggota,
-            'nik' => $this->nik,
-            'email' => $this->email,
-            'no_telp' => $this->no_telp,
-            'foto_url' => $this->foto_anggota ? asset('storage/' . $this->foto_anggota) : null,
-            'status_keanggotaan' => $this->statusKeanggotaan?->nama,
-            'jabatan' => $this->jabatan?->nama,
-            'komisi' => $this->nama_komisi,
-            // Tambahkan field lain yang dibutuhkan Flutter
-        ];
+        $data = parent::toArray($request);
+        
+        $data['foto_url'] = $this->foto_anggota ? asset('storage/' . $this->foto_anggota) : null;
+        $data['status_keanggotaan'] = $this->statusKeanggotaan?->nama;
+        $data['jabatan'] = $this->jabatan?->nama;
+        $data['komisi'] = $this->nama_komisi;
+        
+        return $data;
     }
 }
