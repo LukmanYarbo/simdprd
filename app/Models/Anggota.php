@@ -127,5 +127,10 @@ class Anggota extends Model
     {
         return $this->hasMany(PendidikanAnggota::class , 'id_anggota');
     }
+    
+    public function harta()
+    {
+        return $this->hasMany(HartaAnggota::class, 'id_anggota');
+    }
 
 }

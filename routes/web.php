@@ -53,8 +53,16 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
             Route::get('pendidikan/{id}/edit', 'edit')->name('pendidikan.edit');
             Route::put('pendidikan/{id}', 'update')->name('pendidikan.update');
             Route::delete('pendidikan/{id}', 'destroy')->name('pendidikan.destroy');
-        }
-        );
+        });
+
+        // Harta Anggota Modal API
+        Route::controller(\App\Http\Controllers\Admin\HartaAnggotaController::class)->group(function () {
+            Route::get('anggota/{id}/harta', 'index')->name('harta.index');
+            Route::post('anggota/{id}/harta', 'store')->name('harta.store');
+            Route::get('harta/{id}/edit', 'edit')->name('harta.edit');
+            Route::put('harta/{id}', 'update')->name('harta.update');
+            Route::delete('harta/{id}', 'destroy')->name('harta.destroy');
+        });
 
         Route::get('jabatan-asn/search-by-skpd', [\App\Http\Controllers\Admin\JabatanAsnController::class, 'searchBySkpd'])->name('jabatan-asn.search-by-skpd');
         Route::resource('jabatan-asn', \App\Http\Controllers\Admin\JabatanAsnController::class);
@@ -89,6 +97,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::resource('potongan', \App\Http\Controllers\Admin\PotonganController::class);
 
         // Proses Gaji
+        Route::get('transaksi-gaji/slip-gaji-bulk', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'slipGajiBulk'])->name('transaksi-gaji.slip-gaji-bulk');
         Route::get('transaksi-gaji/slip-gaji/{id}', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'slipGaji'])->name('transaksi-gaji.slip-gaji');
         Route::get('transaksi-gaji/dsb-report', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'report'])->name('transaksi-gaji.dsb-report');
         Route::get('transaksi-gaji/daftar-gaji', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'daftarGaji'])->name('transaksi-gaji.daftar-gaji');

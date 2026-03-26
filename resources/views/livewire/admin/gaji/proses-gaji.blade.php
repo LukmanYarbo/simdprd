@@ -78,6 +78,77 @@
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
+
+        /* Premium Button Animations */
+        .btn-premium {
+            background: linear-gradient(45deg, #0d6efd, #00d2ff);
+            border: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden !important;
+        }
+        
+        .btn-premium:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -10px rgba(13, 110, 253, 0.5);
+        }
+        
+        .btn-premium:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* Shimmer Effect for Premium Button */
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: all 0.6s;
+            pointer-events: none;
+        }
+
+        .btn-premium:hover::before {
+            left: 100%;
+        }
+
+        /* Proses Ulang Button Enhancement */
+        .btn-warning-premium {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden !important;
+        }
+        .btn-warning-premium:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px -5px rgba(255, 193, 7, 0.4);
+        }
+        .btn-warning-premium:active {
+            transform: scale(0.95);
+        }
+
+        /* Ripple Animation */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
     </style>
 
     {{-- Loading Overlay --}}
@@ -93,7 +164,7 @@
 
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-header bg-white py-3">
-            <h5 class="mb-0 text-primary fw-bold"><i class="ti ti-coin me-2"></i>Proses Gaji Anggota DPRD</h5>
+            <h5 class="mb-0 text-primary fw-bold"><i class="ti ti-coins me-2"></i>Proses Gaji Anggota DPRD</h5>
         </div>
         <div class="card-body">
             {{-- Alert parameter tidak lengkap --}}
@@ -117,7 +188,7 @@
                     <label class="form-label fw-bold small text-muted text-uppercase">Bulan / Periode Gaji</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="ti ti-calendar text-primary"></i></span>
-                        <select wire:model.live="bulan" class="form-select bg-light border-start-0 shadow-none">
+                        <select wire:model.live="bulan" class="form-select bg-light border-start-0 shadow-none rounded-end-3">
                             <optgroup label="Gaji Bulanan">
                                 <option value="1">Januari</option>
                                 <option value="2">Februari</option>
@@ -206,15 +277,15 @@
                             @php 
                                 $isFinal = strtoupper($dsbGajiRecord->status ?? '') === 'FINAL';
                             @endphp
-                            <button onclick="confirmProses(true)" class="btn btn-warning px-4 py-2 rounded-pill shadow-sm" @if(!$paramLengkap || $isFinal) disabled @endif @if($isFinal) title="Status FINAL - Tidak dapat diproses ulang" @endif>
+                            <button onclick="createRipple(event); confirmProses(true)" class="btn btn-warning btn-warning-premium px-4 py-2 rounded-pill shadow-sm" @if(!$paramLengkap || $isFinal) disabled @endif @if($isFinal) title="Status FINAL - Tidak dapat diproses ulang" @endif>
                                 <i class="ti ti-arrow-clockwise me-1"></i> Proses Ulang
                             </button>
                             <button onclick="confirmHapus()" class="btn btn-outline-danger px-4 py-2 rounded-pill" @if($isFinal) disabled @endif @if($isFinal) title="Status FINAL - Tidak dapat dihapus" @endif>
                                 <i class="ti ti-trash3 me-1"></i> Hapus Seluruh Data
                             </button>
                         @else
-                            <button onclick="confirmProses(false)" class="btn btn-primary px-5 py-2 rounded-pill shadow-lg shadow-primary-subtle" @if(!$paramLengkap) disabled @endif>
-                                <i class="ti ti-lightning-charge-fill me-1"></i> Mulai Proses Gaji Periode Ini
+                            <button onclick="createRipple(event); confirmProses(false)" class="btn btn-premium btn-primary px-5 py-2 rounded-pill shadow-lg shadow-primary-subtle" @if(!$paramLengkap) disabled @endif>
+                                <i class="ti ti-lightning me-1"></i> Mulai Proses Gaji Periode Ini
                             </button>
                         @endif
                     </div>
@@ -274,6 +345,11 @@
                                 <i class="ti ti-cash text-warning me-2"></i> Daftar Tunjangan
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item p-2 rounded-3" href="{{ route('admin.transaksi-gaji.slip-gaji-bulk', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank">
+                                <i class="ti ti-printer text-info me-2"></i> Slip Gaji (Semua Anggota)
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider my-2 opacity-10"></li>
                         <li>
                             <a class="dropdown-item p-2 rounded-3 fw-bold" href="{{ route('admin.transaksi-gaji.dsb-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank">
@@ -297,8 +373,8 @@
     <div class="card border-0 shadow-sm mt-4">
         <div class="card-header bg-white py-3">
             <h6 class="mb-0 text-success fw-bold">
-                <i class="ti ti-table me-2"></i>Data Transaksi Gaji — {{ $blnThnLabel }}
-                <span class="badge bg-success ms-2">{{ count($ringkasan) }} anggota</span>
+                <i class="ti ti-table-alias me-2"></i>Data Transaksi Gaji — {{ $blnThnLabel }}
+                <span class="badge bg-success ms-2 rounded-pill">{{ count($ringkasan) }} anggota</span>
             </h6>
         </div>
         <div class="card-body p-0">
@@ -639,6 +715,22 @@
  
     @script
     <script>
+        window.createRipple = (event) => {
+            const button = event.currentTarget;
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+            circle.classList.add("ripple");
+
+            const ripple = button.getElementsByClassName("ripple")[0];
+            if (ripple) { ripple.remove(); }
+            button.appendChild(circle);
+        };
+
         window.confirmProses = (isUlang) => {
             let titleText = isUlang ? 'Proses Ulang Gaji?' : 'Proses Gaji?';
             let msgText = isUlang ? 'Periode ini sudah diproses. Proses ulang dan timpa data lama?' : 'Mulai proses gaji untuk periode ini?';

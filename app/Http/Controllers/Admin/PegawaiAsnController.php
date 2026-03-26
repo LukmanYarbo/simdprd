@@ -32,7 +32,10 @@ class PegawaiAsnController extends Controller implements HasMiddleware
     public function index()
     {
         $pegawai = PegawaiAsn::with(['skpd', 'agama', 'statusKawin', 'pangkatGolongan', 'jabatanAsn', 'statusPegawai'])
-            ->latest()
+            ->join('jabatan_asns', 'pegawai_asns.id_jabatan', '=', 'jabatan_asns.id')
+            ->orderBy('jabatan_asns.id_esselon', 'asc')
+            ->orderBy('pegawai_asns.id_pangkat_golongan', 'desc')
+            ->select('pegawai_asns.*')
             ->paginate(10);
         return view('admin.pegawai_asn.index', compact('pegawai'));
     }

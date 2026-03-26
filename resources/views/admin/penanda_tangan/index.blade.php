@@ -75,14 +75,14 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <div class="btn-group" role="group">
+                                <div class="d-flex gap-2 justify-content-center">
                                     @can('edit penanda_tangan')
-                                    <a href="{{ route('admin.penanda-tangan.edit', $item->id) }}" class="btn btn-icon-only btn-sm btn-outline-primary shadow-sm" title="Edit Data">
-                                        <i class="ti ti-pencil"></i>
+                                    <a href="{{ route('admin.penanda-tangan.edit', $item->id) }}" class="btn-icon-modern text-primary" title="Edit Data">
+                                        <i class="ti ti-edit"></i>
                                     </a>
                                     @endcan
                                     @can('delete penanda_tangan')
-                                    <button type="button" class="btn btn-icon-only btn-sm btn-outline-danger shadow-sm" onclick="confirmDelete({{ $item->id }})" title="Hapus Data">
+                                    <button type="button" class="btn-icon-modern text-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus Data">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                     <form id="delete-form-{{ $item->id }}" action="{{ route('admin.penanda-tangan.destroy', $item->id) }}" method="POST" class="d-none">
@@ -114,7 +114,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script>
     function confirmDelete(id) {
         Swal.fire({

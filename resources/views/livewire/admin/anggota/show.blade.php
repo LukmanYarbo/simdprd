@@ -318,6 +318,55 @@
             </div>
         </div>
 
+        <!-- Full Width Column (Harta Anggota) -->
+        <div class="col-12" id="harta">
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-transparent border-0 py-3">
+                    <h5 class="mb-0 fw-bold"><i class="ti ti-wallet me-2"></i>Daftar Harta Anggota</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="bg-body-tertiary text-muted">
+                                <tr>
+                                    <th class="border-0 ps-3 rounded-start">Jenis Harta</th>
+                                    <th class="border-0">Nama / Rincian</th>
+                                    <th class="border-0">Tahun Perolehan</th>
+                                    <th class="border-0 text-end rounded-end">Harga Perolehan (Rp)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($anggota->harta as $h)
+                                <tr>
+                                    <td class="ps-3 border-bottom-0">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">{{ $h->jenis_harta }}</span>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <div class="fw-semibold">{{ $h->nama_harta }}</div>
+                                        @if($h->keterangan)
+                                            <div class="small text-muted text-truncate" style="max-width: 200px;" title="{{ $h->keterangan }}">{{ $h->keterangan }}</div>
+                                        @endif
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        {{ $h->tahun_perolehan }}
+                                    </td>
+                                    <td class="border-bottom-0 text-end fw-semibold">
+                                        Rp {{ number_format($h->harga_perolehan, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4 border-bottom-0">
+                                        Belum ada data harta yang tercatat.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
       
     </div>
 </div>

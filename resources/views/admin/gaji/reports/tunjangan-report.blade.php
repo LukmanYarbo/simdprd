@@ -54,7 +54,7 @@
         .text-right { text-align: right; }
         .font-bold { font-weight: 700; }
         
-        .col-no { width: 25px; }
+        .col-no { width: 8px; }
         .col-identitas { width: 35%; }
         .col-tunjangan { width: 15%; }
         .col-potongan { width: 12%; }
@@ -81,7 +81,7 @@
             margin-top: 5px;
         }
         .sig-box {
-            width: 200px;
+            width: 300px;
             text-align: center;
             font-size: 8.5pt;
         }
