@@ -104,6 +104,11 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::get('transaksi-gaji/tunjangan-report', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'tunjanganReport'])->name('transaksi-gaji.tunjangan-report');
         Route::get('transaksi-gaji/export-excel', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'exportExcel'])->name('transaksi-gaji.export-excel');
         Route::get('transaksi-gaji', [\App\Http\Controllers\Admin\TransaksiGajiController::class, 'index'])->name('transaksi-gaji.index');
+
+        // Anggaran & LRA
+        Route::get('anggaran', [\App\Http\Controllers\Admin\AnggaranController::class, 'index'])->name('anggaran.index');
+        Route::get('jurnal-lra/print-bku', [\App\Http\Controllers\Admin\AnggaranController::class, 'printBku'])->name('jurnal-lra.print-bku');
+        Route::get('jurnal-lra', [\App\Http\Controllers\Admin\AnggaranController::class, 'jurnalIndex'])->name('jurnal-lra.index');
     });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {

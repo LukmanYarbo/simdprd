@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Gaji;
 
 use App\Models\Anggota;
 use App\Models\TransaksiGaji;
+use App\Services\AnggaranService;
 use App\Services\GajiCalculatorService;
 use Livewire\Component;
 
@@ -30,12 +31,14 @@ class ProsesGaji extends Component
     public string $alasanStatus = '';
     public string $tanggalCetak = '';
     public $dsbGajiRecord = null;
-
+    
     protected GajiCalculatorService $calculator;
+    protected AnggaranService $anggaranService;
 
-    public function boot(GajiCalculatorService $calculator)
+    public function boot(GajiCalculatorService $calculator, AnggaranService $anggaranService)
     {
         $this->calculator = $calculator;
+        $this->anggaranService = $anggaranService;
     }
 
     public function mount()
@@ -126,9 +129,21 @@ class ProsesGaji extends Component
             return;
         }
 
+        // Cek Pagu Anggaran
+        $anggaran = \App\Models\Anggaran::where('tahun_anggaran', $this->tahun)->first();
+        if (!$anggaran) {
+            $this->dispatch('swal', title: 'Anggaran Belum Ada', text: 'Pagu anggaran untuk tahun ' . $this->tahun . ' belum diinput.', icon: 'error');
+            return;
+        }
+        if ($anggaran->status !== 'FINAL') {
+            $this->dispatch('swal', title: 'Anggaran Belum Final', text: 'Status anggaran tahun ' . $this->tahun . ' masih DRAFT. Silahkan finalisasi terlebih dahulu.', icon: 'warning');
+            return;
+        }
+
         $blnThn = $this->getBlnThn();
 
         // Hapus data lama jika ada (re-proses)
+        $this->anggaranService->reverseRealization($blnThn);
         TransaksiGaji::where('bln_thn', $blnThn)->delete();
 
         // Ambil semua anggota aktif
@@ -160,9 +175,12 @@ class ProsesGaji extends Component
         // Populate dsb_gaji table
         try {
             $this->calculator->saveDsbGaji($blnThn, $this->tanggalCetak);
+            
+            // Process Budget Realization
+            $this->anggaranService->processRealization($blnThn);
         } catch (\Exception $e) {
             // Log error or handle gracefully
-            \Illuminate\Support\Facades\Log::error("Failed to save dsb_gaji for $blnThn: " . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error("Failed to save dsb_gaji/anggaran for $blnThn: " . $e->getMessage());
         }
 
         $this->dispatch('swal',
@@ -215,6 +233,7 @@ class ProsesGaji extends Component
     public function hapusData(): void
     {
         $blnThn = $this->getBlnThn();
+        $this->anggaranService->reverseRealization($blnThn);
         TransaksiGaji::where('bln_thn', $blnThn)->delete();
         $this->calculator->deleteDsbGaji($blnThn);
         

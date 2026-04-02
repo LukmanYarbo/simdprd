@@ -166,6 +166,24 @@
                     title: "{{ session('info') }}"
                 });
             @endif
+
+            // Livewire Swal Listener
+            window.addEventListener('swal', function(e) {
+                const data = e.detail;
+                if (Array.isArray(data)) {
+                    // For old Livewire 2 style if mixed
+                    Swal.fire(data[0]);
+                } else {
+                    // Livewire 3 style
+                    Swal.fire({
+                        title: data.title || '',
+                        text: data.text || '',
+                        icon: data.icon || 'info',
+                        timer: data.timer || null,
+                        showConfirmButton: data.showConfirmButton ?? true
+                    });
+                }
+            });
         });
     </script>
 </body>

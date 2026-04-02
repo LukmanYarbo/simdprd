@@ -113,6 +113,26 @@
         </li>
 
         <li>
+            <a href="#anggaranSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+               aria-expanded="{{ request()->routeIs('admin.anggaran.*') || request()->routeIs('admin.jurnal-lra.*') ? 'true' : 'false' }}">
+                <span><i class="ti ti-report-money me-2"></i> Kelola Anggaran</span>
+                <i class="ti ti-chevron-down small"></i>
+            </a>
+            <ul class="collapse {{ request()->routeIs('admin.anggaran.*') || request()->routeIs('admin.jurnal-lra.*') ? 'show' : '' }} list-unstyled ps-3" id="anggaranSubmenu">
+                <li>
+                    <a href="{{ route('admin.anggaran.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggaran.*') ? 'active' : '' }}">
+                        <i class="ti ti-wallet me-2"></i> Master Anggaran
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.jurnal-lra.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.jurnal-lra.*') ? 'active' : '' }}">
+                        <i class="ti ti-history me-2"></i> Jurnal LRA
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
             <a href="#inputDataSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
                aria-expanded="{{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.pegawai-asn.*') ? 'true' : 'false' }}">
                 <span><i class="ti ti-database-import me-2"></i> Input Data</span>
