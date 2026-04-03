@@ -73,8 +73,6 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         // Pemda Module
         Route::get('pemda/pegawai-details/{id}', [\App\Http\Controllers\Admin\PemdaController::class, 'getPegawaiDetails'])->name('pemda.pegawai-details');
         Route::resource('pemda', \App\Http\Controllers\Admin\PemdaController::class);
-        Route::get('surat-tugas/{id}/print', [\App\Http\Controllers\Admin\SuratTugasController::class, 'print'])->name('surat-tugas.print');
-        Route::resource('surat-tugas', \App\Http\Controllers\Admin\SuratTugasController::class);
 
         // Penanda Tangan
         Route::get('penanda-tangan/search-skpd', [\App\Http\Controllers\Admin\PenandaTanganController::class, 'searchSkpd'])->name('penanda-tangan.search-skpd');

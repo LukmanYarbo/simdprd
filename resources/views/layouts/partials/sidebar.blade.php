@@ -14,11 +14,11 @@
 
         <li>
             <a href="#masterDataSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-               aria-expanded="{{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.surat-tugas.*') || request()->routeIs('admin.penanda-tangan.*') ? 'true' : 'false' }}">
+               aria-expanded="{{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.penanda-tangan.*') ? 'true' : 'false' }}">
                 <span><i class="ti ti-folders me-2"></i> Master Data</span>
                 <i class="ti ti-chevron-down small"></i>
             </a>
-            <ul class="collapse {{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.surat-tugas.*') || request()->routeIs('admin.penanda-tangan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
+            <ul class="collapse {{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.penanda-tangan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
                 <li>
                     <a href="{{ route('admin.pemda.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pemda.*') ? 'active' : '' }}">
                         <i class="ti ti-building-monument me-2"></i> Data Pemda
@@ -50,11 +50,7 @@
                         <i class="ti ti-building-skyscraper me-2"></i> Data SKPD
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('admin.surat-tugas.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.surat-tugas.*') ? 'active' : '' }}">
-                        <i class="ti ti-file-text me-2"></i> Surat Tugas Anggota
-                    </a>
-                </li>
+
                 @can('view penanda_tangan')
                 <li>
                     <a href="{{ route('admin.penanda-tangan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.penanda-tangan.*') ? 'active' : '' }}">
