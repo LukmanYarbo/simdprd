@@ -16,6 +16,11 @@ class AnggaranController extends Controller
         return view('admin.anggaran.index');
     }
 
+    public function form($id = null)
+    {
+        return view('admin.anggaran.form', compact('id'));
+    }
+
     public function jurnalIndex()
     {
         return view('admin.anggaran.jurnal');
@@ -31,13 +36,7 @@ class AnggaranController extends Controller
         $anggaran = Anggaran::where('tahun_anggaran', $tahun)->firstOrFail();
         
         // Sum total pagu
-        $totalPagu = $anggaran->gaji_pokok + $anggaran->tunjangan_keluarga + $anggaran->tunjangan_jabatan + 
-                     $anggaran->tunjangan_beras + $anggaran->tunjangan_pph + $anggaran->pembulatan + 
-                     $anggaran->uang_paket + $anggaran->tunjangan_alat_kelengkapan + 
-                     $anggaran->tunjangan_alat_kelengkapan_lainnya + $anggaran->tunjangan_perumahan + 
-                     $anggaran->uang_jasa_pengabdian + $anggaran->tunjangan_reses + 
-                     $anggaran->tunjangan_transportasi + $anggaran->jkk + $anggaran->jkm + 
-                     $anggaran->tunjangan_komunikasi_insentif;
+        $totalPagu = $anggaran->total_pagu;
 
         // Calculate cumulative realization BEFORE this month
         // We need to decide the order of months. 1, 2, ..., 12, THR, G13?
@@ -79,6 +78,37 @@ class AnggaranController extends Controller
         $labelBulan = $this->getLabelBulan($bulan);
 
         return view('admin.anggaran.print-bku', compact('filteredJournals', 'saldoAwal', 'totalPagu', 'pemda', 'tahun', 'labelBulan'));
+    }
+
+    public function printRealisasi(Request $request)
+    {
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+
+        $anggaran = Anggaran::with('rincians')->where('tahun_anggaran', $tahun)->firstOrFail();
+        
+        // Fetch all journal entries for this period (cumulative up to the selected month)
+        $query = JurnalLra::where('bln_thn', 'like', '%-' . $tahun);
+        
+        // If bulan is selected, we usually want to see realization UP TO that month for a cumulative report
+        // But the user might want just that month. Usually 'Realisasi' is cumulative to date.
+        // Let's implement cumulative by default if no clear instruction.
+        if ($bulan) {
+            // This is a bit tricky since months are strings like '1', '2', ..., '12', 'THR', 'G13'
+            // For now, let's just use the filters from the list.
+            // If the user filtered by month, let's show realization for THAT month only as per BKU logic.
+            $query->where('bln_thn', 'like', $bulan . '-%');
+        }
+
+        $realizations = $query->select('item_anggaran', DB::raw('SUM(debet - kredit) as total_realisasi'))
+            ->groupBy('item_anggaran')
+            ->get()
+            ->pluck('total_realisasi', 'item_anggaran');
+
+        $pemda = Pemda::first();
+        $labelBulan = $this->getLabelBulan($bulan);
+
+        return view('admin.anggaran.print-realisasi', compact('anggaran', 'realizations', 'pemda', 'tahun', 'labelBulan'));
     }
 
     protected function getLabelBulan($bulan)

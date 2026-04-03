@@ -42,13 +42,24 @@
                                 @endfor
                             </select>
                         </div>
-                        <div class="col-md-2 d-flex align-items-end gap-2">
-                            <button class="btn btn-light btn-sm w-50 rounded-pill" wire:click="$set('search', ''); $set('filterTahun', ''); $set('filterBulan', '');">
-                                <i class="ti ti-refresh me-1"></i> Reset
-                            </button>
-                            <a href="{{ route('admin.jurnal-lra.print-bku', ['bulan' => $filterBulan, 'tahun' => $filterTahun]) }}" target="_blank" class="btn btn-primary btn-sm w-50 rounded-pill {{ !$filterTahun ? 'disabled' : '' }}">
-                                <i class="ti ti-printer me-1"></i> Cetak BKU
-                            </a>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <div class="dropdown w-100">
+                                <button class="btn btn-primary btn-sm w-100 rounded-pill dropdown-toggle {{ !$filterTahun ? 'disabled' : '' }}" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="ti ti-printer me-1"></i> Cetak
+                                </button>
+                                <ul class="dropdown-menu shadow border-0 rounded-3">
+                                    <li>
+                                        <a class="dropdown-menu-item dropdown-item small py-2" href="{{ route('admin.jurnal-lra.print-bku', ['bulan' => $filterBulan, 'tahun' => $filterTahun]) }}" target="_blank">
+                                            <i class="ti ti-receipt-2 me-2 text-primary"></i> Cetak BKU
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-menu-item dropdown-item small py-2" href="{{ route('admin.jurnal-lra.print-realisasi', ['bulan' => $filterBulan, 'tahun' => $filterTahun]) }}" target="_blank">
+                                            <i class="ti ti-chart-bar me-2 text-success"></i> Cetak Realisasi
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 

@@ -18,7 +18,7 @@ class AnggaranService
         $parts = explode('-', $blnThn);
         $tahun = (int) end($parts);
 
-        $anggaran = Anggaran::where('tahun_anggaran', $tahun)->first();
+        $anggaran = Anggaran::with('rincians')->where('tahun_anggaran', $tahun)->first();
         if (!$anggaran) {
             \Log::warning("Budget not found for year $tahun. Realization skipped.");
             return;
@@ -72,8 +72,11 @@ class AnggaranService
                         'kredit' => 0,
                     ]);
 
-                    // Deduct Budget
-                    $anggaran->decrement($item, $value);
+                    // Deduct Budget from sisa_pagu
+                    $rincian = $anggaran->rincians->where('kode_item', $item)->first();
+                    if ($rincian) {
+                        $rincian->decrement('sisa_pagu', $value);
+                    }
                 }
             }
         });
@@ -89,11 +92,14 @@ class AnggaranService
 
         DB::transaction(function () use ($journals) {
             foreach ($journals as $journal) {
-                $anggaran = Anggaran::find($journal->id_anggaran);
+                $anggaran = Anggaran::with('rincians')->find($journal->id_anggaran);
                 if ($anggaran) {
-                    // Restore budget (increment by debet, decrement by kredit)
+                    // Restore budget
                     $restoreValue = $journal->debet - $journal->kredit;
-                    $anggaran->increment($journal->item_anggaran, $restoreValue);
+                    $rincian = $anggaran->rincians->where('kode_item', $journal->item_anggaran)->first();
+                    if ($rincian) {
+                        $rincian->increment('sisa_pagu', $restoreValue);
+                    }
                 }
                 $journal->delete();
             }

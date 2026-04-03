@@ -114,11 +114,16 @@
 
         <li>
             <a href="#anggaranSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-               aria-expanded="{{ request()->routeIs('admin.anggaran.*') || request()->routeIs('admin.jurnal-lra.*') ? 'true' : 'false' }}">
+               aria-expanded="{{ request()->routeIs('admin.anggaran.*') || request()->routeIs('admin.jurnal-lra.*') || request()->routeIs('admin.kertas-kerja.*') ? 'true' : 'false' }}">
                 <span><i class="ti ti-report-money me-2"></i> Kelola Anggaran</span>
                 <i class="ti ti-chevron-down small"></i>
             </a>
-            <ul class="collapse {{ request()->routeIs('admin.anggaran.*') || request()->routeIs('admin.jurnal-lra.*') ? 'show' : '' }} list-unstyled ps-3" id="anggaranSubmenu">
+            <ul class="collapse {{ request()->routeIs('admin.anggaran.*') || request()->routeIs('admin.jurnal-lra.*') || request()->routeIs('admin.kertas-kerja.*') ? 'show' : '' }} list-unstyled ps-3" id="anggaranSubmenu">
+                <li>
+                    <a href="{{ route('admin.kertas-kerja.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.kertas-kerja.*') ? 'active' : '' }}">
+                        <i class="ti ti-file-analytics me-2"></i> Kertas Kerja
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('admin.anggaran.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggaran.*') ? 'active' : '' }}">
                         <i class="ti ti-wallet me-2"></i> Master Anggaran

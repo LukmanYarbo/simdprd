@@ -107,8 +107,15 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
 
         // Anggaran & LRA
         Route::get('anggaran', [\App\Http\Controllers\Admin\AnggaranController::class, 'index'])->name('anggaran.index');
+        Route::get('anggaran/form/{id?}', [\App\Http\Controllers\Admin\AnggaranController::class, 'form'])->name('anggaran.form');
+        Route::get('jurnal-lra/print-realisasi', [\App\Http\Controllers\Admin\AnggaranController::class, 'printRealisasi'])->name('jurnal-lra.print-realisasi');
         Route::get('jurnal-lra/print-bku', [\App\Http\Controllers\Admin\AnggaranController::class, 'printBku'])->name('jurnal-lra.print-bku');
         Route::get('jurnal-lra', [\App\Http\Controllers\Admin\AnggaranController::class, 'jurnalIndex'])->name('jurnal-lra.index');
+
+        // Kertas Kerja
+        Route::get('kertas-kerja', [\App\Http\Controllers\Admin\KertasKerjaController::class, 'index'])->name('kertas-kerja.index');
+        Route::get('kertas-kerja/form/{id?}', [\App\Http\Controllers\Admin\KertasKerjaController::class, 'form'])->name('kertas-kerja.form');
+        Route::get('kertas-kerja/print/{id}', [\App\Http\Controllers\Admin\KertasKerjaController::class, 'print'])->name('kertas-kerja.print');
     });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {

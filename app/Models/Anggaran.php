@@ -11,6 +11,11 @@ class Anggaran extends Model
 
     protected $guarded = [];
 
+    public function rincians()
+    {
+        return $this->hasMany(AnggaranRincian::class, 'anggaran_id');
+    }
+
     public function jurnalLra()
     {
         return $this->hasMany(JurnalLra::class, 'id_anggaran');
