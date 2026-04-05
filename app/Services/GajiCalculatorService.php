@@ -665,8 +665,8 @@ class GajiCalculatorService
         $PPH_STHN_THR = floor($PKP2_THR);
         $TOT_PAJAK_THR = $PPH_STHN_THR;
 
-        // PPH THR = pajak setahun THR dikurangi PPH gaji bulan biasa
-        $PPH_THR = $PPH_STHN_THR - $PPH_GAJI_BLNBIASA;
+        // PPH THR = pajak setahun THR dikurangi PPH gaji bulan biasa (selalu positif)
+        $PPH_THR = abs($PPH_STHN_THR - $PPH_GAJI_BLNBIASA);
         $POT_PPH_THR = $PPH_THR;
 
         // Total
