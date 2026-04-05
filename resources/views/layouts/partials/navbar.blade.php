@@ -20,6 +20,18 @@
             @endif
         </div>
         <div class="d-flex align-items-center gap-3">
+            <!-- Digital Clock -->
+            <div class="d-none d-lg-flex align-items-center bg-body-tertiary border border-secondary-subtle px-3 py-1 rounded-pill hover-shadow transition-base me-2">
+                <div class="d-flex align-items-center text-gradient fw-bold small me-2" id="digital-clock">
+                    <i class="ti ti-clock me-2"></i>
+                    <span>00:00:00</span>
+                </div>
+                <div class="vr mx-2 opacity-10"></div>
+                <div class="small text-secondary fw-medium" id="digital-date" style="font-size: 0.75rem;">
+                    <span>Loading...</span>
+                </div>
+            </div>
+
             <!-- Theme Toggle -->
             <button class="btn btn-link nav-link link-body-emphasis icon-hover-rotate" id="theme-toggle" title="Toggle theme">
                 <i class="ti ti-sun fs-5 text-primary" id="theme-icon"></i>

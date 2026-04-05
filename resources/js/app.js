@@ -3,93 +3,99 @@ import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 import '../css/app.scss';
 
-// Sidebar & Components Toggle
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * Theme Management System
+ * Handles Dark, Light, and Transparent (Premium) modes
+ * Supports Persistence and Livewire (SPA) navigation
+ */
+const getStoredTheme = () => localStorage.getItem('theme');
+const setStoredTheme = theme => localStorage.setItem('theme', theme);
+
+const getPreferredTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) return storedTheme;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
+const setTheme = theme => {
+    if (theme === 'auto') {
+        document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    } else {
+        document.documentElement.setAttribute('data-bs-theme', theme);
+    }
+
+    const themeIcon = document.getElementById('theme-icon');
+    if (themeIcon) {
+        themeIcon.classList.remove(
+            'ti-sun-filled', 'ti-moon-stars-filled', 'ti-glass-full', 
+            'ti-sun', 'ti-moon-stars', 'ti-moon-filled', 'ti-droplet', 'ti-glass'
+        );
+        
+        if (theme === 'dark') {
+            themeIcon.classList.add('ti-moon-stars');
+            themeIcon.title = "Dark Mode";
+        } else if (theme === 'transparent') {
+            themeIcon.classList.add('ti-glass');
+            themeIcon.title = "Premium Mode";
+        } else {
+            themeIcon.classList.add('ti-sun');
+            themeIcon.title = "Light Mode";
+        }
+    }
+};
+
+/**
+ * Initial Theme Set
+ */
+setTheme(getPreferredTheme());
+
+/**
+ * Re-initialize UI Listeners
+ * This function is called on initial load and after every Livewire navigation
+ */
+function initUI() {
+    // 1. Sidebar Toggle
     const sidebar = document.getElementById('sidebar');
     const sidebarCollapse = document.getElementById('sidebarCollapse');
     const sidebarClose = document.getElementById('sidebarClose');
 
-    if (sidebarCollapse) {
-        sidebarCollapse.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
+    if (sidebarCollapse && sidebar) {
+        sidebarCollapse.onclick = () => sidebar.classList.toggle('active');
+    }
+    if (sidebarClose && sidebar) {
+        sidebarClose.onclick = () => sidebar.classList.remove('active');
     }
 
-    if (sidebarClose) {
-        sidebarClose.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-        });
+    // 2. Theme Toggle Listener
+    const themeToggleBtn = document.querySelector('#theme-toggle');
+    if (themeToggleBtn) {
+        themeToggleBtn.onclick = () => {
+            const currentTheme = getStoredTheme() || 'light';
+            let newTheme = 'light';
+            
+            if (currentTheme === 'light') newTheme = 'dark';
+            else if (currentTheme === 'dark') newTheme = 'transparent';
+            else if (currentTheme === 'transparent') newTheme = 'light';
+            
+            setStoredTheme(newTheme);
+            setTheme(newTheme);
+        };
+    }
+
+    // 3. Re-apply current theme (fixes Livewire's attribute syncing)
+    setTheme(getPreferredTheme());
+}
+
+// Global Listeners
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme !== 'light' && storedTheme !== 'dark' && storedTheme !== 'transparent') {
+        setTheme(getPreferredTheme());
     }
 });
 
-// Theme Toggler
-const getStoredTheme = () => localStorage.getItem('theme')
-const setStoredTheme = theme => localStorage.setItem('theme', theme)
+// Run on standard page load
+document.addEventListener('DOMContentLoaded', initUI);
 
-const getPreferredTheme = () => {
-  const storedTheme = getStoredTheme()
-  if (storedTheme) {
-    return storedTheme
-  }
-
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
-
-const setTheme = theme => {
-  if (theme === 'auto') {
-    document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
-  } else {
-    document.documentElement.setAttribute('data-bs-theme', theme)
-  }
-
-  const themeIcon = document.getElementById('theme-icon');
-  if (themeIcon) {
-    // Reset icons - remove both filled and standard Tabler icon classes
-    themeIcon.classList.remove(
-      'ti-sun-filled', 'ti-moon-stars-filled', 'ti-glass-full', 
-      'ti-sun', 'ti-moon-stars', 'ti-moon-filled', 'ti-droplet', 'ti-glass'
-    );
-    
-    if (theme === 'dark') {
-        themeIcon.classList.add('ti-moon-stars'); // Using standard icon for better compatibility
-        themeIcon.title = "Dark Mode";
-    } else if (theme === 'transparent') {
-        themeIcon.classList.add('ti-glass'); // Using standard icon
-        themeIcon.title = "Premium Mode";
-    } else {
-        themeIcon.classList.add('ti-sun'); // Using standard icon
-        themeIcon.title = "Light Mode";
-    }
-  }
-}
-
-setTheme(getPreferredTheme())
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-  const storedTheme = getStoredTheme()
-  if (storedTheme !== 'light' && storedTheme !== 'dark' && storedTheme !== 'transparent') {
-    setTheme(getPreferredTheme())
-  }
-})
-
-window.addEventListener('DOMContentLoaded', () => {
-  const themeToggleFn = document.querySelector('#theme-toggle')
-  
-  if(themeToggleFn) {
-      themeToggleFn.addEventListener('click', () => {
-        const currentTheme = getStoredTheme() || 'light';
-        let newTheme = 'light';
-        
-        if (currentTheme === 'light') {
-            newTheme = 'dark';
-        } else if (currentTheme === 'dark') {
-            newTheme = 'transparent';
-        } else if (currentTheme === 'transparent') {
-            newTheme = 'light';
-        }
-        
-        setStoredTheme(newTheme)
-        setTheme(newTheme)
-      })
-  }
-})
+// Run on Livewire SPA navigation
+document.addEventListener('livewire:navigated', initUI);

@@ -55,7 +55,7 @@
                             <td>
                                 <div class="fw-semibold">{{ $item->no_peraturan }}</div>
                                 @if($item->file)
-                                    <a href="javascript:void(0)" onclick="previewPdf('{{ asset('storage/' . $item->file) }}', '{{ $item->no_peraturan }}')" class="text-decoration-none small text-danger fw-medium">
+                                    <a href="javascript:void(0)" onclick="previewPdf('{{ Storage::disk('public')->url($item->file) }}', '{{ $item->no_peraturan }}')" class="text-decoration-none small text-danger fw-medium">
                                         <i class="ti ti-file-type-pdf me-1"></i>Lihat Dokumen
                                     </a>
                                 @endif
@@ -111,27 +111,38 @@
     {{-- PDF Preview Panel --}}
     <div class="card shadow-lg border-0 mb-4 overflow-hidden" id="pdfPreviewCard" style="display:none;">
         <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
-            <h6 class="m-0 fw-bold text-danger"><i class="ti ti-file-type-pdf me-2"></i>Preview: <span id="pdfTitle"></span></h6>
-            <button class="btn btn-sm btn-light rounded-pill px-3" onclick="closePdfPreview()">
-                <i class="ti ti-x me-1"></i>Tutup
-            </button>
+            <h6 class="m-0 fw-bold text-danger d-flex align-items-center">
+                <i class="ti ti-file-type-pdf me-2 fs-4"></i>
+                <span>Preview: <span id="pdfTitle"></span></span>
+            </h6>
+            <div class="btn-group">
+                <a id="pdfDownloadBtn" href="#" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-3 me-2">
+                    <i class="ti ti-external-link me-1"></i>Buka di Tab Baru
+                </a>
+                <button class="btn btn-sm btn-light rounded-pill px-3" onclick="closePdfPreview()">
+                    <i class="ti ti-x me-1"></i>Tutup
+                </button>
+            </div>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body p-0 bg-secondary bg-opacity-10">
             <iframe id="pdfFrame" src="" style="width:100%; height:80vh; border:none;" allowfullscreen></iframe>
         </div>
     </div>
 </div>
-@endsection
 
-@push('scripts')
 <script>
-    // Initialize tooltips
+    // Initialize tooltips on load
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
 
     function previewPdf(url, title) {
         const card = document.getElementById('pdfPreviewCard');
+        const frame = document.getElementById('pdfFrame');
+        const downloadBtn = document.getElementById('pdfDownloadBtn');
+        
         document.getElementById('pdfTitle').textContent = title;
-        document.getElementById('pdfFrame').src = url;
+        frame.src = url;
+        downloadBtn.href = url;
+        
         card.style.display = 'block';
         // Smooth scroll to preview panel
         card.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -159,4 +170,4 @@
         });
     }
 </script>
-@endpush
+@endsection

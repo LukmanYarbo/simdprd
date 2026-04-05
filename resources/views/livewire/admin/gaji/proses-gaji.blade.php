@@ -602,10 +602,65 @@
                                 <td>PPh21 Terutang Sebulan <br><small class="fw-normal">(Total Pendapatan × Persentase TER)</small></td>
                                 <td class="text-end text-success fs-5">Rp {{ number_format($selectedPajakDetail['pph_sebulan'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
+                            @elseif(($selectedPajakDetail['metode'] ?? '') === 'thr')
+                            {{-- Detail Pajak THR --}}
+                            <tr class="table-warning">
+                                <td colspan="2" class="fw-bold text-center"><i class="ti ti-gift me-1"></i>Rincian Perhitungan PPh THR</td>
+                            </tr>
+                            <tr>
+                                <td>Bruto THR <br><small class="text-muted">(Gapok + Tj.Istri + Tj.Anak + Tj.Jabatan)</small></td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto_thr'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Pembulatan</td>
+                                <td class="text-end">Rp {{ number_format($selectedPajakDetail['pembulatan'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Bruto THR Setelah Pembulatan</td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto1_thr'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="border-top">
+                                <td>STHN Gaji Biasa <br><small class="text-muted">(Neto setahun gaji biasa, sudah termasuk semua tunjangan)</small></td>
+                                <td class="text-end fw-bold text-primary">Rp {{ number_format($selectedPajakDetail['sthn_gaji_biasa'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Bruto THR + STHN <br><small class="text-muted">(Bruto1 THR + STHN Gaji Biasa)</small></td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto2_thr'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Biaya Jabatan THR</td>
+                                <td class="text-end text-danger">- Rp {{ number_format($selectedPajakDetail['biaya_jabatan_thr'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="border-top">
+                                <td>Neto THR <br><small class="text-muted">(Bruto2 THR - Biaya Jabatan)</small></td>
+                                <td class="text-end fw-bold">Rp {{ number_format($selectedPajakDetail['neto_thr'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>PTKP ({{ $selectedPajakDetail['status_ptkp'] ?? '-' }})</td>
+                                <td class="text-end text-danger">- Rp {{ number_format($selectedPajakDetail['nilai_ptkp'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="border-top">
+                                <td>PKP THR <br><small class="text-muted">(Neto THR - PTKP, dibulatkan ke bawah ribuan)</small></td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['pkp_thr'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>PPh Setahun THR <br><small class="text-muted">(Dihitung berdasarkan tarif lapis Pasal 17)</small></td>
+                                <td class="text-end fw-semibold text-warning">Rp {{ number_format($selectedPajakDetail['pph_sthn_thr'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td>PPh Gaji Biasa Setahun</td>
+                                <td class="text-end text-danger">- Rp {{ number_format($selectedPajakDetail['pph_gaji_biasa'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="table-primary fw-bold border-top">
+                                <td>PPh21 THR Terutang <br><small class="fw-normal">(PPh Setahun THR - PPh Gaji Biasa)</small></td>
+                                <td class="text-end text-success fs-5">Rp {{ number_format($selectedPajakDetail['pph_thr'] ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+
                             @else
+                            {{-- Detail Pajak Lapis (Pasal 17) --}}
                             <tr>
                                 <td>Penghasilan Bruto Sebulan</td>
-                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto_sebulan'] ?? 0, 0, ',', '.') }}</td>
+                                <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto_sebulan_lapis'] ?? $selectedPajakDetail['bruto_sebulan'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
                                 <td>Biaya Jabatan ({{ $selectedPajakDetail['persen_biaya_jab'] ?? 0 }}%) <br><small class="text-muted">Maks. Rp {{ number_format($selectedPajakDetail['max_biaya_jab'] ?? 0, 0, ',', '.') }}</small></td>

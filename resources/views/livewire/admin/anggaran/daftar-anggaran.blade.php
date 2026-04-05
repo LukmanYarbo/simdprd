@@ -89,6 +89,7 @@
                                 <tr>
                                     <th class="small py-3 px-4">Item Uraian</th>
                                     <th class="small py-3 text-end">Total Pagu (Rp)</th>
+                                    <th class="small py-3 text-end">Realisasi (Rp)</th>
                                     <th class="small py-3 text-end pe-4">Sisa Pagu (Rp)</th>
                                 </tr>
                             </thead>
@@ -97,6 +98,7 @@
                                 <tr>
                                     <td class="small px-4 fw-bold">{{ $rincian->uraian }}</td>
                                     <td class="small text-end fw-bold text-dark">{{ number_format($rincian->jumlah, 0, ',', '.') }}</td>
+                                    <td class="small text-end fw-bold text-danger">{{ number_format($rincian->jumlah - $rincian->sisa_pagu, 0, ',', '.') }}</td>
                                     <td class="small text-end pe-4 fw-bold {{ $rincian->sisa_pagu < ($rincian->jumlah * 0.2) ? 'text-danger' : 'text-primary' }}">
                                         {{ number_format($rincian->sisa_pagu, 0, ',', '.') }}
                                     </td>
@@ -107,6 +109,7 @@
                                 <tr>
                                     <th class="text-end py-3">GRAND TOTAL</th>
                                     <th class="text-end text-success fs-5 py-3">{{ number_format($detailData->total_pagu, 0, ',', '.') }}</th>
+                                    <th class="text-end text-danger fs-5 py-3">{{ number_format($detailData->total_pagu - $detailData->rincians->sum('sisa_pagu'), 0, ',', '.') }}</th>
                                     <th class="text-end text-primary fs-5 py-3 pe-4">{{ number_format($detailData->rincians->sum('sisa_pagu'), 0, ',', '.') }}</th>
                                 </tr>
                             </tfoot>
