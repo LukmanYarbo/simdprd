@@ -79,10 +79,32 @@
                 </div>
             </div>
 
+            <!-- Budget Card: Realisasi Bulan Berjalan -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card glass-card border-0 glow-shadow h-100 fade-in-up"
+                    style="animation-delay: 0.4s; border-left: 4px solid #6366f1 !important;">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="text-secondary text-uppercase fw-bold small tracking-wider">Realisasi Bulan Ini</span>
+                            <div class="stats-icon rounded-3 p-2"
+                                style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                                <i class="ti ti-calendar-stats fs-4"></i>
+                            </div>
+                        </div>
+                        <h3 class="mb-2 fw-extrabold text-primary">Rp
+                            {{ number_format($budgetSummary['realisasi_bulan_berjalan'], 0, ',', '.') }}
+                        </h3>
+                        <div class="d-flex align-items-center">
+                            <span class="text-secondary small">Bulan {{ $budgetSummary['label_bulan'] }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Budget Card: Sisa -->
             <div class="col-12 col-md-6 col-xl-3">
                 <div class="card glass-card border-0 glow-shadow h-100 fade-in-up"
-                    style="animation-delay: 0.4s; border-left: 4px solid #f59e0b !important;">
+                    style="animation-delay: 0.5s; border-left: 4px solid #f59e0b !important;">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <span class="text-secondary text-uppercase fw-bold small tracking-wider">Sisa Pagu</span>

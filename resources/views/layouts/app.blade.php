@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - Dashboard</title>
+    <title>{{ config('app.name', 'Simpeg DPRD') }} - Dashboard</title>
 
     <!-- Tabler Icons -->
     <link rel="stylesheet" href="{{ asset('assets/libs/tabler-icons/tabler-icons.min.css') }}">
