@@ -9,7 +9,7 @@
     <style>
         @page {
             size: 330mm 215.9mm; /* Legal Landscape */
-            margin: 8mm 10mm;
+            margin: 8mm 5mm;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -66,24 +66,24 @@
             page-break-inside: auto;
         }
         table.gaji-table thead {
-            display: table-header-group;
+            display: table-row-group;
         }
         table.gaji-table tr {
             page-break-inside: avoid;
             page-break-after: auto;
         }
         table.gaji-table th {
-            border: 1px solid #000;
+            border: 0.5px dotted #000;
             text-align: center;
             font-weight: 700;
             font-size: 7pt;
             text-transform: uppercase;
             vertical-align: middle;
-            padding: 2px 2px;
+            padding: 2px 4px;
         }
         table.gaji-table td {
-            border: 1px solid #000;
-            padding: 1px 3px;
+            border: 0.5px dotted #000;
+            padding: 1px 6px;
             vertical-align: top;
             text-align: right;
             white-space: nowrap;
@@ -105,14 +105,29 @@
 
         td.t-left { text-align: left !important; }
         td.t-center { text-align: center !important; }
+        .no-border-top { border-top: none !important; }
+        .no-border-bottom { border-bottom: none !important; }
 
         /* Member separator row */
-        tr.member-sep td { border-bottom: 2px solid #000; }
+        tr.member-sep td { border-bottom: 1.5px dotted #000; }
 
         /* Subtotal row */
         tr.subtotal td {
-            border-top: 2px solid #000;
+            border-top: none !important;
+            border-bottom: none !important;
             font-weight: 700;
+        }
+        tr.subtotal:first-of-type td {
+            border-top: 0.5px dotted #000 !important;
+        }
+        tr.subtotal:last-of-type td {
+            border-bottom: 0.5px dotted #000 !important;
+        }
+        tr.subtotal:first-of-type td[rowspan] {
+            border-bottom: 0.5px dotted #000 !important;
+        }
+        .page-break {
+            page-break-after: always;
         }
 
         /* Footer info */
@@ -123,7 +138,7 @@
             font-size: 7.5pt;
         }
         .footer-info {
-            border: 1px solid #000;
+            border: 0.5px dotted #000;
             padding: 3px 8px;
             display: inline-block;
         }
@@ -155,72 +170,80 @@
     </style>
 </head>
 <body>
+    @php
+        $totalGajiPokok = 0; $totalTunIstri = 0; $totalTunAnak = 0; $totalTunBeras = 0;
+        $totalTunJabatan = 0; $totalUangPaket = 0; $totalTunKomisi = 0;
+        $totalTunBanmus = 0; $totalTunBanggar = 0; $totalTunBaleg = 0; $totalTunBk = 0;
+        $totalTunPansus = 0; $totalTunPanja = 0; $totalPembulatan = 0;
+        $totalTunBpjs = 0; $totalTunJkm = 0; $totalTunJkk = 0; $totalTunPajak = 0;
+        $totalJlhKotor = 0;
+        $totalPotBpjs = 0; $totalPotJkk = 0; $totalPotJkm = 0; $totalPotPajak = 0;
+        $totalPotBpjs2 = 0; $totalJlhPot = 0;
+        $totalBersih = 0;
+        $fmt = function($v) { return $v != 0 ? number_format($v, 0, ',', '.') : '0'; };
+        $no = 0;
+    @endphp
+
     <div class="report-header">
-        <div class="pemda-name">PEMERINTAH DAERAH KABUPATEN BOLAANG MONGONDOW UTARA</div>
+        <div class="pemda-name">PEMERINTAH DAERAH {{ strtoupper($pemda->kabupaten ?? 'KABUPATEN BOLAANG MONGONDOW UTARA') }}</div>
         <div class="report-title">DAFTAR PEMBAYARAN GAJI PIMPINAN DAN ANGGOTA DPRD</div>
         <div class="sub-title">DEWAN PERWAKILAN RAKYAT DAERAH</div>
         <div class="period">BULAN {{ $bulanLabel }} {{ $tahun }}</div>
     </div>
 
-
-
     <table class="gaji-table">
-        {{-- === HEADER ROWS === --}}
         <thead>
             <tr>
                 <th class="col-no" rowspan="4" style="vertical-align: middle;">No.</th>
-                <th class="col-nama" rowspan="2" style="vertical-align: middle;">N A M A</th>
+                <th class="col-nama no-border-bottom" rowspan="2" style="vertical-align: middle;">N A M A</th>
                 <th class="col-sts" rowspan="4" style="vertical-align: middle;">STS KAWIN<br><small>JLH ISTRI/ANAK</small><br><small>JLH JIWA</small></th>
-                <th colspan="5" style="text-align:center; border-bottom: 2px solid #000;">P E N G H A S I L A N</th>
+                <th colspan="5" style="text-align:center; border-bottom: none;">P E N G H A S I L A N</th>
                 <th class="col-jlh" rowspan="4" style="vertical-align: middle;">JLH. KOTOR</th>
-                <th colspan="2" style="text-align:center; border-bottom: 2px solid #000;">P O T O N G A N</th>
+                <th colspan="2" style="text-align:center; border-bottom: none;">P O T O N G A N</th>
                 <th class="col-bersih" rowspan="4" style="vertical-align: middle;">JUMLAH<br>BERSIH</th>
                 <th class="col-ttd" rowspan="2" style="vertical-align: middle;">TANDA<br>TANGAN</th>
             </tr>
             <tr>
-                <th class="col-num" style="font-size: 6.5pt;">GAJI POKOK<br>TUN. ISTRI<br>TUN. ANAK<br>TUN. BERAS</th>
-                <th class="col-num" style="font-size: 6.5pt;">TUN. JABATAN<br>UANG PAKET<br>TUN. KOMISI</th>
-                <th class="col-num" style="font-size: 6.5pt;">TUN. BANMUS<br>TUN. BANGGAR<br>TUN. BALEG<br>TUN. BK</th>
-                <th class="col-num" style="font-size: 6.5pt;">TUN. PANSUS<br>TUN. PANJA<br>PEMBULATAN</th>
-                <th class="col-num" style="font-size: 6.5pt;">TUN. BPJS 3%<br>TUN. JKM<br>TUN. JKK<br>TUN. PAJAK</th>
-                <th class="col-num" style="font-size: 6.5pt;">POT BPJS 3%<br>POT. JKK<br>POT. JKM<br>PAJAK</th>
-                <th class="col-pot" style="font-size: 6.5pt;">POT BPJS 1%<br><br>JLH. POT</th>
+                <th class="col-num" style="font-size: 6.5pt; border-bottom: none;">GAJI POKOK<br>TUN. ISTRI<br>TUN. ANAK<br>TUN. BERAS</th>
+                <th class="col-num" style="font-size: 6.5pt; border-bottom: none;">TUN. JABATAN<br>UANG PAKET<br>TUN. KOMISI</th>
+                <th class="col-num" style="font-size: 6.5pt; border-bottom: none;">TUN. BANMUS<br>TUN. BANGGAR<br>TUN. BALEG<br>TUN. BK</th>
+                <th class="col-num" style="font-size: 6.5pt; border-bottom: none;">TUN. PANSUS<br>TUN. PANJA<br>PEMBULATAN</th>
+                <th class="col-num" style="font-size: 6.5pt; border-bottom: none;">TUN. BPJS 3%<br>TUN. JKM<br>TUN. JKK<br>TUN. PAJAK</th>
+                <th class="col-num" style="font-size: 6.5pt; border-bottom: none;">POT BPJS 3%<br>POT. JKK<br>POT. JKM<br>PAJAK</th>
+                <th class="col-pot" style="font-size: 6.5pt; border-bottom: none;">POT BPJS 1%<br><br>JLH. POT</th>
             </tr>
             <tr>
-                <th class="col-nama" style="text-align: center;">J A B A T A N</th>
-                <th class="col-num" colspan="5" style="background: #fff; border: none;">&nbsp;</th>
-                <th class="col-num" colspan="2" style="background: #fff; border: none;">&nbsp;</th>
+                <th class="col-nama no-border-top no-border-bottom" style="text-align: center;">J A B A T A N</th>
+                <th style="border-top: none; border-bottom: none;"></th>
+                <th style="border-top: none; border-bottom: none;"></th>
+                <th style="border-top: none; border-bottom: none;"></th>
+                <th style="border-top: none; border-bottom: none;"></th>
+                <th style="border-top: none; border-bottom: none;"></th>
+                <th style="border-top: none; border-bottom: none;"></th>
+                <th style="border-top: none; border-bottom: none;"></th>
                 <th class="col-ttd" rowspan="2" style="vertical-align: middle;">NO. REKENING</th>
             </tr>
             <tr>
-                <th class="col-nama" style="text-align: center;">NPWP / TGL LAHIR</th>
-                <th class="col-num" colspan="5" style="background: #fff; border: none;">&nbsp;</th>
-                <th class="col-num" colspan="2" style="background: #fff; border: none;">&nbsp;</th>
-                <th class="col-ttd" style="background: #fff; border: none;">&nbsp;</th>
+                <th class="col-nama no-border-top" style="text-align: center;">NPWP / TGL LAHIR</th>
+                <th style="border-top: none; border-bottom: 1.5px dotted #000;"></th>
+                <th style="border-top: none; border-bottom: 1.5px dotted #000;"></th>
+                <th style="border-top: none; border-bottom: 1.5px dotted #000;"></th>
+                <th style="border-top: none; border-bottom: 1.5px dotted #000;"></th>
+                <th style="border-top: none; border-bottom: 1.5px dotted #000;"></th>
+                <th style="border-top: none; border-bottom: 1.5px dotted #000;"></th>
+                <th style="border-top: none; border-bottom: 1.5px dotted #000;"></th>
             </tr>
         </thead>
-        @php
-            $no = 0;
-            $totalGajiPokok = 0; $totalTunIstri = 0; $totalTunAnak = 0; $totalTunBeras = 0;
-            $totalTunJabatan = 0; $totalUangPaket = 0; $totalTunKomisi = 0;
-            $totalTunBanmus = 0; $totalTunBanggar = 0; $totalTunBaleg = 0; $totalTunBk = 0;
-            $totalTunPansus = 0; $totalTunPanja = 0; $totalPembulatan = 0;
-            $totalTunBpjs = 0; $totalTunJkm = 0; $totalTunJkk = 0; $totalTunPajak = 0;
-            $totalJlhKotor = 0;
-            $totalPotBpjs = 0; $totalPotJkk = 0; $totalPotJkm = 0; $totalPotPajak = 0;
-            $totalPotBpjs2 = 0; $totalJlhPot = 0;
-            $totalBersih = 0;
-        @endphp
+
         @foreach($transaksi as $t)
-        <tbody>
             @php
                 $no++;
                 $a = $t->anggota;
                 
                 // Jabatan abbreviation
                 $jabShort = '';
-                if ($a->id_status_kawin == 1) $jabShort = 'T'; // Tanpa Istri/Anak (Simplified for logic)
-                else $jabShort = $t->status_kawin ?? 'K'; 
+                if ($a->id_status_kawin == 1) $jabShort = 'T';
+                else $jabShort = $t->status_kawin ?? 'K';
 
                 $jabFull = $a->jabatan->nama_jabatan ?? 'ANGGOTA DPRD';
                 $stsKawin = $t->status_kawin ?? '-';
@@ -252,7 +275,7 @@
                 $tunJkk = $t->tunjangan_jkk ?? 0;
                 $tunTax = $t->PPH21_Gaji ?? 0;
 
-                $brutto = $t->brutto2 ?? 0; // JLH KOTOR (using brutto2 as requested)
+                $brutto = $t->brutto2 ?? 0; // JLH KOTOR
 
                 // Potongan mapping
                 $potBpjs1 = $t->potongan_bpjs ?? 0;
@@ -263,9 +286,9 @@
                 $potBpjs2 = $t->potongan_bpjs2 ?? 0;
                 $jlhPot = $potBpjs1+$potJkk+$potJkm+$potTax+$potBpjs2 ?? 0;
                 
-                $jlhBersih = $t->brutto1 ?? 0; // JUMLAH BERSIH (using brutto1 as requested)
+                $jlhBersih = $t->brutto1 ?? 0; // JUMLAH BERSIH
 
-                // Totals
+                // Accumulate totals
                 $totalGajiPokok += $gajiPokok; $totalTunIstri += $tunIstri; $totalTunAnak += $tunAnak; $totalTunBeras += $tunBeras;
                 $totalTunJabatan += $tunJabatan; $totalUangPaket += $uangPaket; $totalTunKomisi += $tunKomisi;
                 $totalTunBanmus += $tunBanmus; $totalTunBanggar += $tunBanggar; $totalTunBaleg += $tunBaleg; $totalTunBk += $tunBk;
@@ -275,73 +298,70 @@
                 $totalPotBpjs += $potBpjs1; $totalPotJkk += $potJkk; $totalPotJkm += $potJkm; $totalPotPajak += $potTax;
                 $totalPotBpjs2 += $potBpjs2; $totalJlhPot += $jlhPot;
                 $totalBersih += $jlhBersih;
-
-                $fmt = function($v) { return $v != 0 ? number_format($v, 0, ',', '.') : '0'; };
             @endphp
 
-            {{-- Row 1: Nama, Gaji Pokok, Tun Jabatan, Tun Banmus, Tun Pansus, Tun BPJS 3%, JLH KOTOR, Pot BPJS 3%, Pot BPJS 2%, No --}}
-            <tr>
-                <td rowspan="4" class="t-center" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #000;">{{ $no }}.</td>
-                <td class="t-left" style="font-weight:700;">{{ strtoupper($a->nama_anggota) }}</td>
-                <td class="t-center" style="border-bottom: none;"></td>
-                <td>{{ $fmt($gajiPokok) }}</td>
-                <td>{{ $fmt($tunJabatan) }}</td>
-                <td>{{ $fmt($tunBanmus) }}</td>
-                <td>{{ $fmt($tunPansus) }}</td>
-                <td>{{ $fmt($tunBpjs1) }}</td>
-                <td rowspan="4" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #000;">{{ $fmt($brutto) }}</td>
-                <td>{{ $fmt($potBpjs1) }}</td>
-                <td>{{ $fmt($potBpjs2) }}</td>
-                <td rowspan="4" style="vertical-align:middle; font-weight:700; border-bottom: 2px solid #000;">{{ $fmt($jlhBersih) }}</td>
-                <td class="t-center" style="font-weight:700;">{{ $no }}</td>
-            </tr>
-            {{-- Row 2: Jabatan, STS Kawin, Tun Istri, Uang Paket, Tun Banggar, Tun Panja, Tun JKM, Pot JKK --}}
-            <tr>
-                <td class="t-left" style="font-size: 7.5pt;">{{ strtoupper($jabFull) }}</td>
-                <td class="t-center" style="vertical-align: middle;">{{ $jabShort }}</td>
-                <td>{{ $fmt($tunIstri) }}</td>
-                <td>{{ $fmt($uangPaket) }}</td>
-                <td>{{ $fmt($tunBanggar) }}</td>
-                <td>{{ $fmt($tunPanja) }}</td>
-                <td>{{ $fmt($tunJkm) }}</td>
-                <td>{{ $fmt($potJkk) }}</td>
-                <td></td>
-                <td class="t-center" style="border-bottom: none;"></td>
-            </tr>
-            {{-- Row 3: NPWP, JLH Is/Anak, Tun Anak, Tun Komisi, Tun Baleg, Pembulatan, Tun JKK, Pot JKM --}}
-            <tr>
-                <td class="t-left" style="font-size: 7pt;">{{ $a->no_npwp ?? '-' }}</td>
-                <td class="t-center" style="vertical-align: middle;">{{ $jlhIs }} / {{ $jlhAnak }}</td>
-                <td>{{ $fmt($tunAnak) }}</td>
-                <td>{{ $fmt($tunKomisi) }}</td>
-                <td>{{ $fmt($tunBaleg) }}</td>
-                <td>{{ $fmt($pembulatan) }}</td>
-                <td>{{ $fmt($tunJkk) }}</td>
-                <td>{{ $fmt($potJkm) }}</td>
-                <td></td>
-                <td class="t-center" style="border-bottom: none;"></td>
-            </tr>
-            {{-- Row 4: Tgl Lahir, JLH Jiwa, Tun Beras, -, Tun BK, -, Tun Pajak, Pajak, JLH POT, No Rekening --}}
-            <tr class="member-sep">
-                <td class="t-left" style="font-size: 7pt; border-bottom: 2px solid #000;">{{ $a->tgl_lahir ? $a->tgl_lahir->format('d/m/Y') : '-' }}</td>
-                <td class="t-center" style="vertical-align: middle; border-bottom: 2px solid #000;">{{ $jlhJiwa }}</td>
-                <td style="border-bottom: 2px solid #000;">{{ $fmt($tunBeras) }}</td>
-                <td style="border-bottom: 2px solid #000;">0</td>
-                <td style="border-bottom: 2px solid #000;">{{ $fmt($tunBk) }}</td>
-                <td style="border-bottom: 2px solid #000;">0</td>
-                <td style="border-bottom: 2px solid #000;">{{ $fmt($tunTax) }}</td>
-                <td style="border-bottom: 2px solid #000;">{{ $fmt($potTax) }}</td>
-                <td style="border-bottom: 2px solid #000; font-weight:700;">{{ $fmt($jlhPot) }}</td>
-                <td class="t-left" style="font-size: 6.5pt; vertical-align: middle; border-bottom: 2px solid #000;">{{ $a->no_rekening ?? '-' }}</td>
-            </tr>
-        </tbody>
+            <tbody>
+                {{-- Row 1: Nama, Gaji Pokok, Tun Jabatan, Tun Banmus, Tun Pansus, Tun BPJS 3%, JLH KOTOR, Pot BPJS 3%, Pot BPJS 2%, No --}}
+                <tr>
+                    <td rowspan="4" class="t-center" style="vertical-align:middle; font-weight:700; border-bottom: 1.5px dotted #000;">{{ $no }}.</td>
+                    <td class="t-left no-border-bottom" style="font-weight:700;">{{ strtoupper($a->nama_anggota) }}</td>
+                    <td class="t-center no-border-bottom"></td>
+                    <td class="no-border-bottom">{{ $fmt($gajiPokok) }}</td>
+                    <td class="no-border-bottom">{{ $fmt($tunJabatan) }}</td>
+                    <td class="no-border-bottom">{{ $fmt($tunBanmus) }}</td>
+                    <td class="no-border-bottom">{{ $fmt($tunPansus) }}</td>
+                    <td class="no-border-bottom">{{ $fmt($tunBpjs1) }}</td>
+                    <td rowspan="4" style="vertical-align:middle; font-weight:700; border-bottom: 1.5px dotted #000;">{{ $fmt($brutto) }}</td>
+                    <td class="no-border-bottom">{{ $fmt($potBpjs1) }}</td>
+                    <td class="no-border-bottom">{{ $fmt($potBpjs2) }}</td>
+                    <td rowspan="4" style="vertical-align:middle; font-weight:700; border-bottom: 1.5px dotted #000;">{{ $fmt($jlhBersih) }}</td>
+                    <td class="t-center no-border-bottom" style="font-weight:700;">{{ $no }}</td>
+                </tr>
+                {{-- Row 2: Jabatan, STS Kawin, Tun Istri, Uang Paket, Tun Banggar, Tun Panja, Tun JKM, Pot JKK --}}
+                <tr>
+                    <td class="t-left no-border-top no-border-bottom" style="font-size: 7.5pt;">{{ strtoupper($jabFull) }}</td>
+                    <td class="t-center no-border-top no-border-bottom" style="vertical-align: middle;">{{ $jabShort }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($tunIstri) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($uangPaket) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($tunBanggar) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($tunPanja) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($tunJkm) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($potJkk) }}</td>
+                    <td class="no-border-top no-border-bottom"></td>
+                    <td class="t-center no-border-top no-border-bottom"></td>
+                </tr>
+                {{-- Row 3: NPWP, JLH Is/Anak, Tun Anak, Tun Komisi, Tun Baleg, Pembulatan, Tun JKK, Pot JKM --}}
+                <tr>
+                    <td class="t-left no-border-top no-border-bottom" style="font-size: 7pt;">{{ $a->no_npwp ?? '-' }}</td>
+                    <td class="t-center no-border-top no-border-bottom" style="vertical-align: middle;">{{ $jlhIs }} / {{ $jlhAnak }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($tunAnak) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($tunKomisi) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($tunBaleg) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($pembulatan) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($tunJkk) }}</td>
+                    <td class="no-border-top no-border-bottom">{{ $fmt($potJkm) }}</td>
+                    <td class="no-border-top no-border-bottom"></td>
+                    <td class="t-center no-border-top"></td>
+                </tr>
+                {{-- Row 4: Tgl Lahir, JLH Jiwa, Tun Beras, -, Tun BK, -, Tun Pajak, Pajak, JLH POT, No Rekening --}}
+                <tr class="member-sep">
+                    <td class="t-left no-border-top" style="font-size: 7pt; border-bottom: 1.5px dotted #000;">{{ $a->tgl_lahir ? $a->tgl_lahir->format('d/m/Y') : '-' }}</td>
+                    <td class="t-center no-border-top" style="vertical-align: middle; border-bottom: 1.5px dotted #000;">{{ $jlhJiwa }}</td>
+                    <td class="no-border-top" style="border-bottom: 1.5px dotted #000;">{{ $fmt($tunBeras) }}</td>
+                    <td class="no-border-top" style="border-bottom: 1.5px dotted #000;">0</td>
+                    <td class="no-border-top" style="border-bottom: 1.5px dotted #000;">{{ $fmt($tunBk) }}</td>
+                    <td class="no-border-top" style="border-bottom: 1.5px dotted #000;">0</td>
+                    <td class="no-border-top" style="border-bottom: 1.5px dotted #000;">{{ $fmt($tunTax) }}</td>
+                    <td class="no-border-top" style="border-bottom: 1.5px dotted #000;">{{ $fmt($potTax) }}</td>
+                    <td class="no-border-top" style="border-bottom: 1.5px dotted #000; font-weight:700;">{{ $fmt($jlhPot) }}</td>
+                    <td class="t-left" style="font-size: 6.5pt; vertical-align: middle; border-bottom: 1.5px dotted #000;">{{ $a->no_rekening ?? '-' }}</td>
+                </tr>
+            </tbody>
         @endforeach
 
         <tbody>
-            {{-- === SUBTOTAL ROWS === --}}
-            @php $fmt = function($v) { return $v != 0 ? number_format($v, 0, ',', '.') : '0'; }; @endphp
             <tr class="subtotal">
-                <td colspan="2" class="t-left" style="font-weight:700;">JUMLAH HALAMAN INI</td>
+                <td colspan="2" class="t-left" style="font-weight:700;">JUMLAH</td>
                 <td class="t-center"></td>
                 <td style="font-weight:700;">{{ $fmt($totalGajiPokok) }}</td>
                 <td style="font-weight:700;">{{ $fmt($totalTunJabatan) }}</td>
@@ -387,7 +407,7 @@
                 <td></td>
                 <td style="font-weight:700;">{{ $fmt($totalTunPajak) }}</td>
                 <td style="font-weight:700;">{{ $fmt($totalPotPajak) }}</td>
-                <td style="font-weight:700; border-top: 1px solid #000;">{{ $fmt($totalJlhPot) }}</td>
+                <td style="font-weight:700;">{{ $fmt($totalJlhPot) }}</td>
                 <td></td>
             </tr>
         </tbody>
@@ -405,6 +425,7 @@
         $kota = strtoupper($pemda->ibu_kota ?? 'BOROKO');
     @endphp
 
+    <div class="sheet-label" style="margin-bottom: 2px;">LEMBARAN : I</div>
     <div class="signatures">
         {{-- Sekretaris DPRD di sebelah kiri --}}
         <div class="sig-box">
