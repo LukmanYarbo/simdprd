@@ -103,6 +103,11 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::get('transaksi-gaji/export-excel', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'exportExcel'])->name('transaksi-gaji.export-excel');
         Route::get('transaksi-gaji', [\App\Http\Controllers\Admin\TransaksiGajiController::class, 'index'])->name('transaksi-gaji.index');
 
+        // Form 1721-A2 PPh 21
+        Route::get('pph21-a2', [\App\Http\Controllers\Admin\Pajak\Pph21A2Controller::class, 'index'])->name('pph21-a2.index');
+        Route::get('pph21-a2/print/{id_anggota}', [\App\Http\Controllers\Admin\Pajak\Pph21A2Controller::class, 'print'])->name('pph21-a2.print');
+        Route::get('pph21-a2/print-bulk', [\App\Http\Controllers\Admin\Pajak\Pph21A2Controller::class, 'printBulk'])->name('pph21-a2.print-bulk');
+
         // Anggaran & LRA
         Route::get('anggaran', [\App\Http\Controllers\Admin\AnggaranController::class, 'index'])->name('anggaran.index');
         Route::get('anggaran/form/{id?}', [\App\Http\Controllers\Admin\AnggaranController::class, 'form'])->name('anggaran.form');

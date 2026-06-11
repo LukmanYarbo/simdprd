@@ -107,6 +107,11 @@
                 <i class="ti ti-coins me-2"></i> Proses Gaji
             </a>
         </li>
+        <li>
+            <a href="{{ route('admin.pph21-a2.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pph21-a2.*') ? 'active' : '' }}">
+                <i class="ti ti-file-text me-2"></i> Form 1721-A2 PPh 21
+            </a>
+        </li>
 
         <li>
             <a href="#anggaranSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"

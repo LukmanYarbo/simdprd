@@ -67,14 +67,14 @@ class GajiCalculatorService
     // ===========================
     public function hitungGaji(Anggota $anggota, string $blnThn, string $metodePajak = 'ter'): array
     {
-        // THR: hitung gaji lapis biasa dulu → ambil STHN & PPH setahun → teruskan ke hitungTHR
-        if (str_starts_with($blnThn, 'THR-')) {
+        // THR / G13: hitung gaji lapis biasa dulu → ambil STHN & PPH setahun → teruskan ke hitungTHR
+        if (str_starts_with($blnThn, 'THR-') || str_starts_with($blnThn, 'G13-')) {
             // 1. Hitung gaji lapis biasa
             $gajiLapis = $this->hitungGajiLapis($anggota, $blnThn);
             // 2. Ambil STHN = (BRUTTO2-BJ)*12 dan PPH setahun dari field langsung
             $sthnGajiBiasa = $gajiLapis['_sthn'] ?? 0;  // neto setahun
             $pphGajiBiasa = $gajiLapis['_pph_sthn'] ?? 0;  // PPH setahun
-            // 3. Hitung THR
+            // 3. Hitung THR / G13
             return $this->hitungTHR($anggota, $blnThn, $sthnGajiBiasa, $pphGajiBiasa);
         }
 
@@ -727,7 +727,7 @@ class GajiCalculatorService
             'total_potongan2' => (int) round($TOT_POT_THR),
             'jumlah_bersih' => (int) round($TOTAL_BERSIH_THR),
             'detail_pajak' => [
-                'metode' => 'thr',
+                'metode' => str_starts_with($blnThn, 'G13-') ? 'g13' : 'thr',
                 'bruto_thr' => $BRUTTO_THR,
                 'pembulatan' => $PEMBULATAN_THR,
                 'bruto1_thr' => $BRUTTO1_THR,

@@ -602,13 +602,16 @@
                                 <td>PPh21 Terutang Sebulan <br><small class="fw-normal">(Total Pendapatan × Persentase TER)</small></td>
                                 <td class="text-end text-success fs-5">Rp {{ number_format($selectedPajakDetail['pph_sebulan'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
-                            @elseif(($selectedPajakDetail['metode'] ?? '') === 'thr')
-                            {{-- Detail Pajak THR --}}
+                            @elseif(in_array($selectedPajakDetail['metode'] ?? '', ['thr', 'g13']))
+                            @php
+                                $labelIrregular = ($selectedPajakDetail['metode'] ?? '') === 'g13' ? 'Gaji Ke-13' : 'THR';
+                            @endphp
+                            {{-- Detail Pajak THR / G13 --}}
                             <tr class="table-warning">
-                                <td colspan="2" class="fw-bold text-center"><i class="ti ti-gift me-1"></i>Rincian Perhitungan PPh THR</td>
+                                <td colspan="2" class="fw-bold text-center"><i class="ti ti-gift me-1"></i>Rincian Perhitungan PPh {{ $labelIrregular }}</td>
                             </tr>
                             <tr>
-                                <td>Bruto THR <br><small class="text-muted">(Gapok + Tj.Istri + Tj.Anak + Tj.Jabatan)</small></td>
+                                <td>Bruto {{ $labelIrregular }} <br><small class="text-muted">(Gapok + Tj.Istri + Tj.Anak + Tj.Jabatan)</small></td>
                                 <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto_thr'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
@@ -616,7 +619,7 @@
                                 <td class="text-end">Rp {{ number_format($selectedPajakDetail['pembulatan'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
-                                <td>Bruto THR Setelah Pembulatan</td>
+                                <td>Bruto {{ $labelIrregular }} Setelah Pembulatan</td>
                                 <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto1_thr'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr class="border-top">
@@ -624,15 +627,15 @@
                                 <td class="text-end fw-bold text-primary">Rp {{ number_format($selectedPajakDetail['sthn_gaji_biasa'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
-                                <td>Bruto THR + STHN <br><small class="text-muted">(Bruto1 THR + STHN Gaji Biasa)</small></td>
+                                <td>Bruto {{ $labelIrregular }} + STHN <br><small class="text-muted">(Bruto1 {{ $labelIrregular }} + STHN Gaji Biasa)</small></td>
                                 <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['bruto2_thr'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
-                                <td>Biaya Jabatan THR</td>
+                                <td>Biaya Jabatan {{ $labelIrregular }}</td>
                                 <td class="text-end text-danger">- Rp {{ number_format($selectedPajakDetail['biaya_jabatan_thr'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr class="border-top">
-                                <td>Neto THR <br><small class="text-muted">(Bruto2 THR - Biaya Jabatan)</small></td>
+                                <td>Neto {{ $labelIrregular }} <br><small class="text-muted">(Bruto2 {{ $labelIrregular }} - Biaya Jabatan)</small></td>
                                 <td class="text-end fw-bold">Rp {{ number_format($selectedPajakDetail['neto_thr'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
@@ -640,11 +643,11 @@
                                 <td class="text-end text-danger">- Rp {{ number_format($selectedPajakDetail['nilai_ptkp'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr class="border-top">
-                                <td>PKP THR <br><small class="text-muted">(Neto THR - PTKP, dibulatkan ke bawah ribuan)</small></td>
+                                <td>PKP {{ $labelIrregular }} <br><small class="text-muted">(Neto {{ $labelIrregular }} - PTKP, dibulatkan ke bawah ribuan)</small></td>
                                 <td class="text-end fw-semibold">Rp {{ number_format($selectedPajakDetail['pkp_thr'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
-                                <td>PPh Setahun THR <br><small class="text-muted">(Dihitung berdasarkan tarif lapis Pasal 17)</small></td>
+                                <td>PPh Setahun {{ $labelIrregular }} <br><small class="text-muted">(Dihitung berdasarkan tarif lapis Pasal 17)</small></td>
                                 <td class="text-end fw-semibold text-warning">Rp {{ number_format($selectedPajakDetail['pph_sthn_thr'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
@@ -652,7 +655,7 @@
                                 <td class="text-end text-danger">- Rp {{ number_format($selectedPajakDetail['pph_gaji_biasa'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
                             <tr class="table-primary fw-bold border-top">
-                                <td>PPh21 THR Terutang <br><small class="fw-normal">(PPh Setahun THR - PPh Gaji Biasa)</small></td>
+                                <td>PPh21 {{ $labelIrregular }} Terutang <br><small class="fw-normal">(PPh Setahun {{ $labelIrregular }} - PPh Gaji Biasa)</small></td>
                                 <td class="text-end text-success fs-5">Rp {{ number_format($selectedPajakDetail['pph_thr'] ?? 0, 0, ',', '.') }}</td>
                             </tr>
 
