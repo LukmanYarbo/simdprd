@@ -12,7 +12,7 @@ class PegawaiAsn extends Model
     protected $fillable = [
         'id_skpd', 'nip', 'nik', 'nokk', 'nama', 'tempat_lahir', 'tgl_lahir', 'jenis_kelamin',
         'id_agama', 'id_status_kawin', 'id_pangkat_golongan', 'id_jabatan', 'ket_jabatan', 'id_status_pegawai',
-        'tanggal_mulai_kerja', 'tanggal_berhenti', 'email', 'nohp', 'norek', 'npwp', 'foto'
+        'tanggal_mulai_kerja', 'tanggal_berhenti', 'email', 'nohp', 'norek', 'npwp', 'foto', 'id_ttd'
     ];
 
     public function skpd()

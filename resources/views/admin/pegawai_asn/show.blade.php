@@ -84,6 +84,16 @@
                                     <td class="py-3">{{ $pegawaiAsn->pangkatGolongan->pangkat ?? '-' }} <span class="badge bg-secondary ms-1">{{ $pegawaiAsn->pangkatGolongan->golongan ?? '-' }}</span></td>
                                 </tr>
                                 <tr>
+                                    <th class="ps-4 py-3 bg-body-tertiary">Penanda Tangan Dokumen</th>
+                                    <td class="py-3">
+                                        @if($pegawaiAsn->id_ttd == 'Y')
+                                            <span class="badge bg-success-subtle text-success"><i class="ti ti-circle-check me-1"></i> Ya</span>
+                                        @else
+                                            <span class="badge bg-secondary-subtle text-secondary"><i class="ti ti-circle-x me-1"></i> Tidak</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="ps-4 py-3 bg-body-tertiary">Tanggal Mulai Kerja</th>
                                     <td class="py-3">{{ $pegawaiAsn->tanggal_mulai_kerja ?? '-' }}</td>
                                 </tr>

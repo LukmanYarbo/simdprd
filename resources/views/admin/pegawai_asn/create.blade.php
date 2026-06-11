@@ -142,6 +142,15 @@
                             </div>
 
                             <div class="form-floating mb-3">
+                                <select class="form-select @error('id_ttd') is-invalid @enderror" id="id_ttd" name="id_ttd" required>
+                                    <option value="T" {{ old('id_ttd') == 'T' ? 'selected' : '' }}>Tidak</option>
+                                    <option value="Y" {{ old('id_ttd') == 'Y' ? 'selected' : '' }}>Ya</option>
+                                </select>
+                                <label for="id_ttd">Penanda Tangan Dokumen <span class="text-danger">*</span></label>
+                                @error('id_ttd') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="form-floating mb-3">
                                 <select class="form-select @error('id_status_pegawai') is-invalid @enderror" id="id_status_pegawai" name="id_status_pegawai" required>
                                     <option value="">Pilih Status...</option>
                                     @foreach($statusPegawai as $sp)

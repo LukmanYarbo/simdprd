@@ -81,6 +81,7 @@ class PegawaiAsnController extends Controller implements HasMiddleware
             'norek' => 'nullable|string',
             'npwp' => 'nullable|string',
             'foto' => 'nullable|image|max:2048',
+            'id_ttd' => 'required|in:Y,T',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -141,6 +142,7 @@ class PegawaiAsnController extends Controller implements HasMiddleware
             'norek' => 'nullable|string',
             'npwp' => 'nullable|string',
             'foto' => 'nullable|image|max:2048',
+            'id_ttd' => 'required|in:Y,T',
         ]);
 
         if ($request->hasFile('foto')) {

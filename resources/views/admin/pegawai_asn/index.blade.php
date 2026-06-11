@@ -58,7 +58,12 @@
                                 <small class="text-secondary">{{ $item->nip }}</small>
                             </td>
                             <td>
-                                <div class="mb-1"><span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{ $item->jabatanAsn->nama_jabatan ?? '-' }}</span></div>
+                                <div class="mb-1">
+                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{ $item->jabatanAsn->nama_jabatan ?? '-' }}</span>
+                                    @if($item->id_ttd == 'Y')
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle ms-1">Penanda Tangan</span>
+                                    @endif
+                                </div>
                                 <small class="text-muted"><i class="ti ti-circle-fill {{ $item->statusPegawai->nama == 'Aktif' ? 'text-success' : 'text-danger' }} me-1" style="font-size: 8px;"></i>{{ $item->statusPegawai->nama ?? '-' }}</small>
                             </td>
                             <td>{{ $item->skpd->namaskpd ?? '-' }}</td>

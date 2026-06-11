@@ -171,10 +171,14 @@ class PenandaTanganController extends Controller implements HasMiddleware
         $idSkpd = $request->get('id_skpd');
 
         $query = PegawaiAsn::query()
-            ->where('nama', 'like', "%{$term}%");
+            ->where('pegawai_asns.nama', 'like', "%{$term}%")
+            ->where('pegawai_asns.id_ttd', '=', 'Y')
+            ->whereHas('statusPegawai', function ($q) {
+                $q->where('nama', 'Aktif');
+            });
 
         if ($idSkpd) {
-            $query->where('id_skpd', $idSkpd);
+            $query->where('pegawai_asns.id_skpd', $idSkpd);
         }
 
         $asns = $query->join('jabatan_asns', 'pegawai_asns.id_jabatan', '=', 'jabatan_asns.id')
