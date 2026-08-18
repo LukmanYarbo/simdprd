@@ -4,9 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class KertasKerjaController extends Controller
+class KertasKerjaController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view kertas_kerja|create kertas_kerja|edit kertas_kerja', only: ['index', 'form', 'print']),
+        ];
+    }
+
     public function index()
     {
         return view('admin.anggaran.kertas-kerja.index');

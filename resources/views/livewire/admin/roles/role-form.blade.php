@@ -32,7 +32,7 @@
                                     @foreach($permissionsList as $permission)
                                     <div class="col-12 mb-2">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" wire:model.defer="permissions" value="{{ $permission['name'] }}" id="perm_{{ $permission['id'] }}">
+                                            <input class="form-check-input" type="checkbox" wire:model.live="permissions" value="{{ $permission['name'] }}" id="perm_{{ $permission['id'] }}">
                                             <label class="form-check-label small" for="perm_{{ $permission['id'] }}">
                                                 {{ $permission['name'] }}
                                             </label>

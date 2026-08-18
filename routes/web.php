@@ -128,6 +128,17 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::get('kertas-kerja', [\App\Http\Controllers\Admin\KertasKerjaController::class, 'index'])->name('kertas-kerja.index');
         Route::get('kertas-kerja/form/{id?}', [\App\Http\Controllers\Admin\KertasKerjaController::class, 'form'])->name('kertas-kerja.form');
         Route::get('kertas-kerja/print/{id}', [\App\Http\Controllers\Admin\KertasKerjaController::class, 'print'])->name('kertas-kerja.print');
+
+        // Database Management
+        Route::get('database/backup', [\App\Http\Controllers\Admin\DatabaseController::class, 'backupIndex'])->name('database.backup');
+        Route::post('database/backup', [\App\Http\Controllers\Admin\DatabaseController::class, 'createBackup'])->name('database.backup-create');
+        Route::get('database/backup/download/{file}', [\App\Http\Controllers\Admin\DatabaseController::class, 'downloadBackup'])->name('database.backup-download');
+        Route::delete('database/backup/{file}', [\App\Http\Controllers\Admin\DatabaseController::class, 'deleteBackup'])->name('database.backup-delete');
+        Route::get('database/restore', [\App\Http\Controllers\Admin\DatabaseController::class, 'restoreIndex'])->name('database.restore');
+        Route::post('database/restore', [\App\Http\Controllers\Admin\DatabaseController::class, 'restore'])->name('database.restore-execute');
+        Route::get('database/kosongkan', [\App\Http\Controllers\Admin\DatabaseController::class, 'truncateIndex'])->name('database.truncate');
+        Route::post('database/kosongkan', [\App\Http\Controllers\Admin\DatabaseController::class, 'truncate'])->name('database.truncate-execute');
+        Route::post('database/seed', [\App\Http\Controllers\Admin\DatabaseController::class, 'seed'])->name('database.seed');
     });
 
 Route::middleware(['auth', 'role:operator|user'])->group(function () {

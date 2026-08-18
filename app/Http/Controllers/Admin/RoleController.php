@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class RoleController extends Controller
+class RoleController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view roles', only: ['index']),
+            new Middleware('permission:create roles', only: ['create']),
+            new Middleware('permission:edit roles', only: ['edit']),
+            new Middleware('permission:delete roles', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         $roles = Role::withCount(['permissions', 'users'])->paginate(10);

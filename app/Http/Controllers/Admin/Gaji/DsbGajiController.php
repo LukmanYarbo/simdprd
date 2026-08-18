@@ -11,9 +11,18 @@ use App\Models\DsbGaji;
 use App\Services\GajiCalculatorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class DsbGajiController extends Controller
+class DsbGajiController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view transaksi_gaji'),
+        ];
+    }
+
     protected $gajiService;
 
     public function __construct(GajiCalculatorService $gajiService)

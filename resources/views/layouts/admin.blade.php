@@ -128,6 +128,71 @@
     <!-- Select2 JS -->
     <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
 
+    <script>
+        // Modern SweetAlert confirm + processing helper
+        window.confirmAndProcess = function (form, opts) {
+            if (!form) return;
+
+            const options = Object.assign({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin melanjutkan?',
+                icon: 'warning',
+                confirmText: 'Ya, Lanjutkan',
+                loadingText: 'Sedang memproses...',
+            }, opts);
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                Swal.fire({
+                    title: options.title,
+                    html: options.text,
+                    icon: options.icon,
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: options.confirmText,
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true,
+                    customClass: {
+                        popup: 'rounded-4'
+                    },
+                }).then((result) => {
+                    if (!result.isConfirmed) return;
+
+                    Swal.fire({
+                        html: `
+                            <style>
+                                @keyframes dbSpin { to { transform: rotate(360deg); } }
+                                @keyframes dbPulse {
+                                    0%, 100% { transform: scale(1); opacity: .5; }
+                                    50% { transform: scale(1.3); opacity: 1; }
+                                }
+                            </style>
+                            <div class="text-center py-3">
+                                <div class="mx-auto mb-3"
+                                    style="width:58px;height:58px;border:4px solid rgba(0,0,0,.12);border-top-color:var(--bs-primary);border-radius:50%;animation:dbSpin .9s linear infinite;"></div>
+                                <p class="fw-semibold mb-1" style="font-size:1.05rem;">${options.loadingText}</p>
+                                <p class="text-muted mb-0" style="font-size:.85rem;">Mohon tunggu, jangan tutup jendela ini.</p>
+                            </div>`,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        customClass: {
+                            popup: 'rounded-4'
+                        },
+                        didOpen: () => form.submit(),
+                    });
+                });
+            });
+        };
+    </script>
+
     @livewireScripts
     @stack('scripts')
 

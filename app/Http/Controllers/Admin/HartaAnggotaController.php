@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Anggota;
 use App\Models\HartaAnggota;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class HartaAnggotaController extends Controller
+class HartaAnggotaController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view anggota', only: ['index', 'edit']),
+            new Middleware('permission:edit anggota', only: ['store', 'update', 'destroy']),
+        ];
+    }
     public function index($anggotaId)
     {
         $anggota = Anggota::findOrFail($anggotaId);

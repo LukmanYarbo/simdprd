@@ -6,11 +6,13 @@
         </button>
     </div>
     <ul class="list-unstyled components mb-0 p-2 flex-grow-1">
+        @can('view dashboard')
         <li>
             <a href="{{ route('admin.dashboard') }}" class="sidebar-link rounded {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="ti ti-layout-dashboard me-2"></i> Dashboard
             </a>
         </li>
+        @endcan
 
         <li>
             <a href="#masterDataSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
@@ -19,11 +21,13 @@
                 <i class="ti ti-chevron-down small"></i>
             </a>
             <ul class="collapse {{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.penanda-tangan.*') ? 'show' : '' }} list-unstyled ps-3" id="masterDataSubmenu">
+                @can('view pemda')
                 <li>
                     <a href="{{ route('admin.pemda.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pemda.*') ? 'active' : '' }}">
                         <i class="ti ti-building-monument me-2"></i> Data Pemda
                     </a>
                 </li>
+                @endcan
                 @can('view alat_kelengkapan')
                 <li>
                     <a href="{{ route('admin.alat-kelengkapan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.alat-kelengkapan.*') ? 'active' : '' }}">
@@ -45,11 +49,13 @@
                     </a>
                 </li>
                 @endcan
+                @can('view skpd')
                 <li>
                     <a href="{{ route('admin.skpd.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.skpd.*') ? 'active' : '' }}">
                         <i class="ti ti-building-skyscraper me-2"></i> Data SKPD
                     </a>
                 </li>
+                @endcan
 
                 @can('view penanda_tangan')
                 <li>
@@ -58,11 +64,13 @@
                     </a>
                 </li>
                 @endcan
+                @can('view anggota')
                 <li>
                     <a href="{{ route('admin.anggota-status.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggota-status.*') ? 'active' : '' }}">
                         <i class="ti ti-user-edit me-2"></i> Perubahan Status Anggota
                     </a>
                 </li>
+                @endcan
             </ul>
         </li>
         <li>
@@ -102,16 +110,20 @@
                 @endcan
             </ul>
         </li>
+        @can('view transaksi_gaji')
         <li>
             <a href="{{ route('admin.transaksi-gaji.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.transaksi-gaji.*') ? 'active' : '' }}">
                 <i class="ti ti-coins me-2"></i> Proses Gaji
             </a>
         </li>
+        @endcan
+        @can('view pph21_a2')
         <li>
             <a href="{{ route('admin.pph21-a2.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pph21-a2.*') ? 'active' : '' }}">
                 <i class="ti ti-file-text me-2"></i> Form 1721-A2 PPh 21
             </a>
         </li>
+        @endcan
 
         <li>
             <a href="#anggaranSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
@@ -120,21 +132,27 @@
                 <i class="ti ti-chevron-down small"></i>
             </a>
             <ul class="collapse {{ request()->routeIs('admin.anggaran.*') || request()->routeIs('admin.jurnal-lra.*') || request()->routeIs('admin.kertas-kerja.*') ? 'show' : '' }} list-unstyled ps-3" id="anggaranSubmenu">
+                @can('view kertas_kerja')
                 <li>
                     <a href="{{ route('admin.kertas-kerja.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.kertas-kerja.*') ? 'active' : '' }}">
                         <i class="ti ti-file-analytics me-2"></i> Kertas Kerja
                     </a>
                 </li>
+                @endcan
+                @can('view anggaran')
                 <li>
                     <a href="{{ route('admin.anggaran.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggaran.*') ? 'active' : '' }}">
                         <i class="ti ti-wallet me-2"></i> Master Anggaran
                     </a>
                 </li>
+                @endcan
+                @can('view jurnal_lra')
                 <li>
                     <a href="{{ route('admin.jurnal-lra.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.jurnal-lra.*') ? 'active' : '' }}">
                         <i class="ti ti-history me-2"></i> Jurnal LRA
                     </a>
                 </li>
+                @endcan
             </ul>
         </li>
 
@@ -152,23 +170,25 @@
                     </a>
                 </li>
                 @endcan
+                @can('view pegawai_asn')
                 <li>
                     <a href="{{ route('admin.pegawai-asn.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pegawai-asn.*') ? 'active' : '' }}">
                         <i class="ti ti-shield-lock me-2"></i> Pegawai ASN
                     </a>
                 </li>
+                @endcan
             </ul>
         </li>
         
         <li class="sidebar-heading">System</li>
-        @if(auth()->user()->can('view users') || auth()->user()->can('view roles'))
+        @if(auth()->user()->can('view users') || auth()->user()->can('view roles') || auth()->user()->can('view permissions'))
         <li>
             <a href="#settingsSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-               aria-expanded="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.permissions.*') ? 'true' : 'false' }}">
+               aria-expanded="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.permissions.*') || request()->routeIs('admin.database.*') ? 'true' : 'false' }}">
                 <span><i class="ti ti-settings-2 me-2"></i> Settings</span>
                 <i class="ti ti-chevron-down small"></i>
             </a>
-            <ul class="collapse {{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.permissions.*') ? 'show' : '' }} list-unstyled ps-3" id="settingsSubmenu">
+            <ul class="collapse {{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.permissions.*') || request()->routeIs('admin.database.*') ? 'show' : '' }} list-unstyled ps-3" id="settingsSubmenu">
                 @can('view users')
                 <li>
                     <a href="{{ route('admin.users.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
@@ -181,6 +201,39 @@
                     <a href="{{ route('admin.roles.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.roles.*') ? 'active' : '' }}">
                         <i class="ti ti-shield-check me-2"></i> Role Management
                     </a>
+                </li>
+                @endcan
+                @can('view permissions')
+                <li>
+                    <a href="{{ route('admin.permissions.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.permissions.*') ? 'active' : '' }}">
+                        <i class="ti ti-key me-2"></i> Permissions
+                    </a>
+                </li>
+                @endcan
+                @can('view database_management')
+                <li>
+                    <a href="#databaseSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                       aria-expanded="{{ request()->routeIs('admin.database.*') ? 'true' : 'false' }}">
+                        <span><i class="ti ti-database me-2"></i> Database Management</span>
+                        <i class="ti ti-chevron-down small"></i>
+                    </a>
+                    <ul class="collapse {{ request()->routeIs('admin.database.*') ? 'show' : '' }} list-unstyled ps-3" id="databaseSubmenu">
+                        <li>
+                            <a href="{{ route('admin.database.backup') }}" class="sidebar-link rounded {{ request()->routeIs('admin.database.backup*') ? 'active' : '' }}">
+                                <i class="ti ti-file-download me-2"></i> Backup Database
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.database.restore') }}" class="sidebar-link rounded {{ request()->routeIs('admin.database.restore*') ? 'active' : '' }}">
+                                <i class="ti ti-database-import me-2"></i> Restore Database
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.database.truncate') }}" class="sidebar-link rounded {{ request()->routeIs('admin.database.truncate*') ? 'active' : '' }}">
+                                <i class="ti ti-trash me-2"></i> Kosongkan Database
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @endcan
             </ul>

@@ -8,9 +8,19 @@ use App\Models\JurnalLra;
 use App\Models\Pemda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class AnggaranController extends Controller
+class AnggaranController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view anggaran|create anggaran|edit anggaran', only: ['index', 'form']),
+            new Middleware('permission:view jurnal_lra', only: ['jurnalIndex', 'printBku', 'printRealisasi']),
+        ];
+    }
+
     public function index()
     {
         return view('admin.anggaran.index');

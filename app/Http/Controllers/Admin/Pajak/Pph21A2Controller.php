@@ -12,9 +12,18 @@ use App\Models\Pemda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class Pph21A2Controller extends Controller
+class Pph21A2Controller extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view pph21_a2', only: ['index', 'print', 'printBulk']),
+        ];
+    }
+
     public function index(Request $request)
     {
         $tahun = $request->get('tahun', date('Y'));

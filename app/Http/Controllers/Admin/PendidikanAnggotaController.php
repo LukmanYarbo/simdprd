@@ -8,9 +8,18 @@ use App\Models\JenisPendidikan;
 use App\Models\PendidikanAnggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PendidikanAnggotaController extends Controller
+class PendidikanAnggotaController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view anggota', only: ['index', 'edit']),
+            new Middleware('permission:edit anggota', only: ['store', 'update', 'destroy']),
+        ];
+    }
     public function index($id_anggota)
     {
         $anggota = Anggota::findOrFail($id_anggota);

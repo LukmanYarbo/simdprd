@@ -32,6 +32,12 @@ class RoleAndUserSeeder extends Seeder
             'parameter_gaji',
             'tarif_pajak',
             'potongan',
+            'transaksi_gaji',
+            'pph21_a2',
+            'anggaran',
+            'jurnal_lra',
+            'kertas_kerja',
+            'database_management',
         ];
 
         $actions = ['view', 'create', 'edit', 'delete'];
@@ -69,6 +75,12 @@ class RoleAndUserSeeder extends Seeder
             'view penanda_tangan', 'create penanda_tangan', 'edit penanda_tangan',
             'view parameter_gaji', 'create parameter_gaji', 'edit parameter_gaji',
             'view tarif_pajak', 'create tarif_pajak', 'edit tarif_pajak',
+            'view potongan', 'create potongan', 'edit potongan',
+            'view transaksi_gaji',
+            'view pph21_a2',
+            'view anggaran', 'create anggaran', 'edit anggaran',
+            'view jurnal_lra',
+            'view kertas_kerja', 'create kertas_kerja', 'edit kertas_kerja',
         ];
         // Filter permissions that actually exist to avoid errors if something went wrong
         $validOperatorPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $operatorPermissions)->get();
@@ -89,6 +101,12 @@ class RoleAndUserSeeder extends Seeder
             'view penanda_tangan',
             'view parameter_gaji',
             'view tarif_pajak',
+            'view potongan',
+            'view transaksi_gaji',
+            'view pph21_a2',
+            'view anggaran',
+            'view jurnal_lra',
+            'view kertas_kerja',
         ];
         $validUserPermissions = \Spatie\Permission\Models\Permission::whereIn('name', $userPermissions)->get();
         $userRole->syncPermissions($validUserPermissions);
