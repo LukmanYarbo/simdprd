@@ -136,7 +136,7 @@
             </div>
             <div class="modal-body p-4">
                 <!-- Form Tambah Anggota -->
-                <div class="card bg-body-tertiary border-0 mb-4">
+                <div class="card bg-body-tertiary border-0 mb-4" id="formAnggotaCard">
                     <div class="card-body">
                         <h6 class="fw-bold mb-3">Tambah Anggota</h6>
                         <form id="formAnggota" class="row g-2">
@@ -186,7 +186,7 @@
                                 <th>Nama Anggota</th>
                                 <th class="d-none komisi-col">Nama Komisi</th>
                                 <th>Jabatan</th>
-                                <th class="text-end">Aksi</th>
+                                <th class="text-end action-col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -399,8 +399,21 @@ $(function() {
         $('#tableAnggotaList tbody').html('<tr><td colspan="4" class="text-center">Memuat data...</td></tr>');
         
         $.get("{{ url('admin/surat-keputusan') }}/" + id + "/anggota", function(data) {
-            $('#modalAnggotaTitle').text('Kelola Anggota ' + (data.surat_keputusan.alat_kelengkapan.ket || ''));
+            var isSkActive = data.surat_keputusan.status === 'A';
+            
+            var titleSuffix = isSkActive 
+                ? '' 
+                : ' <span class="badge bg-danger text-white rounded-pill ms-2" style="font-size: 11px; padding: 4px 8px;">Tidak Aktif (Read Only)</span>';
+            
+            $('#modalAnggotaTitle').html('Kelola Anggota ' + (data.surat_keputusan.alat_kelengkapan.ket || '') + titleSuffix);
             $('#modalAnggotaSubtitle').text('No. SK: ' + data.surat_keputusan.no_sk + ' (' + data.surat_keputusan.alat_kelengkapan.nama + ')');
+
+            // Hide or show the Tambah form depending on SK active status
+            if (isSkActive) {
+                $('#formAnggotaCard').show();
+            } else {
+                $('#formAnggotaCard').hide();
+            }
 
             // Toggle Nama Komisi field
             var isKomisi = data.is_komisi || false;
@@ -437,7 +450,7 @@ $(function() {
                 jabatanSelect.append('<option value="'+val.id+'">'+val.nama+'</option>');
             });
 
-            renderAnggotaTable(data.existing_anggota, isKomisi);
+            renderAnggotaTable(data.existing_anggota, isKomisi, isSkActive);
             modalAnggota.show();
         }).fail(function(xhr) {
             console.error(xhr);
@@ -445,24 +458,32 @@ $(function() {
         });
     }
 
-    function renderAnggotaTable(data, isKomisi) {
+    function renderAnggotaTable(data, isKomisi, isSkActive) {
         var html = '';
-        var colSpan = isKomisi ? 4 : 3;
+        var colSpan = isKomisi ? (isSkActive ? 4 : 3) : (isSkActive ? 3 : 2);
         if(data.length === 0) {
             html = '<tr><td colspan="' + colSpan + '" class="text-center text-muted">Belum ada anggota.</td></tr>';
         } else {
             $.each(data, function(index, item) {
                 html += '<tr>';
                 html += '<td>' + item.anggota.nama_anggota + '</td>';
-                if (isKomisi) {
+                if(isKomisi) {
                     html += '<td>' + (item.nama_komisi || '-') + '</td>';
                 }
                 html += '<td>' + item.jabatan_alat_kelengkapan.nama + '</td>';
-                html += '<td class="text-end"><button type="button" class="btn-icon-modern text-danger btn-delete-member" data-id="'+item.id+'"><i class="ti ti-trash"></i></button></td>';
+                if (isSkActive) {
+                    html += '<td class="text-end"><button type="button" class="btn-icon-modern text-danger btn-delete-member" data-id="'+item.id+'"><i class="ti ti-trash"></i></button></td>';
+                }
                 html += '</tr>';
             });
         }
         $('#tableAnggotaList tbody').html(html);
+        
+        if (isSkActive) {
+            $('.action-col').show();
+        } else {
+            $('.action-col').hide();
+        }
     }
 
     // Clear Nama Komisi button

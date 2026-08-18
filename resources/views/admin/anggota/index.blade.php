@@ -13,7 +13,7 @@
             <h2 class="h4 mb-0 fw-bold">Manajemen Anggota</h2>
         </div>
         <div class="col-auto">
-            <a href="{{ route('admin.anggota.create') }}" class="btn premium-gradient text-white border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
+            <a href="{{ route('admin.anggota.create') }}" class="btn premium-gradient border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
                 <i class="ti ti-plus me-2"></i>Tambah Anggota
             </a>
         </div>

@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-5 fade-in-up">
         <h2 class="h3 fw-extrabold text-gradient mb-0">System Users</h2>
-        <a href="{{ route('admin.users.create') }}" class="btn premium-gradient text-white border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
+        <a href="{{ route('admin.users.create') }}" class="btn premium-gradient border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
             <i class="ti ti-user-plus me-2"></i> Add New User
         </a>
     </div>

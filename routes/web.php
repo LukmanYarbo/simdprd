@@ -16,6 +16,15 @@ Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, '
 
 Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::get('/storage-link', function () {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('storage:link');
+            return back()->with('success', 'Storage link berhasil dibuat!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal membuat storage link: ' . $e->getMessage());
+        }
+    })->name('storage-link');
 
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);

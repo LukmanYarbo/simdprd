@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,7 @@
 
     <!-- Tabler Icons -->
     <link rel="stylesheet" href="{{ asset('assets/libs/tabler-icons/tabler-icons.min.css') }}">
-    
+
     <!-- Google Fonts -->
     <link rel="stylesheet" href="{{ asset('assets/fonts/plus-jakarta-sans/plus-jakarta-sans.css') }}">
 
@@ -22,10 +23,13 @@
 
     <!-- Scripts -->
     <script>
-        (function() {
+        (function () {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-bs-theme', savedTheme);
         })();
+        window.Laravel = {
+            storageUrl: "{{ asset('storage') }}"
+        };
     </script>
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
     @livewireStyles
@@ -38,24 +42,41 @@
             align-items: center;
             width: 100%;
             position: sticky;
-            top: 72px; /* var(--header-height) */
-            z-index: 0; /* Stays above cards but below navbar dropdowns (1000+) */
+            top: 72px;
+            /* var(--header-height) */
+            z-index: 0;
+            /* Stays above cards but below navbar dropdowns (1000+) */
             background: rgba(var(--bs-tertiary-bg-rgb), 0.9) !important;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
         }
+
         .marquee-content {
             display: inline-block;
             white-space: nowrap;
             animation: scrollerSlide 25s linear infinite;
-            animation-delay: 3.5s; /* Wait for letters to finish dropping */
+            animation-delay: 3.5s;
+            /* Wait for letters to finish dropping */
         }
+
         @keyframes scrollerSlide {
-            0% { transform: translateX(0); }
-            45% { transform: translateX(-100%); }
-            45.001% { transform: translateX(100vw); }
-            100% { transform: translateX(0); }
+            0% {
+                transform: translateX(0);
+            }
+
+            45% {
+                transform: translateX(-100%);
+            }
+
+            45.001% {
+                transform: translateX(100vw);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
         }
+
         @keyframes dropLetter {
             to {
                 opacity: 1;
@@ -64,6 +85,7 @@
         }
     </style>
 </head>
+
 <body>
     <div id="wrapper">
         <!-- Sidebar -->
@@ -74,18 +96,21 @@
             @include('layouts.partials.navbar')
 
             <!-- Marquee Running Text with Fade Effect -->
-            <div class="marquee-wrapper border-bottom border-white border-opacity-10 bg-white bg-opacity-5" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
-                <div class="marquee-content py-2 px-3 fw-medium small" style="color: var(--bs-primary);" id="marqueeText">
-                    Selamat Datang {{ auth()->check() ? auth()->user()->name : 'Guest' }} di Sistem Informasi Manajemen DPRD
+            <div class="marquee-wrapper border-bottom border-white border-opacity-10 bg-white bg-opacity-5"
+                style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                <div class="marquee-content py-2 px-3 fw-medium small" style="color: var(--bs-primary);"
+                    id="marqueeText">
+                    Selamat Datang {{ auth()->check() ? auth()->user()->name : 'Guest' }} di Sistem Informasi Manajemen
+                    DPRD
                 </div>
             </div>
 
             <div class="flex-grow-1"> <!-- Added wrapper for main content to push footer -->
                 <main class="p-4">
                     @hasSection('breadcrumbs')
-                    <div class="mb-4">
-                        @yield('breadcrumbs')
-                    </div>
+                        <div class="mb-4">
+                            @yield('breadcrumbs')
+                        </div>
                     @endif
                     <div class="fade-in-up">
                         @yield('content')
@@ -107,7 +132,7 @@
     @stack('scripts')
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Marquee splitting logic for drop-down letters
             const marqueeEl = document.getElementById('marqueeText');
             if (marqueeEl) {
@@ -188,7 +213,7 @@
             updateClock(); // Initial call
 
             // Livewire Swal Listener
-            window.addEventListener('swal', function(e) {
+            window.addEventListener('swal', function (e) {
                 const data = e.detail;
                 if (Array.isArray(data)) {
                     // For old Livewire 2 style if mixed
@@ -207,4 +232,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
+        if (config('app.env') === 'production' || str_starts_with(config('app.url'), 'https://')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         \Illuminate\Support\Facades\Gate::before(function ($user, $ability) {
             return $user->hasRole('admin') ? true : null;
         });

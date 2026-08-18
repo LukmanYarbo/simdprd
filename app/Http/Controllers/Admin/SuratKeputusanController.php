@@ -233,10 +233,12 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             ->get();
         $jabatanAlatKelengkapan = JabatanAlatKelengkapan::all();
 
-        // For Komisi: collect all distinct nama_komisi already used in this SK
+        // For Komisi: collect all distinct nama_komisi used in any Komisi SK
         $namaKomisiList = [];
         if ($isKomisi) {
-            $namaKomisiList = JabatanAnggota::where('id_surat_keputusan', $id)
+            $namaKomisiList = JabatanAnggota::whereHas('suratKeputusan.alatKelengkapan', function($q) {
+                    $q->whereRaw('LOWER(nama) = ?', ['komisi']);
+                })
                 ->whereNotNull('nama_komisi')
                 ->distinct()
                 ->pluck('nama_komisi')
@@ -256,6 +258,11 @@ class SuratKeputusanController extends Controller implements HasMiddleware
     public function storeAnggota(Request $request)
     {
         $suratKeputusan = SuratKeputusan::with('alatKelengkapan')->findOrFail($request->id_surat_keputusan);
+        
+        if ($suratKeputusan->status !== 'A') {
+            return response()->json(['errors' => ['id_surat_keputusan' => ['Tidak dapat menambah anggota pada Surat Keputusan yang tidak aktif.']]], 422);
+        }
+
         $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
 
         $request->validate([
@@ -268,11 +275,8 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         // Check if member already exists in this SK
         $query = JabatanAnggota::where('id_surat_keputusan', $request->id_surat_keputusan)
             ->where('id_anggota', $request->id_anggota);
-        if ($isKomisi) {
-            $query->where('nama_komisi', $request->nama_komisi);
-        }
         if ($query->exists()) {
-            return response()->json(['errors' => ['id_anggota' => ['Anggota ini sudah terdaftar' . ($isKomisi ? ' di Komisi ini.' : ' dalam SK ini.')]]], 422);
+            return response()->json(['errors' => ['id_anggota' => ['Anggota ini sudah terdaftar dalam SK ini.']]], 422);
         }
 
         // Validate Position Limits (Ketua, Wakil, Sekretaris)
@@ -350,6 +354,10 @@ class SuratKeputusanController extends Controller implements HasMiddleware
     {
         $jabatanAnggota = JabatanAnggota::with('suratKeputusan.alatKelengkapan')->findOrFail($id);
         
+        if (($jabatanAnggota->suratKeputusan->status ?? '') !== 'A') {
+            return response()->json(['error' => 'Tidak dapat menghapus anggota pada Surat Keputusan yang tidak aktif.'], 422);
+        }
+
         $namaAlatKelengkapan = strtolower($jabatanAnggota->suratKeputusan->alatKelengkapan->nama ?? '');
         $anggotaField = '';
         

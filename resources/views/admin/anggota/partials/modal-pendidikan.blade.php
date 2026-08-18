@@ -559,7 +559,7 @@
                     var style = getLevelStyle(levelName);
                     
                     var fileLink = item.file_ijazah 
-                        ? '<a href="/storage/'+item.file_ijazah+'" target="_blank" class="btn btn-xs btn-outline-primary rounded-pill px-2.5 py-1 text-decoration-none d-inline-flex align-items-center gap-1.5"><i class="ti ti-file-type-pdf text-danger"></i> Ijazah</a>' 
+                        ? '<a href="'+(window.Laravel?.storageUrl || '/storage')+'/'+item.file_ijazah+'" target="_blank" class="btn btn-xs btn-outline-primary rounded-pill px-2.5 py-1 text-decoration-none d-inline-flex align-items-center gap-1.5"><i class="ti ti-file-type-pdf text-danger"></i> Ijazah</a>' 
                         : '<span class="text-secondary small" style="font-size: 0.75rem;"><i class="ti ti-ban text-muted"></i> No File</span>';
                     
                     var yearDisplay = '';
@@ -782,7 +782,7 @@
                     $uploadContent.addClass('d-none');
                     $uploadPreview.removeClass('d-none').addClass('d-flex');
                     $previewFileName.text(data.file_ijazah.split('/').pop());
-                    $previewFileSize.html('<a href="/storage/'+data.file_ijazah+'" target="_blank" class="text-primary text-decoration-none fw-bold"><i class="ti ti-eye"></i> Lihat File</a>');
+                    $previewFileSize.html('<a href="'+(window.Laravel?.storageUrl || '/storage')+'/'+data.file_ijazah+'" target="_blank" class="text-primary text-decoration-none fw-bold"><i class="ti ti-eye"></i> Lihat File</a>');
                     $previewFileIcon.attr('class', 'ti ti-file-check text-success fs-3');
                     $('#current_file_ijazah').html('');
                 } else {

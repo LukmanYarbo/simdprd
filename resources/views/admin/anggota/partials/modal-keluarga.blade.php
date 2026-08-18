@@ -464,7 +464,7 @@
                         : '<span class="badge bg-body-secondary text-secondary badge-glow-secondary rounded-pill px-2.5 py-1">Tidak</span>';
                     
                     var fileBtn = item.file_surat_ket 
-                        ? '<a href="/storage/'+item.file_surat_ket+'" target="_blank" class="btn btn-icon-modern text-primary ms-1" title="Lihat Surat Keterangan"><i class="ti ti-file-certificate"></i></a>' 
+                        ? '<a href="'+(window.Laravel?.storageUrl || '/storage')+'/'+item.file_surat_ket+'" target="_blank" class="btn btn-icon-modern text-primary ms-1" title="Lihat Surat Keterangan"><i class="ti ti-file-certificate"></i></a>' 
                         : '';
 
                     var calculatedAge = item.tgl_lahir ? calculateAgeLocal(item.tgl_lahir) + ' Thn' : 'n/a';
@@ -775,7 +775,7 @@
                     $uploadContentK.addClass('d-none');
                     $uploadPreviewK.removeClass('d-none').addClass('d-flex');
                     $previewFileNameK.text(data.file_surat_ket.split('/').pop());
-                    $previewFileSizeK.html('<a href="/storage/'+data.file_surat_ket+'" target="_blank" class="text-primary text-decoration-none fw-bold"><i class="ti ti-eye"></i> Lihat Surat</a>');
+                    $previewFileSizeK.html('<a href="'+(window.Laravel?.storageUrl || '/storage')+'/'+data.file_surat_ket+'" target="_blank" class="text-primary text-decoration-none fw-bold"><i class="ti ti-eye"></i> Lihat Surat</a>');
                     $previewFileIconK.attr('class', 'ti ti-file-check text-success fs-3');
                     $('#link_file_surat_ket').html('');
                 } else {
