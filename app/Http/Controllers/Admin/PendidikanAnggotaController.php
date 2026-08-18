@@ -8,6 +8,7 @@ use App\Models\JenisPendidikan;
 use App\Models\PendidikanAnggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -62,7 +63,9 @@ class PendidikanAnggotaController extends Controller implements HasMiddleware
         $data['id_anggota'] = $id_anggota;
 
         if ($request->hasFile('file_ijazah')) {
-            $data['file_ijazah'] = $request->file('file_ijazah')->store('ijazah', 'public');
+            $anggota = Anggota::findOrFail($id_anggota);
+            $tingkat = JenisPendidikan::findOrFail($request->id_jenis_pendidikan)->nama;
+            $data['file_ijazah'] = $this->storeIjazah($request->file('file_ijazah'), $anggota, $tingkat);
         }
 
         PendidikanAnggota::create($data);
@@ -94,12 +97,25 @@ class PendidikanAnggotaController extends Controller implements HasMiddleware
             if ($pendidikan->file_ijazah) {
                 Storage::disk('public')->delete($pendidikan->file_ijazah);
             }
-            $data['file_ijazah'] = $request->file('file_ijazah')->store('ijazah', 'public');
+            $anggota = Anggota::findOrFail($pendidikan->id_anggota);
+            $tingkat = JenisPendidikan::findOrFail($request->id_jenis_pendidikan)->nama;
+            $data['file_ijazah'] = $this->storeIjazah($request->file('file_ijazah'), $anggota, $tingkat);
         }
 
         $pendidikan->update($data);
 
         return response()->json(['success' => 'Data pendidikan berhasil diperbarui']);
+    }
+
+    protected function storeIjazah($file, Anggota $anggota, string $tingkat)
+    {
+        $ext = $file->getClientOriginalExtension();
+        $nama = Str::slug($anggota->nama_anggota, '_');
+        $tingkatSlug = Str::slug($tingkat, '_');
+        $tanggal = now()->format('d-m-Y_H-i-s');
+        $filename = "{$nama}_{$tingkatSlug}_{$tanggal}.{$ext}";
+
+        return $file->storeAs('ijazah', $filename, 'public');
     }
 
     public function destroy($id)

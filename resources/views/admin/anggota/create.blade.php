@@ -18,25 +18,58 @@
 
     <!-- Step Indicator -->
     <div class="card border-0 shadow-lg mb-4">
-        <div class="card-body p-4 pt-5 pb-5">
-            <div class="step-header">
-                <div class="step-item active" data-step="1">
-                    1 <span class="step-label">Data Pribadi</span>
+        <div class="card-body p-4">
+            <div class="wizard-stepper">
+                <div class="wizard-progress">
+                    <div class="wizard-progress-bar" id="wizardProgressBar"></div>
                 </div>
-                <div class="step-item" data-step="2">
-                    2 <span class="step-label">Kontak & Alamat</span>
-                </div>
-                <div class="step-item" data-step="3">
-                    3 <span class="step-label">Keanggotaan</span>
-                </div>
-                <div class="step-item" data-step="4">
-                    4 <span class="step-label">Asuransi & Foto</span>
+                <div class="wizard-steps">
+                    <div class="wizard-step active" data-step="1">
+                        <div class="wizard-step-bubble">
+                            <span class="wizard-step-number">1</span>
+                            <span class="wizard-step-check"><i class="ti ti-check"></i></span>
+                        </div>
+                        <div class="wizard-step-meta">
+                            <span class="wizard-step-title">Data Pribadi</span>
+                            <span class="wizard-step-desc">Identitas & keluarga</span>
+                        </div>
+                    </div>
+                    <div class="wizard-step" data-step="2">
+                        <div class="wizard-step-bubble">
+                            <span class="wizard-step-number">2</span>
+                            <span class="wizard-step-check"><i class="ti ti-check"></i></span>
+                        </div>
+                        <div class="wizard-step-meta">
+                            <span class="wizard-step-title">Kontak & Alamat</span>
+                            <span class="wizard-step-desc">Kontak & domisili</span>
+                        </div>
+                    </div>
+                    <div class="wizard-step" data-step="3">
+                        <div class="wizard-step-bubble">
+                            <span class="wizard-step-number">3</span>
+                            <span class="wizard-step-check"><i class="ti ti-check"></i></span>
+                        </div>
+                        <div class="wizard-step-meta">
+                            <span class="wizard-step-title">Keanggotaan</span>
+                            <span class="wizard-step-desc">Jabatan & keuangan</span>
+                        </div>
+                    </div>
+                    <div class="wizard-step" data-step="4">
+                        <div class="wizard-step-bubble">
+                            <span class="wizard-step-number">4</span>
+                            <span class="wizard-step-check"><i class="ti ti-check"></i></span>
+                        </div>
+                        <div class="wizard-step-meta">
+                            <span class="wizard-step-title">Asuransi & Foto</span>
+                            <span class="wizard-step-desc">BPJS, tunjangan, foto</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <form id="wizardForm" action="{{ route('admin.anggota.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="wizardForm" class="wizard-modern" action="{{ route('admin.anggota.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         
         @if ($errors->any())
@@ -52,9 +85,13 @@
 
         <!-- Step 1: Data Pribadi -->
         <div class="form-step active" id="step1">
-            <div class="card border-0 shadow-lg">
-                <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="ti ti-person me-2"></i>Langkah 1: Data Pribadi</h5>
+            <div class="card wizard-card">
+                <div class="card-header wizard-card-header border-0">
+                    <div class="wizard-card-icon"><i class="ti ti-person"></i></div>
+                    <div>
+                        <h5 class="wizard-card-title">Langkah 1: Data Pribadi</h5>
+                        <small class="wizard-card-subtitle">Identitas, tempat & tanggal lahir</small>
+                    </div>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -85,10 +122,10 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label d-block text-secondary small text-uppercase fw-bold">Jenis Kelamin <span class="text-danger">*</span></label>
-                            <div class="btn-group w-100" role="group">
+                            <div class="wz-segmented gender" role="group">
                                 <input type="radio" class="btn-check" name="jk" id="jk_l" value="L" {{ old('jk') == 'L' ? 'checked' : '' }} required>
                                 <label class="btn btn-outline-primary" for="jk_l"><i class="ti ti-gender-male me-1"></i> Laki-laki</label>
-                                
+
                                 <input type="radio" class="btn-check" name="jk" id="jk_p" value="P" {{ old('jk') == 'P' ? 'checked' : '' }}>
                                 <label class="btn btn-outline-danger" for="jk_p"><i class="ti ti-gender-female me-1"></i> Perempuan</label>
                             </div>
@@ -129,16 +166,20 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 text-end">
-                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="2">Next <i class="ti ti-arrow-right ms-1"></i></button>
+                    <button type="button" class="btn btn-gradient px-5 next-btn" data-next="2">Lanjut <i class="ti ti-arrow-right ms-1"></i></button>
                 </div>
             </div>
         </div>
 
         <!-- Step 2: Kontak & Alamat -->
         <div class="form-step" id="step2">
-            <div class="card border-0 shadow-lg">
-                <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="ti ti-geo-alt me-2"></i>Langkah 2: Kontak & Alamat</h5>
+            <div class="card wizard-card">
+                <div class="card-header wizard-card-header border-0">
+                    <div class="wizard-card-icon"><i class="ti ti-geo-alt"></i></div>
+                    <div>
+                        <h5 class="wizard-card-title">Langkah 2: Kontak & Alamat</h5>
+                        <small class="wizard-card-subtitle">Kontak, wilayah & alamat lengkap</small>
+                    </div>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -188,17 +229,21 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="1"><i class="ti ti-arrow-left me-1"></i> Previous</button>
-                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="3">Next <i class="ti ti-arrow-right ms-1"></i></button>
+                    <button type="button" class="btn btn-ghost btn-outline-secondary px-5 prev-btn" data-prev="1"><i class="ti ti-arrow-left me-1"></i> Kembali</button>
+                    <button type="button" class="btn btn-gradient px-5 next-btn" data-next="3">Lanjut <i class="ti ti-arrow-right ms-1"></i></button>
                 </div>
             </div>
         </div>
 
         <!-- Step 3: Keanggotaan & Keuangan -->
         <div class="form-step" id="step3">
-            <div class="card border-0 shadow-lg">
-                <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="ti ti-briefcase me-2"></i>Langkah 3: Keanggotaan & Keuangan</h5>
+            <div class="card wizard-card">
+                <div class="card-header wizard-card-header border-0">
+                    <div class="wizard-card-icon"><i class="ti ti-briefcase"></i></div>
+                    <div>
+                        <h5 class="wizard-card-title">Langkah 3: Keanggotaan & Keuangan</h5>
+                        <small class="wizard-card-subtitle">SKPD, jabatan & data keuangan</small>
+                    </div>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-3">
@@ -255,41 +300,46 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="2"><i class="ti ti-arrow-left me-1"></i> Previous</button>
-                    <button type="button" class="btn btn-primary px-5 next-btn" data-next="4">Next <i class="ti ti-arrow-right ms-1"></i></button>
+                    <button type="button" class="btn btn-ghost btn-outline-secondary px-5 prev-btn" data-prev="2"><i class="ti ti-arrow-left me-1"></i> Kembali</button>
+                    <button type="button" class="btn btn-gradient px-5 next-btn" data-next="4">Lanjut <i class="ti ti-arrow-right ms-1"></i></button>
                 </div>
             </div>
         </div>
 
         <!-- Step 4: Asuransi & Tunjangan + Foto -->
         <div class="form-step" id="step4">
-            <div class="card border-0 shadow-lg">
-                <div class="card-header bg-transparent border-0 py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="ti ti-shield-check me-2"></i>Langkah 4: Asuransi & Foto</h5>
+            <div class="card wizard-card">
+                <div class="card-header wizard-card-header border-0">
+                    <div class="wizard-card-icon"><i class="ti ti-shield-check"></i></div>
+                    <div>
+                        <h5 class="wizard-card-title">Langkah 4: Asuransi & Foto</h5>
+                        <small class="wizard-card-subtitle">BPJS, JKK, JKM, tunjangan & foto</small>
+                    </div>
                 </div>
                 <div class="card-body p-4 pt-0">
                     <div class="row g-4">
                         <div class="col-md-4 text-center">
                             <label class="form-label d-block">Foto Anggota</label>
-                            <div class="mb-3">
-                                <img id="preview" src="https://ui-avatars.com/api/?name=New+Anggota&background=random&size=180" class="rounded border shadow-lg" width="180" height="180" title="Klik untuk ganti foto">
+                            <div class="photo-uploader" id="photoUploader" title="Klik atau seret foto di sini">
+                                <img id="preview" src="https://ui-avatars.com/api/?name=New+Anggota&background=random&size=200" alt="Foto anggota">
+                                <div class="photo-uploader-overlay">
+                                    <i class="ti ti-camera"></i>
+                                    <span>Klik atau seret foto</span>
+                                </div>
                             </div>
-                            <input type="file" class="form-control form-control-sm @error('foto_anggota') is-invalid @enderror" id="foto_anggota" name="foto_anggota">
-                            @error('foto_anggota')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            <input type="file" class="visually-hidden @error('foto_anggota') is-invalid @enderror" id="foto_anggota" name="foto_anggota" accept=".jpg,.jpeg,.png">
+                            <div class="form-text small text-muted mt-2">Format JPG/PNG, maks 2 MB</div>
+                            @error('foto_anggota')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-8">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label d-block">Peserta BPJS?</label>
-                                    <div class="d-flex gap-3 mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status_bpjs" id="status_bpjs_y" value="Y" {{ old('status_bpjs') == 'Y' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="status_bpjs_y">Ya</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status_bpjs" id="status_bpjs_t" value="T" {{ old('status_bpjs', 'T') == 'T' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="status_bpjs_t">Tidak</label>
-                                        </div>
+                                    <div class="wz-segmented mt-1">
+                                        <input type="radio" class="btn-check" name="status_bpjs" id="status_bpjs_y" value="Y" {{ old('status_bpjs') == 'Y' ? 'checked' : '' }}>
+                                        <label class="btn btn-outline-success" for="status_bpjs_y"><i class="ti ti-check me-1"></i> Ya</label>
+                                        <input type="radio" class="btn-check" name="status_bpjs" id="status_bpjs_t" value="T" {{ old('status_bpjs', 'T') == 'T' ? 'checked' : '' }}>
+                                        <label class="btn btn-outline-danger" for="status_bpjs_t"><i class="ti ti-x me-1"></i> Tidak</label>
                                     </div>
                                     @error('status_bpjs')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                                 </div>
@@ -300,15 +350,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label d-block">Peserta JKK?</label>
-                                    <div class="d-flex gap-3 mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status_jkk" id="status_jkk_y" value="Y" {{ old('status_jkk') == 'Y' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="status_jkk_y">Ya</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status_jkk" id="status_jkk_t" value="T" {{ old('status_jkk', 'T') == 'T' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="status_jkk_t">Tidak</label>
-                                        </div>
+                                    <div class="wz-segmented mt-1">
+                                        <input type="radio" class="btn-check" name="status_jkk" id="status_jkk_y" value="Y" {{ old('status_jkk') == 'Y' ? 'checked' : '' }}>
+                                        <label class="btn btn-outline-success" for="status_jkk_y"><i class="ti ti-check me-1"></i> Ya</label>
+                                        <input type="radio" class="btn-check" name="status_jkk" id="status_jkk_t" value="T" {{ old('status_jkk', 'T') == 'T' ? 'checked' : '' }}>
+                                        <label class="btn btn-outline-danger" for="status_jkk_t"><i class="ti ti-x me-1"></i> Tidak</label>
                                     </div>
                                     @error('status_jkk')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                                 </div>
@@ -319,15 +365,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label d-block">Peserta JKM?</label>
-                                    <div class="d-flex gap-3 mt-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status_jkm" id="status_jkm_y" value="Y" {{ old('status_jkm') == 'Y' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="status_jkm_y">Ya</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="status_jkm" id="status_jkm_t" value="T" {{ old('status_jkm', 'T') == 'T' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="status_jkm_t">Tidak</label>
-                                        </div>
+                                    <div class="wz-segmented mt-1">
+                                        <input type="radio" class="btn-check" name="status_jkm" id="status_jkm_y" value="Y" {{ old('status_jkm') == 'Y' ? 'checked' : '' }}>
+                                        <label class="btn btn-outline-success" for="status_jkm_y"><i class="ti ti-check me-1"></i> Ya</label>
+                                        <input type="radio" class="btn-check" name="status_jkm" id="status_jkm_t" value="T" {{ old('status_jkm', 'T') == 'T' ? 'checked' : '' }}>
+                                        <label class="btn btn-outline-danger" for="status_jkm_t"><i class="ti ti-x me-1"></i> Tidak</label>
                                     </div>
                                     @error('status_jkm')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                                 </div>
@@ -357,8 +399,8 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0 p-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary px-5 prev-btn" data-prev="3"><i class="ti ti-arrow-left me-1"></i> Previous</button>
-                    <button type="submit" class="btn btn-success btn-lg px-5">
+                    <button type="button" class="btn btn-ghost btn-outline-secondary px-5 prev-btn" data-prev="3"><i class="ti ti-arrow-left me-1"></i> Kembali</button>
+                    <button type="submit" class="btn btn-gradient btn-lg px-5">
                         <i class="ti ti-save me-1"></i> Simpan Data Anggota
                     </button>
                 </div>
@@ -367,8 +409,12 @@
     </form>
 </div>
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/anggota-wizard.css') }}?v={{ filemtime(public_path('assets/css/anggota-wizard.css')) }}">
+@endpush
+
 @push('scripts')
-<script src="{{ asset('assets/js/anggota.js') }}"></script>
+<script src="{{ asset('assets/js/anggota.js') }}?v={{ filemtime(public_path('assets/js/anggota.js')) }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         new AnggotaWizard({

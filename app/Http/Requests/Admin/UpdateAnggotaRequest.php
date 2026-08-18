@@ -67,4 +67,13 @@ class UpdateAnggotaRequest extends FormRequest
             'foto_anggota' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'foto_anggota.image' => 'Foto anggota harus berupa gambar (JPG/JPEG/PNG).',
+            'foto_anggota.mimes' => 'Foto anggota harus berformat JPG, JPEG, atau PNG.',
+            'foto_anggota.max' => 'Ukuran foto anggota maksimal 2 MB.',
+        ];
+    }
 }

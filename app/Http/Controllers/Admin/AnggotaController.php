@@ -156,9 +156,29 @@ class AnggotaController extends Controller implements HasMiddleware
                 break;
         }
 
-        $request->validate($rules);
+        $request->validate($rules, $this->stepMessages());
 
         return response()->json(['success' => true]);
+    }
+
+    protected function stepMessages(): array
+    {
+        return [
+            'foto_anggota.image' => 'Foto anggota harus berupa gambar (JPG/JPEG/PNG).',
+            'foto_anggota.mimes' => 'Foto anggota harus berformat JPG, JPEG, atau PNG.',
+            'foto_anggota.max' => 'Ukuran foto anggota maksimal 2 MB.',
+            'status_bpjs.required' => 'Status peserta BPJS wajib dipilih.',
+            'no_bpjs.required' => 'Nomor BPJS wajib diisi.',
+            'no_bpjs.required_if' => 'Nomor BPJS wajib diisi karena status BPJS adalah Ya.',
+            'status_jkk.required' => 'Status peserta JKK wajib dipilih.',
+            'no_jkk.required' => 'Nomor JKK wajib diisi.',
+            'no_jkk.required_if' => 'Nomor JKK wajib diisi karena status JKK adalah Ya.',
+            'status_jkm.required' => 'Status peserta JKM wajib dipilih.',
+            'no_jkm.required' => 'Nomor JKM wajib diisi.',
+            'no_jkm.required_if' => 'Nomor JKM wajib diisi karena status JKM adalah Ya.',
+            'status_tjgn_perum.required' => 'Status tunjangan perumahan wajib dipilih.',
+            'status_tjgn_transport.required' => 'Status tunjangan transport wajib dipilih.',
+        ];
     }
 
     public function create()

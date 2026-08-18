@@ -13,7 +13,8 @@ class AnggotaWizard {
         this.steps = this.form.querySelectorAll('.form-step');
         this.nextButtons = this.form.querySelectorAll('.next-btn');
         this.prevButtons = this.form.querySelectorAll('.prev-btn');
-        this.stepperItems = document.querySelectorAll('.step-item');
+        this.stepperItems = document.querySelectorAll('.wizard-step');
+        this.progressBar = document.getElementById('wizardProgressBar');
         
         this.provSelect = document.getElementById('prov');
         this.kabSelect = document.getElementById('kab');
@@ -21,6 +22,9 @@ class AnggotaWizard {
         this.desaSelect = document.getElementById('desa');
         this.fotoInput = document.getElementById('foto_anggota');
         this.previewImg = document.getElementById('preview');
+        this.photoUploader = document.getElementById('photoUploader');
+
+        this.currentStep = this.form.querySelector('.form-step.active') ? parseInt(this.form.querySelector('.form-step.active').id.replace('step', '')) : 1;
 
         this.init();
     }
@@ -88,7 +92,33 @@ class AnggotaWizard {
         const stepNumber = parseInt(stepElement.id.replace('step', ''));
         const formData = new FormData();
         formData.append('step', stepNumber);
+
+        // File inputs: validate type & size client-side for immediate feedback
+        if (input.type === 'file') {
+            if (input.files && input.files.length > 0) {
+                const file = input.files[0];
+                const allowedTypes = ['image/jpeg', 'image/png'];
+
+                if (allowedTypes.indexOf(file.type) === -1) {
+                    this.markInvalid(input, 'Format foto harus JPG, JPEG, atau PNG.');
+                    return false;
+                }
+
+                if (file.size > 2 * 1024 * 1024) {
+                    this.markInvalid(input, 'Ukuran foto maksimal 2 MB.');
+                    return false;
+                }
+
+                this.markValid(input);
+                return true;
+            }
+
+            this.clearValidation(input);
+            return true;
+        }
+
         formData.append(input.name, input.value);
+
         if (this.config.currentData.id) {
             formData.append('id', this.config.currentData.id);
         }
@@ -238,7 +268,7 @@ class AnggotaWizard {
                 // Show loading on button
                 const originalText = btn.innerHTML;
                 btn.disabled = true;
-                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Validating...';
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Memvalidasi...';
 
                 try {
                     const isValid = await this.validateStep(currentStepNumber);
@@ -258,6 +288,15 @@ class AnggotaWizard {
         this.prevButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 this.goToStep(btn.dataset.prev);
+            });
+        });
+
+        this.stepperItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const itemStep = parseInt(item.dataset.step);
+                if (item.classList.contains('clickable')) {
+                    this.goToStep(itemStep);
+                }
             });
         });
     }
@@ -348,31 +387,76 @@ class AnggotaWizard {
     }
 
     goToStep(stepNumber) {
-        this.steps.forEach(step => step.classList.remove('active'));
+        stepNumber = parseInt(stepNumber);
         const targetStep = document.getElementById(`step${stepNumber}`);
-        if(targetStep) targetStep.classList.add('active');
+        if (!targetStep) return;
+
+        const direction = stepNumber > this.currentStep ? 'right' : 'left';
+
+        this.steps.forEach(step => {
+            step.classList.remove('active', 'step-anim-right', 'step-anim-left');
+        });
+
+        targetStep.classList.add('active');
+        targetStep.classList.add(direction === 'right' ? 'step-anim-right' : 'step-anim-left');
+        setTimeout(() => targetStep.classList.remove('step-anim-right', 'step-anim-left'), 450);
 
         // Update Stepper UI
         this.stepperItems.forEach(item => {
             const itemStep = parseInt(item.dataset.step);
-            if (itemStep < stepNumber) {
-                item.classList.add('completed');
-                item.classList.remove('active');
-            } else if (itemStep == stepNumber) {
-                item.classList.add('active');
-                item.classList.remove('completed');
-            } else {
-                item.classList.remove('active', 'completed');
-            }
+            item.classList.toggle('completed', itemStep < stepNumber);
+            item.classList.toggle('active', itemStep === stepNumber);
+            item.classList.toggle('clickable', itemStep < stepNumber);
         });
+
+        // Update progress bar
+        if (this.progressBar) {
+            const progress = (stepNumber - 1) / Math.max(this.steps.length - 1, 1) * 100;
+            this.progressBar.style.width = `${progress}%`;
+        }
+
+        this.currentStep = stepNumber;
+
+        // Smooth scroll to top of the wizard
+        const stepperCard = document.querySelector('.wizard-stepper');
+        if (stepperCard) {
+            stepperCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     initImagePreview() {
         if (this.fotoInput && this.previewImg) {
-            // Click on image to trigger file input
-            this.previewImg.addEventListener('click', () => {
-                this.fotoInput.click();
-            });
+            const triggerFile = () => this.fotoInput.click();
+
+            // Click on uploader box to trigger file input
+            if (this.photoUploader) {
+                this.photoUploader.addEventListener('click', triggerFile);
+
+                // Drag & drop support
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    this.photoUploader.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        this.photoUploader.classList.add('dragover');
+                    });
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    this.photoUploader.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        this.photoUploader.classList.remove('dragover');
+                    });
+                });
+
+                this.photoUploader.addEventListener('drop', (e) => {
+                    const files = e.dataTransfer.files;
+                    if (files && files.length) {
+                        this.fotoInput.files = files;
+                        this.fotoInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                });
+            } else {
+                this.previewImg.addEventListener('click', triggerFile);
+            }
 
             this.fotoInput.addEventListener('change', (event) => {
                 const reader = new FileReader();
