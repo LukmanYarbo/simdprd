@@ -218,6 +218,7 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             ->get();
         
         $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
+        $anggota = $this->sortAnggotaByKomisiDanJabatan($anggota, $isKomisi);
 
         $existingMemberIds = $anggota->pluck('id_anggota')->toArray();
         $allAnggota = Anggota::select('id', 'nama_anggota', 'nik')
@@ -258,11 +259,6 @@ class SuratKeputusanController extends Controller implements HasMiddleware
     public function storeAnggota(Request $request)
     {
         $suratKeputusan = SuratKeputusan::with('alatKelengkapan')->findOrFail($request->id_surat_keputusan);
-        
-        if ($suratKeputusan->status !== 'A') {
-            return response()->json(['errors' => ['id_surat_keputusan' => ['Tidak dapat menambah anggota pada Surat Keputusan yang tidak aktif.']]], 422);
-        }
-
         $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
 
         $request->validate([
@@ -339,7 +335,7 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             case 'panja': $anggotaField = 'id_panja'; break;
         }
 
-        if ($anggotaField) {
+        if ($suratKeputusan->status === 'A' && $anggotaField) {
             $updateData = [$anggotaField => $request->id_jabatan_alat_kelengkapan];
             if ($namaAlatKelengkapan === 'komisi') {
                 $updateData['nama_komisi'] = $request->nama_komisi;
@@ -353,10 +349,6 @@ class SuratKeputusanController extends Controller implements HasMiddleware
     public function destroyAnggota($id)
     {
         $jabatanAnggota = JabatanAnggota::with('suratKeputusan.alatKelengkapan')->findOrFail($id);
-        
-        if (($jabatanAnggota->suratKeputusan->status ?? '') !== 'A') {
-            return response()->json(['error' => 'Tidak dapat menghapus anggota pada Surat Keputusan yang tidak aktif.'], 422);
-        }
 
         $namaAlatKelengkapan = strtolower($jabatanAnggota->suratKeputusan->alatKelengkapan->nama ?? '');
         $anggotaField = '';
@@ -387,19 +379,13 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         return response()->json(['success' => 'Anggota berhasil dihapus.']);
     }
 
-    public function print($id)
+    /**
+     * Sort SK members by nama_komisi (Komisi type only), then by position order:
+     * Ketua, Wakil, Sekretaris, Anggota. Members with the same position are sorted by name.
+     */
+    private function sortAnggotaByKomisiDanJabatan($anggota, bool $isKomisi)
     {
-        $suratKeputusan = SuratKeputusan::with(['alatKelengkapan', 'jabatanAnggota.anggota', 'jabatanAnggota.jabatanAlatKelengkapan'])
-            ->findOrFail($id);
-        
-        $pemda = Pemda::first();
-        
-        $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
-
-        // Custom sort for members based on position name
-        // For Komisi: sort by nama_komisi first, then Ketua, Wakil, Sekretaris, then Anggota
-        // For others: Ketua, Wakil, Sekretaris, then Anggota
-        $sortedAnggota = $suratKeputusan->jabatanAnggota->sort(function($a, $b) use ($isKomisi) {
+        return $anggota->sort(function($a, $b) use ($isKomisi) {
             if ($isKomisi) {
                 $komisiA = $a->nama_komisi ?? '';
                 $komisiB = $b->nama_komisi ?? '';
@@ -409,19 +395,32 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             }
 
             $order = ['Ketua' => 1, 'Wakil' => 2, 'Sekretaris' => 3, 'Anggota' => 4];
-            
-            $nameA = $a->jabatanAlatKelengkapan->nama;
-            $nameB = $b->jabatanAlatKelengkapan->nama;
-            
+
+            $nameA = $a->jabatanAlatKelengkapan->nama ?? '';
+            $nameB = $b->jabatanAlatKelengkapan->nama ?? '';
+
             $valA = $order[$nameA] ?? 99;
             $valB = $order[$nameB] ?? 99;
-            
+
             if ($valA == $valB) {
-                return strcmp($a->anggota->nama_anggota, $b->anggota->nama_anggota);
+                return strcmp($a->anggota->nama_anggota ?? '', $b->anggota->nama_anggota ?? '');
             }
-            
+
             return $valA - $valB;
-        });
+        })->values();
+    }
+
+    public function print($id)
+    {
+        $suratKeputusan = SuratKeputusan::with(['alatKelengkapan', 'jabatanAnggota.anggota', 'jabatanAnggota.jabatanAlatKelengkapan'])
+            ->findOrFail($id);
+        
+        $pemda = Pemda::first();
+        
+        $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
+
+        // Custom sort for members: by nama_komisi (Komisi only), then Ketua, Wakil, Sekretaris, Anggota
+        $sortedAnggota = $this->sortAnggotaByKomisiDanJabatan($suratKeputusan->jabatanAnggota, $isKomisi);
 
         // Fetch Ketua DPRD for signature
         $ketuaDprd = \App\Models\Anggota::whereHas('jabatan', function($q) {

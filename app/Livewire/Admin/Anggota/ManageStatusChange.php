@@ -110,7 +110,16 @@ class ManageStatusChange extends Component
                 $query->where('nama_anggota', 'like', '%' . $this->search . '%')
                       ->orWhere('nik', 'like', '%' . $this->search . '%');
             })
-            ->latest()
+            ->leftJoin('jabatan_dprd', 'anggota.id_dprd', '=', 'jabatan_dprd.id')
+            ->orderByRaw("CASE
+                WHEN LOWER(jabatan_dprd.nama) LIKE '%ketua%' THEN 1
+                WHEN LOWER(jabatan_dprd.nama) LIKE '%wakil%' THEN 2
+                WHEN LOWER(jabatan_dprd.nama) LIKE '%anggota%' THEN 3
+                ELSE 4
+            END")
+            ->orderBy('jabatan_dprd.nama')
+            ->orderBy('nama_anggota')
+            ->select('anggota.*')
             ->paginate(10);
 
         $statuses = StatusKeanggotaan::all();

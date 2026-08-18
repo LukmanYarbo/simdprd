@@ -210,7 +210,7 @@
     <script src="{{ asset('assets/libs/jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
 <script>
@@ -399,21 +399,11 @@ $(function() {
         $('#tableAnggotaList tbody').html('<tr><td colspan="4" class="text-center">Memuat data...</td></tr>');
         
         $.get("{{ url('admin/surat-keputusan') }}/" + id + "/anggota", function(data) {
-            var isSkActive = data.surat_keputusan.status === 'A';
-            
-            var titleSuffix = isSkActive 
-                ? '' 
-                : ' <span class="badge bg-danger text-white rounded-pill ms-2" style="font-size: 11px; padding: 4px 8px;">Tidak Aktif (Read Only)</span>';
-            
-            $('#modalAnggotaTitle').html('Kelola Anggota ' + (data.surat_keputusan.alat_kelengkapan.ket || '') + titleSuffix);
+            $('#modalAnggotaTitle').html('Kelola Anggota ' + (data.surat_keputusan.alat_kelengkapan.ket || ''));
             $('#modalAnggotaSubtitle').text('No. SK: ' + data.surat_keputusan.no_sk + ' (' + data.surat_keputusan.alat_kelengkapan.nama + ')');
 
-            // Hide or show the Tambah form depending on SK active status
-            if (isSkActive) {
-                $('#formAnggotaCard').show();
-            } else {
-                $('#formAnggotaCard').hide();
-            }
+            // Always show the Tambah form (member management allowed regardless of status)
+            $('#formAnggotaCard').show();
 
             // Toggle Nama Komisi field
             var isKomisi = data.is_komisi || false;
@@ -450,7 +440,7 @@ $(function() {
                 jabatanSelect.append('<option value="'+val.id+'">'+val.nama+'</option>');
             });
 
-            renderAnggotaTable(data.existing_anggota, isKomisi, isSkActive);
+            renderAnggotaTable(data.existing_anggota, isKomisi);
             modalAnggota.show();
         }).fail(function(xhr) {
             console.error(xhr);
@@ -458,9 +448,9 @@ $(function() {
         });
     }
 
-    function renderAnggotaTable(data, isKomisi, isSkActive) {
+    function renderAnggotaTable(data, isKomisi) {
         var html = '';
-        var colSpan = isKomisi ? (isSkActive ? 4 : 3) : (isSkActive ? 3 : 2);
+        var colSpan = isKomisi ? 4 : 3;
         if(data.length === 0) {
             html = '<tr><td colspan="' + colSpan + '" class="text-center text-muted">Belum ada anggota.</td></tr>';
         } else {
@@ -471,19 +461,12 @@ $(function() {
                     html += '<td>' + (item.nama_komisi || '-') + '</td>';
                 }
                 html += '<td>' + item.jabatan_alat_kelengkapan.nama + '</td>';
-                if (isSkActive) {
-                    html += '<td class="text-end"><button type="button" class="btn-icon-modern text-danger btn-delete-member" data-id="'+item.id+'"><i class="ti ti-trash"></i></button></td>';
-                }
+                html += '<td class="text-end"><button type="button" class="btn-icon-modern text-danger btn-delete-member" data-id="'+item.id+'"><i class="ti ti-trash"></i></button></td>';
                 html += '</tr>';
             });
         }
         $('#tableAnggotaList tbody').html(html);
-        
-        if (isSkActive) {
-            $('.action-col').show();
-        } else {
-            $('.action-col').hide();
-        }
+        $('.action-col').show();
     }
 
     // Clear Nama Komisi button

@@ -15,9 +15,6 @@
     <!-- Modern Styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/admin-modern.css') }}">
 
-    <!-- Bootstrap CSS -->
-    <link href="{{ asset('assets/libs/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     @vite(['resources/js/app.js'])
     <style>
         :root {

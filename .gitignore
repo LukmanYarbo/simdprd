@@ -22,3 +22,16 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# One-off debug / scratch scripts
+/scratch/
+/tmp/
+/check_*.php
+/verify_*.php
+/debug_*.php
+/final_check.php
+/read_log.php
+/sync_dsb.php
+/create_db.php
+/routes.txt
+/migrate_error.txt
