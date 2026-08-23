@@ -69,13 +69,13 @@
         $potLainLain = 0; // Replace with actual field if available
         
         // Helper for Alat Kelengkapan
-        $jabatanKomisi = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 1);
-        $jabatanBanmus = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 2);
-        $jabatanBanggar = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 3);
-        $jabatanBk = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 4);
-        $jabatanBalegda = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 5);
-        $jabatanPansus = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 6);
-        $jabatanPanja = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 7);
+        $jabatanKomisi = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 2);
+        $jabatanBanmus = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 3);
+        $jabatanBanggar = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 4);
+        $jabatanBk = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 5);
+        $jabatanBalegda = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 6);
+        $jabatanPansus = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 7);
+        $jabatanPanja = $a->jabatanAnggota->firstWhere('id_alat_kelengkapan', 8);
         
         $displayKomisi = $jabatanKomisi ? ($jabatanKomisi->jabatanAlatKelengkapan->nama . ($jabatanKomisi->nama_komisi ? ' Komisi ' . $jabatanKomisi->nama_komisi : ' Komisi')) : '-';
         $displayBanmus = $jabatanBanmus ? ($jabatanBanmus->jabatanAlatKelengkapan->nama . ' Badan Musyawarah') : '-';

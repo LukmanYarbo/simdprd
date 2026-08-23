@@ -23,7 +23,7 @@ class SuratKeputusanController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view surat_keputusan|create surat_keputusan|edit surat_keputusan|delete surat_keputusan', only: ['index', 'show']),
+            new Middleware('permission:view surat_keputusan|create surat_keputusan|edit surat_keputusan|delete surat_keputusan', only: ['index', 'show', 'strukturAll']),
             new Middleware('permission:create surat_keputusan', only: ['create', 'store']),
             new Middleware('permission:edit surat_keputusan', only: ['edit', 'update', 'getAnggota', 'storeAnggota', 'destroyAnggota']),
             new Middleware('permission:delete surat_keputusan', only: ['destroy']),
@@ -58,6 +58,7 @@ class SuratKeputusanController extends Controller implements HasMiddleware
                     $btn = '<div class="d-flex gap-2 justify-content-end">';
                     if($user->can('view surat_keputusan')){
                         $btn .= '<a href="'.route('admin.surat-keputusan.print', $row->id).'" target="_blank" class="btn-icon-modern" title="Cetak"><i class="ti ti-printer"></i></a>';
+                        $btn .= '<button type="button" class="btn-icon-modern text-success btn-struktur" data-id="'.$row->id.'" title="Struktur Organisasi"><i class="ti ti-sitemap"></i></button>';
                     }
                     if($user->can('edit surat_keputusan')){
                         $btn .= '<button type="button" class="btn-icon-modern text-info btn-members" data-id="'.$row->id.'" title="Kelola Anggota"><i class="ti ti-users"></i></button>';
@@ -80,6 +81,47 @@ class SuratKeputusanController extends Controller implements HasMiddleware
     {
         $alatKelengkapans = AlatKelengkapan::all();
         return view('admin.surat_keputusan.create', compact('alatKelengkapans'));
+    }
+
+    /**
+     * Struktur organisasi SK aktif untuk setiap Alat Kelengkapan DPRD.
+     */
+    public function strukturAll()
+    {
+        $alatKelengkapans = AlatKelengkapan::orderBy('id')->get();
+
+        $data = $alatKelengkapans->map(function ($ak) {
+            $isKomisi = strtolower($ak->nama) === 'komisi';
+
+            $sk = SuratKeputusan::with(['jabatanAnggota.anggota', 'jabatanAnggota.jabatanAlatKelengkapan'])
+                ->where('id_alat_kelengkapan', $ak->id)
+                ->where('status', 'A')
+                ->first();
+
+            return [
+                'id' => $ak->id,
+                'nama' => $ak->nama,
+                'ket' => $ak->ket,
+                'is_komisi' => $isKomisi,
+                'surat_keputusan' => $sk ? [
+                    'id' => $sk->id,
+                    'no_sk' => $sk->no_sk,
+                    'tgl_sk' => \Carbon\Carbon::parse($sk->tgl_sk)->locale('id')->translatedFormat('d F Y'),
+                    'jumlah_anggota' => $sk->jabatanAnggota->count(),
+                    'anggota' => $this->sortAnggotaByKomisiDanJabatan($sk->jabatanAnggota, $isKomisi)
+                        ->map(function ($ja) {
+                            return [
+                                'id' => $ja->id,
+                                'nama_anggota' => $ja->anggota->nama_anggota ?? '-',
+                                'jabatan' => $ja->jabatanAlatKelengkapan->nama ?? '-',
+                                'nama_komisi' => $ja->nama_komisi,
+                            ];
+                        })->values(),
+                ] : null,
+            ];
+        })->values();
+
+        return response()->json($data);
     }
 
     public function store(Request $request)
@@ -218,11 +260,16 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             ->get();
         
         $isKomisi = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'komisi';
+        $isPimpinan = strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'pimpinan dprd';
         $anggota = $this->sortAnggotaByKomisiDanJabatan($anggota, $isKomisi);
 
         $existingMemberIds = $anggota->pluck('id_anggota')->toArray();
         $allAnggota = Anggota::select('id', 'nama_anggota', 'nik')
             ->where('id_status_keanggotaan', 1)
+            ->when($isPimpinan, function ($q) {
+                // SK Pimpinan DPRD hanya boleh menganggotakan Ketua/Wakil DPRD (id_dprd 1 atau 2)
+                $q->whereIn('id_dprd', [1, 2]);
+            })
             ->whereNotIn('id', $existingMemberIds)
             ->when($isKomisi, function ($q) {
                 // Exclude Ketua DPRD and Wakil Ketua DPRD for Komisi-type SK
@@ -232,7 +279,10 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             })
             ->orderBy('nama_anggota')
             ->get();
-        $jabatanAlatKelengkapan = JabatanAlatKelengkapan::all();
+        $jabatanAlatKelengkapan = JabatanAlatKelengkapan::orderBy('id')
+            ->get()
+            ->unique('nama')
+            ->values();
 
         // For Komisi: collect all distinct nama_komisi used in any Komisi SK
         $namaKomisiList = [];
@@ -276,42 +326,51 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         }
 
         // Validate Position Limits (Ketua, Wakil, Sekretaris)
+        // Jika batas terlampaui, kirim konfirmasi ke client (bukan tolak langsung).
+        // Client akan menampilkan dialog konfirmasi; jika user setuju, request
+        // dikirim ulang dengan parameter force=1.
         $jabatan = JabatanAlatKelengkapan::findOrFail($request->id_jabatan_alat_kelengkapan);
+        $limitMessage = null;
+
         if (in_array($jabatan->nama, ['Ketua', 'Wakil', 'Sekretaris'])) {
             $namaAlatKelengkapan = strtolower($suratKeputusan->alatKelengkapan->nama ?? '');
             $isBanggarBanmus = in_array($namaAlatKelengkapan, ['banggar', 'banmus']);
 
             // For Wakil in Banggar/Banmus: quota = number of "Wakil Ketua DPRD" members
             if ($jabatan->nama === 'Wakil' && $isBanggarBanmus) {
-                // Count total anggota whose jabatan DPRD name contains "Wakil Ketua DPRD" (case-insensitive)
                 $wakilKuota = \App\Models\Anggota::where('id_status_keanggotaan', 1)
                     ->whereHas('jabatan', function ($q) {
                         $q->whereRaw('LOWER(nama) LIKE ?', ['%wakil ketua dprd%']);
                     })
                     ->count();
 
-                // Count how many Wakil already exist in this SK
                 $wakilTerisi = JabatanAnggota::where('id_surat_keputusan', $request->id_surat_keputusan)
                     ->where('id_jabatan_alat_kelengkapan', $request->id_jabatan_alat_kelengkapan)
                     ->count();
 
                 if ($wakilTerisi >= $wakilKuota) {
-                    return response()->json(['errors' => ['id_jabatan_alat_kelengkapan' => [
-                        "Jabatan Wakil sudah penuh ($wakilTerisi/$wakilKuota). Kuota disesuaikan dengan jumlah Wakil Ketua DPRD."
-                    ]]], 422);
+                    $limitMessage = "Jumlah Wakil sudah mencapai batas standar ($wakilTerisi/$wakilKuota). Batas disesuaikan dengan jumlah Wakil Ketua DPRD.";
                 }
             } else {
-                // Default: max 1 for Ketua & Sekretaris, and Wakil on non-Banggar/Banmus
                 $posQuery = JabatanAnggota::where('id_surat_keputusan', $request->id_surat_keputusan)
                     ->where('id_jabatan_alat_kelengkapan', $request->id_jabatan_alat_kelengkapan);
                 if ($isKomisi) {
                     $posQuery->where('nama_komisi', $request->nama_komisi);
                 }
+
                 if ($posQuery->exists()) {
+                    $pemegang = $posQuery->with('anggota')->first()?->anggota;
                     $scope = $isKomisi ? "di Komisi '{$request->nama_komisi}'" : 'dalam SK ini';
-                    return response()->json(['errors' => ['id_jabatan_alat_kelengkapan' => ["Jabatan $jabatan->nama sudah terisi $scope."]]], 422);
+                    $limitMessage = "Jabatan $jabatan->nama sudah terisi oleh " . ($pemegang->nama_anggota ?? 'anggota lain') . " $scope.";
                 }
             }
+        }
+
+        if ($limitMessage && ! $request->boolean('force')) {
+            return response()->json([
+                'requires_confirmation' => true,
+                'message' => $limitMessage . ' Tetap tambahkan anggota ini dengan jabatan yang sama?',
+            ], 422);
         }
 
         JabatanAnggota::create([
@@ -321,6 +380,19 @@ class SuratKeputusanController extends Controller implements HasMiddleware
             'id_alat_kelengkapan' => $suratKeputusan->id_alat_kelengkapan,
             'nama_komisi' => $isKomisi ? $request->nama_komisi : null,
         ]);
+
+        // Sinkronisasi khusus SK Pimpinan DPRD:
+        // jabatan Ketua -> anggota.id_dprd = 1, jabatan Wakil -> anggota.id_dprd = 2
+        if (strtolower($suratKeputusan->alatKelengkapan->nama ?? '') === 'pimpinan dprd') {
+            $dprdValue = match ($jabatan->nama) {
+                'Ketua' => 1,
+                'Wakil' => 2,
+                default => null,
+            };
+            if ($dprdValue) {
+                \App\Models\Anggota::where('id', $request->id_anggota)->update(['id_dprd' => $dprdValue]);
+            }
+        }
 
         $namaAlatKelengkapan = strtolower($suratKeputusan->alatKelengkapan->nama ?? '');
         $anggotaField = '';
@@ -348,9 +420,23 @@ class SuratKeputusanController extends Controller implements HasMiddleware
 
     public function destroyAnggota($id)
     {
-        $jabatanAnggota = JabatanAnggota::with('suratKeputusan.alatKelengkapan')->findOrFail($id);
+        $jabatanAnggota = JabatanAnggota::with(['suratKeputusan.alatKelengkapan', 'jabatanAlatKelengkapan'])->findOrFail($id);
 
         $namaAlatKelengkapan = strtolower($jabatanAnggota->suratKeputusan->alatKelengkapan->nama ?? '');
+
+        // Kembalikan id_dprd ke 3 (Anggota DPRD) bila anggota dihapus dari SK Pimpinan DPRD
+        if ($namaAlatKelengkapan === 'pimpinan dprd') {
+            $dprdValue = match (strtolower($jabatanAnggota->jabatanAlatKelengkapan->nama ?? '')) {
+                'ketua' => 1,
+                'wakil' => 2,
+                default => null,
+            };
+            if ($dprdValue) {
+                \App\Models\Anggota::where('id', $jabatanAnggota->id_anggota)
+                    ->where('id_dprd', $dprdValue)
+                    ->update(['id_dprd' => 3]);
+            }
+        }
         $anggotaField = '';
         
         switch ($namaAlatKelengkapan) {

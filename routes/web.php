@@ -39,6 +39,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
             'alat-kelengkapan' => 'alatKelengkapan'
         ]);
         Route::get('surat-keputusan/{suratKeputusan}/print', [\App\Http\Controllers\Admin\SuratKeputusanController::class , 'print'])->name('surat-keputusan.print');
+        Route::get('surat-keputusan/struktur', [\App\Http\Controllers\Admin\SuratKeputusanController::class , 'strukturAll'])->name('surat-keputusan.struktur-all');
         Route::resource('surat-keputusan', \App\Http\Controllers\Admin\SuratKeputusanController::class)->parameters([
             'surat-keputusan' => 'suratKeputusan'
         ]);

@@ -13,7 +13,7 @@ class JabatanAnggotaSeeder extends Seeder
   0 => 
   array (
     'id' => 45,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 1,
     'id_anggota' => 1,
@@ -24,7 +24,7 @@ class JabatanAnggotaSeeder extends Seeder
   1 => 
   array (
     'id' => 46,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 2,
@@ -35,7 +35,7 @@ class JabatanAnggotaSeeder extends Seeder
   2 => 
   array (
     'id' => 47,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 3,
@@ -46,7 +46,7 @@ class JabatanAnggotaSeeder extends Seeder
   3 => 
   array (
     'id' => 48,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 8,
@@ -57,7 +57,7 @@ class JabatanAnggotaSeeder extends Seeder
   4 => 
   array (
     'id' => 49,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 16,
@@ -68,7 +68,7 @@ class JabatanAnggotaSeeder extends Seeder
   5 => 
   array (
     'id' => 50,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 6,
@@ -79,7 +79,7 @@ class JabatanAnggotaSeeder extends Seeder
   6 => 
   array (
     'id' => 51,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 19,
@@ -90,7 +90,7 @@ class JabatanAnggotaSeeder extends Seeder
   7 => 
   array (
     'id' => 52,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 12,
@@ -101,7 +101,7 @@ class JabatanAnggotaSeeder extends Seeder
   8 => 
   array (
     'id' => 53,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 4,
@@ -112,7 +112,7 @@ class JabatanAnggotaSeeder extends Seeder
   9 => 
   array (
     'id' => 54,
-    'id_alat_kelengkapan' => 2,
+    'id_alat_kelengkapan' => 3,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 17,
@@ -123,7 +123,7 @@ class JabatanAnggotaSeeder extends Seeder
   10 => 
   array (
     'id' => 55,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 1,
     'id_anggota' => 1,
@@ -134,7 +134,7 @@ class JabatanAnggotaSeeder extends Seeder
   11 => 
   array (
     'id' => 56,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 2,
@@ -145,7 +145,7 @@ class JabatanAnggotaSeeder extends Seeder
   12 => 
   array (
     'id' => 57,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 3,
@@ -156,7 +156,7 @@ class JabatanAnggotaSeeder extends Seeder
   13 => 
   array (
     'id' => 58,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 18,
@@ -167,7 +167,7 @@ class JabatanAnggotaSeeder extends Seeder
   14 => 
   array (
     'id' => 59,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 16,
@@ -178,7 +178,7 @@ class JabatanAnggotaSeeder extends Seeder
   15 => 
   array (
     'id' => 60,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 13,
@@ -189,7 +189,7 @@ class JabatanAnggotaSeeder extends Seeder
   16 => 
   array (
     'id' => 61,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 7,
@@ -200,7 +200,7 @@ class JabatanAnggotaSeeder extends Seeder
   17 => 
   array (
     'id' => 62,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 15,
@@ -211,7 +211,7 @@ class JabatanAnggotaSeeder extends Seeder
   18 => 
   array (
     'id' => 63,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 19,
@@ -222,7 +222,7 @@ class JabatanAnggotaSeeder extends Seeder
   19 => 
   array (
     'id' => 64,
-    'id_alat_kelengkapan' => 3,
+    'id_alat_kelengkapan' => 4,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 4,
@@ -233,7 +233,7 @@ class JabatanAnggotaSeeder extends Seeder
   20 => 
   array (
     'id' => 65,
-    'id_alat_kelengkapan' => 4,
+    'id_alat_kelengkapan' => 5,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 1,
     'id_anggota' => 11,
@@ -244,7 +244,7 @@ class JabatanAnggotaSeeder extends Seeder
   21 => 
   array (
     'id' => 66,
-    'id_alat_kelengkapan' => 4,
+    'id_alat_kelengkapan' => 5,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 13,
@@ -255,7 +255,7 @@ class JabatanAnggotaSeeder extends Seeder
   22 => 
   array (
     'id' => 67,
-    'id_alat_kelengkapan' => 4,
+    'id_alat_kelengkapan' => 5,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 14,
@@ -266,7 +266,7 @@ class JabatanAnggotaSeeder extends Seeder
   23 => 
   array (
     'id' => 68,
-    'id_alat_kelengkapan' => 5,
+    'id_alat_kelengkapan' => 6,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 1,
     'id_anggota' => 12,
@@ -277,7 +277,7 @@ class JabatanAnggotaSeeder extends Seeder
   24 => 
   array (
     'id' => 69,
-    'id_alat_kelengkapan' => 5,
+    'id_alat_kelengkapan' => 6,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 14,
@@ -288,7 +288,7 @@ class JabatanAnggotaSeeder extends Seeder
   25 => 
   array (
     'id' => 70,
-    'id_alat_kelengkapan' => 5,
+    'id_alat_kelengkapan' => 6,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 3,
     'id_anggota' => 4,
@@ -299,7 +299,7 @@ class JabatanAnggotaSeeder extends Seeder
   26 => 
   array (
     'id' => 71,
-    'id_alat_kelengkapan' => 5,
+    'id_alat_kelengkapan' => 6,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 11,
@@ -310,7 +310,7 @@ class JabatanAnggotaSeeder extends Seeder
   27 => 
   array (
     'id' => 72,
-    'id_alat_kelengkapan' => 5,
+    'id_alat_kelengkapan' => 6,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 10,
@@ -321,7 +321,7 @@ class JabatanAnggotaSeeder extends Seeder
   28 => 
   array (
     'id' => 73,
-    'id_alat_kelengkapan' => 5,
+    'id_alat_kelengkapan' => 6,
     'nama_komisi' => NULL,
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 20,
@@ -332,7 +332,7 @@ class JabatanAnggotaSeeder extends Seeder
   29 => 
   array (
     'id' => 74,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'I',
     'id_jabatan_alat_kelengkapan' => 1,
     'id_anggota' => 8,
@@ -343,7 +343,7 @@ class JabatanAnggotaSeeder extends Seeder
   30 => 
   array (
     'id' => 75,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'I',
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 20,
@@ -354,7 +354,7 @@ class JabatanAnggotaSeeder extends Seeder
   31 => 
   array (
     'id' => 76,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'I',
     'id_jabatan_alat_kelengkapan' => 3,
     'id_anggota' => 6,
@@ -365,7 +365,7 @@ class JabatanAnggotaSeeder extends Seeder
   32 => 
   array (
     'id' => 77,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'I',
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 4,
@@ -376,7 +376,7 @@ class JabatanAnggotaSeeder extends Seeder
   33 => 
   array (
     'id' => 78,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'I',
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 9,
@@ -387,7 +387,7 @@ class JabatanAnggotaSeeder extends Seeder
   34 => 
   array (
     'id' => 79,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'I',
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 5,
@@ -398,7 +398,7 @@ class JabatanAnggotaSeeder extends Seeder
   35 => 
   array (
     'id' => 80,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'II',
     'id_jabatan_alat_kelengkapan' => 1,
     'id_anggota' => 18,
@@ -409,7 +409,7 @@ class JabatanAnggotaSeeder extends Seeder
   36 => 
   array (
     'id' => 81,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'II',
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 10,
@@ -420,7 +420,7 @@ class JabatanAnggotaSeeder extends Seeder
   37 => 
   array (
     'id' => 82,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'II',
     'id_jabatan_alat_kelengkapan' => 3,
     'id_anggota' => 19,
@@ -431,7 +431,7 @@ class JabatanAnggotaSeeder extends Seeder
   38 => 
   array (
     'id' => 83,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'II',
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 7,
@@ -442,7 +442,7 @@ class JabatanAnggotaSeeder extends Seeder
   39 => 
   array (
     'id' => 84,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'II',
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 11,
@@ -453,7 +453,7 @@ class JabatanAnggotaSeeder extends Seeder
   40 => 
   array (
     'id' => 85,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'III',
     'id_jabatan_alat_kelengkapan' => 1,
     'id_anggota' => 16,
@@ -464,7 +464,7 @@ class JabatanAnggotaSeeder extends Seeder
   41 => 
   array (
     'id' => 86,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'III',
     'id_jabatan_alat_kelengkapan' => 2,
     'id_anggota' => 13,
@@ -475,7 +475,7 @@ class JabatanAnggotaSeeder extends Seeder
   42 => 
   array (
     'id' => 87,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'III',
     'id_jabatan_alat_kelengkapan' => 3,
     'id_anggota' => 12,
@@ -486,7 +486,7 @@ class JabatanAnggotaSeeder extends Seeder
   43 => 
   array (
     'id' => 88,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'III',
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 15,
@@ -497,7 +497,7 @@ class JabatanAnggotaSeeder extends Seeder
   44 => 
   array (
     'id' => 89,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'III',
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 17,
@@ -508,7 +508,7 @@ class JabatanAnggotaSeeder extends Seeder
   45 => 
   array (
     'id' => 90,
-    'id_alat_kelengkapan' => 1,
+    'id_alat_kelengkapan' => 2,
     'nama_komisi' => 'III',
     'id_jabatan_alat_kelengkapan' => 4,
     'id_anggota' => 14,

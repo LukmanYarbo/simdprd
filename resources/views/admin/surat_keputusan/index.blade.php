@@ -12,6 +12,7 @@
     <div class="row mb-4 align-items-center">
         <div class="col">
             <h2 class="h4 mb-0 fw-bold">Surat Keputusan</h2>
+            <p class="text-muted small mb-0">Kelola SK dan struktur organisasi setiap Alat Kelengkapan DPRD</p>
         </div>
         <div class="col-auto">
             @can('create surat_keputusan')
@@ -23,95 +24,149 @@
     </div>
 
     <div class="card border-0 shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0 w-100" id="surat-keputusan-table">
-                    <thead class="bg-body-tertiary text-muted">
-                        <tr>
-                            <th class="border-0" width="5%">No</th>
-                            <th class="border-0">No. SK</th>
-                            <th class="border-0">Tanggal SK</th>
-                            <th class="border-0">Nama Alat Kelengkapan</th>
-                            <th class="border-0">Jumlah Anggota</th>
-                            <th class="border-0">Status</th>
-                          
-                            <th class="border-0">File</th>
-                            <th class="border-0 text-end pe-4" width="15%">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+        <div class="card-header bg-white border-bottom py-2 px-3">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active fw-semibold" id="tab-data-btn" data-bs-toggle="tab" data-bs-target="#tabData" type="button" role="tab">
+                        <i class="ti ti-list-details me-1"></i>Data Surat Keputusan
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold" id="tab-struktur-btn" data-bs-toggle="tab" data-bs-target="#tabStruktur" type="button" role="tab">
+                        <i class="ti ti-sitemap me-1"></i>Struktur Organisasi
+                    </button>
+                </li>
+            </ul>
         </div>
-    </div>
+        <div class="card-body p-3 p-md-4">
+            <div class="tab-content">
+                {{-- ================= TAB DATA ================= --}}
+                <div class="tab-pane fade show active" id="tabData" role="tabpanel">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 w-100" id="surat-keputusan-table">
+                            <thead class="bg-body-tertiary text-muted">
+                                <tr>
+                                    <th class="border-0" width="5%">No</th>
+                                    <th class="border-0">No. SK</th>
+                                    <th class="border-0">Tanggal SK</th>
+                                    <th class="border-0">Nama Alat Kelengkapan</th>
+                                    <th class="border-0">Jumlah Anggota</th>
+                                    <th class="border-0">Status</th>
+                                    <th class="border-0">File</th>
+                                    <th class="border-0 text-end pe-4" width="15%">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
 
-    {{-- PDF Preview Panel --}}
-    <div class="card border-0 shadow-lg mt-4" id="pdfPreviewCard" style="display:none;">
-        <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
-            <h6 class="m-0 fw-bold text-danger"><i class="ti ti-file-earmark-pdf me-2"></i>Preview SK: <span id="pdfTitle"></span></h6>
-            <button class="btn-icon-modern" onclick="closePdfPreview()">
-                <i class="ti ti-x"></i>
-            </button>
-        </div>
-        <div class="card-body p-0">
-            <iframe id="pdfFrame" src="" style="width:100%; height:80vh; border:none;"></iframe>
+                    {{-- PDF Preview Panel --}}
+                    <div class="card border shadow-lg mt-4" id="pdfPreviewCard" style="display:none;">
+                        <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 fw-bold text-danger"><i class="ti ti-file-earmark-pdf me-2"></i>Preview SK: <span id="pdfTitle"></span></h6>
+                            <button class="btn-icon-modern" onclick="closePdfPreview()">
+                                <i class="ti ti-x"></i>
+                            </button>
+                        </div>
+                        <div class="card-body p-0">
+                            <iframe id="pdfFrame" src="" style="width:100%; height:80vh; border:none;"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- ================= TAB STRUKTUR ORGANISASI ================= --}}
+                <div class="tab-pane fade" id="tabStruktur" role="tabpanel">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                        <p class="text-muted small mb-0">
+                            <i class="ti ti-info-circle me-1"></i>Struktur organisasi berdasarkan <strong>SK Aktif</strong> masing-masing Alat Kelengkapan DPRD.
+                        </p>
+                        <button type="button" class="btn btn-sm btn-light border rounded-pill px-3" id="btnReloadStruktur">
+                            <i class="ti ti-refresh me-1"></i>Muat Ulang
+                        </button>
+                    </div>
+                    <div id="strukturContainer">
+                        <div class="text-center text-muted py-5">
+                            <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>Memuat struktur organisasi...
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Form SK -->
 <div class="modal fade" id="modalSuratKeputusan" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-light border-bottom-0 pt-4 px-4 pb-2">
-                <h5 class="modal-title fw-bold text-primary" id="modalTitle">Tambah Surat Keputusan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header bg-primary text-white pt-4 px-4 pb-3 rounded-top">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle bg-white bg-opacity-25" style="width:38px;height:38px;">
+                        <i class="ti ti-file-text fs-5"></i>
+                    </span>
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0" id="modalTitle">Tambah Surat Keputusan</h5>
+                        <small class="opacity-75" id="modalSubtitle">Lengkapi data surat keputusan di bawah ini</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
                 <form id="formSuratKeputusan" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" id="id" name="id">
-                    <div class="mb-3">
-                        <label for="no_sk" class="form-label">No. SK <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="no_sk" name="no_sk" required>
-                        <div class="invalid-feedback"></div>
+
+                    <h6 class="text-uppercase text-muted fw-bold small mb-3"><i class="ti ti-id-badge me-1"></i>Informasi SK</h6>
+                    <div class="row g-3 mb-1">
+                        <div class="col-md-7">
+                            <label for="no_sk" class="form-label fw-semibold">No. SK <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="no_sk" name="no_sk" placeholder="Contoh: 001/SK/DPRD/2026" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="tgl_sk" class="form-label fw-semibold">Tanggal SK <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="tgl_sk" name="tgl_sk" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-7">
+                            <label for="id_alat_kelengkapan" class="form-label fw-semibold">Alat Kelengkapan <span class="text-danger">*</span></label>
+                            <select class="form-select" id="id_alat_kelengkapan" name="id_alat_kelengkapan" required>
+                                <option value="">Pilih Alat Kelengkapan</option>
+                                @foreach($alatKelengkapans as $ak)
+                                    <option value="{{ $ak->id }}">{{ strtoupper($ak->nama) }}{{ $ak->ket ? ' - '.$ak->ket : '' }}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="status" class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="A">Aktif</option>
+                                <option value="T">Tidak Aktif</option>
+                            </select>
+                            <small class="text-muted d-block mt-1"><i class="ti ti-info-circle me-1"></i>Hanya boleh ada satu SK aktif per Alat Kelengkapan.</small>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="tgl_sk" class="form-label">Tanggal SK <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="tgl_sk" name="tgl_sk" required>
-                        <div class="invalid-feedback"></div>
+
+                    <hr class="my-4">
+                    <h6 class="text-uppercase text-muted fw-bold small mb-3"><i class="ti ti-file-upload me-1"></i>Dokumen &amp; Keterangan</h6>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="ket_sk" class="form-label fw-semibold">Keterangan SK</label>
+                            <textarea class="form-control" id="ket_sk" name="ket_sk" rows="3" placeholder="Tentang / dasar penetapan SK..."></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-12">
+                            <label for="file_sk" class="form-label fw-semibold">File SK (PDF/DOC/IMG)</label>
+                            <input class="form-control" type="file" id="file_sk" name="file_sk">
+                            <small class="text-muted d-none" id="fileHelp">Biarkan kosong jika tidak ingin mengubah file.</small>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="id_alat_kelengkapan" class="form-label">Alat Kelengkapan <span class="text-danger">*</span></label>
-                        <select class="form-select" id="id_alat_kelengkapan" name="id_alat_kelengkapan" required>
-                            <option value="">Pilih Alat Kelengkapan</option>
-                            @foreach($alatKelengkapans as $ak)
-                                <option value="{{ $ak->id }}">{{ $ak->nama }}</option>
-                            @endforeach
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                        <select class="form-select" id="status" name="status" required>
-                            <option value="A">Aktif</option>
-                            <option value="T">Tidak Aktif</option>
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ket_sk" class="form-label">Keterangan SK</label>
-                        <textarea class="form-control" id="ket_sk" name="ket_sk" rows="3"></textarea>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="mb-4">
-                        <label for="file_sk" class="form-label">File SK (PDF/DOC/IMG)</label>
-                        <input class="form-control" type="file" id="file_sk" name="file_sk">
-                        <small class="text-muted d-none" id="fileHelp">Biarkan kosong jika tidak ingin mengubah file.</small>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="modal-footer border-top-0 pb-4 px-4 pt-0">
+
+                    <div class="modal-footer border-top-0 pb-0 px-0 pt-4">
                         <button type="button" class="btn btn-light rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm transition-base" id="btnSave">
                             <i class="ti ti-device-floppy me-1"></i>Simpan
@@ -125,7 +180,7 @@
 
 <!-- Modal Anggota -->
 <div class="modal fade" id="modalAnggota" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-light border-bottom-0 pt-4 px-4 pb-2">
                 <div>
@@ -138,7 +193,7 @@
                 <!-- Form Tambah Anggota -->
                 <div class="card bg-body-tertiary border-0 mb-4" id="formAnggotaCard">
                     <div class="card-body">
-                        <h6 class="fw-bold mb-3">Tambah Anggota</h6>
+                        <h6 class="fw-bold mb-3"><i class="ti ti-user-plus me-1"></i>Tambah Anggota</h6>
                         <form id="formAnggota" class="row g-2">
                             @csrf
                             <input type="hidden" id="id_surat_keputusan_anggota" name="id_surat_keputusan">
@@ -178,7 +233,7 @@
                 </div>
 
                 <!-- Daftar Anggota -->
-                <h6 class="fw-bold mb-3">Daftar Anggota</h6>
+                <h6 class="fw-bold mb-3"><i class="ti ti-users me-1"></i>Daftar Anggota</h6>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0" id="tableAnggotaList">
                         <thead class="bg-body-tertiary">
@@ -198,12 +253,78 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Struktur Organisasi (per SK) -->
+<div class="modal fade" id="modalStruktur" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-success text-white pt-4 px-4 pb-3">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle bg-white bg-opacity-25" style="width:38px;height:38px;">
+                        <i class="ti ti-sitemap fs-5"></i>
+                    </span>
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0" id="modalStrukturTitle">Struktur Organisasi</h5>
+                        <p class="mb-0 small opacity-75" id="modalStrukturSubtitle"></p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="modalStrukturBody"></div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/libs/datatables/css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/libs/select2/select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/libs/select2/select2-bootstrap-5-theme.min.css') }}" />
+    <style>
+        /* ===== Struktur Organisasi ===== */
+        .struktur-scroll { overflow-x: auto; }
+        .org-tree { display: flex; flex-direction: column; align-items: center; padding: .5rem 0 1rem; }
+        .org-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+        .org-node {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: .85rem;
+            padding: .75rem 1rem;
+            text-align: center;
+            min-width: 150px;
+            max-width: 200px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.06);
+            position: relative;
+        }
+        .org-avatar {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-bottom: .5rem;
+            font-weight: 700; font-size: .875rem; color: #fff;
+        }
+        .org-name { font-weight: 600; font-size: .85rem; line-height: 1.25; word-break: break-word; }
+        .org-role {
+            font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+            text-transform: uppercase; color: #6c757d; margin-top: .15rem;
+        }
+        .org-connector { width: 2px; height: 26px; background: #ced4da; }
+        .org-members-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; max-width: 900px; }
+        .org-members-grid .org-node { min-width: 130px; max-width: 160px; padding: .6rem .75rem; }
+        .org-members-grid .org-avatar { width: 36px; height: 36px; font-size: .75rem; }
+        .avatar-ketua { background: linear-gradient(135deg,#2563eb,#3b82f6); }
+        .avatar-wakil { background: linear-gradient(135deg,#059669,#10b981); }
+        .avatar-sekretaris { background: linear-gradient(135deg,#d97706,#f59e0b); }
+        .avatar-anggota { background: linear-gradient(135deg,#475569,#64748b); }
+        .org-komisi-section { background: #f8f9fa; border: 1px dashed #ced4da; border-radius: 1rem; padding: 1rem 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+        .org-komisi-title {
+            display: inline-block; font-weight: 700; font-size: .8rem;
+            background: #eef2ff; color: #4338ca;
+            padding: .25rem .9rem; border-radius: 999px; margin-bottom: .5rem;
+        }
+        .ak-struktur-card { border-left: 4px solid #2563eb; }
+        .sk-empty { font-style: italic; color: #adb5bd; }
+    </style>
 @endpush
 
 @push('scripts')
@@ -237,13 +358,13 @@ $(function() {
                     }
                 }
             },
-          
+
             {data: 'file_download', name: 'file_download', orderable: false, searchable: false},
             {
-                data: 'action', 
-                name: 'action', 
-                orderable: false, 
-                searchable: false, 
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
                 className: 'text-end pe-4'
             },
         ],
@@ -266,12 +387,13 @@ $(function() {
     };
 
     const modal = new bootstrap.Modal(document.getElementById('modalSuratKeputusan'));
-    
+
     function openModal() {
         $('#formSuratKeputusan')[0].reset();
         $('#id').val('');
         $('#modalTitle').text('Tambah Surat Keputusan');
-        $('#btnSave').text('Simpan');
+        $('#modalSubtitle').text('Lengkapi data surat keputusan di bawah ini');
+        $('#btnSave').html('<i class="ti ti-device-floppy me-1"></i>Simpan');
         $('#fileHelp').addClass('d-none');
         $('.is-invalid').removeClass('is-invalid');
         modal.show();
@@ -286,7 +408,8 @@ $(function() {
             $('#status').val(data.status);
             $('#ket_sk').val(data.ket_sk);
             $('#modalTitle').text('Edit Surat Keputusan');
-            $('#btnSave').text('Simpan Perubahan');
+            $('#modalSubtitle').text(data.no_sk + ' - ' + (data.ket_sk || 'Tanpa keterangan'));
+            $('#btnSave').html('<i class="ti ti-device-floppy me-1"></i>Simpan Perubahan');
             $('#fileHelp').removeClass('d-none');
             $('.is-invalid').removeClass('is-invalid');
             modal.show();
@@ -308,7 +431,7 @@ $(function() {
         var id = $('#id').val();
         var url = id ? "{{ route('admin.surat-keputusan.index') }}" + '/' + id : "{{ route('admin.surat-keputusan.store') }}";
         var formData = new FormData(this);
-        
+
         if (id) {
             formData.append('_method', 'PUT');
         }
@@ -323,6 +446,7 @@ $(function() {
             success: function(data) {
                 modal.hide();
                 table.draw();
+                loadStruktur(true);
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil',
@@ -365,6 +489,7 @@ $(function() {
                     },
                     success: function(response) {
                         table.draw();
+                        loadStruktur(true);
                         Swal.fire('Terhapus!', response.success, 'success');
                     },
                     error: function(xhr) {
@@ -378,6 +503,7 @@ $(function() {
             }
         });
     }
+
     // --- Member Management Logic ---
     const modalAnggota = new bootstrap.Modal(document.getElementById('modalAnggota'));
 
@@ -397,7 +523,7 @@ $(function() {
     function loadAnggota(id) {
         $('#id_surat_keputusan_anggota').val(id);
         $('#tableAnggotaList tbody').html('<tr><td colspan="4" class="text-center">Memuat data...</td></tr>');
-        
+
         $.get("{{ url('admin/surat-keputusan') }}/" + id + "/anggota", function(data) {
             $('#modalAnggotaTitle').html('Kelola Anggota ' + (data.surat_keputusan.alat_kelengkapan.ket || ''));
             $('#modalAnggotaSubtitle').text('No. SK: ' + data.surat_keputusan.no_sk + ' (' + data.surat_keputusan.alat_kelengkapan.nama + ')');
@@ -424,7 +550,7 @@ $(function() {
                     datalist.append('<option value="' + val + '">');
                 });
             }
-            
+
             // Populate Anggota Select
             var anggotaSelect = $('#id_anggota');
             anggotaSelect.empty().append('<option value="">Pilih Anggota</option>');
@@ -433,10 +559,13 @@ $(function() {
             });
             anggotaSelect.trigger('change');
 
-            // Populate Jabatan Select
+            // Populate Jabatan Select (hindari pilihan berulang)
             var jabatanSelect = $('#id_jabatan_alat_kelengkapan');
             jabatanSelect.empty().append('<option value="">Pilih Jabatan</option>');
+            var seenJabatan = {};
             $.each(data.jabatan_options, function(key, val) {
+                if (seenJabatan[val.nama]) return;
+                seenJabatan[val.nama] = true;
                 jabatanSelect.append('<option value="'+val.id+'">'+val.nama+'</option>');
             });
 
@@ -474,10 +603,16 @@ $(function() {
         $('#nama_komisi').val('').focus();
     });
 
-    $('#formAnggota').submit(function(e) {
-        e.preventDefault();
-        var formData = $(this).serialize();
-        var btn = $(this).find('button[type="submit"]');
+    function submitFormAnggota(force) {
+        if (!$('#id_surat_keputusan_anggota').val()) {
+            Swal.fire('Gagal!', 'Surat Keputusan belum dipilih.', 'error');
+            return;
+        }
+        var formData = $('#formAnggota').serialize();
+        if (force) {
+            formData += '&force=1';
+        }
+        var btn = $('#formAnggota').find('button[type="submit"]');
         btn.prop('disabled', true);
 
         $.ajax({
@@ -485,8 +620,12 @@ $(function() {
             type: "POST",
             data: formData,
             success: function(response) {
-                loadAnggota($('#id_surat_keputusan_anggota').val());
+                // Reset form & select2 agar siap untuk input berikutnya
                 $('#formAnggota')[0].reset();
+                $('#id_anggota').val(null).trigger('change');
+                $('#nama_komisi_error').text('');
+                loadAnggota($('#id_surat_keputusan_anggota').val());
+                loadStruktur(true);
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil',
@@ -497,10 +636,31 @@ $(function() {
                 table.ajax.reload(null, false); // Reload main table to update count
             },
             error: function(xhr) {
+                var rj = xhr.responseJSON || {};
+
+                // Batas jabatan terlampaui -> tanyakan konfirmasi ke pengguna
+                if (xhr.status === 422 && rj.requires_confirmation) {
+                    Swal.fire({
+                        title: 'Konfirmasi Jabatan',
+                        text: rj.message,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#2563eb',
+                        cancelButtonColor: '#6b7280',
+                        confirmButtonText: 'Ya, Tetap Tambahkan',
+                        cancelButtonText: 'Batal'
+                    }).then(function(result) {
+                        if (result.isConfirmed) {
+                            submitFormAnggota(true);
+                        }
+                    });
+                    return;
+                }
+
                 var msg = 'Terjadi kesalahan.';
                 $('#nama_komisi_error').text('');
                 if(xhr.status === 422) {
-                    var errors = xhr.responseJSON.errors;
+                    var errors = rj.errors;
                     if (errors.nama_komisi) {
                         $('#nama_komisi_error').text(errors.nama_komisi[0]);
                         msg = errors.nama_komisi[0];
@@ -518,6 +678,11 @@ $(function() {
                 btn.prop('disabled', false);
             }
         });
+    }
+
+    $('#formAnggota').submit(function(e) {
+        e.preventDefault();
+        submitFormAnggota(false);
     });
 
     $(document).on('click', '.btn-delete-member', function() {
@@ -539,6 +704,7 @@ $(function() {
                     },
                     success: function(response) {
                         loadAnggota($('#id_surat_keputusan_anggota').val());
+                        loadStruktur(true);
                         Swal.fire({
                             icon: 'success',
                             title: 'Terhapus!',
@@ -557,6 +723,186 @@ $(function() {
                     }
                 });
             }
+        });
+    });
+
+    // ==========================================
+    // ======== STRUKTUR ORGANISASI =============
+    // ==========================================
+    const modalStruktur = new bootstrap.Modal(document.getElementById('modalStruktur'));
+    var strukturLoaded = false;
+
+    function escapeHtml(str) {
+        return $('<div/>').text(str == null ? '' : String(str)).html();
+    }
+
+    function initialsOf(name) {
+        return (name || '?').trim().split(/\s+/).slice(0, 2).map(function(w) {
+            return w.charAt(0);
+        }).join('').toUpperCase();
+    }
+
+    function avatarClass(role) {
+        switch ((role || '').toLowerCase()) {
+            case 'ketua': return 'avatar-ketua';
+            case 'wakil': return 'avatar-wakil';
+            case 'sekretaris': return 'avatar-sekretaris';
+            default: return 'avatar-anggota';
+        }
+    }
+
+    function orgNode(nama, jabatan, komisi) {
+        var html = '<div class="org-node">';
+        html += '<div class="org-avatar ' + avatarClass(jabatan) + '">' + escapeHtml(initialsOf(nama)) + '</div>';
+        html += '<div class="org-name">' + escapeHtml(nama) + '</div>';
+        if (komisi) {
+            html += '<div class="org-komisi-title mt-1">' + escapeHtml(komisi) + '</div>';
+        }
+        html += '<div class="org-role">' + escapeHtml(jabatan) + '</div>';
+        html += '</div>';
+        return html;
+    }
+
+    function orgLevel(items) {
+        if (!items.length) return '';
+        return '<div class="org-row">' + items.map(function(m) {
+            return orgNode(m.nama_anggota, m.jabatan, m.nama_komisi);
+        }).join('') + '</div><div class="org-connector"></div>';
+    }
+
+    /**
+     * Render bagan struktur dari daftar anggota (sudah terurut).
+     * item: { nama_anggota, jabatan, nama_komisi }
+     */
+    function renderOrgChart(anggota, isKomisi) {
+        anggota = anggota || [];
+        if (!anggota.length) {
+            return '<div class="text-center text-muted py-4 sk-empty"><i class="ti ti-users-off me-1"></i>Belum ada anggota pada SK aktif.</div>';
+        }
+
+        var sections = [];
+
+        if (isKomisi) {
+            // Kelompokkan per nama_komisi
+            var groups = {};
+            $.each(anggota, function(i, m) {
+                var key = m.nama_komisi || 'Tanpa Komisi';
+                if (!groups[key]) groups[key] = [];
+                groups[key].push(m);
+            });
+            Object.keys(groups).sort().forEach(function(komisi) {
+                var members = groups[komisi];
+                var ketua = members.filter(function(m){ return (m.jabatan||'').toLowerCase() === 'ketua'; });
+                var wakil = members.filter(function(m){ return (m.jabatan||'').toLowerCase() === 'wakil'; });
+                var sekre = members.filter(function(m){ return (m.jabatan||'').toLowerCase() === 'sekretaris'; });
+                var reguler = members.filter(function(m){
+                    return ['ketua','wakil','sekretaris'].indexOf((m.jabatan||'').toLowerCase()) === -1;
+                });
+                var chart = '<div class="org-tree">'
+                    + orgLevel(ketua)
+                    + orgLevel(wakil)
+                    + orgLevel(sekre)
+                    + (reguler.length
+                        ? '<div class="org-members-grid">' + reguler.map(function(m){ return orgNode(m.nama_anggota, m.jabatan, null); }).join('') + '</div>'
+                        : '')
+                    + '</div>';
+                sections.push(
+                    '<div class="org-komisi-section">' +
+                        '<div class="text-center"><span class="org-komisi-title"><i class="ti ti-diagram-3 me-1"></i>' + escapeHtml(komisi) + '</span></div>' +
+                        chart +
+                    '</div>'
+                );
+            });
+        } else {
+            var ketua = anggota.filter(function(m){ return (m.jabatan||'').toLowerCase() === 'ketua'; });
+            var wakil = anggota.filter(function(m){ return (m.jabatan||'').toLowerCase() === 'wakil'; });
+            var sekre = anggota.filter(function(m){ return (m.jabatan||'').toLowerCase() === 'sekretaris'; });
+            var reguler = anggota.filter(function(m){
+                return ['ketua','wakil','sekretaris'].indexOf((m.jabatan||'').toLowerCase()) === -1;
+            });
+            sections.push('<div class="org-tree">'
+                + orgLevel(ketua)
+                + orgLevel(wakil)
+                + orgLevel(sekre)
+                + (reguler.length
+                    ? '<div class="org-members-grid">' + reguler.map(function(m){ return orgNode(m.nama_anggota, m.jabatan, null); }).join('') + '</div>'
+                    : '')
+                + '</div>');
+        }
+
+        return sections.join('');
+    }
+
+    /**
+     * Render kartu struktur untuk satu alat kelengkapan.
+     * data: { nama, ket, is_komisi, surat_keputusan: {no_sk, tgl_sk, jumlah_anggota, anggota:[...] } | null }
+     */
+    function renderAkStrukturCard(data) {
+        var sk = data.surat_keputusan;
+        var header =
+            '<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">' +
+                '<div>' +
+                    '<h5 class="fw-bold mb-0 text-uppercase"><i class="ti ti-building-community me-2 text-primary"></i>' + escapeHtml(data.nama) + (data.ket ? ' <span class="fw-normal text-muted small">— ' + escapeHtml(data.ket) + '</span>' : '') + '</h5>' +
+                    (sk
+                        ? '<small class="text-muted"><i class="ti ti-file-certificate me-1"></i>No. SK: ' + escapeHtml(sk.no_sk) + ' • Tanggal: ' + escapeHtml(sk.tgl_sk) + ' • <span class="badge bg-success ms-1">SK Aktif</span></small>'
+                        : '<small class="sk-empty"><i class="ti ti-file-x me-1"></i>Tidak ada SK aktif</small>') +
+                '</div>' +
+                (sk && sk.jumlah_anggota ? '<span class="badge bg-primary-subtle text-primary-emphasis">' + sk.jumlah_anggota + ' Anggota</span>' : '') +
+            '</div>';
+
+        var body = sk ? renderOrgChart(sk.anggota, data.is_komisi)
+                      : '<div class="alert alert-light border text-center text-muted mb-0 sk-empty">Belum ada SK aktif untuk alat kelengkapan ini.</div>';
+
+        return '<div class="card ak-struktur-card border shadow-sm mb-4"><div class="card-body">' + header + body + '</div></div>';
+    }
+
+    function loadStruktur(force) {
+        if (strukturLoaded && !force) return;
+        $('#strukturContainer').html('<div class="text-center text-muted py-5"><div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>Memuat struktur organisasi...</div>');
+
+        $.get("{{ route('admin.surat-keputusan.struktur-all') }}", function(data) {
+            var html = '';
+            if (!data.length) {
+                html = '<div class="alert alert-light border text-center">Belum ada data Alat Kelengkapan.</div>';
+            } else {
+                $.each(data, function(i, ak) {
+                    html += renderAkStrukturCard(ak);
+                });
+            }
+            $('#strukturContainer').html(html);
+            strukturLoaded = true;
+        }).fail(function() {
+            $('#strukturContainer').html('<div class="alert alert-danger text-center mb-0">Gagal memuat struktur organisasi.</div>');
+        });
+    }
+
+    // Muat struktur saat tab dibuka pertama kali
+    $(document).on('shown.bs.tab', '#tab-struktur-btn', function() {
+        loadStruktur(false);
+    });
+
+    $(document).on('click', '#btnReloadStruktur', function() {
+        loadStruktur(true);
+    });
+
+    // Tombol Struktur per baris tabel (per SK)
+    $(document).on('click', '.btn-struktur', function() {
+        var id = $(this).data('id');
+        $.get("{{ url('admin/surat-keputusan') }}/" + id + "/anggota", function(data) {
+            var sk = data.surat_keputusan;
+            $('#modalStrukturTitle').text('Struktur Organisasi ' + (sk.alat_kelengkapan.ket || sk.alat_kelengkapan.nama));
+            $('#modalStrukturSubtitle').text('No. SK: ' + sk.no_sk + ' • Status: ' + (sk.status === 'A' ? 'Aktif' : 'Tidak Aktif'));
+            var anggota = (data.existing_anggota || []).map(function(item) {
+                return {
+                    nama_anggota: item.anggota ? item.anggota.nama_anggota : '-',
+                    jabatan: item.jabatan_alat_kelengkapan ? item.jabatan_alat_kelengkapan.nama : '-',
+                    nama_komisi: item.nama_komisi
+                };
+            });
+            $('#modalStrukturBody').html(renderOrgChart(anggota, data.is_komisi));
+            modalStruktur.show();
+        }).fail(function() {
+            Swal.fire('Error', 'Gagal memuat struktur organisasi.', 'error');
         });
     });
 

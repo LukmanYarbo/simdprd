@@ -42,11 +42,8 @@ class SupportingTablesSeeder extends Seeder
             ['nama' => 'Anggota DPRD'],
            
         ]);
-        DB::table('jabatan_alat_kelengkapan')->insert([
-            ['nama' => 'Ketua'],
-            ['nama' => 'Wakil'],
-            ['nama' => 'Sekretaris'],
-            ['nama' => 'Anggota'],
-        ]);
+        foreach ([['nama' => 'Ketua'], ['nama' => 'Wakil'], ['nama' => 'Sekretaris'], ['nama' => 'Anggota']] as $item) {
+            DB::table('jabatan_alat_kelengkapan')->updateOrInsert(['nama' => $item['nama']], $item);
+        }
     }
 }
