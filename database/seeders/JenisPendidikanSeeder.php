@@ -27,11 +27,10 @@ class JenisPendidikanSeeder extends Seeder
         ];
 
         foreach ($data as $d) {
-            \Illuminate\Support\Facades\DB::table('jenis_pendidikan')->insert([
-                'nama' => $d,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            \Illuminate\Support\Facades\DB::table('jenis_pendidikan')->updateOrInsert(
+                ['nama' => $d],
+                ['nama' => $d, 'updated_at' => now()]
+            );
         }
     }
 }

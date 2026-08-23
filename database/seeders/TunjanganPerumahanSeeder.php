@@ -12,7 +12,9 @@ class TunjanganPerumahanSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\TunjanganPerumahan::create([
+        \App\Models\TunjanganPerumahan::firstOrCreate([
+            'no_peraturan' => 'PERBUB NO 10 TAHUN 2021',
+        ], [
             'tgl_berlaku' => '2021-01-01',
             'no_peraturan' => 'PERBUB NO 10 TAHUN 2021',
             'nilai_tunjangan_ketua' => 12000000.00,

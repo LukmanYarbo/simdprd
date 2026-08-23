@@ -131,10 +131,22 @@
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
 
     function confirmDelete(action) {
-        if (!confirm('Yakin ingin menghapus tarif ini? Semua data lapis pajak terkait akan ikut terhapus.')) return;
-        const form = document.getElementById('deleteForm');
-        form.action = action;
-        form.submit();
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            html: 'Tarif pajak ini akan dihapus secara permanen.<br><small class="text-muted">Semua data lapis pajak terkait akan ikut terhapus.</small>',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById('deleteForm');
+                form.action = action;
+                form.submit();
+            }
+        });
     }
 </script>
 @endpush

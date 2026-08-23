@@ -9,6 +9,10 @@ class KertasKerjaSeeder extends Seeder
 {
     public function run(): void
     {
+        if (KertasKerja::where('tahun_anggaran', 2027)->exists()) {
+            return;
+        }
+
         $kk = KertasKerja::create(array (
   'tahun_anggaran' => 2027,
   'status' => 'DRAFT',

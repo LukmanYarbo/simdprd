@@ -50,7 +50,7 @@
                                     <a href="{{ route('admin.database.backup-download', $backup['name']) }}" class="btn btn-sm btn-outline-success" title="Download">
                                         <i class="ti ti-download"></i>
                                     </a>
-                                    <form action="{{ route('admin.database.backup-delete', $backup['name']) }}" method="POST" onsubmit="return confirm('Hapus backup ini?');">
+                                    <form action="{{ route('admin.database.backup-delete', $backup['name']) }}" method="POST" class="form-delete-backup">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
@@ -82,6 +82,26 @@
             icon: 'info',
             confirmText: 'Ya, Buat Backup',
             loadingText: 'Sedang membuat backup database...',
+        });
+
+        document.querySelectorAll('.form-delete-backup').forEach(function (form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'File backup ini akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
         });
     });
 </script>

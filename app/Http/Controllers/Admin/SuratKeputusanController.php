@@ -115,6 +115,9 @@ class SuratKeputusanController extends Controller implements HasMiddleware
                                 'nama_anggota' => $ja->anggota->nama_anggota ?? '-',
                                 'jabatan' => $ja->jabatanAlatKelengkapan->nama ?? '-',
                                 'nama_komisi' => $ja->nama_komisi,
+                                'foto_url' => ($ja->anggota && $ja->anggota->foto_anggota)
+                                    ? asset('storage/' . $ja->anggota->foto_anggota)
+                                    : null,
                             ];
                         })->values(),
                 ] : null,

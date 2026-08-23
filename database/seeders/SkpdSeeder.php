@@ -19,7 +19,7 @@ class SkpdSeeder extends Seeder
         ];
 
         foreach ($skpds as $skpd) {
-            \App\Models\Skpd::create(['namaskpd' => $skpd]);
+            \App\Models\Skpd::firstOrCreate(['namaskpd' => $skpd]);
         }
     }
 }

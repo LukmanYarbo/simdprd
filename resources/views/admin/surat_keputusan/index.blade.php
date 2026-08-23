@@ -322,6 +322,12 @@
             display: inline-flex; align-items: center; justify-content: center;
             margin-bottom: .5rem;
             font-weight: 700; font-size: .875rem; color: #fff;
+            overflow: hidden;
+        }
+        .org-avatar-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
         .org-name { font-weight: 600; font-size: .85rem; line-height: 1.25; word-break: break-word; }
         .org-role {
@@ -838,9 +844,12 @@ $(function() {
         }
     }
 
-    function orgNode(nama, jabatan, komisi) {
+    function orgNode(nama, jabatan, komisi, fotoUrl) {
+        var avatarContent = fotoUrl
+            ? '<img src="' + escapeHtml(fotoUrl) + '" alt="' + escapeHtml(nama) + '" class="org-avatar-img">'
+            : escapeHtml(initialsOf(nama));
         var html = '<div class="org-node">';
-        html += '<div class="org-avatar ' + avatarClass(jabatan) + '">' + escapeHtml(initialsOf(nama)) + '</div>';
+        html += '<div class="org-avatar ' + avatarClass(jabatan) + '">' + avatarContent + '</div>';
         html += '<div class="org-name">' + escapeHtml(nama) + '</div>';
         if (komisi) {
             html += '<div class="org-komisi-title mt-1">' + escapeHtml(komisi) + '</div>';
@@ -853,7 +862,7 @@ $(function() {
     function orgLevel(items) {
         if (!items.length) return '';
         return '<div class="org-row">' + items.map(function(m) {
-            return orgNode(m.nama_anggota, m.jabatan, m.nama_komisi);
+            return orgNode(m.nama_anggota, m.jabatan, m.nama_komisi, m.foto_url);
         }).join('') + '</div><div class="org-connector"></div>';
     }
 
@@ -890,7 +899,7 @@ $(function() {
                     + orgLevel(wakil)
                     + orgLevel(sekre)
                     + (reguler.length
-                        ? '<div class="org-members-grid">' + reguler.map(function(m){ return orgNode(m.nama_anggota, m.jabatan, null); }).join('') + '</div>'
+                        ? '<div class="org-members-grid">' + reguler.map(function(m){ return orgNode(m.nama_anggota, m.jabatan, null, m.foto_url); }).join('') + '</div>'
                         : '')
                     + '</div>';
                 sections.push(
@@ -912,7 +921,7 @@ $(function() {
                 + orgLevel(wakil)
                 + orgLevel(sekre)
                 + (reguler.length
-                    ? '<div class="org-members-grid">' + reguler.map(function(m){ return orgNode(m.nama_anggota, m.jabatan, null); }).join('') + '</div>'
+                    ? '<div class="org-members-grid">' + reguler.map(function(m){ return orgNode(m.nama_anggota, m.jabatan, null, m.foto_url); }).join('') + '</div>'
                     : '')
                 + '</div>');
         }
@@ -983,7 +992,8 @@ $(function() {
                 return {
                     nama_anggota: item.anggota ? item.anggota.nama_anggota : '-',
                     jabatan: item.jabatan_alat_kelengkapan ? item.jabatan_alat_kelengkapan.nama : '-',
-                    nama_komisi: item.nama_komisi
+                    nama_komisi: item.nama_komisi,
+                    foto_url: (item.anggota && item.anggota.foto_anggota) ? "{{ asset('storage') }}/" + item.anggota.foto_anggota : null
                 };
             });
             $('#modalStrukturBody').html(renderOrgChart(anggota, data.is_komisi));

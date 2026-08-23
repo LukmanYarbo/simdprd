@@ -4,15 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
 class IkatanKeluargaSeeder extends Seeder
 {
     public function run()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('ikatan_keluarga')->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
         $data = [
             ['nama' => 'Suami'],
             ['nama' => 'Istri'],
@@ -20,6 +15,8 @@ class IkatanKeluargaSeeder extends Seeder
             ['nama' => 'Lainnya'],
         ];
 
-        DB::table('ikatan_keluarga')->insert($data);
+        foreach ($data as $item) {
+            DB::table('ikatan_keluarga')->updateOrInsert(['nama' => $item['nama']], $item);
+        }
     }
 }

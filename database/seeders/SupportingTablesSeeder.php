@@ -12,36 +12,44 @@ class SupportingTablesSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('agama')->insert([
-            ['nama' => 'Islam'],
-            ['nama' => 'Kristen'],
-            ['nama' => 'Katolik'],
-            ['nama' => 'Hindu'],
-            ['nama' => 'Budha'],
-            ['nama' => 'Konghucu'],
-        ]);
+        foreach ([
+            'Islam',
+            'Kristen',
+            'Katolik',
+            'Hindu',
+            'Budha',
+            'Konghucu',
+        ] as $nama) {
+            DB::table('agama')->updateOrInsert(['nama' => $nama], ['nama' => $nama]);
+        }
 
-        DB::table('status_kawin')->insert([
+        foreach ([
             ['nama' => 'Belum Kawin', 'kode' => 'TK'],
             ['nama' => 'Kawin', 'kode' => 'K'],
             ['nama' => 'Cerai Hidup', 'kode' => 'CH'],
             ['nama' => 'Cerai Mati', 'kode' => 'CM'],
-        ]);
+        ] as $item) {
+            DB::table('status_kawin')->updateOrInsert(['kode' => $item['kode']], $item);
+        }
 
-        DB::table('status_keanggotaan')->insert([
-            ['nama' => 'Aktif'],
-            ['nama' => 'Tidak Aktif'],
-            ['nama' => 'PAW'],
-            ['nama' => 'Meninggal Dunia'],
-            ['nama' => 'Mengundurkan Diri'],
-        ]);
+        foreach ([
+            'Aktif',
+            'Tidak Aktif',
+            'PAW',
+            'Meninggal Dunia',
+            'Mengundurkan Diri',
+        ] as $nama) {
+            DB::table('status_keanggotaan')->updateOrInsert(['nama' => $nama], ['nama' => $nama]);
+        }
 
-        DB::table('jabatan_dprd')->insert([
-            ['nama' => 'Ketua DPRD'],
-            ['nama' => 'Wakil Ketua DPRD'],
-            ['nama' => 'Anggota DPRD'],
-           
-        ]);
+        foreach ([
+            'Ketua DPRD',
+            'Wakil Ketua DPRD',
+            'Anggota DPRD',
+        ] as $nama) {
+            DB::table('jabatan_dprd')->updateOrInsert(['nama' => $nama], ['nama' => $nama]);
+        }
+
         foreach ([['nama' => 'Ketua'], ['nama' => 'Wakil'], ['nama' => 'Sekretaris'], ['nama' => 'Anggota']] as $item) {
             DB::table('jabatan_alat_kelengkapan')->updateOrInsert(['nama' => $item['nama']], $item);
         }

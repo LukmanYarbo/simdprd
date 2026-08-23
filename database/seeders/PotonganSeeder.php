@@ -12,6 +12,10 @@ class PotonganSeeder extends Seeder
      */
     public function run(): void
     {
+        if (\App\Models\Potongan::exists()) {
+            return;
+        }
+
         \App\Models\Potongan::create([
             'tunjangan_bpjs' => 0.00,
             'potongan_bpjs' => 1.00,

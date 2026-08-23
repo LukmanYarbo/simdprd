@@ -12,7 +12,9 @@ class TunjanganTransportasiSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\TunjanganTransportasi::create([
+        \App\Models\TunjanganTransportasi::firstOrCreate([
+            'no_peraturan' => 'PERBUB NO 10 TAHUN 2021',
+        ], [
             'tgl_berlaku' => '2021-01-01',
             'no_peraturan' => 'PERBUB NO 10 TAHUN 2021',
             'nilai_tunjangan_ketua' => 0.00,

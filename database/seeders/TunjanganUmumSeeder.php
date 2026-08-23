@@ -12,6 +12,10 @@ class TunjanganUmumSeeder extends Seeder
      */
     public function run(): void
     {
+        if (\App\Models\TunjanganUmum::exists()) {
+            return;
+        }
+
         \App\Models\TunjanganUmum::create([
             'tunjangan_beras' => 7242.00,
             'jumlah_beras' => 10,

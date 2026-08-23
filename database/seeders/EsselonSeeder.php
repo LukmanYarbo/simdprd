@@ -15,7 +15,7 @@ class EsselonSeeder extends Seeder
         $data = ['00','01','Ia', 'Ib', 'IIa', 'IIb', 'IIIa', 'IIIb', 'IVa', 'IVb','Staf','Fungsional'];
         
         foreach ($data as $nama) {
-            \App\Models\Esselon::create(['nama' => $nama]);
+            \App\Models\Esselon::firstOrCreate(['nama' => $nama]);
         }
     }
 }

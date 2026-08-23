@@ -12,7 +12,9 @@ class TarifPajakSeeder extends Seeder
      */
     public function run(): void
     {
-        $tax = \App\Models\TarifPajak::create([
+        $tax = \App\Models\TarifPajak::firstOrCreate([
+            'no_peraturan' => 'UU No. 7 TAHUN 2021',
+        ], [
             'no_peraturan' => 'UU No. 7 TAHUN 2021',
             'tgl_berlaku' => '2021-01-01',
             'ptkp' => 54000000,
@@ -32,7 +34,10 @@ class TarifPajakSeeder extends Seeder
         ];
 
         foreach ($lapis as $l) {
-            \App\Models\TarifLapisPajak::create(array_merge($l, ['id_tarif_pajak' => $tax->id]));
+            \App\Models\TarifLapisPajak::firstOrCreate(
+                array_merge(['id_tarif_pajak' => $tax->id], $l),
+                array_merge($l, ['id_tarif_pajak' => $tax->id])
+            );
         }
     }
 }

@@ -45,7 +45,7 @@
                                         title="Edit">
                                     <i class="ti ti-edit"></i>
                                 </button>
-                                <form action="{{ route('admin.skpd.destroy', $skpd->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                <form action="{{ route('admin.skpd.destroy', $skpd->id) }}" method="POST" class="form-delete-skpd">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn-icon-modern text-danger" title="Hapus">
@@ -157,6 +157,26 @@
 
                 var editModal = new bootstrap.Modal(document.getElementById('editSkpdModal'));
                 editModal.show();
+            });
+
+            // Handle Delete dengan SweetAlert2
+            $(document).on('submit', '.form-delete-skpd', function(e) {
+                e.preventDefault();
+                var form = this;
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Data SKPD ini akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
             });
 
             @if($errors->any())

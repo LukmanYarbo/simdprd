@@ -33,7 +33,7 @@ class PangkatGolonganSeeder extends Seeder
         ];
 
         foreach ($data as $item) {
-            \App\Models\PangkatGolongan::create($item);
+            \App\Models\PangkatGolongan::firstOrCreate(['golongan' => $item['golongan']], $item);
         }
     }
 }
