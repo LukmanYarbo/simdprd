@@ -33,7 +33,6 @@ class AnggotaWizard {
         this.initWizardNavigation();
         await this.initRegionalCascading();
         this.initImagePreview();
-        this.initDynamicValidation();
         this.initInsuranceToggles();
         this.initFormSubmission();
     }
@@ -63,139 +62,10 @@ class AnggotaWizard {
         });
     }
 
-    initDynamicValidation() {
-        const inputs = this.form.querySelectorAll('input:not([type="hidden"]), select, textarea');
-        inputs.forEach((input, index) => {
-            const eventType = input.tagName === 'SELECT' || input.type === 'file' ? 'change' : 'blur';
-            
-            input.addEventListener(eventType, async () => {
-                // Skip if empty and not required
-                if (!input.value && !input.hasAttribute('required')) {
-                    this.clearValidation(input);
-                    return;
-                }
-
-                const isValid = await this.validateFieldServer(input);
-                if (isValid) {
-                    this.markValid(input);
-                    // Autofocus next input if exists in the same step
-                    this.focusNextInput(input, inputs, index);
-                }
-            });
-        });
-    }
-
-    async validateFieldServer(input) {
-        const stepElement = input.closest('.form-step');
-        if (!stepElement) return false;
-        
-        const stepNumber = parseInt(stepElement.id.replace('step', ''));
-        const formData = new FormData();
-        formData.append('step', stepNumber);
-
-        // File inputs: validate type & size client-side for immediate feedback
-        if (input.type === 'file') {
-            if (input.files && input.files.length > 0) {
-                const file = input.files[0];
-                const allowedTypes = ['image/jpeg', 'image/png'];
-
-                if (allowedTypes.indexOf(file.type) === -1) {
-                    this.markInvalid(input, 'Format foto harus JPG, JPEG, atau PNG.');
-                    return false;
-                }
-
-                if (file.size > 2 * 1024 * 1024) {
-                    this.markInvalid(input, 'Ukuran foto maksimal 2 MB.');
-                    return false;
-                }
-
-                this.markValid(input);
-                return true;
-            }
-
-            this.clearValidation(input);
-            return true;
-        }
-
-        formData.append(input.name, input.value);
-
-        if (this.config.currentData.id) {
-            formData.append('id', this.config.currentData.id);
-        }
-
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
-        try {
-            const response = await fetch(this.config.validationUrl, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Accept': 'application/json'
-                },
-                body: formData
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                return true;
-            } else {
-                // Only mark invalid if THIS specific field has an error
-                if (result.errors && result.errors[input.name]) {
-                    this.markInvalid(input, result.errors[input.name][0]);
-                    return false;
-                }
-                // If this field doesn't have an error but the request failed (e.g. other fields missing), 
-                // we treat this field as "possibly okay" or at least not "invalid" yet.
-                // However, for UX, if it's required and empty, it should be invalid.
-                if (input.hasAttribute('required') && !input.value) {
-                    this.markInvalid(input, 'Field ini wajib diisi');
-                    return false;
-                }
-                
-                return true; // No specific error for this field
-            }
-        } catch (error) {
-            console.error('Field validation error:', error);
-            return false;
-        }
-    }
-
-    markValid(input) {
-        input.classList.remove('is-invalid');
-        input.classList.add('is-valid');
-        const feedback = input.parentNode.querySelector('.invalid-feedback');
-        if (feedback) feedback.remove();
-    }
-
-    markInvalid(input, message) {
-        input.classList.remove('is-valid');
-        input.classList.add('is-invalid');
-        let feedback = input.parentNode.querySelector('.invalid-feedback');
-        if (!feedback) {
-            feedback = document.createElement('div');
-            feedback.className = 'invalid-feedback';
-            input.parentNode.appendChild(feedback);
-        }
-        feedback.textContent = message;
-    }
-
     clearValidation(input) {
         input.classList.remove('is-valid', 'is-invalid');
         const feedback = input.parentNode.querySelector('.invalid-feedback');
         if (feedback) feedback.remove();
-    }
-
-    focusNextInput(currentInput, allInputs, currentIndex) {
-        const currentStep = currentInput.closest('.form-step');
-        // Find next input in the same step
-        for (let i = currentIndex + 1; i < allInputs.length; i++) {
-            const nextInput = allInputs[i];
-            if (nextInput.closest('.form-step') === currentStep && !nextInput.disabled && nextInput.type !== 'hidden') {
-                nextInput.focus();
-                break;
-            }
-        }
     }
 
     initFormSubmission() {

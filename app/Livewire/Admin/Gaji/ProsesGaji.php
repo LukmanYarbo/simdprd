@@ -31,7 +31,7 @@ class ProsesGaji extends Component
     public string $alasanStatus = '';
     public string $tanggalCetak = '';
     public $dsbGajiRecord = null;
-    
+
     protected GajiCalculatorService $calculator;
     protected AnggaranService $anggaranService;
 
@@ -102,7 +102,7 @@ class ProsesGaji extends Component
         $this->blnThnLabel = $this->getBlnThnLabel();
         $this->sudahDiproses = TransaksiGaji::where('bln_thn', $blnThn)->exists();
         $this->dsbGajiRecord = \App\Models\DsbGaji::where('bln_thn', $blnThn)->first();
-        
+
         if ($this->dsbGajiRecord) {
             $this->tanggalCetak = date('Y-m-d', strtotime($this->dsbGajiRecord->tanggal_proses));
         } else {
@@ -146,9 +146,13 @@ class ProsesGaji extends Component
         $this->anggaranService->reverseRealization($blnThn);
         TransaksiGaji::where('bln_thn', $blnThn)->delete();
 
-        // Ambil semua anggota aktif
+        // Ambil semua anggota aktif (urut jabatan DPRD: Ketua, Wakil, Anggota)
         $anggotas = Anggota::where('id_status_keanggotaan', 1)
             ->with(['statusKawin'])
+            ->orderBy('id_dprd')
+            ->orderBy('nama_komisi')
+            ->orderBy('id_komisi')
+            ->orderBy('nama_anggota')
             ->get();
 
         if ($anggotas->isEmpty()) {
@@ -162,7 +166,7 @@ class ProsesGaji extends Component
         foreach ($anggotas as $anggota) {
             $data = $this->calculator->hitungGaji($anggota, $blnThn, $this->metodePajak);
             $newTrx = TransaksiGaji::create($data);
-            
+
             // Sertakan semua data untuk ditampilkan di tabel
             $data['id'] = $newTrx->id;
             $data['nama'] = $anggota->nama_anggota;
@@ -175,7 +179,7 @@ class ProsesGaji extends Component
         // Populate dsb_gaji table
         try {
             $this->calculator->saveDsbGaji($blnThn, $this->tanggalCetak);
-            
+
             // Process Budget Realization
             $this->anggaranService->processRealization($blnThn);
         } catch (\Exception $e) {
@@ -183,7 +187,8 @@ class ProsesGaji extends Component
             \Illuminate\Support\Facades\Log::error("Failed to save dsb_gaji/anggaran for $blnThn: " . $e->getMessage());
         }
 
-        $this->dispatch('swal',
+        $this->dispatch(
+            'swal',
             title: 'Berhasil',
             text: 'Proses gaji ' . count($hasil) . ' anggota aktif telah berhasil.',
             icon: 'success'
@@ -195,7 +200,7 @@ class ProsesGaji extends Component
     public function openStatusModal(): void
     {
         if (!$this->dsbGajiRecord) return;
-        
+
         $this->newStatus = $this->dsbGajiRecord->status;
         $this->alasanStatus = $this->dsbGajiRecord->alasan_perubahan ?? '';
         $this->showStatusModal = true;
@@ -226,7 +231,7 @@ class ProsesGaji extends Component
 
         $this->closeStatusModal();
         $this->cekStatus();
-        
+
         $this->dispatch('swal', title: 'Berhasil', text: 'Status gaji berhasil diperbarui.', icon: 'success');
     }
 
@@ -236,9 +241,9 @@ class ProsesGaji extends Component
         $this->anggaranService->reverseRealization($blnThn);
         TransaksiGaji::where('bln_thn', $blnThn)->delete();
         $this->calculator->deleteDsbGaji($blnThn);
-        
+
         $this->cekStatus();
-        
+
         $this->dispatch('swal', title: 'Berhasil', text: 'Data periode ' . $this->getBlnThnLabel() . ' berhasil dihapus.', icon: 'success');
     }
 
@@ -255,20 +260,30 @@ class ProsesGaji extends Component
 
     protected function getRingkasanData(): array
     {
-        return $this->sudahDiproses && empty($this->hasilProses)
+        $rows = $this->sudahDiproses && empty($this->hasilProses)
             ? TransaksiGaji::where('bln_thn', $this->getBlnThn())
-                ->with('anggota')
-                ->get()
-                ->map(function ($t) {
-                    $arr = $t->toArray();
-                    $arr['nama'] = $t->anggota->nama_anggota ?? '-';
-                    // Fallback to decode detail_pajak JSON if it wasn't automatically casted
-                    if (is_string($arr['detail_pajak'] ?? null)) {
-                        $arr['detail_pajak'] = json_decode($arr['detail_pajak'], true);
-                    }
-                    return $arr;
-                })->toArray()
-            : $this->hasilProses;
+            ->with('anggota')
+            ->get()
+            ->map(function ($t) {
+                $arr = $t->toArray();
+                $arr['nama'] = $t->anggota->nama_anggota ?? '-';
+                // Fallback to decode detail_pajak JSON if it wasn't automatically casted
+                if (is_string($arr['detail_pajak'] ?? null)) {
+                    $arr['detail_pajak'] = json_decode($arr['detail_pajak'], true);
+                }
+                return $arr;
+            })
+            : collect($this->hasilProses);
+
+        return $rows
+            ->sortBy([
+                fn($a, $b) => ($a['anggota']['id_dprd'] ?? 99) <=> ($b['anggota']['id_dprd'] ?? 99),
+                fn($a, $b) => ($a['anggota']['nama_komisi'] ?? '') <=> ($b['anggota']['nama_komisi'] ?? ''),
+                fn($a, $b) => ($a['anggota']['id_komisi'] ?? 99) <=> ($b['anggota']['id_komisi'] ?? 99),
+                fn($a, $b) => strcasecmp($a['nama'] ?? '', $b['nama'] ?? ''),
+            ])
+            ->values()
+            ->toArray();
     }
 
     public function render()
