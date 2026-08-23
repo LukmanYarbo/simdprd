@@ -9,11 +9,19 @@
         <div class="row mb-5 fade-in-up">
             <div class="col">
                 <h2 class="h3 fw-extrabold text-gradient mb-1">Dashboard Overview</h2>
-                <p class="text-secondary fw-medium">Selamat Datang, <span
-                        class="text-primary fw-bold">{{ Auth::user()->name }}</span></p>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <p class="text-secondary fw-medium mb-0 me-1">Selamat Datang, <span
+                            class="text-primary fw-bold">{{ Auth::user()->name }}</span></p>
+                    @foreach(Auth::user()->getRoleNames() as $roleName)
+                        <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis text-uppercase">
+                            <i class="ti ti-shield-check me-1"></i>{{ $roleName }}
+                        </span>
+                    @endforeach
+                </div>
             </div>
         </div>
 
+        @can('view anggaran')
         <div class="row g-4 mb-4">
             <!-- Stats Card 1
                         <div class="col-12 col-md-6 col-xl-3">
@@ -168,7 +176,9 @@
                 </div>
             </div>
         </div>
+        @endcan
 
+        @can('view anggota')
         <!-- Membership & AKD Section -->
         <div class="row mb-4 fade-in-up" style="animation-delay: 0.7s;">
             <div class="col">
@@ -293,11 +303,22 @@
                 </div>
             </div>
         </div>
+        @endcan
+
+        @if(!auth()->user()->can('view anggaran') && !auth()->user()->can('view anggota'))
+        <div class="alert alert-light border text-center py-5">
+            <i class="ti ti-lock display-6 d-block mb-3 text-muted"></i>
+            <h6 class="fw-bold text-muted">Belum ada informasi yang dapat ditampilkan</h6>
+            <p class="text-muted small mb-0">Role Anda belum memiliki izin untuk melihat data anggaran maupun keanggotaan.
+                Silakan hubungi administrator.</p>
+        </div>
+        @endif
 
     </div>
 @endsection
 
 @push('scripts')
+    @can('view anggaran')
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -418,4 +439,5 @@
             donutChart.render();
         });
     </script>
+    @endcan
 @endpush

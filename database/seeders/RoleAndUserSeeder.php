@@ -17,6 +17,10 @@ class RoleAndUserSeeder extends Seeder
         // Resources based on sidebar
         $resources = [
             'anggota',
+            'perubahan_status_anggota',
+            'keluarga',
+            'pendidikan',
+            'harta',
             'users',
             'roles',
             'permissions',
@@ -64,6 +68,10 @@ class RoleAndUserSeeder extends Seeder
         $operatorPermissions = [
             'view dashboard',
             'view anggota', 'create anggota', 'edit anggota',
+            'view perubahan_status_anggota', 'create perubahan_status_anggota',
+            'view keluarga', 'create keluarga', 'edit keluarga',
+            'view pendidikan', 'create pendidikan', 'edit pendidikan',
+            'view harta', 'create harta', 'edit harta',
             'view alat_kelengkapan', 'create alat_kelengkapan', 'edit alat_kelengkapan',
             'view surat_keputusan', 'create surat_keputusan', 'edit surat_keputusan',
             'view pemda', 'create pemda', 'edit pemda',
@@ -90,6 +98,10 @@ class RoleAndUserSeeder extends Seeder
         $userPermissions = [
             'view dashboard',
             'view anggota',
+            'view perubahan_status_anggota',
+            'view keluarga',
+            'view pendidikan',
+            'view harta',
             'view alat_kelengkapan',
             'view surat_keputusan',
             'view pemda',

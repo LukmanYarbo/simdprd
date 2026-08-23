@@ -24,7 +24,8 @@ class AnggotaController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view anggota|create anggota|edit anggota|delete anggota', only: ['index', 'show', 'status']),
+            new Middleware('permission:view perubahan_status_anggota|create perubahan_status_anggota', only: ['status']),
+            new Middleware('permission:view anggota|create anggota|edit anggota|delete anggota', only: ['index', 'show']),
             new Middleware('permission:create anggota', only: ['create', 'store']),
             new Middleware('permission:edit anggota', only: ['edit', 'update']),
             new Middleware('permission:delete anggota', only: ['destroy']),

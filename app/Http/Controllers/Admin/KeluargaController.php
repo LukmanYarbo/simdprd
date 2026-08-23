@@ -19,8 +19,10 @@ class KeluargaController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view anggota', only: ['index', 'edit']),
-            new Middleware('permission:edit anggota', only: ['store', 'update', 'destroy']),
+            new Middleware('permission:view keluarga|create keluarga|edit keluarga|delete keluarga', only: ['index', 'edit']),
+            new Middleware('permission:create keluarga', only: ['store']),
+            new Middleware('permission:edit keluarga', only: ['update']),
+            new Middleware('permission:delete keluarga', only: ['destroy']),
         ];
     }
     public function index($id_anggota)

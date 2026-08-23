@@ -26,9 +26,33 @@ class DaftarKertasKerja extends Component
         $this->dispatch('show-detail-modal');
     }
 
+    /**
+     * Kertas Kerja FINAL yang sudah di-plot ke Master Anggaran
+     * tidak boleh dihapus.
+     */
+    public static function isTerplotDanFinal(int $tahunAnggaran, string $status): bool
+    {
+        if ($status !== 'FINAL') {
+            return false;
+        }
+
+        return \App\Models\Anggaran::where('tahun_anggaran', $tahunAnggaran)->exists();
+    }
+
     public function deleteKertasKerja($id)
     {
-        KertasKerja::findOrFail($id)->delete();
+        $kertasKerja = KertasKerja::findOrFail($id);
+
+        if (self::isTerplotDanFinal((int) $kertasKerja->tahun_anggaran, $kertasKerja->status)) {
+            $this->dispatch('swal',
+                title: 'Tidak Dapat Dihapus',
+                text: 'Kertas Kerja Tahun ' . $kertasKerja->tahun_anggaran . ' berstatus FINAL dan sudah ter-plot ke Master Anggaran.',
+                icon: 'error'
+            );
+            return;
+        }
+
+        $kertasKerja->delete();
         $this->dispatch('swal', title: 'Berhasil', text: 'Data Kertas Kerja berhasil dihapus.', icon: 'success');
     }
 

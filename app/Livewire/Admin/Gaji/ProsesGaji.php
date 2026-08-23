@@ -12,7 +12,7 @@ class ProsesGaji extends Component
 {
     public int $tahun;
     public string $bulan = '1'; // '1' s/d '12', 'THR', 'G13'
-    public string $metodePajak = 'ter'; // 'lapis' atau 'ter'
+    public string $metodePajak = 'lapis'; // 'lapis' atau 'ter'
 
     public bool $sudahDiproses = false;
     public bool $paramLengkap  = true;

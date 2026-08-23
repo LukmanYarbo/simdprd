@@ -46,13 +46,13 @@
                     </div>
                     <div class="ms-2 d-none d-md-block text-start" style="line-height: 1.1;">
                         <div class="fw-bold fs-7">{{ Auth::user()->name }}</div>
-                        <small class="text-muted" style="font-size: 0.65rem;">Administrator</small>
+                        <small class="text-muted" style="font-size: 0.65rem;">{{ ucfirst(Auth::user()->getRoleNames()->first() ?? 'User') }}</small>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2 rounded-4 animate__animated animate__fadeIn animate__faster" aria-labelledby="dropdownUser1" style="min-width: 220px;">
                     <li class="px-3 py-2 mb-2 bg-light rounded-3 d-md-none text-center">
                         <div class="fw-bold">{{ Auth::user()->name }}</div>
-                        <small class="text-muted">Administrator</small>
+                        <small class="text-muted">{{ ucfirst(Auth::user()->getRoleNames()->first() ?? 'User') }}</small>
                     </li>
                     <li>
                         <a class="dropdown-item rounded-3 py-2 d-flex align-items-center" href="{{ route('profile.show') }}">

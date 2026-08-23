@@ -14,8 +14,10 @@ class HartaAnggotaController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view anggota', only: ['index', 'edit']),
-            new Middleware('permission:edit anggota', only: ['store', 'update', 'destroy']),
+            new Middleware('permission:view harta|create harta|edit harta|delete harta', only: ['index', 'edit']),
+            new Middleware('permission:create harta', only: ['store']),
+            new Middleware('permission:edit harta', only: ['update']),
+            new Middleware('permission:delete harta', only: ['destroy']),
         ];
     }
     public function index($anggotaId)

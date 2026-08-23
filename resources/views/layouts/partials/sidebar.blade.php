@@ -14,6 +14,7 @@
         </li>
         @endcan
 
+        @if(auth()->user()->can('view pemda') || auth()->user()->can('view alat_kelengkapan') || auth()->user()->can('view surat_keputusan') || auth()->user()->can('view jabatan_asn') || auth()->user()->can('view skpd') || auth()->user()->can('view penanda_tangan') || auth()->user()->can('view anggota') || auth()->user()->can('view perubahan_status_anggota'))
         <li>
             <a href="#masterDataSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
                aria-expanded="{{ request()->routeIs('admin.alat-kelengkapan.*') || request()->routeIs('admin.surat-keputusan.*') || request()->routeIs('admin.jabatan-asn.*') || request()->routeIs('admin.skpd.*') || request()->routeIs('admin.pemda.*') || request()->routeIs('admin.penanda-tangan.*') ? 'true' : 'false' }}">
@@ -64,7 +65,7 @@
                     </a>
                 </li>
                 @endcan
-                @can('view anggota')
+                @can('view perubahan_status_anggota')
                 <li>
                     <a href="{{ route('admin.anggota-status.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.anggota-status.*') ? 'active' : '' }}">
                         <i class="ti ti-user-edit me-2"></i> Perubahan Status Anggota
@@ -73,6 +74,8 @@
                 @endcan
             </ul>
         </li>
+        @endif
+        @if(auth()->user()->can('view parameter_gaji') || auth()->user()->can('view tarif_pajak') || auth()->user()->can('view tunjangan') || auth()->user()->can('view potongan'))
         <li>
             <a href="#masterGajiSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
                aria-expanded="{{ request()->routeIs('admin.parameter-gaji.*') || request()->routeIs('admin.tarif-pajak.*') || request()->routeIs('admin.tunjangan.*') || request()->routeIs('admin.potongan.*') ? 'true' : 'false' }}">
@@ -104,12 +107,13 @@
                 @can('view potongan')
                 <li>
                     <a href="{{ route('admin.potongan.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.potongan.*') ? 'active' : '' }}">
-                        <i class="ti ti-scissors me-2"></i> Data Potongan
-                    </a>
-                </li>
+                <i class="ti ti-scissors me-2"></i> Data Potongan
+                </a>
+            </li>
                 @endcan
             </ul>
         </li>
+        @endif
         @can('view transaksi_gaji')
         <li>
             <a href="{{ route('admin.transaksi-gaji.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.transaksi-gaji.*') ? 'active' : '' }}">
@@ -125,6 +129,7 @@
         </li>
         @endcan
 
+        @if(auth()->user()->can('view kertas_kerja') || auth()->user()->can('view anggaran') || auth()->user()->can('view jurnal_lra'))
         <li>
             <a href="#anggaranSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
                aria-expanded="{{ request()->routeIs('admin.anggaran.*') || request()->routeIs('admin.jurnal-lra.*') || request()->routeIs('admin.kertas-kerja.*') ? 'true' : 'false' }}">
@@ -149,13 +154,15 @@
                 @can('view jurnal_lra')
                 <li>
                     <a href="{{ route('admin.jurnal-lra.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.jurnal-lra.*') ? 'active' : '' }}">
-                        <i class="ti ti-history me-2"></i> Jurnal LRA
-                    </a>
-                </li>
+                <i class="ti ti-history me-2"></i> Jurnal LRA
+                </a>
+            </li>
                 @endcan
             </ul>
         </li>
+        @endif
 
+        @if(auth()->user()->can('view anggota') || auth()->user()->can('view pegawai_asn'))
         <li>
             <a href="#inputDataSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
                aria-expanded="{{ request()->routeIs('admin.anggota.*') || request()->routeIs('admin.pegawai-asn.*') ? 'true' : 'false' }}">
@@ -173,15 +180,16 @@
                 @can('view pegawai_asn')
                 <li>
                     <a href="{{ route('admin.pegawai-asn.index') }}" class="sidebar-link rounded {{ request()->routeIs('admin.pegawai-asn.*') ? 'active' : '' }}">
-                        <i class="ti ti-shield-lock me-2"></i> Pegawai ASN
-                    </a>
-                </li>
+                <i class="ti ti-shield-lock me-2"></i> Pegawai ASN
+                </a>
+            </li>
                 @endcan
             </ul>
         </li>
-        
+        @endif
+
+        @if(auth()->user()->can('view users') || auth()->user()->can('view roles') || auth()->user()->can('view permissions') || auth()->user()->can('view database_management'))
         <li class="sidebar-heading">System</li>
-        @if(auth()->user()->can('view users') || auth()->user()->can('view roles') || auth()->user()->can('view permissions'))
         <li>
             <a href="#settingsSubmenu" class="sidebar-link rounded d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
                aria-expanded="{{ request()->routeIs('admin.users.*') || request()->routeIs('admin.roles.*') || request()->routeIs('admin.permissions.*') || request()->routeIs('admin.database.*') ? 'true' : 'false' }}">

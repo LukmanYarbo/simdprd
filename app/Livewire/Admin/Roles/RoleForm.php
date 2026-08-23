@@ -14,6 +14,12 @@ class RoleForm extends Component
     public array $permissions = [];
     public bool $selectAll = false;
 
+    /** Grup yang sedang terbuka (dikelola di server agar tidak tertutup saat re-render) */
+    public array $openGroups = [];
+
+    /** Kata kunci pencarian permission */
+    public string $search = '';
+
     public function mount(?Role $role = null)
     {
         $this->role = $role;
@@ -23,7 +29,10 @@ class RoleForm extends Component
             $this->name = $this->role->name;
             $this->permissions = $this->role->permissions->pluck('name')->toArray();
         }
-        
+
+        // Buka semua grup secara default agar mudah dipilih
+        $this->openGroups = $this->getPermissionGroups(false)->keys()->all();
+
         $this->updateSelectAllState();
     }
 
@@ -39,6 +48,57 @@ class RoleForm extends Component
         } else {
             $this->permissions = [];
         }
+    }
+
+    public function toggleGroup(string $group): void
+    {
+        if (in_array($group, $this->openGroups)) {
+            $this->openGroups = array_values(array_diff($this->openGroups, [$group]));
+        } else {
+            $this->openGroups[] = $group;
+        }
+    }
+
+    public function expandAllGroups(): void
+    {
+        $this->openGroups = $this->getPermissionGroups(false)->keys()->all();
+    }
+
+    public function collapseAllGroups(): void
+    {
+        $this->openGroups = [];
+    }
+
+    /**
+     * Centang / hapus seluruh permission dalam satu grup.
+     */
+    public function toggleGroupPermissions(string $group): void
+    {
+        $names = $this->getPermissionGroups(false)->get($group, collect())->pluck('name')->all();
+
+        if (empty($names)) {
+            return;
+        }
+
+        $selectedCount = count(array_intersect($names, $this->permissions));
+
+        if ($selectedCount === count($names)) {
+            $this->permissions = array_values(array_diff($this->permissions, $names));
+        } else {
+            $this->permissions = array_values(array_unique(array_merge($this->permissions, $names)));
+        }
+
+        $this->updateSelectAllState();
+    }
+
+    /**
+     * Jumlah permission grup yang sedang tercentang.
+     */
+    public function groupSelectedCount(string $group): int
+    {
+        $names = $this->getPermissionGroups(false)->get($group, collect())->pluck('name')->all();
+
+        return count(array_intersect($names, $this->permissions));
     }
 
     private function updateSelectAllState()
@@ -59,6 +119,20 @@ class RoleForm extends Component
             'permissions' => ['nullable', 'array'],
             'permissions.*' => ['exists:permissions,name'],
         ];
+    }
+
+    private function getPermissionGroups(bool $applySearch = true)
+    {
+        $query = Permission::query();
+
+        if ($applySearch && trim($this->search) !== '') {
+            $query->where('name', 'like', '%' . trim($this->search) . '%');
+        }
+
+        return $query->get()->groupBy(function ($permission) {
+            $parts = explode(' ', $permission->name);
+            return count($parts) > 1 ? $parts[count($parts) - 1] : 'Other';
+        })->sortKeys();
     }
 
     public function save()
@@ -83,14 +157,8 @@ class RoleForm extends Component
 
     public function render()
     {
-        $allPermissions = Permission::all();
-        $permissionGroups = $allPermissions->groupBy(function ($permission) {
-            $parts = explode(' ', $permission->name);
-            return count($parts) > 1 ? end($parts) : 'Other';
-        });
-
         return view('livewire.admin.roles.role-form', [
-            'permissionGroups' => $permissionGroups
+            'permissionGroups' => $this->getPermissionGroups(),
         ]);
     }
 }

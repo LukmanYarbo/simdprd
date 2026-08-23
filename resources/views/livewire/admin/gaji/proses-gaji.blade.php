@@ -222,8 +222,8 @@
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="ti ti-calculator text-primary"></i></span>
                         <select wire:model.live="metodePajak" class="form-select bg-light border-start-0 shadow-none">
-                            <option value="ter">Sistem Baru (TER)</option>
                             <option value="lapis">Lapis Pajak Lama</option>
+                            <option value="ter">Sistem Baru (TER)</option>
                         </select>
                     </div>
                 </div>

@@ -71,9 +71,19 @@
                                                 <a href="{{ route('admin.kertas-kerja.form', $kk->id) }}" class="btn btn-sm btn-light border" title="Edit">
                                                     <i class="ti ti-edit text-warning"></i>
                                                 </a>
-                                                <button onclick="confirmDelete({{ $kk->id }})" class="btn btn-sm btn-light border" title="Hapus">
-                                                    <i class="ti ti-trash text-danger"></i>
-                                                </button>
+                                                @php
+                                                    $isProtected = \App\Livewire\Admin\KertasKerja\DaftarKertasKerja::isTerplotDanFinal((int) $kk->tahun_anggaran, $kk->status);
+                                                @endphp
+                                                @if($isProtected)
+                                                    <button type="button" class="btn btn-sm btn-light border" disabled
+                                                        title="Tidak dapat dihapus: berstatus FINAL & sudah ter-plot ke Master Anggaran">
+                                                        <i class="ti ti-lock text-secondary"></i>
+                                                    </button>
+                                                @else
+                                                    <button onclick="confirmDelete({{ $kk->id }})" class="btn btn-sm btn-light border" title="Hapus">
+                                                        <i class="ti ti-trash text-danger"></i>
+                                                    </button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

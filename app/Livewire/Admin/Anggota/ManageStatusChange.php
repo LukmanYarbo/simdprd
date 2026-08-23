@@ -66,6 +66,8 @@ class ManageStatusChange extends Component
 
     public function saveStatusChange()
     {
+        abort_unless(auth()->user()->can('create perubahan_status_anggota'), 403, 'Tidak memiliki izin mengubah status keanggotaan.');
+
         $this->validate();
 
         $filePath = null;

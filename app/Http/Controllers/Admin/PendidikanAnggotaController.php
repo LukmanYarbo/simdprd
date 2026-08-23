@@ -17,8 +17,10 @@ class PendidikanAnggotaController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view anggota', only: ['index', 'edit']),
-            new Middleware('permission:edit anggota', only: ['store', 'update', 'destroy']),
+            new Middleware('permission:view pendidikan|create pendidikan|edit pendidikan|delete pendidikan', only: ['index', 'edit']),
+            new Middleware('permission:create pendidikan', only: ['store']),
+            new Middleware('permission:edit pendidikan', only: ['update']),
+            new Middleware('permission:delete pendidikan', only: ['destroy']),
         ];
     }
     public function index($id_anggota)

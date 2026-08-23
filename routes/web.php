@@ -14,7 +14,7 @@ Route::post('logout', [LoginController::class , 'logout'])->name('logout');
 Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 
-Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     
     Route::get('/storage-link', function () {
@@ -144,7 +144,7 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         Route::post('database/seed', [\App\Http\Controllers\Admin\DatabaseController::class, 'seed'])->name('database.seed');
     });
 
-Route::middleware(['auth', 'role:operator|user'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class , 'index'])->name('dashboard');
 });
 
