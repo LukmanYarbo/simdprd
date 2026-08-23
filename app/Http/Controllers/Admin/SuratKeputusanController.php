@@ -25,7 +25,7 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         return [
             new Middleware('permission:view surat_keputusan|create surat_keputusan|edit surat_keputusan|delete surat_keputusan', only: ['index', 'show', 'strukturAll']),
             new Middleware('permission:create surat_keputusan', only: ['create', 'store']),
-            new Middleware('permission:edit surat_keputusan', only: ['edit', 'update', 'getAnggota', 'storeAnggota', 'destroyAnggota']),
+            new Middleware('permission:edit surat_keputusan', only: ['edit', 'update', 'getAnggota', 'storeAnggota', 'destroyAnggota', 'inactive', 'copyAnggota']),
             new Middleware('permission:delete surat_keputusan', only: ['destroy']),
         ];
     }
@@ -122,6 +122,119 @@ class SuratKeputusanController extends Controller implements HasMiddleware
         })->values();
 
         return response()->json($data);
+    }
+
+    /**
+     * Daftar SK tidak aktif milik satu Alat Kelengkapan (untuk fitur "Copy dari").
+     */
+    public function inactive($idAlatKelengkapan)
+    {
+        $data = SuratKeputusan::where('status', 'T')
+            ->where('id_alat_kelengkapan', $idAlatKelengkapan)
+            ->withCount('jabatanAnggota')
+            ->orderByDesc('tgl_sk')
+            ->get(['id', 'no_sk', 'tgl_sk'])
+            ->map(fn ($sk) => [
+                'id' => $sk->id,
+                'no_sk' => $sk->no_sk,
+                'tgl_sk' => \Carbon\Carbon::parse($sk->tgl_sk)->locale('id')->translatedFormat('d M Y'),
+                'jumlah_anggota' => $sk->jabatan_anggota_count,
+            ]);
+
+        return response()->json($data);
+    }
+
+    /**
+     * Salin seluruh anggota dari SK lain (biasanya SK lama/tidak aktif)
+     * ke SK tujuan. Anggota yang sudah ada di SK tujuan dilewati.
+     */
+    public function copyAnggota(Request $request)
+    {
+        $request->validate([
+            'id_surat_keputusan' => 'required|exists:surat_keputusan,id',
+            'id_copy_from' => 'required|exists:surat_keputusan,id|different:id_surat_keputusan',
+        ]);
+
+        $tujuan = SuratKeputusan::with('alatKelengkapan')->findOrFail($request->id_surat_keputusan);
+        $sumber = SuratKeputusan::findOrFail($request->id_copy_from);
+
+        if ($sumber->id_alat_kelengkapan !== $tujuan->id_alat_kelengkapan) {
+            return response()->json(['error' => 'SK sumber harus dari Alat Kelengkapan yang sama.'], 422);
+        }
+
+        $isKomisi = strtolower($tujuan->alatKelengkapan->nama ?? '') === 'komisi';
+
+        $sudahAda = JabatanAnggota::where('id_surat_keputusan', $tujuan->id)
+            ->pluck('id_anggota')
+            ->all();
+
+        $anggotaSumber = JabatanAnggota::with('jabatanAlatKelengkapan')
+            ->where('id_surat_keputusan', $sumber->id)
+            ->get();
+
+        $disalin = 0;
+        $dilewati = 0;
+
+        foreach ($anggotaSumber as $ja) {
+            if (in_array($ja->id_anggota, $sudahAda)) {
+                $dilewati++;
+                continue;
+            }
+
+            JabatanAnggota::create([
+                'id_surat_keputusan' => $tujuan->id,
+                'id_anggota' => $ja->id_anggota,
+                'id_jabatan_alat_kelengkapan' => $ja->id_jabatan_alat_kelengkapan,
+                'id_alat_kelengkapan' => $tujuan->id_alat_kelengkapan,
+                'nama_komisi' => $isKomisi ? $ja->nama_komisi : null,
+            ]);
+
+            $sudahAda[] = $ja->id_anggota;
+            $disalin++;
+        }
+
+        // Sinkronkan kolom alat kelengkapan pada tabel anggota bila SK tujuan aktif
+        if ($tujuan->status === 'A') {
+            $this->syncAnggotaFields($tujuan, $isKomisi);
+        }
+
+        return response()->json([
+            'success' => "Berhasil menyalin {$disalin} anggota" . ($dilewati > 0 ? ", {$dilewati} dilewati karena sudah terdaftar." : '.'),
+            'disalin' => $disalin,
+            'dilewati' => $dilewati,
+        ]);
+    }
+
+    /**
+     * Sinkronkan kolom id_komisi/id_banggar/... pada tabel anggota
+     * berdasarkan anggota yang terdaftar pada sebuah SK aktif.
+     */
+    private function syncAnggotaFields(SuratKeputusan $sk, bool $isKomisi): void
+    {
+        $namaAlatKelengkapan = strtolower($sk->alatKelengkapan->nama ?? '');
+        $anggotaField = match ($namaAlatKelengkapan) {
+            'komisi' => 'id_komisi',
+            'banggar' => 'id_banggar',
+            'banmus' => 'id_banmus',
+            'bk' => 'id_bk',
+            'balegda' => 'id_balegda',
+            'pansus' => 'id_pansus',
+            'panja' => 'id_panja',
+            default => null,
+        };
+
+        if (! $anggotaField) {
+            return;
+        }
+
+        $rows = JabatanAnggota::where('id_surat_keputusan', $sk->id)->get();
+        foreach ($rows as $ja) {
+            $updateData = [$anggotaField => $ja->id_jabatan_alat_kelengkapan];
+            if ($namaAlatKelengkapan === 'komisi') {
+                $updateData['nama_komisi'] = $ja->nama_komisi;
+            }
+            \App\Models\Anggota::where('id', $ja->id_anggota)->update($updateData);
+        }
     }
 
     public function store(Request $request)

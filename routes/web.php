@@ -40,6 +40,8 @@ Route::middleware(['auth', 'role:admin|operator'])->prefix('admin')->name('admin
         ]);
         Route::get('surat-keputusan/{suratKeputusan}/print', [\App\Http\Controllers\Admin\SuratKeputusanController::class , 'print'])->name('surat-keputusan.print');
         Route::get('surat-keputusan/struktur', [\App\Http\Controllers\Admin\SuratKeputusanController::class , 'strukturAll'])->name('surat-keputusan.struktur-all');
+        Route::get('surat-keputusan/inactive/{idAlatKelengkapan}', [\App\Http\Controllers\Admin\SuratKeputusanController::class , 'inactive'])->name('surat-keputusan.inactive');
+        Route::post('surat-keputusan/copy-anggota', [\App\Http\Controllers\Admin\SuratKeputusanController::class , 'copyAnggota'])->name('surat-keputusan.copy-anggota');
         Route::resource('surat-keputusan', \App\Http\Controllers\Admin\SuratKeputusanController::class)->parameters([
             'surat-keputusan' => 'suratKeputusan'
         ]);

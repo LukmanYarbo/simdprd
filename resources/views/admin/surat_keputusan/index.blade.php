@@ -233,6 +233,26 @@
                 </div>
 
                 <!-- Daftar Anggota -->
+                <div class="card bg-body-tertiary border-0 mb-4 d-none" id="copySkCard">
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-3"><i class="ti ti-copy me-1"></i>Copy dari SK Sebelumnya</h6>
+                        <div class="row g-2 align-items-end">
+                            <div class="col-md-8">
+                                <select class="form-select" id="skCopySelect">
+                                    <option value="">Pilih SK tidak aktif...</option>
+                                    <!-- Options populated via JS -->
+                                </select>
+                                <small class="text-muted d-none mt-1 d-block" id="skCopyInfo"></small>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-outline-primary btn-sm rounded-pill w-100 py-2" id="btnCopyAnggota" disabled>
+                                    <i class="ti ti-users-group me-1"></i>Salin Anggota
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <h6 class="fw-bold mb-3"><i class="ti ti-users me-1"></i>Daftar Anggota</h6>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0" id="tableAnggotaList">
@@ -569,6 +589,35 @@ $(function() {
                 jabatanSelect.append('<option value="'+val.id+'">'+val.nama+'</option>');
             });
 
+            // Muat daftar SK tidak aktif untuk fitur "Copy dari" (Alat Kelengkapan sama)
+            var currentSkId = String(data.surat_keputusan.id);
+            $.get("{{ route('admin.surat-keputusan.inactive', ':idAlatKelengkapan') }}".replace(':idAlatKelengkapan', data.surat_keputusan.id_alat_kelengkapan), function(list) {
+                var $card = $('#copySkCard'), $select = $('#skCopySelect');
+                var options = (list || []).filter(function(s) { return String(s.id) !== currentSkId; });
+                $select.empty().append('<option value="">Pilih SK tidak aktif...</option>');
+                if (options.length) {
+                    $.each(options, function(i, s) {
+                        $select.append('<option value="' + s.id + '">' + escapeHtml(s.no_sk) + ' — ' + s.jumlah_anggota + ' anggota</option>');
+                    });
+                    $select.off('change').on('change', function() {
+                        var val = $(this).val(), sel = null;
+                        $.each(options, function(i, s) { if (String(s.id) === String(val)) sel = s; });
+                        if (sel) {
+                            $('#skCopyInfo').removeClass('d-none').text(sel.no_sk + ' • ' + sel.tgl_sk + ' • ' + sel.jumlah_anggota + ' anggota siap disalin');
+                            $('#btnCopyAnggota').prop('disabled', false);
+                        } else {
+                            $('#skCopyInfo').addClass('d-none').text('');
+                            $('#btnCopyAnggota').prop('disabled', true);
+                        }
+                    });
+                    $('#skCopyInfo').addClass('d-none').text('');
+                    $('#btnCopyAnggota').prop('disabled', true);
+                    $card.removeClass('d-none');
+                } else {
+                    $card.addClass('d-none');
+                }
+            }).fail(function() { $('#copySkCard').addClass('d-none'); });
+
             renderAnggotaTable(data.existing_anggota, isKomisi);
             modalAnggota.show();
         }).fail(function(xhr) {
@@ -723,6 +772,44 @@ $(function() {
                     }
                 });
             }
+        });
+    });
+
+    // Salin anggota dari SK tidak aktif yang dipilih
+    $(document).on('click', '#btnCopyAnggota', function() {
+        var target = $('#id_surat_keputusan_anggota').val();
+        var source = $('#skCopySelect').val();
+        if (!target || !source) return;
+
+        Swal.fire({
+            title: 'Salin Anggota?',
+            text: 'Seluruh anggota dari SK terpilih akan ditambahkan ke SK ini. Anggota yang sudah terdaftar akan dilewati.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#2563eb',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Ya, Salin',
+            cancelButtonText: 'Batal'
+        }).then(function(result) {
+            if (!result.isConfirmed) return;
+            var btn = $('#btnCopyAnggota');
+            btn.prop('disabled', true);
+            $.post("{{ route('admin.surat-keputusan.copy-anggota') }}", {
+                _token: "{{ csrf_token() }}",
+                id_surat_keputusan: target,
+                id_copy_from: source
+            }).done(function(resp) {
+                loadAnggota(target);
+                loadStruktur(true);
+                table.ajax.reload(null, false);
+                Swal.fire({ icon: 'success', title: 'Berhasil', text: resp.success, timer: 2000, showConfirmButton: false });
+            }).fail(function(xhr) {
+                var rj = xhr.responseJSON || {};
+                var msg = rj.error || (rj.errors ? Object.values(rj.errors)[0][0] : 'Gagal menyalin anggota.');
+                Swal.fire('Gagal!', msg, 'error');
+            }).always(function() {
+                btn.prop('disabled', false);
+            });
         });
     });
 
