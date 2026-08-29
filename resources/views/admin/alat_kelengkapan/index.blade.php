@@ -32,7 +32,7 @@
                             <th class="border-0" width="5%">No</th>
                             <th class="border-0">Nama</th>
                             <th class="border-0">Keterangan</th>
-                            <th class="border-0 text-end pe-4" width="15%">Aksi</th>
+                            <th class="border-0 text-center" width="120">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,7 +103,7 @@ $(function() {
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'nama', name: 'nama'},
             {data: 'ket', name: 'ket'},
-            {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-end pe-4'},
+            {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
         ],
         language: {
             url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json',

@@ -44,12 +44,14 @@
                             <td>{{ $item->skpd->namaskpd ?? '-' }}</td>
                             <td>{{ $item->esselon->nama ?? '-' }}</td>
                             <td class="text-center">
-                                <button class="btn btn-icon-only btn-sm btn-outline-primary" onclick="editJabatan({{ $item->id }}, '{{ $item->nama_jabatan }}', '{{ $item->id_esselon }}', '{{ $item->id_skpd }}')" title="Edit">
-                                    <i class="ti ti-pencil"></i>
-                                </button>
-                                <button class="btn btn-icon-only btn-sm btn-outline-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus">
-                                    <i class="ti ti-trash"></i>
-                                </button>
+                                <div class="table-actions">
+                                    <button class="btn-action-sk edit" data-tip="Edit" aria-label="Edit" onclick="editJabatan({{ $item->id }}, '{{ $item->nama_jabatan }}', '{{ $item->id_esselon }}', '{{ $item->id_skpd }}')">
+                                        <i class="ti ti-pencil"></i>
+                                    </button>
+                                    <button class="btn-action-sk delete" data-tip="Hapus" aria-label="Hapus" onclick="confirmDelete({{ $item->id }})">
+                                        <i class="ti ti-trash-x"></i>
+                                    </button>
+                                </div>
                                 <form id="delete-form-{{ $item->id }}" action="{{ route('admin.jabatan-asn.destroy', $item->id) }}" method="POST" class="d-none">
                                     @csrf
                                     @method('DELETE')

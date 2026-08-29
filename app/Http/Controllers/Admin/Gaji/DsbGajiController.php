@@ -149,6 +149,39 @@ class DsbGajiController extends Controller implements HasMiddleware
         ));
     }
 
+    public function daftarGajiTer(Request $request)
+    {
+        $bulan = $request->get('bulan', date('n'));
+        $tahun = $request->get('tahun', date('Y'));
+        $blnThn = $bulan . '-' . $tahun;
+
+        $transaksi = TransaksiGaji::where('bln_thn', $blnThn)
+            ->with(['anggota', 'anggota.jabatan'])
+            ->join('anggota', 'transaksi_gaji.id_anggota', '=', 'anggota.id')
+            ->select('transaksi_gaji.*')
+            ->orderBy('anggota.id_dprd', 'asc')
+            ->orderBy('anggota.id_komisi', 'asc')
+            ->orderBy('anggota.nama_komisi', 'asc')
+            ->orderBy('anggota.nama_anggota', 'asc')
+            ->get();
+
+        if ($transaksi->isEmpty()) {
+            return back()->with('error', 'Data gaji untuk periode ini belum diproses.');
+        }
+
+        $dsbGaji = DsbGaji::where('bln_thn', $blnThn)->first();
+        $bulanLabel = $this->getBulanLabel($bulan);
+        $pemda = Pemda::first();
+
+        return view('admin.gaji.reports.daftar-gaji-ter', compact(
+            'transaksi',
+            'dsbGaji',
+            'bulanLabel',
+            'tahun',
+            'pemda'
+        ));
+    }
+
     public function tunjanganReport(Request $request)
     {
         $bulan = $request->get('bulan', date('n'));

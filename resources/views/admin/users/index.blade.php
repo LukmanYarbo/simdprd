@@ -1,11 +1,21 @@
 @extends('layouts.admin')
 
+@section('breadcrumbs')
+<x-breadcrumbs :items="[
+    ['label' => 'Dashboard', 'url' => route('admin.dashboard'), 'icon' => 'ti ti-home-2'],
+    ['label' => 'Users', 'icon' => 'ti ti-users']
+]" />
+@endsection
+
 @section('content')
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-5 fade-in-up">
-        <h2 class="h3 fw-extrabold text-gradient mb-0">System Users</h2>
-        <a href="{{ route('admin.users.create') }}" class="btn premium-gradient border-0 glow-shadow px-4 py-2 rounded-pill transition-base">
-            <i class="ti ti-user-plus me-2"></i> Add New User
+    <div class="modern-page-header fade-in-up">
+        <div class="header-left">
+            <h2 class="h4">System Users</h2>
+            <p>Kelola akun pengguna dan hak akses sistem</p>
+        </div>
+        <a href="{{ route('admin.users.create') }}" class="btn-modern-primary">
+            <i class="ti ti-user-plus me-1"></i> Add New User
         </a>
     </div>
 

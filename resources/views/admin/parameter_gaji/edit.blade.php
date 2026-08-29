@@ -10,11 +10,12 @@
         ['label' => 'Edit Data']
     ]" />
 
-    <div class="card shadow-lg border-0 mb-4 mt-4">
-        <div class="card-header py-3 bg-white border-bottom">
-            <h6 class="m-0 fw-bold text-primary"><i class="ti ti-pencil me-2"></i>Form Edit Parameter Gaji</h6>
+    <div class="modern-form-card mb-4 mt-2">
+        <div class="form-card-header">
+            <div class="icon-box" style="background: linear-gradient(135deg,#f59e0b,#d97706);"><i class="ti ti-pencil"></i></div>
+            <div class="header-text"><h5>Form Edit Parameter Gaji</h5><small>Perbarui aturan dan tunjangan gaji DPRD</small></div>
         </div>
-        <div class="card-body p-4">
+        <div class="form-card-body">
             <form action="{{ route('admin.parameter-gaji.update', $parameterGaji->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -196,11 +197,11 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-                    <a href="{{ route('admin.parameter-gaji.index') }}" class="btn btn-light rounded-pill px-4 transition-base">
+                    <a href="{{ route('admin.parameter-gaji.index') }}" class="btn-modern-ghost">
                         <i class="ti ti-arrow-left me-1"></i>Batal
                     </a>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm transition-base">
-                        <i class="ti ti-device-floppy me-1"></i>Perbarui Data
+                    <button type="submit" class="btn-modern-primary" style="background: linear-gradient(135deg,#f59e0b,#d97706);">
+                        <i class="ti ti-check me-1"></i>Perbarui Data
                     </button>
                 </div>
             </form>

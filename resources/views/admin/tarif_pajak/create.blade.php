@@ -10,11 +10,12 @@
         ['label' => 'Tambah Data']
     ]" />
 
-    <div class="card shadow-lg border-0 mb-4 mt-4">
-        <div class="card-header py-3 bg-white border-bottom">
-            <h6 class="m-0 fw-bold text-primary"><i class="ti ti-plus-circle me-2"></i>Form Tambah Tarif Pajak PPh 21</h6>
+    <div class="modern-form-card mb-4 mt-2">
+        <div class="form-card-header">
+            <div class="icon-box"><i class="ti ti-percentage"></i></div>
+            <div class="header-text"><h5>Form Tambah Tarif Pajak PPh 21</h5><small>Kelola tarif pajak progresif dan PTKP</small></div>
         </div>
-        <div class="card-body p-4">
+        <div class="form-card-body">
             <form action="{{ route('admin.tarif-pajak.store') }}" method="POST">
                 @csrf
 
@@ -184,11 +185,11 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-                    <a href="{{ route('admin.tarif-pajak.index') }}" class="btn btn-secondary px-4">
+                    <a href="{{ route('admin.tarif-pajak.index') }}" class="btn-modern-ghost">
                         <i class="ti ti-arrow-left me-1"></i>Batal
                     </a>
-                    <button type="submit" class="btn btn-primary px-4 shadow-sm">
-                        <i class="ti ti-check-lg me-1"></i>Simpan Data
+                    <button type="submit" class="btn-modern-primary">
+                        <i class="ti ti-check me-1"></i>Simpan Data
                     </button>
                 </div>
             </form>

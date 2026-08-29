@@ -28,7 +28,7 @@
                     <tr>
                         <th width="5%">No</th>
                         <th>Nama SKPD</th>
-                        <th width="15%">Aksi</th>
+                        <th class="text-center" width="120">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,19 +37,19 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $skpd->namaskpd }}</td>
                         <td>
-                            <div class="d-flex gap-2">
-                                <button type="button" 
-                                        class="btn-icon-modern text-primary btn-edit" 
-                                        data-id="{{ $skpd->id }}" 
-                                        data-nama="{{ $skpd->namaskpd }}" 
-                                        title="Edit">
-                                    <i class="ti ti-edit"></i>
+                            <div class="table-actions">
+                                <button type="button"
+                                        class="btn-action-sk edit btn-edit"
+                                        data-id="{{ $skpd->id }}"
+                                        data-nama="{{ $skpd->namaskpd }}"
+                                        data-tip="Edit" aria-label="Edit">
+                                    <i class="ti ti-pencil"></i>
                                 </button>
-                                <form action="{{ route('admin.skpd.destroy', $skpd->id) }}" method="POST" class="form-delete-skpd">
+                                <form action="{{ route('admin.skpd.destroy', $skpd->id) }}" method="POST" class="form-delete-skpd d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-icon-modern text-danger" title="Hapus">
-                                        <i class="ti ti-trash"></i>
+                                    <button type="submit" class="btn-action-sk delete" data-tip="Hapus" aria-label="Hapus">
+                                        <i class="ti ti-trash-x"></i>
                                     </button>
                                 </form>
                             </div>

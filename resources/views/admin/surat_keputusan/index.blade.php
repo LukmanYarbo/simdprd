@@ -50,10 +50,10 @@
                                     <th class="border-0">No. SK</th>
                                     <th class="border-0">Tanggal SK</th>
                                     <th class="border-0">Nama Alat Kelengkapan</th>
-                                    <th class="border-0">Jumlah Anggota</th>
-                                    <th class="border-0">Status</th>
-                                    <th class="border-0">File</th>
-                                    <th class="border-0 text-end pe-4" width="15%">Aksi</th>
+                                    <th class="border-0 text-center">Jumlah Anggota</th>
+                                    <th class="border-0 text-center">Status</th>
+                                    <th class="border-0 text-center">File</th>
+                                    <th class="border-0 text-center" width="170">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,10 +62,10 @@
                     </div>
 
                     {{-- PDF Preview Panel --}}
-                    <div class="card border shadow-lg mt-4" id="pdfPreviewCard" style="display:none;">
+                    <div class="card border shadow-lg mt-4 overflow-hidden" id="pdfPreviewCard" style="display:none; border-radius:1rem;">
                         <div class="card-header py-3 bg-white border-bottom d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 fw-bold text-danger"><i class="ti ti-file-earmark-pdf me-2"></i>Preview SK: <span id="pdfTitle"></span></h6>
-                            <button class="btn-icon-modern" onclick="closePdfPreview()">
+                            <h6 class="m-0 fw-bold text-danger"><i class="ti ti-file-type-pdf me-2"></i>Preview SK: <span id="pdfTitle"></span></h6>
+                            <button class="btn-action-sk delete delete-sm" onclick="closePdfPreview()" data-tip="Tutup preview" style="width:32px;height:32px;">
                                 <i class="ti ti-x"></i>
                             </button>
                         </div>
@@ -372,26 +372,27 @@ $(function() {
             {data: 'no_sk', name: 'no_sk'},
             {data: 'tgl_sk', name: 'tgl_sk'},
             {data: 'alat_kelengkapan.nama', name: 'alatKelengkapan.nama'},
-            {data: 'jumlah_anggota', name: 'jumlah_anggota', searchable: false},
+            {data: 'jumlah_anggota', name: 'jumlah_anggota', searchable: false, className: 'text-center'},
             {
                 data: 'status',
                 name: 'status',
+                className: 'text-center',
                 render: function(data, type, row) {
                     if (data === 'A') {
-                        return '<span class="badge bg-success">Aktif</span>';
+                        return '<span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle" style="font-size:.72rem; padding:.3rem .6rem;">Aktif</span>';
                     } else {
-                        return '<span class="badge bg-secondary">Tidak Aktif</span>';
+                        return '<span class="badge rounded-pill bg-secondary-subtle text-secondary border" style="font-size:.72rem; padding:.3rem .6rem;">Tidak Aktif</span>';
                     }
                 }
             },
 
-            {data: 'file_download', name: 'file_download', orderable: false, searchable: false},
+            {data: 'file_download', name: 'file_download', orderable: false, searchable: false, className: 'text-center'},
             {
                 data: 'action',
                 name: 'action',
                 orderable: false,
                 searchable: false,
-                className: 'text-end pe-4'
+                className: 'text-center'
             },
         ],
         language: {
@@ -645,7 +646,7 @@ $(function() {
                     html += '<td>' + (item.nama_komisi || '-') + '</td>';
                 }
                 html += '<td>' + item.jabatan_alat_kelengkapan.nama + '</td>';
-                html += '<td class="text-end"><button type="button" class="btn-icon-modern text-danger btn-delete-member" data-id="'+item.id+'"><i class="ti ti-trash"></i></button></td>';
+                html += '<td class="text-end"><button type="button" class="btn-action-sk delete delete-sm btn-delete-member" data-id="'+item.id+'" data-tip="Hapus anggota" aria-label="Hapus anggota"><i class="ti ti-trash-x"></i></button></td>';
                 html += '</tr>';
             });
         }

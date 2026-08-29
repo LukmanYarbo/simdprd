@@ -111,6 +111,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::get('transaksi-gaji/slip-gaji/{id}', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'slipGaji'])->name('transaksi-gaji.slip-gaji');
         Route::get('transaksi-gaji/dsb-report', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'report'])->name('transaksi-gaji.dsb-report');
         Route::get('transaksi-gaji/daftar-gaji', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'daftarGaji'])->name('transaksi-gaji.daftar-gaji');
+        Route::get('transaksi-gaji/daftar-gaji-ter', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'daftarGajiTer'])->name('transaksi-gaji.daftar-gaji-ter');
         Route::get('transaksi-gaji/tunjangan-report', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'tunjanganReport'])->name('transaksi-gaji.tunjangan-report');
         Route::get('transaksi-gaji/export-excel', [\App\Http\Controllers\Admin\Gaji\DsbGajiController::class, 'exportExcel'])->name('transaksi-gaji.export-excel');
         Route::get('transaksi-gaji', [\App\Http\Controllers\Admin\TransaksiGajiController::class, 'index'])->name('transaksi-gaji.index');

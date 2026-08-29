@@ -372,3 +372,71 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(99, 102, 241, 0.5);
 }
+
+/* 2026 Modern Form & Table Utilities (complement Vite SCSS) */
+.modern-page-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem}
+.modern-page-header .header-left h2{font-weight:800;letter-spacing:-.02em;margin:0 0 .25rem}
+.modern-page-header .header-left p{color:#64748b;font-size:.9rem;margin:0}
+.modern-form-card{background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;box-shadow:0 10px 30px -10px rgba(15,23,42,.08);overflow:hidden}
+.modern-form-card .form-card-header{padding:1.35rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:.85rem;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%)}
+.modern-form-card .form-card-header .icon-box{width:42px;height:42px;border-radius:.85rem;display:grid;place-items:center;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;font-size:1.25rem;box-shadow:0 8px 18px -8px rgba(99,102,241,.5)}
+.modern-form-card .form-card-header .header-text h5{margin:0;font-weight:700;font-size:1.02rem}
+.modern-form-card .form-card-header .header-text small{color:#64748b;font-size:.82rem}
+.modern-form-card .form-card-body{padding:1.5rem}
+.modern-form-card .form-card-footer{padding:1.1rem 1.5rem;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:.6rem}
+.form-section{background:#f8fafc;border:1px solid #e2e8f0;border-radius:1rem;padding:1.25rem;margin-bottom:1.25rem}
+.form-section .section-title{font-weight:700;font-size:.9rem;color:#6366f1;display:flex;align-items:center;gap:.45rem;border-bottom:1px solid #e2e8f0;padding-bottom:.65rem;margin-bottom:1rem}
+.btn-modern-primary{background:linear-gradient(135deg,#6366f1 0%,#4f46e5 100%);border:none;color:#fff;font-weight:700;border-radius:.7rem;padding:.62rem 1.35rem;box-shadow:0 8px 18px -8px rgba(99,102,241,.5);display:inline-flex;align-items:center;gap:.4rem;transition:all .2s ease}
+.btn-modern-primary:hover{transform:translateY(-1px);box-shadow:0 12px 22px -8px rgba(99,102,241,.55);filter:brightness(1.05);color:#fff}
+.btn-modern-ghost{background:#fff;border:1px solid #e2e8f0;border-radius:.7rem;font-weight:600;color:#64748b;padding:.62rem 1.25rem}
+.btn-modern-ghost:hover{background:#f8fafc;color:#0f172a}
+.glass-table-card{background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;box-shadow:0 10px 30px -10px rgba(15,23,42,.08);overflow:hidden}
+.glass-table-card .table-card-header{padding:1.1rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%)}
+[data-bs-theme="dark"] .modern-form-card{background:#0f172a;border-color:rgba(255,255,255,.06)}
+[data-bs-theme="dark"] .modern-form-card .form-card-header{background:linear-gradient(180deg,#0f172a 0%,#111827 100%);border-color:rgba(255,255,255,.06)}
+[data-bs-theme="dark"] .form-section{background:#111827;border-color:rgba(255,255,255,.06)}
+[data-bs-theme="dark"] .glass-table-card{background:#0f172a;border-color:rgba(255,255,255,.06)}
+[data-bs-theme="dark"] .glass-table-card .table-card-header{background:linear-gradient(180deg,#0f172a 0%,#111827 100%);border-color:rgba(255,255,255,.06)}
+
+/* ==========================================================
+   Surat Keputusan — Premium Action Icons (2026)
+   ========================================================== */
+.sk-actions, .table-actions { display:flex; gap:.38rem; justify-content:center; align-items:center; flex-wrap:nowrap; }
+#surat-keputusan-table td { vertical-align: middle; }
+#surat-keputusan-table thead th { vertical-align: middle; white-space: nowrap; }
+#surat-keputusan-table tbody td:nth-child(5),
+#surat-keputusan-table tbody td:nth-child(6) { text-align: center; }
+#surat-keputusan-table tbody td:last-child { padding-top:.55rem; padding-bottom:.55rem; }
+.btn-action-sk {
+  width:34px; height:34px; border-radius:.7rem; display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid transparent; font-size:.95rem; position:relative;
+  transition: all .22s cubic-bezier(.16,1,.3,1); cursor:pointer; text-decoration:none;
+}
+.btn-action-sk i { font-size:1rem; line-height:1; }
+.btn-action-sk:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 18px rgba(15,23,42,.12); }
+.btn-action-sk:active { transform: translateY(0) scale(.97); }
+.btn-action-sk::after{
+  content: attr(data-tip); position:absolute; bottom: calc(100% + 8px); left:50%; transform: translateX(-50%) translateY(4px);
+  background:#0f172a; color:#fff; font-size:.68rem; font-weight:600; padding:.3rem .55rem; border-radius:.5rem;
+  white-space:nowrap; opacity:0; pointer-events:none; transition: all .18s ease;
+}
+.btn-action-sk:hover::after{ opacity:1; transform: translateX(-50%) translateY(0); }
+.btn-action-sk.print  { background:#eef2ff; color:#4f46e5; border-color:#e0e7ff; }
+.btn-action-sk.print:hover  { background:#4f46e5; color:#fff; border-color:#4f46e5; box-shadow:0 8px 18px rgba(79,70,229,.35); }
+.btn-action-sk.structure { background:#ecfdf5; color:#059669; border-color:#d1fae5; }
+.btn-action-sk.structure:hover { background:#059669; color:#fff; border-color:#059669; box-shadow:0 8px 18px rgba(5,150,105,.35); }
+.btn-action-sk.manage { background:#fef3c7; color:#d97706; border-color:#fde68a; }
+.btn-action-sk.manage:hover { background:#f59e0b; color:#fff; border-color:#f59e0b; box-shadow:0 8px 18px rgba(245,158,11,.35); }
+.btn-action-sk.edit { background:#eff6ff; color:#2563eb; border-color:#dbeafe; }
+.btn-action-sk.edit:hover { background:#2563eb; color:#fff; border-color:#2563eb; box-shadow:0 8px 18px rgba(37,99,235,.35); }
+.btn-action-sk.delete { background:#fef2f2; color:#dc2626; border-color:#fecaca; }
+.btn-action-sk.delete:hover { background:#dc2626; color:#fff; border-color:#dc2626; box-shadow:0 8px 18px rgba(220,38,38,.35); }
+.btn-action-sk.pdf { background:#fff; color:#dc2626; border-color:#fecaca; font-size:.8rem; padding:.35rem .7rem; width:auto; height:auto; border-radius:999px; font-weight:700; gap:.3rem; }
+.btn-action-sk.pdf:hover { background:#dc2626; color:#fff; }
+/* anggota table delete */
+.btn-action-sk.delete-sm { width:30px; height:30px; border-radius:.6rem; font-size:.85rem; }
+[data-bs-theme="dark"] .btn-action-sk.print{ background:rgba(79,70,229,.18); border-color:rgba(79,70,229,.3); }
+[data-bs-theme="dark"] .btn-action-sk.structure{ background:rgba(16,185,129,.18); border-color:rgba(16,185,129,.3); }
+[data-bs-theme="dark"] .btn-action-sk.manage{ background:rgba(245,158,11,.18); border-color:rgba(245,158,11,.3); }
+[data-bs-theme="dark"] .btn-action-sk.edit{ background:rgba(37,99,235,.18); border-color:rgba(37,99,235,.3); }
+[data-bs-theme="dark"] .btn-action-sk.delete{ background:rgba(239,68,68,.18); border-color:rgba(239,68,68,.3); }

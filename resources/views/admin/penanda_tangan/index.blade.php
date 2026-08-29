@@ -75,15 +75,15 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                <div class="d-flex gap-2 justify-content-center">
+                                <div class="table-actions">
                                     @can('edit penanda_tangan')
-                                    <a href="{{ route('admin.penanda-tangan.edit', $item->id) }}" class="btn-icon-modern text-primary" title="Edit Data">
-                                        <i class="ti ti-edit"></i>
+                                    <a href="{{ route('admin.penanda-tangan.edit', $item->id) }}" class="btn-action-sk edit" data-tip="Edit" aria-label="Edit">
+                                        <i class="ti ti-pencil"></i>
                                     </a>
                                     @endcan
                                     @can('delete penanda_tangan')
-                                    <button type="button" class="btn-icon-modern text-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus Data">
-                                        <i class="ti ti-trash"></i>
+                                    <button type="button" class="btn-action-sk delete" data-tip="Hapus" aria-label="Hapus" onclick="confirmDelete({{ $item->id }})">
+                                        <i class="ti ti-trash-x"></i>
                                     </button>
                                     <form id="delete-form-{{ $item->id }}" action="{{ route('admin.penanda-tangan.destroy', $item->id) }}" method="POST" class="d-none">
                                         @csrf

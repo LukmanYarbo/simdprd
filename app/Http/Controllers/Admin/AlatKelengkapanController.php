@@ -35,12 +35,12 @@ class AlatKelengkapanController extends Controller implements HasMiddleware
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = '<div class="btn-group shadow-sm">';
+                    $btn = '<div class="table-actions">';
                     if(auth()->user()->can('edit alat_kelengkapan')){
-                        $btn .= '<button type="button" class="btn btn-icon-only btn-sm btn-outline-primary btn-edit" data-id="'.$row->id.'" title="Edit"><i class="ti ti-pencil"></i></button>';
+                        $btn .= '<button type="button" class="btn-action-sk edit btn-edit" data-id="'.$row->id.'" data-tip="Edit" aria-label="Edit"><i class="ti ti-pencil"></i></button>';
                     }
                     if(auth()->user()->can('delete alat_kelengkapan')){
-                        $btn .= '<button type="button" onclick="deleteItem('.$row->id.')" class="btn btn-icon-only btn-sm btn-outline-danger" title="Hapus"><i class="ti ti-trash"></i></button>';
+                        $btn .= '<button type="button" onclick="deleteItem('.$row->id.')" class="btn-action-sk delete" data-tip="Hapus" aria-label="Hapus"><i class="ti ti-trash-x"></i></button>';
                     }
                     $btn .= '</div>';
                     return $btn;

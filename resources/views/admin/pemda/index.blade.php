@@ -10,19 +10,17 @@
         ['label' => 'Data Pemda', 'icon' => 'ti ti-building-community']
     ]" />
 
-    <div class="card shadow mb-4 mt-4">
-
-    
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Daftar Pemda</h6>
-            <a href="{{ route('admin.pemda.create') }}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm transition-base">
+    <div class="glass-table-card mt-4">
+        <div class="table-card-header">
+            <h5><span class="icon-box-sm d-inline-grid place-items-center rounded-3 p-2 me-1" style="background: linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff;"><i class="ti ti-building-community"></i></span> Daftar Pemda</h5>
+            <a href="{{ route('admin.pemda.create') }}" class="btn-modern-primary btn-sm">
                 <i class="ti ti-plus me-1"></i> Tambah Data Pemda
             </a>
         </div>
-        <div class="card-body">
+        <div class="p-0">
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
-                    <thead class="bg-body-tertiary">
+                <table class="table table-hover align-middle mb-0" width="100%" cellspacing="0">
+                    <thead class="bg-body-tertiary text-uppercase" style="font-size:.72rem; letter-spacing:.06em; color:#64748b;">
                         <tr>
                             <th>No</th>
                             <th>Nama Pemda</th>
@@ -51,12 +49,14 @@
                             </td>
                             <td>{{ $item->kota }} / {{ $item->kabupaten }}</td>
                             <td class="text-center">
-                                <a href="{{ route('admin.pemda.edit', $item->id) }}" class="btn btn-icon-only btn-sm btn-outline-primary" title="Edit">
-                                    <i class="ti ti-pencil"></i>
-                                </a>
-                                <button class="btn btn-icon-only btn-sm btn-outline-danger" onclick="confirmDelete({{ $item->id }})" title="Hapus">
-                                    <i class="ti ti-trash"></i>
-                                </button>
+                                <div class="table-actions">
+                                    <a href="{{ route('admin.pemda.edit', $item->id) }}" class="btn-action-sk edit" data-tip="Edit" aria-label="Edit">
+                                        <i class="ti ti-pencil"></i>
+                                    </a>
+                                    <button class="btn-action-sk delete" data-tip="Hapus" aria-label="Hapus" onclick="confirmDelete({{ $item->id }})">
+                                        <i class="ti ti-trash-x"></i>
+                                    </button>
+                                </div>
                                 <form id="delete-form-{{ $item->id }}" action="{{ route('admin.pemda.destroy', $item->id) }}" method="POST" class="d-none">
                                     @csrf
                                     @method('DELETE')

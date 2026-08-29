@@ -341,6 +341,11 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item p-2 rounded-3" href="{{ route('admin.transaksi-gaji.daftar-gaji-ter', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank" style="background:#eef2ff;">
+                                <i class="ti ti-receipt-2 text-indigo me-2" style="color:#4f46e5;"></i> Daftar Gaji Sistem TER <span class="badge bg-primary ms-1" style="font-size:.62rem;">PDF</span> <small class="text-muted ms-1">PMK 168</small>
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item p-2 rounded-3" href="{{ route('admin.transaksi-gaji.tunjangan-report', ['bulan' => $bulan, 'tahun' => $tahun]) }}" target="_blank">
                                 <i class="ti ti-cash text-warning me-2"></i> Daftar Tunjangan
                             </a>
