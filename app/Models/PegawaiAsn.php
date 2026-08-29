@@ -44,4 +44,14 @@ class PegawaiAsn extends Model
     {
         return $this->belongsTo(StatusPegawai::class, 'id_status_pegawai');
     }
+
+    public function pemda()
+    {
+        return $this->hasMany(Pemda::class, 'id_sekda');
+    }
+
+    public function penandaTangan()
+    {
+        return $this->hasMany(PenandaTangan::class, 'id_pegawai_asn');
+    }
 }

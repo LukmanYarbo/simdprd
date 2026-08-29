@@ -14,11 +14,16 @@ class StatusKawin extends Model
 
     public function anggota()
     {
-        return $this->hasMany(Anggota::class, 'id_status_kawin');
+        return $this->hasMany(Anggota::class, 'id_status_kawin', 'kode');
+    }
+
+    public function pegawaiAsn()
+    {
+        return $this->hasMany(PegawaiAsn::class, 'id_status_kawin', 'kode');
     }
 
     public function keluarga()
     {
-        return $this->hasMany(Keluarga::class, 'id_status_kawin');
+        return $this->hasMany(Keluarga::class, 'id_status_kawin', 'id');
     }
 }

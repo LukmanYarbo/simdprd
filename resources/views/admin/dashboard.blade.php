@@ -205,11 +205,11 @@
 
             <!-- Komisi Card -->
             <div class="col-6 col-md-4 col-xl-2">
-                <div class="card glass-card border-0 glow-shadow h-100 fade-in-up" style="animation-delay: 0.9s;">
+                <div class="card glass-card glass-card-hover border-0 glow-shadow h-100 fade-in-up" style="animation-delay: 0.9s;">
                     <div class="card-body p-3 text-center">
                         <div class="stats-icon rounded-circle p-2 mx-auto mb-2"
-                            style="background: rgba(16, 185, 129, 0.1); color: #10b981; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                            <i class="ti ti-buildingfs-5"></i>
+                            style="background: rgba(16, 185, 129, 0.1); color: #10b981; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">
+                            <i class="ti ti-building fs-5"></i>
                         </div>
                         <h4 class="mb-0 fw-extrabold">{{ $membershipSummary['komisi'] }}</h4>
                         <span class="text-secondary small fw-bold text-uppercase tracking-tighter"

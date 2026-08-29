@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('jabatan_bendahara')->nullable();
             $table->date('tanggal_proses')->nullable();
             $table->string('status')->default('FINAL');
+            $table->text('alasan_perubahan')->nullable();
             $table->timestamps();
         });
     }

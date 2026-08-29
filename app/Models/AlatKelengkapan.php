@@ -17,8 +17,8 @@ class AlatKelengkapan extends Model
         return $this->hasMany(SuratKeputusan::class, 'id_alat_kelengkapan');
     }
 
-    public function jabatans()
+    public function jabatanAnggota()
     {
-        return $this->hasMany(Jabatan::class, 'id_alat_kelengkapan');
+        return $this->hasMany(JabatanAnggota::class, 'id_alat_kelengkapan');
     }
 }

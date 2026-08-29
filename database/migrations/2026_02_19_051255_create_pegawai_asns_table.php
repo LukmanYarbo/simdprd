@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('norek')->nullable();
             $table->string('npwp')->nullable();
             $table->string('foto')->nullable();
+            $table->enum('id_ttd', ['Y', 'T'])->default('T');
             $table->timestamps();
         });
     }

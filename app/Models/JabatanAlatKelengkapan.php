@@ -12,4 +12,9 @@ class JabatanAlatKelengkapan extends Model
     protected $table = 'jabatan_alat_kelengkapan';
 
     protected $fillable = ['nama'];
+
+    public function jabatanAnggota()
+    {
+        return $this->hasMany(JabatanAnggota::class, 'id_jabatan_alat_kelengkapan');
+    }
 }

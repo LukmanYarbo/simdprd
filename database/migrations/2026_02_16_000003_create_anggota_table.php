@@ -45,6 +45,7 @@ return new class extends Migration
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
             
+            $table->string('nama_komisi')->nullable();
             $table->foreignId('id_komisi')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
             $table->foreignId('id_banggar')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();
             $table->foreignId('id_banmus')->nullable()->constrained('jabatan_alat_kelengkapan')->nullOnDelete();

@@ -16,4 +16,9 @@ class Agama extends Model
     {
         return $this->hasMany(Anggota::class, 'id_agama');
     }
+
+    public function pegawaiAsn()
+    {
+        return $this->hasMany(PegawaiAsn::class, 'id_agama');
+    }
 }

@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PangkatGolongan extends Model
 {
-    use HasFactory;
-    
+    protected $table = 'pangkat_golongans';
     protected $fillable = ['pangkat', 'golongan'];
+
+    public function pegawaiAsn()
+    {
+        return $this->hasMany(PegawaiAsn::class, 'id_pangkat_golongan');
+    }
 }

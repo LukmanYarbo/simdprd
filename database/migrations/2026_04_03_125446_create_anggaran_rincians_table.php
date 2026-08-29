@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('kode_item');
             $table->string('uraian');
             $table->bigInteger('besaran')->default(0);
-            $table->integer('orang')->default(0);
-            $table->integer('bulan_kali')->default(0);
             $table->bigInteger('jumlah')->default(0);
             $table->bigInteger('sisa_pagu')->default(0);
             $table->timestamps();
